@@ -16,10 +16,10 @@ public class DecryptTest {
 
     public static void main(String[] args) {
 
-        String salt = "itn2x3";
+        String salt = "0iqwhi";
 
         SimpleObject simpleObject = new SimpleObject();
-        simpleObject.setUser("wy");
+        simpleObject.setUser("stylefeng");
         simpleObject.setAge(12);
         simpleObject.setName("ffff");
         simpleObject.setTips("code");
