@@ -1,0 +1,38 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <!--<#input id="id" name="" underline="true"/>-->
+                            <#input id="accountId" name="用户" underline="true"/>
+                            <#input id="title" name="小说标题" underline="true"/>
+                            <#input id="picAddress" name="小说封面" underline="true"/>
+                            <#input id="type" name="小说类别" underline="true"/>
+                            <#input id="author" name="作者名" underline="true"/>
+                            <#input id="refreshTime" name="更新时间"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="status" name="小说状态" underline="true"/>
+                            <#input id="payPoints" name="支付积分" underline="true"/>
+                            <#input id="description" name="描述" underline="true"/>
+                            <!--<#input id="isDel" name="" underline="true"/>
+                            <#input id="gmtCreated" name="" underline="true"/>
+                            <#input id="gmtModified" name="" underline="true"/>-->
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="NovelInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="NovelInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/novel/novel_info.js"></script>
+@}

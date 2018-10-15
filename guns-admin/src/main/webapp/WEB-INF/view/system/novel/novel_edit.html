@@ -1,0 +1,38 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <!--<#input id="id" name="" value="${item.id}" underline="true"/>-->
+                            <#input id="accountId" name="用户" value="${item.accountId}" underline="true"/>
+                            <#input id="title" name="小说标题" value="${item.title}" underline="true"/>
+                            <#input id="picAddress" name="小说封面" value="${item.picAddress}" underline="true"/>
+                            <#input id="type" name="小说类别" value="${item.type}" underline="true"/>
+                            <#input id="author" name="作者名" value="${item.author}" underline="true"/>
+                            <#input id="refreshTime" name="更新时间" value="${item.refreshTime}" />
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="status" name="小说状态" value="${item.status}" underline="true"/>
+                            <#input id="payPoints" name="支付积分" value="${item.payPoints}" underline="true"/>
+                            <#input id="description" name="描述" value="${item.description}" underline="true"/>
+                            <!--<#input id="isDel" name="" value="${item.isDel}" underline="true"/>
+                            <#input id="gmtCreated" name="" value="${item.gmtCreated}" underline="true"/>
+                            <#input id="gmtModified" name="" value="${item.gmtModified}" />-->
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="NovelInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="NovelInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/novel/novel_info.js"></script>
+@}

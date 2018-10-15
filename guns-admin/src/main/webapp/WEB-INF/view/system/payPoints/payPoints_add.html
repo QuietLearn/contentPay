@@ -1,0 +1,31 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="" underline="true"/>
+                            <#input id="appid" name="" underline="true"/>
+                            <#input id="accoutid" name="用户id"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="type" name="模豆购买类型  5  8  30  50  88  168  388  448  998  1648  2998  6498  " underline="true"/>
+                            <#input id="gmtCreated" name="" underline="true"/>
+                            <#input id="gmtModified" name="" underline="true"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="PayPointsInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="PayPointsInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/payPoints/payPoints_info.js"></script>
+@}

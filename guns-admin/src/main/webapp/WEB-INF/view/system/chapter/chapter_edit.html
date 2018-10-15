@@ -1,0 +1,33 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                           <!-- <#input id="id" name="" value="${item.id}" underline="true"/>-->
+                            <#input id="novelId" name="小说编号" value="${item.novelId}" underline="true"/>
+                            <#input id="number" name="章节编号" value="${item.number}" underline="true"/>
+                            <#input id="title" name="章节名称" value="${item.title}" />
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="content" name="章节内容" value="${item.content}" underline="true"/>
+                           <!-- <#input id="isDel" name="" value="${item.isDel}" underline="true"/>
+                            <#input id="gmtCreated" name="" value="${item.gmtCreated}" underline="true"/>
+                            <#input id="gmtModified" name="" value="${item.gmtModified}" />-->
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ChapterInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ChapterInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/chapter/chapter_info.js"></script>
+@}

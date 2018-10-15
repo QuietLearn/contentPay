@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.NovelMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.Novel">
+        <id column="id" property="id" />
+        <result column="account_id" property="accountId" />
+        <result column="title" property="title" />
+        <result column="pic_address" property="picAddress" />
+        <result column="type" property="type" />
+        <result column="author" property="author" />
+        <result column="refresh_time" property="refreshTime" />
+        <result column="status" property="status" />
+        <result column="pay_points" property="payPoints" />
+        <result column="description" property="description" />
+        <result column="is_del" property="isDel" />
+        <result column="gmt_created" property="gmtCreated" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, account_id, title, pic_address, type, author, refresh_time, status, pay_points, description, is_del, gmt_created, gmt_modified
+    </sql>
+
+</mapper>
