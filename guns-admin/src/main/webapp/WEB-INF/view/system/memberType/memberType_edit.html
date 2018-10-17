@@ -1,0 +1,33 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="" value="${item.id}" underline="true"/>
+                            <#input id="serverCode" name=" 1001 普通用户 1001 包月  1002 包年" value="${item.serverCode}" underline="true"/>
+                            <#input id="serverName" name="服务名称" value="${item.serverName}" underline="true"/>
+                            <#input id="price" name="购买单价" value="${item.price}" />
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="aging" name="有效持续时间" value="${item.aging}" underline="true"/>
+                            <#input id="isDel" name="逻辑删除" value="${item.isDel}" underline="true"/>
+                            <#input id="gmtCreated" name="" value="${item.gmtCreated}" underline="true"/>
+                            <#input id="gmtModified" name="" value="${item.gmtModified}" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="MemberTypeInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="MemberTypeInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/memberType/memberType_info.js"></script>
+@}

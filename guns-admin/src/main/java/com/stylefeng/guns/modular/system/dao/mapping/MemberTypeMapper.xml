@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.MemberTypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.MemberType">
+        <id column="id" property="id" />
+        <result column="server_code" property="serverCode" />
+        <result column="server_name" property="serverName" />
+        <result column="price" property="price" />
+        <result column="aging" property="aging" />
+        <result column="is_del" property="isDel" />
+        <result column="gmt_created" property="gmtCreated" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, server_code, server_name, price, aging, is_del, gmt_created, gmt_modified
+    </sql>
+
+    <select id="findNameByCode" parameterType="int" resultType="string">
+        select server_name
+        from cps_member_type
+        where server_code = #{id};
+    </select>
+</mapper>

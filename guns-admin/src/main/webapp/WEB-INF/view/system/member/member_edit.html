@@ -1,0 +1,56 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="id" value="${item.id}" underline="true"/>
+                            <#input id="username" name="用户名" value="${item.username}" underline="true"/>
+                            <#input id="nickname" name="昵称" value="${item.nickname}" underline="true"/>
+                            <#input id="password" name="明文密码" value="${item.password}" underline="true"/>
+                            <#input id="md5Password" name="md5加密密码" value="${item.md5Password}" underline="true"/>
+                            <#input id="gender" name="性别" value="${item.gender}" underline="true"/>
+                            <#input id="picAddress" name="头像图片地址" value="${item.picAddress}" underline="true"/>
+                            <#input id="mobile" name="手机" value="${item.mobile}" underline="true"/>
+                            <#input id="qq" name="qq" value="${item.qq}" underline="true"/>
+                            <#input id="weixin" name="微信" value="${item.weixin}" underline="true"/>
+                            <#input id="email" name="邮箱" value="${item.email}" underline="true"/>
+                            <#input id="memberTypeId" name="会员类型 表id" value="${item.memberTypeId}" underline="true"/>
+                            <#input id="memberTypeName" name="会员类型名称" value="${item.memberTypeName}" underline="true"/>
+                            <#input id="vipLevel" name="会员等级" value="${item.vipLevel}" underline="true"/>
+                            <#input id="buyTime" name="购买时间" value="${item.buyTime}" underline="true"/>
+                            <#input id="endTime" name="结束时间" value="${item.endTime}" />
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="aging" name="有效时间" value="${item.aging}" underline="true"/>
+                            <#input id="points" name="积分" value="${item.points}" underline="true"/>
+                            <#input id="userLevel" name="用户等级" value="${item.userLevel}" underline="true"/>
+                            <#input id="experience" name="用户经验" value="${item.experience}" underline="true"/>
+                            <#input id="favoritesIds" name="收藏夹ids ，分隔" value="${item.favoritesIds}" underline="true"/>
+                            <#input id="lastLogin" name="最后登录时间" value="${item.lastLogin}" underline="true"/>
+                            <#input id="lastLoginip" name="最后登录ip" value="${item.lastLoginip}" underline="true"/>
+                            <#input id="registerTime" name="注册时间" value="${item.registerTime}" underline="true"/>
+                            <#input id="registerIp" name="注册ip" value="${item.registerIp}" underline="true"/>
+                            <#input id="uuidToken" name="uuid唯一值" value="${item.uuidToken}" underline="true"/>
+                            <#input id="totalMoney" name="总消费额" value="${item.totalMoney}" underline="true"/>
+                            <#input id="isLock" name="是否锁定 0 是 １否" value="${item.isLock}" underline="true"/>
+                            <#input id="isDel" name="逻辑删除 0 是 １否" value="${item.isDel}" underline="true"/>
+                            <#input id="gmtCreated" name="创建时间" value="${item.gmtCreated}" underline="true"/>
+                            <#input id="gmtModified" name="更改时间" value="${item.gmtModified}" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="MemberInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="MemberInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/member/member_info.js"></script>
+@}

@@ -12,7 +12,7 @@ import com.stylefeng.guns.core.util.ToolUtil;
 public class ContextConfig {
 
     private String templatePrefixPath = "gunsTemplate/advanced";
-    private String projectPath = "D:\\ideaSpace\\guns";//模板输出的项目目录
+    private String projectPath = "E:\\idea_cooperation\\guns";//模板输出的项目目录
     private String bizChName;   //业务名称
     private String bizEnName;   //业务英文名称
     private String bizEnBigName;//业务英文名称(大写)
@@ -24,6 +24,7 @@ public class ContextConfig {
     private String modelMapperPackageName = "com.stylefeng.guns.modular.system.dao";    //model的dao
     private String entityName;              //实体的名称
 
+    //灵活开关，分别对应前端模板
     private Boolean controllerSwitch = true;    //是否生成控制器代码开关
     private Boolean indexPageSwitch = true;     //主页
     private Boolean addPageSwitch = true;       //添加页面

@@ -33,4 +33,9 @@ public interface Const {
      */
     String API_MENU_NAME = "接口文档";
 
+    /**
+     * 注册页面需要检测是否数据库已存在的字段
+     */
+    public static final String USERNAME = "username";
+    public static final String EMAIL = "email";
 }
