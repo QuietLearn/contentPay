@@ -24,4 +24,8 @@ public interface MemberMapper extends BaseMapper<Member> {
     Member login(@Param("username") String username, @Param("md5Password") String md5Password);
 
     Member selectMemberByUsername(String username);
+
+    Member selectMemberByUuidToken(String uuidToken);
+
+    int updateUuidById(Member member);
 }

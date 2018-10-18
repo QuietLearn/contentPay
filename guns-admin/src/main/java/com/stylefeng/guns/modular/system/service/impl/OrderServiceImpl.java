@@ -1,44 +1,59 @@
 package com.stylefeng.guns.modular.system.service.impl;
 
-import com.alipay.api.AlipayApiException;
-import com.alipay.api.AlipayClient;
-import com.alipay.api.DefaultAlipayClient;
-import com.alipay.api.domain.AlipayTradeAppPayModel;
-import com.alipay.api.request.AlipayTradeAppPayRequest;
-import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.common.result.ResultCode;
+import com.stylefeng.guns.modular.system.dao.VipPriceMapper;
+import com.stylefeng.guns.modular.system.model.Order;
+import com.stylefeng.guns.modular.system.dao.OrderMapper;
+import com.stylefeng.guns.modular.system.model.VipPrice;
 import com.stylefeng.guns.modular.system.service.IOrderService;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.stylefeng.guns.modular.system.vo.OrderVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Random;
 
 /**
- * Created by hyj on 2018/10/17
+ * <p>
+ * 订单表 服务实现类
+ * </p>
+ *
+ * @author hyj
+ * @since 2018-10-18
  */
-public class OrderServiceImpl implements IOrderService {
+@Service
+public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements IOrderService {
 
-    public Result pay(){
+    @Autowired
+    private VipPriceMapper vipPriceMapper;
 
-        //实例化客户端
-        AlipayClient alipayClient = new DefaultAlipayClient("https://openapi.alipay.com/gateway.do", APP_ID, APP_PRIVATE_KEY, "json", CHARSET, ALIPAY_PUBLIC_KEY, "RSA2");
-//实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
-        AlipayTradeAppPayRequest request = new AlipayTradeAppPayRequest();
-//SDK已经封装掉了公共参数，这里只需要传入业务参数。以下方法为sdk的model入参方式(model和biz_content同时存在的情况下取biz_content)。
-        AlipayTradeAppPayModel model = new AlipayTradeAppPayModel();
-        model.setBody("我是测试数据");
-        model.setSubject("App支付测试Java");
-        model.setOutTradeNo(outtradeno);//更换为自己的订单编号
-        model.setTimeoutExpress("30m");
-        model.setTotalAmount("0.01");//订单价格
-        model.setProductCode("QUICK_MSECURITY_PAY");
-        request.setBizModel(model);
-        request.setNotifyUrl("商户外网可以访问的异步地址");//回调地址不可以带参数
-        String orderStr = "";
-        try {
-            //这里和普通的接口调用不同，使用的是sdkExecute
-            AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
-            orderStr = response.getBody();
-            System.out.println(orderStr);//就是orderString 可以直接给客户端请求，无需再做处理。
-        } catch (AlipayApiException e) {
-            e.printStackTrace();
+    public Result<OrderVo> generateOrderVo(Integer vipTypeId){
+        if (vipTypeId==null){
+            return Result.createByErrorCodeMessage(ResultCode.ILLEAGAL_ARGUMENT.getCode(),ResultCode.ILLEAGAL_ARGUMENT.getDesc());
+        }
+        //取出vip价格表中对应的价格
+        VipPrice vipPrice = vipPriceMapper.selectById(vipTypeId);
+        if (vipPrice==null){
+            return Result.createByErrorMessage("该vip价格不存在");
         }
 
+
+        long orderNo = this.generateOrderNo();
+
+        return null;
+    }
+
+    /**
+     * 生成orderNo的策略
+     * @return
+     */
+    private long generateOrderNo(){
+        long currentTimeMillis = System.currentTimeMillis();
+        long orderNo = currentTimeMillis + new Random().nextInt(100);
+        return orderNo;
     }
 }
+

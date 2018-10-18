@@ -61,6 +61,8 @@ public class ${context.bizEnBigName}Controller extends BaseController {
     @RequestMapping(value = "/add")
     @ResponseBody
     public Object add(${context.entityName} ${context.bizEnName}) {
+        ${context.bizEnName}.setGmtCreated(new Date());
+        ${context.bizEnName}.setGmtUpdated(new Date());
         ${context.bizEnName}Service.insert(${context.bizEnName});
         return SUCCESS_TIP;
     }
@@ -81,6 +83,7 @@ public class ${context.bizEnBigName}Controller extends BaseController {
     @RequestMapping(value = "/update")
     @ResponseBody
     public Object update(${context.entityName} ${context.bizEnName}) {
+        ${context.bizEnName}.setGmtUpdated(new Date());
         ${context.bizEnName}Service.updateById(${context.bizEnName});
         return SUCCESS_TIP;
     }
