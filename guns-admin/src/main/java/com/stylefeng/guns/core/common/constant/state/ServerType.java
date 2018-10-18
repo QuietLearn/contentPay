@@ -5,7 +5,8 @@ package com.stylefeng.guns.core.common.constant.state;
  */
 public enum ServerType {
     REGULAR(1000,"普通会员"),
-    VIP(1001,"vip会员");
+    VIP(1001,"vip会员"),
+    ANNO(1002,"匿名用户");
 
 
     int code;

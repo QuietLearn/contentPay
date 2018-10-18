@@ -26,14 +26,14 @@ public class GunsGeneratorConfig extends AbstractGeneratorConfig {
         dataSourceConfig.setDriverName("com.mysql.jdbc.Driver");
         dataSourceConfig.setUsername("root");
         dataSourceConfig.setPassword("123456");
-        dataSourceConfig.setUrl("jdbc:mysql://127.0.0.1:3306/guns?characterEncoding=utf8&useSSL=false&serverTimezone=GMT");
+        dataSourceConfig.setUrl("jdbc:mysql://127.0.0.1:3306/videoapp?characterEncoding=utf8&useSSL=false&serverTimezone=GMT");
     }
 
     //策略配置
     protected void strategyConfig() {
-        strategyConfig.setTablePrefix(new String[]{"sys_"});// 此处可以修改为您的表前缀
+        strategyConfig.setTablePrefix(new String[]{"cps_"});// 此处可以修改为您的表前缀
         strategyConfig.setNaming(NamingStrategy.underline_to_camel); //表名生成策略
-        strategyConfig.setInclude(new String[]{"my_order"});
+        strategyConfig.setInclude(new String[]{""}); //my_order
     }
 
     //包配置

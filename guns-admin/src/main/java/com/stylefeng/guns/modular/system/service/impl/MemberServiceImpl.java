@@ -3,17 +3,22 @@ package com.stylefeng.guns.modular.system.service.impl;
 import com.stylefeng.guns.config.properties.SaltProperties;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.constant.Const;
+import com.stylefeng.guns.core.common.constant.state.AllConst;
 import com.stylefeng.guns.core.common.constant.state.ServerType;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.support.HttpKit;
 import com.stylefeng.guns.core.util.MD5Util;
+import com.stylefeng.guns.modular.system.dao.DataMapper;
 import com.stylefeng.guns.modular.system.dao.MemberTypeMapper;
+import com.stylefeng.guns.modular.system.model.Data;
 import com.stylefeng.guns.modular.system.model.Member;
 import com.stylefeng.guns.modular.system.dao.MemberMapper;
 import com.stylefeng.guns.modular.system.service.IMemberService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.stylefeng.guns.modular.system.vo.MemberVo;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +26,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * <p>
@@ -33,12 +39,17 @@ import java.util.List;
 @Service
 public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> implements IMemberService {
 
+    private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
+
     @Autowired
     private MemberMapper memberMapper;
 
     @Autowired
     private MemberTypeMapper memberTypeMapper;
-
+    
+    @Autowired
+    private DataMapper dataMapper;
+    
     @Autowired
     public SaltProperties saltProperties;
     //后台逻辑方法
@@ -64,6 +75,12 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         if (member==null){
             return Result.createByErrorMessage("密码错误");
         }
+        String uuidString = UUID.randomUUID().toString().replaceAll("-", "");
+        member.setUuidToken(uuidString);
+        Integer updateCount = memberMapper.updateUuidById(member);
+        if (updateCount<=0){
+            logger.error("更新失败，更新数据库行：{}",updateCount);
+        }
         MemberVo memberVo = new MemberVo();
         BeanUtils.copyProperties(member,memberVo);
 
@@ -72,23 +89,33 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     }
 
     //判断是否是vip
-    public Result checkVip(String username){
-        if (StringUtils.isBlank(username)){
-            return Result.createByErrorMessage("username传值为空");
+    public Result checkVip(String UuidToken,int vid){
+        if (StringUtils.isBlank(UuidToken)){
+            return Result.createByErrorMessage("用户需要登录");
         }
 
-        Member member = memberMapper.selectMemberByUsername(username);
+        Member member = memberMapper.selectMemberByUuidToken(UuidToken);
         if (member==null){
-            return Result.createByErrorMessage("用户不存在");
+            return Result.createByErrorMessage("用户不存在或token失效，请重新登录");
         }
 
-        if (ServerType.REGULAR.getCode()==member.getMemberTypeId()){
+        Data data = dataMapper.selectById(vid);
+        if (data==null){
+            return Result.createByErrorMessage("视频不存在");
+        }
+        if (AllConst.VideoReqVip.NO_NEED_VIP==data.getvReqVip()){
+            return Result.createBySuccessMessage("欢迎观看");
+        } else if(AllConst.VideoReqVip.NEED_VIP==data.getvReqVip()){
+            if (ServerType.VIP.getCode()==member.getMemberTypeId()){
+                return Result.createBySuccessMessage("欢迎观看");
+            }
             return Result.createByErrorMessage("请充值会员后观看");
         }
 
         return Result.createBySuccessMessage("欢迎观看");
     }
 
+    //注册
     public Result<String> register(Member member) {
         if (member==null){
             return Result.createByErrorMessage("member为空");

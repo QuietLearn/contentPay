@@ -59,7 +59,7 @@ public class MemberFrontController extends BaseController {
     }
 
     @RequestMapping(value = "/checkVip")
-    public Result checkVip(String username){
-        return memberService.checkVip(username);
+    public Result checkVip(String uuid,int vid){
+        return memberService.checkVip(uuid,vid);
     }
 }

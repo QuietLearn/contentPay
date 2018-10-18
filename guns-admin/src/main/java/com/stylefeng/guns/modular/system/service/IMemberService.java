@@ -50,9 +50,10 @@ public interface IMemberService extends IService<Member> {
     Result login(String username, String password);
 
     /**
-     * 验证用户是否是vip
-     * @param username
+     * 检测用户是否是vip
+     * @param UuidToken
+     * @param vid
      * @return
      */
-    Result checkVip(String username);
+    Result checkVip(String UuidToken,int vid);
 }

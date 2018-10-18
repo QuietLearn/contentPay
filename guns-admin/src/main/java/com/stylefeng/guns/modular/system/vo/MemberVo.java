@@ -26,6 +26,11 @@ public class MemberVo {
      * id
      */
     private Integer id;
+
+    /**
+     * uuid 缓存
+     */
+    private String uuidToken;
     /**
      * 用户名
      */
@@ -42,7 +47,6 @@ public class MemberVo {
     /**
      * 头像图片地址
      */
-    @TableField("pic_address")
     private String picAddress;
     /**
      * 手机
@@ -57,7 +61,6 @@ public class MemberVo {
     /**
      * 会员类型名称
      */
-    @TableField("member_type_name")
     private String memberTypeName;
 
     /**
@@ -120,6 +123,19 @@ public class MemberVo {
 
     public void setPicAddress(String picAddress) {
         this.picAddress = picAddress;
+    }
+
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getUuidToken() {
+        return uuidToken;
+    }
+
+    public void setUuidToken(String uuidToken) {
+        this.uuidToken = uuidToken;
     }
 
     public String getMobile() {

@@ -1,12 +1,11 @@
 package com.stylefeng.guns.core.common.result;
 
 public enum ResultCode {
-    UNKNOWN_ERROR(-1,"未知错误"),
-    SUCCESS(0,"成功"),
+    UNKNOWN_ERROR(-1,"UNKNOWN_ERROR"),
+    SUCCESS(0,"SUCCESS"),
     ERROR(1,"ERROR"),
-    PRIMARY_SCHOOL(100,"这个女孩还在上小学"),
-    MIDDLE_SCHOOL(101,"这个女孩在上初中"),
-    ADULT(202,"这个女孩已成年");
+    ILLEAGAL_ARGUMENT(-2,"ILLEAGAL_ARGUMENT");
+
     private int code;
     private String desc;
 

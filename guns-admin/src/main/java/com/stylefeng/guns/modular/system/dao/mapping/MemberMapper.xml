@@ -81,4 +81,16 @@
         from cps_member
         where username = #{username}
     </select>
+
+    <select id="selectMemberByUuidToken" parameterType="string" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/>
+      from cps_member
+      where UUID_token = #{uuidToken}
+    </select>
+
+    <update id="updateUuidById" parameterType="com.stylefeng.guns.modular.system.model.Member">
+        update cps_member
+        set UUID_token = #{uuidToken,jdbcType=VARCHAR}
+       where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>
