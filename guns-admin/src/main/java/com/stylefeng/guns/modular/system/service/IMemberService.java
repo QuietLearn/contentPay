@@ -3,7 +3,9 @@ package com.stylefeng.guns.modular.system.service;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.modular.system.model.Member;
 import com.baomidou.mybatisplus.service.IService;
+import com.stylefeng.guns.modular.system.vo.MemberVo;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -18,10 +20,11 @@ public interface IMemberService extends IService<Member> {
 
     /**
      * 注册功能
-     * @param member
+     * @param mobile
+     * @param password
      * @return
      */
-    Result<String> register(Member member);
+    Result<MemberVo> register(String mobile, String password, String message);
 
     /**
      * 检查注册页面用户名和邮箱是否已存在
@@ -45,9 +48,28 @@ public interface IMemberService extends IService<Member> {
      */
     Result updateGmtLastLoginAndLastIp(Integer accountId);
 
+    /**
+     * 根据条件列表
+     * @param condition
+     * @return
+     */
     List<Member> list(String condition);
 
+    /**
+     * 登录
+     * @param username
+     * @param password
+     * @return
+     */
     Result login(String username, String password);
+
+    /**
+     * 根据电话登录
+     * @param mobile
+     * @param password
+     * @return
+     */
+    Result loginByMobile(String mobile, String password);
 
     /**
      * 检测用户是否是vip
@@ -56,4 +78,13 @@ public interface IMemberService extends IService<Member> {
      * @return
      */
     Result checkVip(String UuidToken,int vid);
+
+    /**
+     * 获取短信验证码
+     * @param mobile
+     * @return
+     */
+    Result getMessage(String mobile);
+
+
 }

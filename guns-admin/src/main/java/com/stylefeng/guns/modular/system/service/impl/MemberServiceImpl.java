@@ -1,20 +1,23 @@
 package com.stylefeng.guns.modular.system.service.impl;
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.stylefeng.guns.config.properties.SaltProperties;
-import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.TokenCache;
 import com.stylefeng.guns.core.common.constant.Const;
 import com.stylefeng.guns.core.common.constant.state.AllConst;
 import com.stylefeng.guns.core.common.constant.state.ServerType;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.support.HttpKit;
 import com.stylefeng.guns.core.util.MD5Util;
+import com.stylefeng.guns.core.util.meassge.IndustrySMS;
 import com.stylefeng.guns.modular.system.dao.DataMapper;
+import com.stylefeng.guns.modular.system.dao.MemberMapper;
 import com.stylefeng.guns.modular.system.dao.MemberTypeMapper;
+import com.stylefeng.guns.modular.system.dao.NoteMapper;
 import com.stylefeng.guns.modular.system.model.Data;
 import com.stylefeng.guns.modular.system.model.Member;
-import com.stylefeng.guns.modular.system.dao.MemberMapper;
+import com.stylefeng.guns.modular.system.model.Note;
 import com.stylefeng.guns.modular.system.service.IMemberService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.stylefeng.guns.modular.system.vo.MemberVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -26,6 +29,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.UUID;
 
 /**
@@ -49,9 +53,15 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     
     @Autowired
     private DataMapper dataMapper;
-    
+
+    @Autowired
+    private NoteMapper noteMapper;
     @Autowired
     public SaltProperties saltProperties;
+
+
+
+
     //后台逻辑方法
     public List<Member> list(String condition){
         List<Member> members = this.selectList(null);
@@ -64,6 +74,81 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
 
     //前台逻辑方法
+    //注册
+    public Result<MemberVo> register(String mobile,String password,String message) {
+        Member existMember = memberMapper.selectMemberByMobile(mobile);
+        if (existMember!=null){
+            logger.info("该手机已经注册");
+            return Result.createByErrorMessage("该手机已经注册");
+        }
+        String smscode = TokenCache.getKey(TokenCache.TOKEN_PREFIX + mobile);
+        if (!StringUtils.equals(smscode,message)){
+            return Result.createByErrorMessage("验证码错误，重新输入");
+        }
+
+        Member member = new Member();
+        member.setMobile(mobile);
+        member.setPassword(password);
+
+        /*Result<String> result = this.checkValid(member.getUsername(), Const.USERNAME);
+        if (!result.isSuccess()){
+            return result;
+        }
+        result = this.checkValid(member.getEmail(), Const.EMAIL);
+        if (!result.isSuccess()){
+            return result;
+        }*/
+
+        //ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        //设置用户名
+        String username = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 10);
+        username = username + "-mo";
+        member.setUsername(username);
+
+        //获取HttpServletRequest   HttpKit.getRequest();
+        HttpServletRequest request = HttpKit.getRequest();
+        //设置获取到的请求方ip
+        member.setRegisterIp(request.getRemoteAddr());
+        //设置md5加密以及盐值
+        member.setMd5Password(MD5Util.encrypt(member.getPassword()+saltProperties.getSalt1()));
+        //设置会员购买类型和会员等级
+        member.setMemberTypeId(ServerType.REGULAR.getCode());
+        member.setMemberTypeName(memberTypeMapper.findNameByCode(ServerType.REGULAR.getCode()));
+        member.setVipLevel(0);
+        //设置积分
+        member.setPoints(0);
+        //设置用户等级和经验
+        //设置注册时间
+        member.setRegisterTime(new Date());
+        //设置创建时间以及修改时间
+        member.setGmtCreated(new Date());
+        member.setGmtModified(new Date());
+
+        //设置用户登录的uuid防止多端登录，已经登录的话就用以前的uuid访问用户数据
+        String uuidString = UUID.randomUUID().toString().replaceAll("-", "");
+        member.setUuidToken(uuidString);
+
+        //重要，签到的逻辑
+        /*if (flag > 0) {
+            Sign sign = signService.selectByTodayAndAccountId(account
+                    .getId());
+            if (sign != null) {
+                accountUser.setSignCount(sign.getCount());
+            }
+        }*/
+        boolean result = this.insert(member);
+
+        if (!result){
+            return Result.createBySuccessMessage("注册失败");
+        }
+
+        MemberVo memberVo = new MemberVo();
+        BeanUtils.copyProperties(member,memberVo);
+
+
+        return Result.createBySuccess("注册成功",memberVo);
+    }
+
 
     public Result login(String username,String password){
         int userNum = memberMapper.checkName(username);
@@ -88,24 +173,53 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         return Result.createBySuccess("登录成功",memberVo);
     }
 
+
+    public Result loginByMobile(String mobile, String password){
+        Member existMember = memberMapper.selectMemberByMobile(mobile);
+        if (existMember==null){
+            return Result.createByErrorMessage("该手机用户不存在");
+        }
+        //MD5加密 加盐，
+        String md5Password = MD5Util.encrypt(password+saltProperties.getSalt1());
+        //根据手机密码登录
+        Member member = memberMapper.loginByMobile(mobile,md5Password);
+        if (member==null){
+            return Result.createByErrorMessage("密码错误");
+        }
+
+        //设置用户登录的uuid防止多端登录，已经登录的话就用以前的uuid访问用户数据
+        String uuidString = UUID.randomUUID().toString().replaceAll("-", "");
+        member.setUuidToken(uuidString);
+        Integer updateCount = memberMapper.updateUuidById(member);
+        if (updateCount<=0){
+            logger.error("更新失败，更新数据库行：{}",updateCount);
+        }
+
+        MemberVo memberVo = new MemberVo();
+        BeanUtils.copyProperties(member,memberVo);
+
+        return Result.createBySuccess("登录成功",memberVo);
+    }
+
     //判断是否是vip
     public Result checkVip(String UuidToken,int vid){
         if (StringUtils.isBlank(UuidToken)){
             return Result.createByErrorMessage("用户需要登录");
         }
 
-        Member member = memberMapper.selectMemberByUuidToken(UuidToken);
-        if (member==null){
-            return Result.createByErrorMessage("用户不存在或token失效，请重新登录");
-        }
-
         Data data = dataMapper.selectById(vid);
         if (data==null){
             return Result.createByErrorMessage("视频不存在");
         }
+
         if (AllConst.VideoReqVip.NO_NEED_VIP==data.getvReqVip()){
             return Result.createBySuccessMessage("欢迎观看");
         } else if(AllConst.VideoReqVip.NEED_VIP==data.getvReqVip()){
+            Member member = memberMapper.selectMemberByUuidToken(UuidToken);
+            if (member==null){
+                return Result.createByErrorMessage("token失效，请重新登录");
+            }
+
             if (ServerType.VIP.getCode()==member.getMemberTypeId()){
                 return Result.createBySuccessMessage("欢迎观看");
             }
@@ -115,55 +229,38 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         return Result.createBySuccessMessage("欢迎观看");
     }
 
-    //注册
-    public Result<String> register(Member member) {
-        if (member==null){
-            return Result.createByErrorMessage("member为空");
-        }
-         Result<String> result = this.checkValid(member.getUsername(), Const.USERNAME);
+    //注册获取短信
+    @Override
+    public Result getMessage(String mobile){
 
-        if (!result.isSuccess()){
-            return result;
+        int i = noteMapper.selectSendMobileNoteNum(mobile);
+        logger.info("同手机超过1分钟发送短信的次数:{}",i);
+        if (i>=1){
+            return Result.createByErrorMessage("1分钟内发送短信不能超过1条");
         }
-        result = this.checkValid(member.getEmail(), Const.EMAIL);
-        if (!result.isSuccess()){
-            return result;
+        //发送短信
+        Result result = IndustrySMS.execute(mobile);
+        //
+        //如果mobile非空获取短信码存入缓存中
+        if (result.isSuccess()){
+            String message = (String)result.getData();
+            TokenCache.setKey(TokenCache.TOKEN_PREFIX+mobile,message);
+
+
+            Note note = new Note();
+            note.setAging(AllConst.timeout);
+            note.setIsDel(1);
+            note.setMessage(message);
+            note.setMobile(mobile);
+
+
+            note.setGmtCreated(new Date());
+            note.setGmtUpdated(new Date());
+            noteMapper.insert(note);
+
         }
-
-        //ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        //获取HttpServletRequest   HttpKit.getRequest();
-        HttpServletRequest request = HttpKit.getRequest();
-        //设置获取到的请求方ip
-        member.setRegisterIp(request.getRemoteAddr());
-        //设置md5加密以及盐值
-        member.setMd5Password(MD5Util.encrypt(member.getPassword()+saltProperties.getSalt1()));
-        //设置会员购买类型和会员等级
-        member.setMemberTypeId(ServerType.REGULAR.getCode());
-        member.setMemberTypeName(memberTypeMapper.findNameByCode(ServerType.REGULAR.getCode()));
-        member.setVipLevel(0);
-        //设置积分
-        member.setPoints(0);
-        //设置用户等级和经验
-        //设置注册时间
-        member.setRegisterTime(new Date());
-        //设置创建时间以及修改时间
-        member.setGmtCreated(new Date());
-        member.setGmtModified(new Date());
-        //重要，签到的逻辑
-        /*if (flag > 0) {
-            Sign sign = signService.selectByTodayAndAccountId(account
-                    .getId());
-            if (sign != null) {
-                accountUser.setSignCount(sign.getCount());
-            }
-        }*/
-        this.insert(member);
-
-        return Result.createBySuccessMessage("注册成功");
+        return result;
     }
-
-
-
 
     public Result<String> checkValid(String str, String type){
         if (StringUtils.isBlank(type)){

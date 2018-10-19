@@ -84,6 +84,10 @@
             <artifactId>ehcache</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+        </dependency>
         <!--需要分布式session的话需要放开注释-->
         <!--<dependency>-->
             <!--<groupId>org.springframework.session</groupId>-->

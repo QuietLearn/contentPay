@@ -35,10 +35,6 @@ public class MemberVo {
      * 用户名
      */
     private String username;
-    /**
-     * 昵称
-     */
-    private String nickname;
 
     /**
      * 性别
@@ -67,15 +63,6 @@ public class MemberVo {
      * 积分
      */
     private Integer points;
-
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
 
     public Integer getGender() {
         return gender;
@@ -160,7 +147,6 @@ public class MemberVo {
         return "Member{" +
         "id=" + id +
         ", username=" + username +
-        ", nickname=" + nickname +
         ", gender=" + gender +
         ", picAddress=" + picAddress +
         ", mobile=" + mobile +

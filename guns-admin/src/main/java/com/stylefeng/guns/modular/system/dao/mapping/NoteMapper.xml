@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.NoteMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.Note">
+        <id column="id" property="id" />
+        <result column="message" property="message" />
+        <result column="aging" property="aging" />
+        <result column="is_del" property="isDel" />
+        <result column="mobile" property="mobile" />
+        <result column="gmt_created" property="gmtCreated" />
+        <result column="gmt_updated" property="gmtUpdated" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, message, aging, is_del, mobile, gmt_created, gmt_updated
+    </sql>
+
+    <select id="selectSendMobileNoteNum" parameterType="string" resultType="int">
+        select
+        count(1) FROM cps_note
+        WHERE mobile = #{mobile}
+        and gmt_created &lt;= DATE_ADD(NOW(),INTERVAL 1 MINUTE)
+        and gmt_created &gt;= DATE_SUB(NOW(),INTERVAL 1 MINUTE)
+    </select>
+</mapper>

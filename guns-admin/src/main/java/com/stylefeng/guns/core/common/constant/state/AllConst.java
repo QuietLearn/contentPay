@@ -5,6 +5,9 @@ package com.stylefeng.guns.core.common.constant.state;
  */
 public class AllConst {
 
+    public static final int timeout = 2;
+
+    public static final int REPEAT_TIME = 1;
 
     public enum OrderStatusEnum{
         CANCELED(0,"已取消"),

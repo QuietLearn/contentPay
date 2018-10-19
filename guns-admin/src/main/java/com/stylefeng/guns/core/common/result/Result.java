@@ -1,10 +1,10 @@
 package com.stylefeng.guns.core.common.result;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+//@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Result<T> {
     /** 错误提示码 */
     private int code;
@@ -49,6 +49,10 @@ public class Result<T> {
     public static <T> Result<T> createBySuccess(String msg,T data){
         return new Result(ResultCode.SUCCESS.getCode(),msg,data);
     }
+    public static <T> Result<T> createBySuccess(T data){
+        return new Result(ResultCode.SUCCESS.getCode(),data);
+    }
+
 
     public static Result createByError(String msg){
         return new Result(ResultCode.ERROR.getCode());

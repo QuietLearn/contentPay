@@ -1,23 +1,16 @@
 package com.stylefeng.guns.modular.system.controller.portal;
 
 import com.stylefeng.guns.core.base.controller.BaseController;
-import com.stylefeng.guns.core.common.constant.state.ServerType;
+import com.stylefeng.guns.core.common.TokenCache;
 import com.stylefeng.guns.core.common.result.Result;
-import com.stylefeng.guns.core.support.HttpKit;
-import com.stylefeng.guns.core.util.MD5Util;
-import com.stylefeng.guns.modular.system.dao.MemberTypeMapper;
-import com.stylefeng.guns.modular.system.model.Member;
 import com.stylefeng.guns.modular.system.service.IMemberService;
+import com.stylefeng.guns.modular.system.vo.MemberVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 
 /**
  * Created by hyj on 2018/10/15
@@ -33,8 +26,9 @@ public class MemberFrontController extends BaseController {
      * 注册会员 除了前端表单的信息也需要设置默认的信息
      */
     @RequestMapping(value = "/register")
-    public Result<String> register(Member member) {
-        return memberService.register(member);
+    public Result<MemberVo> register(String mobile, String password, String message) {
+
+        return memberService.register(mobile,password,message);
     }
 
     /**
@@ -58,8 +52,19 @@ public class MemberFrontController extends BaseController {
         return memberService.login(username,password);
     }
 
+    @RequestMapping(value = "/login_use_mobile",method = RequestMethod.POST)
+    public Result loginByMobile(String mobile,String password){
+        return memberService.loginByMobile(mobile,password);
+    }
+
     @RequestMapping(value = "/checkVip")
     public Result checkVip(String uuid,int vid){
         return memberService.checkVip(uuid,vid);
     }
+
+    @RequestMapping(value="/getMessage")
+    public Result getMessage(String mobile){
+        return memberService.getMessage(mobile);
+    }
+
 }
