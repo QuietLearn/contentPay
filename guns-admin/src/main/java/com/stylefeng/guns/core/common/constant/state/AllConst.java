@@ -45,4 +45,17 @@ public class AllConst {
         int NEED_VIP = 0;
         int NO_NEED_VIP = 1;
     }
+
+
+    public interface SMS_Message{
+        String signin  = "SMS_144455793";
+        String findPass  = "SMS_144455795"        ;//密码找回 = "SMS_144455795";
+        String replacephone = "SMS_144455799"      ;//解绑手机= "SMS_144455799";
+        String unbundlingphone = "SMS_144450770"     ;//绑定手机= "SMS_144450770";
+        String guardNotice  = "SMS_144455809" ;//守护到期提醒= "SMS_144455809";
+
+        String accessKeyId     ="LTAINyZShGhQRGet";//= "LTAIlB7K8erciXPg";
+        String accessKeySecret ="4RDLyTeo3ka8aKZyaAJPtC3h661o0d";
+        String SignName        ="坚果娱乐";
+    }
 }

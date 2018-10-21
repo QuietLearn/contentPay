@@ -10,6 +10,7 @@ import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.support.HttpKit;
 import com.stylefeng.guns.core.util.MD5Util;
 import com.stylefeng.guns.core.util.meassge.IndustrySMS;
+import com.stylefeng.guns.core.util.meassge.SendSMSUtilLZ;
 import com.stylefeng.guns.modular.system.dao.DataMapper;
 import com.stylefeng.guns.modular.system.dao.MemberMapper;
 import com.stylefeng.guns.modular.system.dao.MemberTypeMapper;
@@ -229,7 +230,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         return Result.createBySuccessMessage("欢迎观看");
     }
 
-    //注册获取短信
+    //注册获取短信1
     @Override
     public Result getMessage(String mobile){
 
@@ -261,6 +262,16 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         }
         return result;
     }
+
+    //2
+    /*public Result getMessage2(String mobile){
+
+        if(StringUtils.isBlank(mobile)){
+        logger.info("手机号为空，请重新传值");
+        return null;
+        }
+    }*/
+
 
     public Result<String> checkValid(String str, String type){
         if (StringUtils.isBlank(type)){

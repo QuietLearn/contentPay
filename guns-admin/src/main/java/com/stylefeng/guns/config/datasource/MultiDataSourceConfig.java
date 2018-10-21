@@ -58,8 +58,8 @@ public class MultiDataSourceConfig {
      */
     private DruidDataSource bizDataSource(DruidProperties druidProperties, MutiDataSourceProperties mutiDataSourceProperties) {
         DruidDataSource dataSource = new DruidDataSource();
-        druidProperties.config(dataSource);
-        mutiDataSourceProperties.config(dataSource);
+        druidProperties.config(dataSource);  //用来初始化数据的连接池配置
+        mutiDataSourceProperties.config(dataSource);//用来配置具体连接的数据库
         return dataSource;
     }
 
@@ -69,8 +69,8 @@ public class MultiDataSourceConfig {
     @Bean
     public DynamicDataSource mutiDataSource(DruidProperties druidProperties, MutiDataSourceProperties mutiDataSourceProperties) {
 
-        DruidDataSource dataSourceGuns = dataSource(druidProperties);
-        DruidDataSource bizDataSource = bizDataSource(druidProperties, mutiDataSourceProperties);
+        DruidDataSource dataSourceGuns = dataSource(druidProperties);  //第一个数据库的driud数据源配置
+        DruidDataSource bizDataSource = bizDataSource(druidProperties, mutiDataSourceProperties);//第二个数据库的driud数据源配置 因为这个方法（见上）
 
         try {
             dataSourceGuns.init();
