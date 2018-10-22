@@ -14,7 +14,7 @@ public class MessageTest {
      */
     public static void main(String[] args) throws ClientException, InterruptedException {
         SendSMSUtilLZ sendSMSUtilLZ = new SendSMSUtilLZ("13065708090");
-        sendSMSUtilLZ.main("1004");
+        sendSMSUtilLZ.main("1000");
         // 验证码通知短信接口
 //        IndustrySMS.execute("13065708090");
 

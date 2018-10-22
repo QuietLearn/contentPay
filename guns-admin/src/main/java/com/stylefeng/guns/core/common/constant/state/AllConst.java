@@ -5,7 +5,7 @@ package com.stylefeng.guns.core.common.constant.state;
  */
 public class AllConst {
 
-    public static final int timeout = 2;
+    public static final int timeout = 10;
 
     public static final int REPEAT_TIME = 1;
 
@@ -48,14 +48,16 @@ public class AllConst {
 
 
     public interface SMS_Message{
+
         String signin  = "SMS_144455793";
+//        String signin  = "SMS_148590553";
         String findPass  = "SMS_144455795"        ;//密码找回 = "SMS_144455795";
         String replacephone = "SMS_144455799"      ;//解绑手机= "SMS_144455799";
         String unbundlingphone = "SMS_144450770"     ;//绑定手机= "SMS_144450770";
         String guardNotice  = "SMS_144455809" ;//守护到期提醒= "SMS_144455809";
 
-        String accessKeyId     ="LTAINyZShGhQRGet";//= "LTAIlB7K8erciXPg";
-        String accessKeySecret ="4RDLyTeo3ka8aKZyaAJPtC3h661o0d";
+        String accessKeyId     ="LTAIlB7K8erciXPg";//= "LTAIlB7K8erciXPg";LTAINyZShGhQRGet
+        String accessKeySecret ="USzLesKykp7JvzGnBHJPSCjGVdjA3J"; //="4RDLyTeo3ka8aKZyaAJPtC3h661o0d"
         String SignName        ="坚果娱乐";
     }
 }

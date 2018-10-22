@@ -1,5 +1,6 @@
 package com.stylefeng.guns.modular.system.service.impl;
 
+import com.aliyuncs.exceptions.ClientException;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.stylefeng.guns.config.properties.SaltProperties;
 import com.stylefeng.guns.core.common.TokenCache;
@@ -231,7 +232,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     }
 
     //注册获取短信1
-    @Override
+    /*
     public Result getMessage(String mobile){
 
         int i = noteMapper.selectSendMobileNoteNum(mobile);
@@ -261,16 +262,46 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
         }
         return result;
-    }
+    }*/
 
     //2
-    /*public Result getMessage2(String mobile){
+    public Result getMessage2(String mobile) throws ClientException, InterruptedException {
 
         if(StringUtils.isBlank(mobile)){
-        logger.info("手机号为空，请重新传值");
-        return null;
+            logger.info("手机号为空，请重新传值");
+            return null;
         }
-    }*/
+
+        int i = noteMapper.selectSendMobileNoteNum(mobile);
+        logger.info("同手机超过1分钟发送短信的次数:{}",i);
+        if (i>=1){
+            return Result.createByErrorMessage("1分钟内发送短信不能超过1条");
+        }
+
+        SendSMSUtilLZ sendSMSUtilLZ = new SendSMSUtilLZ(mobile);
+        Result result = sendSMSUtilLZ.main("1000");
+
+        //如果mobile非空获取短信码存入缓存中
+        if (result.isSuccess()){
+            String message = (String)result.getData();
+            TokenCache.setKey(TokenCache.TOKEN_PREFIX+mobile,message);
+
+
+            Note note = new Note();
+            note.setAging(AllConst.timeout);
+            note.setIsDel(1);
+            note.setMessage(message);
+            note.setMobile(mobile);
+
+
+            note.setGmtCreated(new Date());
+            note.setGmtUpdated(new Date());
+            noteMapper.insert(note);
+
+        }
+
+        return result;
+    }
 
 
     public Result<String> checkValid(String str, String type){

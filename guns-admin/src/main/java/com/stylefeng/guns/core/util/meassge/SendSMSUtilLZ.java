@@ -183,7 +183,7 @@ public class SendSMSUtilLZ {
         return vcode;
     }
 
-    public void main(String type) throws ClientException, InterruptedException {
+    public Result main(String type) throws ClientException, InterruptedException {
     	logger.info("type:"+type);
         if (type.equals("1000")) {
             TemplateCode = signin;//注册
@@ -229,9 +229,11 @@ public class SendSMSUtilLZ {
             }
             logger.info("TotalCount=" + querySendDetailsResponse.getTotalCount());
             logger.info("RequestId=" + querySendDetailsResponse.getRequestId());
+
         } else {
             map.put(cell + "Message", response.getMessage());
         }
+        return Result.createBySuccess(code);
     }
 
 //    public static void main(String[] args) throws ClientException, InterruptedException {

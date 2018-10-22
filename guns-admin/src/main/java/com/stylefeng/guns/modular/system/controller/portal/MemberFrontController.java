@@ -1,5 +1,6 @@
 package com.stylefeng.guns.modular.system.controller.portal;
 
+import com.aliyuncs.exceptions.ClientException;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.TokenCache;
 import com.stylefeng.guns.core.common.result.Result;
@@ -63,8 +64,8 @@ public class MemberFrontController extends BaseController {
     }
 
     @RequestMapping(value="/getMessage")
-    public Result getMessage(String mobile){
-        return memberService.getMessage(mobile);
+    public Result getMessage(String mobile) throws ClientException, InterruptedException {
+        return memberService.getMessage2(mobile);
     }
 
 }

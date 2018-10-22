@@ -1,5 +1,6 @@
 package com.stylefeng.guns.modular.system.service;
 
+import com.aliyuncs.exceptions.ClientException;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.modular.system.model.Member;
 import com.baomidou.mybatisplus.service.IService;
@@ -79,12 +80,12 @@ public interface IMemberService extends IService<Member> {
      */
     Result checkVip(String UuidToken,int vid);
 
+
+    /*Result getMessage(String mobile);*/
     /**
      * 获取短信验证码
      * @param mobile
      * @return
      */
-    Result getMessage(String mobile);
-
-
+    Result getMessage2(String mobile) throws ClientException, InterruptedException;
 }
