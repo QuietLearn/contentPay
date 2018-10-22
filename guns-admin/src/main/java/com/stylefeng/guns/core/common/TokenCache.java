@@ -14,6 +14,8 @@ public class TokenCache {
     //前缀是一个区分，也可以把它抽象理解成namespace
     public static final String TOKEN_PREFIX = "token_";
 
+    public static final String TOKEN_SAFE = "safe_";
+
     //LoadingCache<String,String>是guava的缓存形式，以后还有redis
     // 表示缓存是 hashmap形式的内存，且存储kv都是string
     private static LoadingCache<String,String> localCache = CacheBuilder.newBuilder().initialCapacity(1000).maximumSize(10000).expireAfterAccess(AllConst.timeout, TimeUnit.MINUTES)

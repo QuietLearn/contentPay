@@ -6,6 +6,7 @@ import com.stylefeng.guns.core.common.TokenCache;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.modular.system.service.IMemberService;
 import com.stylefeng.guns.modular.system.vo.MemberVo;
+import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,10 +44,6 @@ public class MemberFrontController extends BaseController {
         return memberService.checkValid(str,type);
     }
 
-    @RequestMapping(value = "/forget_pass_get_question",method = RequestMethod.POST)
-    public Result<String> forgetPassGetQuestion(String username){
-        return memberService.forgetPassGetQuestion(username);
-    }
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public Result login(String username ,String password){
@@ -68,4 +65,23 @@ public class MemberFrontController extends BaseController {
         return memberService.getMessage2(mobile);
     }
 
+    @RequestMapping(value="/reset_password",method = RequestMethod.POST)
+    public Result resetPassword(String mobile,String message,String password){
+        return memberService.resetPassword(mobile,message,password);
+    }
+
+    @RequestMapping(value = "get_uuid_validity",method = RequestMethod.GET)
+    public Result getUuidValidity(String uuidToken){
+        return memberService.getUuidValidity(uuidToken);
+    }
+
+    @RequestMapping(value = "update_user_info",method = RequestMethod.POST)
+    public Result updateUserInfo(MemberVo alterMember,String message){
+        return memberService.updateUserInfo(alterMember,message);
+    }
+
+    @RequestMapping(value = "verify_message")
+    Result verifyMessageResult(String mobile,String message){
+        return memberService.verifyMessageResult(mobile,message);
+    }
 }

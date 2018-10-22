@@ -13,7 +13,7 @@
     <name>guns-admin</name>
     <description>guns 的spring boot版本</description>
 
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <dependencies>
 

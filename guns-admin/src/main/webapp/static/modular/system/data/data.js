@@ -143,6 +143,6 @@ Data.search = function () {
 $(function () {
     var defaultColunms = Data.initColumn();
     var table = new BSTable(Data.id, "/data/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     Data.table = table.init();
 });

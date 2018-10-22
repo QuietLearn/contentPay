@@ -9,6 +9,8 @@ public class AllConst {
 
     public static final int REPEAT_TIME = 1;
 
+    public static final String MESSAGE_ERROR_MSG = "验证码错误，重新输入";
+
     public enum OrderStatusEnum{
         CANCELED(0,"已取消"),
         NO_PAY(10,"未支付"),

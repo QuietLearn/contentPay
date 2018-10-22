@@ -64,6 +64,11 @@ public class MemberVo {
      */
     private Integer points;
 
+    /**
+     * 生日
+     */
+    private Date birthday;
+
     public Integer getGender() {
         return gender;
     }
@@ -140,6 +145,14 @@ public class MemberVo {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 
     @Override

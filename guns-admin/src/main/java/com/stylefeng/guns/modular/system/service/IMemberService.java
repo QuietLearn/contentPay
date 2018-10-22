@@ -36,20 +36,6 @@ public interface IMemberService extends IService<Member> {
     Result<String> checkValid(String str, String type);
 
     /**
-     * 忘记密码获取问题
-     * @param username
-     * @return
-     */
-    Result<String> forgetPassGetQuestion(String username);
-
-    /**
-     * 更新用户最近登录ip和时间
-     * @param accountId
-     * @return
-     */
-    Result updateGmtLastLoginAndLastIp(Integer accountId);
-
-    /**
      * 根据条件列表
      * @param condition
      * @return
@@ -74,11 +60,11 @@ public interface IMemberService extends IService<Member> {
 
     /**
      * 检测用户是否是vip
-     * @param UuidToken
+     * @param uuidToken
      * @param vid
      * @return
      */
-    Result checkVip(String UuidToken,int vid);
+    Result checkVip(String uuidToken,int vid);
 
 
     /*Result getMessage(String mobile);*/
@@ -88,4 +74,44 @@ public interface IMemberService extends IService<Member> {
      * @return
      */
     Result getMessage2(String mobile) throws ClientException, InterruptedException;
+
+    /**
+     * 忘记密码确认短信
+     * @param mobile
+     * @param message
+     * @return
+     */
+    Result resetPassword(String mobile,String message,String password);
+
+    /**
+     * 重置用户密码
+     * @param mobile
+     * @param password
+     * @param token
+     * @return
+     */
+    //Result resetPassword(String mobile,String password,String token);
+
+    /**
+     * 获取uuid对应状态
+     * @param uuidToken
+     * @return
+     */
+    Result getUuidValidity(String uuidToken);
+
+    /**
+     * 更新用户信息
+     * @param alterMember
+     * @param message
+     * @return
+     */
+    Result updateUserInfo(MemberVo alterMember,String message);
+
+    /**
+     * 验证短信
+     * @param mobile
+     * @param message
+     * @return
+     */
+    Result verifyMessageResult(String mobile,String message);
 }

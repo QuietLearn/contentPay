@@ -1,6 +1,11 @@
 package com.stylefeng.guns.modular.system.controller;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.core.page.PageInfoBT;
+import com.stylefeng.guns.core.util.ToolUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,6 +16,8 @@ import com.stylefeng.guns.core.log.LogObjectHolder;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.stylefeng.guns.modular.system.model.Data;
 import com.stylefeng.guns.modular.system.service.IDataService;
+
+import java.util.List;
 
 /**
  * 视频管理控制器
@@ -60,7 +67,21 @@ public class DataController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {
-        return dataService.selectList(null);
+        if (ToolUtil.isEmpty(condition)){
+            Page<Data> page =new PageFactory<Data>().defaultPage();
+            page = dataService.selectPageL(page);
+            PageInfoBT<Data> pageInfoBT =this.packForBT(page);
+            return pageInfoBT;
+        }else {
+            Page<Data> page =new PageFactory<Data>().defaultPage();
+            EntityWrapper<Data> entityWrapper = new EntityWrapper<>();
+            entityWrapper.like("title","%"+condition+"%");
+            page = dataService.selectPage(page,entityWrapper);
+            PageInfoBT<Data> pageInfoBT =this.packForBT(page);
+            return pageInfoBT;
+        }
+
+        /*return dataService.selectList();*/
     }
 
     /**

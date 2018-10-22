@@ -2,12 +2,17 @@ package com.stylefeng.guns.modular.system.service.impl;
 
 import com.aliyuncs.exceptions.ClientException;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.google.common.collect.Maps;
+import com.stylefeng.guns.config.datasource.MultiDataSourceConfig;
 import com.stylefeng.guns.config.properties.SaltProperties;
 import com.stylefeng.guns.core.common.TokenCache;
 import com.stylefeng.guns.core.common.constant.Const;
+import com.stylefeng.guns.core.common.constant.DatasourceEnum;
 import com.stylefeng.guns.core.common.constant.state.AllConst;
 import com.stylefeng.guns.core.common.constant.state.ServerType;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.config.properties.MutiDataSourceProperties;
+import com.stylefeng.guns.core.mutidatasource.annotion.DataSource;
 import com.stylefeng.guns.core.support.HttpKit;
 import com.stylefeng.guns.core.util.MD5Util;
 import com.stylefeng.guns.core.util.meassge.IndustrySMS;
@@ -19,20 +24,22 @@ import com.stylefeng.guns.modular.system.dao.NoteMapper;
 import com.stylefeng.guns.modular.system.model.Data;
 import com.stylefeng.guns.modular.system.model.Member;
 import com.stylefeng.guns.modular.system.model.Note;
+import com.stylefeng.guns.modular.system.service.IDataService;
 import com.stylefeng.guns.modular.system.service.IMemberService;
 import com.stylefeng.guns.modular.system.vo.MemberVo;
+import jdk.nashorn.internal.parser.Token;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.List;
-import java.util.TimeZone;
-import java.util.UUID;
+import java.util.*;
+
+import static com.stylefeng.guns.core.common.constant.DatasourceEnum.DATA_SOURCE_GUNS;
 
 /**
  * <p>
@@ -58,6 +65,10 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
     @Autowired
     private NoteMapper noteMapper;
+
+    @Autowired
+    private IDataService dataService;
+
     @Autowired
     public SaltProperties saltProperties;
 
@@ -80,12 +91,11 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     public Result<MemberVo> register(String mobile,String password,String message) {
         Member existMember = memberMapper.selectMemberByMobile(mobile);
         if (existMember!=null){
-            logger.info("该手机已经注册");
-            return Result.createByErrorMessage("该手机已经注册");
+            logger.info("这个手机号还没注册过哦，请先去注册一下吧");
+            return Result.createByErrorMessage("这个手机号还没注册过哦，请先去注册一下吧");
         }
-        String smscode = TokenCache.getKey(TokenCache.TOKEN_PREFIX + mobile);
-        if (!StringUtils.equals(smscode,message)){
-            return Result.createByErrorMessage("验证码错误，重新输入");
+        if (!verifyMessage(mobile,message)){
+            return Result.createByErrorMessage(AllConst.MESSAGE_ERROR_MSG);
         }
 
         Member member = new Member();
@@ -171,6 +181,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         MemberVo memberVo = new MemberVo();
         BeanUtils.copyProperties(member,memberVo);
 
+        updateGmtLastLoginAndLastIp(member.getId());
 
         return Result.createBySuccess("登录成功",memberVo);
     }
@@ -179,7 +190,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     public Result loginByMobile(String mobile, String password){
         Member existMember = memberMapper.selectMemberByMobile(mobile);
         if (existMember==null){
-            return Result.createByErrorMessage("该手机用户不存在");
+            return Result.createByErrorMessage("这个手机号还没注册过哦，请先去注册一下吧");
         }
         //MD5加密 加盐，
         String md5Password = MD5Util.encrypt(password+saltProperties.getSalt1());
@@ -200,28 +211,38 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         MemberVo memberVo = new MemberVo();
         BeanUtils.copyProperties(member,memberVo);
 
+        updateGmtLastLoginAndLastIp(member.getId());
         return Result.createBySuccess("登录成功",memberVo);
     }
 
+
+    @DataSource(name = DatasourceEnum.DATA_SOURCE_GUNS)
+    @Transactional
+    public Member getMemberByUuidtoken(String uuidToken){
+        Member member = memberMapper.selectMemberByUuidToken(uuidToken);
+        return member;
+    }
+
     //判断是否是vip
-    public Result checkVip(String UuidToken,int vid){
-        if (StringUtils.isBlank(UuidToken)){
+
+    public Result checkVip(String uuidToken,int vid){
+
+        if (StringUtils.isBlank(uuidToken)){
             return Result.createByErrorMessage("用户需要登录");
         }
 
-        Data data = dataMapper.selectById(vid);
+        Data data = dataService.getDataByVid(vid);
         if (data==null){
             return Result.createByErrorMessage("视频不存在");
+        }
+        Member member = this.getMemberByUuidtoken(uuidToken);
+        if (member==null){
+            return Result.createByErrorMessage("token失效，请重新登录");
         }
 
         if (AllConst.VideoReqVip.NO_NEED_VIP==data.getvReqVip()){
             return Result.createBySuccessMessage("欢迎观看");
         } else if(AllConst.VideoReqVip.NEED_VIP==data.getvReqVip()){
-            Member member = memberMapper.selectMemberByUuidToken(UuidToken);
-            if (member==null){
-                return Result.createByErrorMessage("token失效，请重新登录");
-            }
-
             if (ServerType.VIP.getCode()==member.getMemberTypeId()){
                 return Result.createBySuccessMessage("欢迎观看");
             }
@@ -285,7 +306,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         if (result.isSuccess()){
             String message = (String)result.getData();
             TokenCache.setKey(TokenCache.TOKEN_PREFIX+mobile,message);
-
+            logger.info("Token mobile message:{}", TokenCache.getKey(TokenCache.TOKEN_PREFIX+mobile));
 
             Note note = new Note();
             note.setAging(AllConst.timeout);
@@ -300,9 +321,110 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
         }
 
+        result.setData(null);
         return result;
     }
 
+
+    public Result resetPassword(String mobile,String message,String password){
+        Member member = memberMapper.selectMemberByMobile(mobile);
+        if (member==null){
+            return Result.createByErrorMessage("这个手机号还没注册过哦，请先去注册一下吧");
+        }
+        if (!verifyMessage(mobile,message)){
+            return Result.createByErrorMessage(AllConst.MESSAGE_ERROR_MSG);
+        }
+
+        String md5Password = MD5Util.encrypt(password+saltProperties.getSalt1());
+        int updateCount = memberMapper.updatePasswordByMobile(mobile,password,md5Password);
+        if (updateCount>0){
+            return Result.createBySuccessMessage("密码修改成功");
+        }
+        //防止其他人直接调用修改密码接口
+        /*String safeUuid = UUID.randomUUID().toString();
+        TokenCache.setKey(TokenCache.TOKEN_SAFE+mobile,safeUuid);*/
+
+        return Result.createByErrorMessage("密码修改错误");
+    }
+
+    public Result updateUserInfo(MemberVo alterMember,String message){
+        if (StringUtils.isBlank(alterMember.getUuidToken())){
+            return Result.createByErrorMessage("请重新登录");
+        }
+        Member member = memberMapper.selectMemberByUuidToken(alterMember.getUuidToken());
+        if (member==null){
+            return Result.createByErrorMessage("请重新登录");
+        }
+        int resultCount = memberMapper.checkEmailByUserId(alterMember.getEmail(),alterMember.getId());
+        if (resultCount>0){
+            return Result.createByErrorMessage("该邮箱已被使用");
+        }
+        resultCount = memberMapper.checkMobileByUserId(alterMember.getMobile(),alterMember.getId());
+        if (resultCount>0){
+            return Result.createByErrorMessage("该手机已被使用");
+        }
+        resultCount = memberMapper.checkUsernameByUserId(alterMember.getMobile(),alterMember.getId());
+        if (resultCount>0){
+            return Result.createByErrorMessage("该昵称已被使用");
+        }
+
+        if (StringUtils.isNotBlank(message)){
+            if (!verifyMessage(alterMember.getMobile(),message)){
+                return Result.createByErrorMessage(AllConst.MESSAGE_ERROR_MSG);
+            }
+        }
+
+        Member updateMember = new Member();
+        BeanUtils.copyProperties(alterMember,updateMember);
+        updateMember.setId(member.getId());
+        Integer updateCount = memberMapper.updateById(updateMember);
+
+        //重新获取数据库中已经修改过的用户数据
+        Member member1 = memberMapper.selectById(member.getId());
+        MemberVo memberVo = new MemberVo();
+        BeanUtils.copyProperties(member1,memberVo);
+        if (updateCount>0){
+            //user.setPassword(StringUtils.EMPTY);//密码设为空，不暴露出去
+            return  Result.createBySuccess("用户信息更新成功",memberVo);
+        }
+        return Result.createByErrorMessage("用户信息更新失败");
+    }
+
+
+    //公用方法，用于验证短信是否正确
+    public boolean verifyMessage(String mobile,String message){
+        String smscode = TokenCache.getKey(TokenCache.TOKEN_PREFIX + mobile);
+        return StringUtils.equals(smscode,message);
+
+    }
+
+    public Result verifyMessageResult(String mobile,String message){
+        if (!verifyMessage(mobile,message)){
+            return Result.createByErrorMessage(AllConst.MESSAGE_ERROR_MSG);
+        }
+        return Result.createBySuccessMessage("验证通过");
+    }
+
+    /*public Result resetPassword(String mobile,String password,String token){
+        Member member = memberMapper.selectMemberByMobile(mobile);
+        if (member==null){
+            return Result.createByErrorMessage("这个手机号还没注册过哦，请先去注册一下吧");
+        }
+        //获取token
+        String existToken = TokenCache.getKey(TokenCache.TOKEN_SAFE+mobile);
+        //验证token，是否是正确输入验证码的用户
+        if (StringUtils.equals(existToken,token)){
+            String md5Password = MD5Util.encrypt(password+saltProperties.getSalt1());
+            int updateCount = memberMapper.updatePasswordByMobile(mobile,password,md5Password);
+            if (updateCount>0){
+                return Result.createBySuccessMessage("密码修改成功");
+            }
+        } else {
+            return Result.createByErrorMessage("token有误，请重新获取验证码");
+        }
+
+        return Result.createByErrorMessage("密码修改错误");
+    }*/
 
     public Result<String> checkValid(String str, String type){
         if (StringUtils.isBlank(type)){
@@ -323,26 +445,27 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         return Result.createBySuccessMessage("检测成功，数据库中无重复");
     }
 
-    @Override
-    public Result<String> forgetPassGetQuestion(String username) {
-        Result<String> result = this.checkValid(username, Const.USERNAME);
-        if (result.isSuccess()){
-            return Result.createByErrorMessage("不存在该用户");
-        }
-        /*String question =
-        return ;
-*/
-        return null;
-    }
-
-
-    public Result updateGmtLastLoginAndLastIp(Integer accountId) {
+    /**
+     * 更新用户最近登录ip和时间
+     * @param accountId
+     * @return
+     */
+    public void updateGmtLastLoginAndLastIp(Integer accountId) {
         String ip = HttpKit.getRequest().getRemoteAddr();
         int updateCount = memberMapper.updateGmtLastLoginAndLastIp(accountId, ip);
         if (updateCount<=0){
-            return Result.createByErrorMessage("更新用户最近登陆ip失败");
+            logger.info("更新用户最近登陆ip失败");
         }
-        return Result.createBySuccessMessage("更新用户最近登陆ip成功");
+        logger.info("更新用户最近登陆ip成功");
+    }
+
+    public Result getUuidValidity(String uuidToken){
+        Member member = memberMapper.selectMemberByUuidToken(uuidToken);
+        if (member==null)
+            return Result.createByErrorMessage("该uuid已过期");
+        //MessageFormat.format
+        //Message(String.format("uuid对应用户为%s",member.getUsername())
+        return Result.createBySuccess();
     }
 
 

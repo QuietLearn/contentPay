@@ -25,6 +25,7 @@
         <result column="buy_time" property="buyTime" />
         <result column="end_time" property="endTime" />
         <result column="aging" property="aging" />
+        <result column="birthday" property="birthday"/>
         <result column="points" property="points" />
        <!-- <result column="user_level" property="userLevel" />
         <result column="experience" property="experience" />-->
@@ -60,13 +61,15 @@
         where email = #{email}
     </select>
 
-    <update id="updateGmtLastLoginAndLastIp" parameterType="String">
+    <update id="updateGmtLastLoginAndLastIp" parameterType="map">
       update cps_member
       <set>
-          <if test="last_loginIp!=null">
-
+          <if test="ip!=null">
+              last_loginIp=#{ip},
           </if>
+          last_login=now()
       </set>
+        where id = #{memberId}
     </update>
 
     <select id="login" parameterType="map" resultMap="BaseResultMap">
@@ -105,5 +108,42 @@
         from cps_member
         where mobile = #{mobile}
         and Md5_password = #{md5Password}
+    </select>
+
+    <update id="updatePasswordByMobile" parameterType="string" >
+        update cps_member
+        <set>
+            <if test="password!=null">
+                password = #{password},
+            </if>
+            <if test="md5Password!=null">
+                Md5_password = #{md5Password},
+            </if>
+
+             gmt_modified=now()
+        </set>
+
+        where mobile = #{mobile}
+    </update>
+
+    <select id="checkEmailByUserId" resultType="int" parameterType="map">
+    SELECT count(1)
+    FROM cps_member
+    WHERE email = #{email}
+    and id != #{userId}
+  </select>
+
+    <select id="checkMobileByUserId" resultType="int" parameterType="map">
+       SELECT count(1)
+    FROM cps_member
+    WHERE mobile = #{mobile}
+    and id != #{userId}
+    </select>
+
+    <select id="checkUsernameByUserId" resultType="int" parameterType="map">
+         SELECT count(1)
+    FROM cps_member
+    WHERE username = #{username}
+    and id != #{userId}
     </select>
 </mapper>

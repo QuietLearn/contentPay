@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-10-16
+ * @since 2018-10-22
  */
 @TableName("cps_member")
 public class Member extends Model<Member> {
@@ -98,6 +98,10 @@ public class Member extends Model<Member> {
      */
     private Integer aging;
     /**
+     * 生日
+     */
+    private Date birthday;
+    /**
      * 积分
      */
     private Integer points;
@@ -127,7 +131,7 @@ public class Member extends Model<Member> {
     @TableField("register_ip")
     private String registerIp;
     /**
-     * uuid唯一值
+     * uuid唯一值，避免多端登录
      */
     @TableField("UUID_token")
     private String uuidToken;
@@ -294,6 +298,14 @@ public class Member extends Model<Member> {
         this.aging = aging;
     }
 
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
     public Integer getPoints() {
         return points;
     }
@@ -415,6 +427,7 @@ public class Member extends Model<Member> {
         ", buyTime=" + buyTime +
         ", endTime=" + endTime +
         ", aging=" + aging +
+        ", birthday=" + birthday +
         ", points=" + points +
         ", favoritesIds=" + favoritesIds +
         ", lastLogin=" + lastLogin +
