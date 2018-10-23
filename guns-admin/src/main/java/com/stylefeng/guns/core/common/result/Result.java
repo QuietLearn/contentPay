@@ -4,7 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 //@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-@JsonInclude(JsonInclude.Include.NON_DEFAULT)
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class Result<T> {
     /** 错误提示码 */
     private int code;

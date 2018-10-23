@@ -88,6 +88,10 @@ public class SendSMSUtilLZ {
         this.SignName = AllConst.SMS_Message.SignName;
     }
 
+    public static SendSMSUtilLZ createByCell(String cell){
+        return new SendSMSUtilLZ(cell);
+    }
+
     public  SendSmsResponse sendSms() throws ClientException {
 
 

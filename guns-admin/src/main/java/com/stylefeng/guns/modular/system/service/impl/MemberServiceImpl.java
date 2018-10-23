@@ -398,12 +398,17 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
     }
 
+    //验证短信
     public Result verifyMessageResult(String mobile,String message){
         if (!verifyMessage(mobile,message)){
             return Result.createByErrorMessage(AllConst.MESSAGE_ERROR_MSG);
         }
         return Result.createBySuccessMessage("验证通过");
     }
+
+
+
+
 
     /*public Result resetPassword(String mobile,String password,String token){
         Member member = memberMapper.selectMemberByMobile(mobile);
