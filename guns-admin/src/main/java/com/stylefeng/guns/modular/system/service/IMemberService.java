@@ -73,7 +73,7 @@ public interface IMemberService extends IService<Member> {
      * @param mobile
      * @return
      */
-    Result getMessage2(String mobile) throws ClientException, InterruptedException;
+    Result getMessage2(String mobile,String type) throws ClientException, InterruptedException;
 
     /**
      * 忘记密码确认短信

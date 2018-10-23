@@ -76,6 +76,7 @@ public class DataController extends BaseController {
             Page<Data> page =new PageFactory<Data>().defaultPage();
             EntityWrapper<Data> entityWrapper = new EntityWrapper<>();
             entityWrapper.like("title","%"+condition+"%");
+            entityWrapper.like("title","%"+condition+"%");
             page = dataService.selectPage(page,entityWrapper);
             PageInfoBT<Data> pageInfoBT =this.packForBT(page);
             return pageInfoBT;

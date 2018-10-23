@@ -286,7 +286,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     }*/
 
     //2
-    public Result getMessage2(String mobile) throws ClientException, InterruptedException {
+    public Result getMessage2(String mobile,String type) throws ClientException, InterruptedException {
 
         if(StringUtils.isBlank(mobile)){
             logger.info("手机号为空，请重新传值");
@@ -300,7 +300,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         }
 
         SendSMSUtilLZ sendSMSUtilLZ = new SendSMSUtilLZ(mobile);
-        Result result = sendSMSUtilLZ.main("1000");
+        Result result = sendSMSUtilLZ.main(type);
 
         //如果mobile非空获取短信码存入缓存中
         if (result.isSuccess()){

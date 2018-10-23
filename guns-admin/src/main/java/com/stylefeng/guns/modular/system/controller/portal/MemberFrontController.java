@@ -61,8 +61,8 @@ public class MemberFrontController extends BaseController {
     }
 
     @RequestMapping(value="/getMessage")
-    public Result getMessage(String mobile) throws ClientException, InterruptedException {
-        return memberService.getMessage2(mobile);
+    public Result getMessage(String mobile,String type) throws ClientException, InterruptedException {
+        return memberService.getMessage2(mobile,type);
     }
 
     @RequestMapping(value="/reset_password",method = RequestMethod.POST)
