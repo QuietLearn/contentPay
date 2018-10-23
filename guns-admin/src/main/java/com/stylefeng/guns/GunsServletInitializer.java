@@ -1,5 +1,6 @@
 package com.stylefeng.guns;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
@@ -15,4 +16,8 @@ public class GunsServletInitializer extends SpringBootServletInitializer {
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(GunsApplication.class);
     }
+
+    /*public static void main(String[] args) {
+        SpringApplication.run(GunsServletInitializer.class, args);
+    }*/
 }

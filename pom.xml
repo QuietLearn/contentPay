@@ -242,9 +242,7 @@
             <properties>
                 <spring.active>local</spring.active>
             </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
+
         </profile>
         <profile>
             <id>dev</id>
@@ -263,6 +261,9 @@
             <properties>
                 <spring.active>produce</spring.active>
             </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
     </profiles>
 
