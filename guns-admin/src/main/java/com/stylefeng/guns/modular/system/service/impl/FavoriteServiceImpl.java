@@ -63,6 +63,16 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
         if(member==null){
             return Result.createByErrorMessage("请重新登录");
         }
+        EntityWrapper<Favorite> wrapper=new EntityWrapper<>();
+        wrapper.eq("member_id",member.getId());
+        wrapper.eq("video_id",video.getvId());
+        Integer resultCount = favoriteMapper.selectCount(wrapper);
+        if (resultCount >0){
+            Integer deleteCount = favoriteMapper.delete(wrapper);
+            if (deleteCount>0)
+                return Result.createBySuccessMessage("该视频移出收藏");
+            return Result.createByErrorMessage("移出收藏失败");
+        }
         //进行新增收藏夹操作
         Favorite favorite = new Favorite();
         favorite.setGmtCreated(new Date());

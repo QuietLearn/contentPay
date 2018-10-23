@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.PlayHistory">
         <id column="id" property="id" />
-        <result column="memberId" property="memberId" />
+        <result column="member_id" property="memberId" />
         <result column="member_username" property="memberUsername" />
         <result column="videoId" property="videoId" />
         <result column="video_name" property="videoName" />
@@ -20,13 +20,13 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, memberId, member_username, videoId, video_name, video_note, video_pic, video_actor, is_del, play_time, gmt_created, gmt_modified
+        id, member_id, member_username, videoId, video_name, video_note, video_pic, video_actor, is_del, play_time, gmt_created, gmt_modified
     </sql>
 
     <select id="selectByVideoId" parameterType="map" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
         from cps_play_history
-        where memberId = #{memberId}
+        where member_id = #{memberId}
         and videoId = #{vid}
     </select>
 </mapper>

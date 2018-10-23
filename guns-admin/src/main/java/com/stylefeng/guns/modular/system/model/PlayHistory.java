@@ -13,7 +13,7 @@ import java.io.Serializable;
  * 
  * </p>
  *
- * @author stylefeng
+ * @author hyj
  * @since 2018-10-23
  */
 @TableName("cps_play_history")
@@ -26,6 +26,7 @@ public class PlayHistory extends Model<PlayHistory> {
     /**
      * 用户id
      */
+    @TableField("member_id")
     private Integer memberId;
     @TableField("member_username")
     private String memberUsername;
