@@ -347,7 +347,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         return Result.createByErrorMessage("密码修改错误");
     }
 
-    public Result updateUserInfo(MemberVo alterMember,String message){
+    public Result updateUserInfo(MemberVo alterMember,String message,String safeUuid){
         if (StringUtils.isBlank(alterMember.getUuidToken())){
             return Result.createByErrorMessage("请重新登录");
         }
@@ -368,7 +368,11 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
             return Result.createByErrorMessage("该昵称已被使用");
         }
 
-        if (StringUtils.isNotBlank(message)){
+        if (StringUtils.isNotBlank(message)&&StringUtils.isNotBlank(safeUuid)){
+            String key = TokenCache.getKey(TokenCache.TOKEN_SAFE + member.getUsername());
+            if (!StringUtils.equals(key,safeUuid)){
+                return Result.createByErrorMessage("请重新验证旧手机短信");
+            }
             if (!verifyMessage(alterMember.getMobile(),message)){
                 return Result.createByErrorMessage(AllConst.MESSAGE_ERROR_MSG);
             }
@@ -399,11 +403,17 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     }
 
     //验证短信
-    public Result verifyMessageResult(String mobile,String message){
+    public Result verifyMessageResult(String uuidToken , String mobile,String message){
+        Member member = memberMapper.selectMemberByUuidToken(uuidToken);
+        if (member==null){
+            return Result.createByErrorMessage("请重新登录");
+        }
         if (!verifyMessage(mobile,message)){
             return Result.createByErrorMessage(AllConst.MESSAGE_ERROR_MSG);
         }
-        return Result.createBySuccessMessage("验证通过");
+        String safeUuid = UUID.randomUUID().toString();
+        TokenCache.setKey(TokenCache.TOKEN_SAFE+member.getUsername(),safeUuid);
+        return Result.createBySuccess("验证通过",safeUuid);
     }
 
 

@@ -73,6 +73,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
         favorite.setVideoName(video.getvName());
         favorite.setVideoNote(video.getvNote());
         favorite.setVideoPic(video.getvPic());
+        favorite.setVideoActor(video.getvActor());
         Integer insertCount = favoriteMapper.insert(favorite);
         if (insertCount>0){
             return Result.createBySuccessMessage("添加成功");
@@ -90,6 +91,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
 //        if(member==null) return null;
         EntityWrapper<Favorite> entityWrapper = new EntityWrapper<>();
         entityWrapper.eq("member_id",member.getId());
+        entityWrapper.orderBy("gmt_created",false);
         List<Favorite> favorites = favoriteMapper.selectList(entityWrapper);
 
         List<VideoVo> videoVoList = Lists.newArrayList();

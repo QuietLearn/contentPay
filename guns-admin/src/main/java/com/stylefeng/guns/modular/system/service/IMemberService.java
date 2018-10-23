@@ -105,13 +105,14 @@ public interface IMemberService extends IService<Member> {
      * @param message
      * @return
      */
-    Result updateUserInfo(MemberVo alterMember,String message);
+    Result updateUserInfo(MemberVo alterMember,String message,String safeUuid);
 
     /**
      * 验证短信
+     * @param uuidToken
      * @param mobile
      * @param message
      * @return
      */
-    Result verifyMessageResult(String mobile,String message);
+    Result verifyMessageResult(String uuidToken,String mobile,String message);
 }

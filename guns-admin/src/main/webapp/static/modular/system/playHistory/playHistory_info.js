@@ -1,15 +1,15 @@
 /**
- * 初始化用户看单管理详情对话框
+ * 初始化用户播放历史详情对话框
  */
-var FavoriteInfoDlg = {
-    favoriteInfoData : {}
+var PlayHistoryInfoDlg = {
+    playHistoryInfoData : {}
 };
 
 /**
  * 清除数据
  */
-FavoriteInfoDlg.clearData = function() {
-    this.favoriteInfoData = {};
+PlayHistoryInfoDlg.clearData = function() {
+    this.playHistoryInfoData = {};
 }
 
 /**
@@ -18,8 +18,8 @@ FavoriteInfoDlg.clearData = function() {
  * @param key 数据的名称
  * @param val 数据的具体值
  */
-FavoriteInfoDlg.set = function(key, val) {
-    this.favoriteInfoData[key] = (typeof val == "undefined") ? $("#" + key).val() : val;
+PlayHistoryInfoDlg.set = function(key, val) {
+    this.playHistoryInfoData[key] = (typeof val == "undefined") ? $("#" + key).val() : val;
     return this;
 }
 
@@ -29,31 +29,32 @@ FavoriteInfoDlg.set = function(key, val) {
  * @param key 数据的名称
  * @param val 数据的具体值
  */
-FavoriteInfoDlg.get = function(key) {
+PlayHistoryInfoDlg.get = function(key) {
     return $("#" + key).val();
 }
 
 /**
  * 关闭此对话框
  */
-FavoriteInfoDlg.close = function() {
-    parent.layer.close(window.parent.Favorite.layerIndex);
+PlayHistoryInfoDlg.close = function() {
+    parent.layer.close(window.parent.PlayHistory.layerIndex);
 }
 
 /**
  * 收集数据
  */
-FavoriteInfoDlg.collectData = function() {
+PlayHistoryInfoDlg.collectData = function() {
     this
     .set('id')
+    .set('memberId')
+    .set('memberUsername')
     .set('videoId')
     .set('videoName')
     .set('videoNote')
     .set('videoPic')
     .set('videoActor')
-    .set('memberId')
-    .set('memberUsername')
     .set('isDel')
+    .set('playTime')
     .set('gmtCreated')
     .set('gmtModified');
 }
@@ -61,40 +62,40 @@ FavoriteInfoDlg.collectData = function() {
 /**
  * 提交添加
  */
-FavoriteInfoDlg.addSubmit = function() {
+PlayHistoryInfoDlg.addSubmit = function() {
 
     this.clearData();
     this.collectData();
 
     //提交信息
-    var ajax = new $ax(Feng.ctxPath + "/favorite/add", function(data){
+    var ajax = new $ax(Feng.ctxPath + "/playHistory/add", function(data){
         Feng.success("添加成功!");
-        window.parent.Favorite.table.refresh();
-        FavoriteInfoDlg.close();
+        window.parent.PlayHistory.table.refresh();
+        PlayHistoryInfoDlg.close();
     },function(data){
         Feng.error("添加失败!" + data.responseJSON.message + "!");
     });
-    ajax.set(this.favoriteInfoData);
+    ajax.set(this.playHistoryInfoData);
     ajax.start();
 }
 
 /**
  * 提交修改
  */
-FavoriteInfoDlg.editSubmit = function() {
+PlayHistoryInfoDlg.editSubmit = function() {
 
     this.clearData();
     this.collectData();
 
     //提交信息
-    var ajax = new $ax(Feng.ctxPath + "/favorite/update", function(data){
+    var ajax = new $ax(Feng.ctxPath + "/playHistory/update", function(data){
         Feng.success("修改成功!");
-        window.parent.Favorite.table.refresh();
-        FavoriteInfoDlg.close();
+        window.parent.PlayHistory.table.refresh();
+        PlayHistoryInfoDlg.close();
     },function(data){
         Feng.error("修改失败!" + data.responseJSON.message + "!");
     });
-    ajax.set(this.favoriteInfoData);
+    ajax.set(this.playHistoryInfoData);
     ajax.start();
 }
 

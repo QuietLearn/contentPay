@@ -10,62 +10,44 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 收藏夹表 分别查询三个表(先分别查出每个表资源的ids，在用in查询)
+ * 
  * </p>
  *
- * @author hyj
+ * @author stylefeng
  * @since 2018-10-23
  */
-@TableName("cps_favorite")
-public class Favorite extends Model<Favorite> {
+@TableName("cps_play_history")
+public class PlayHistory extends Model<PlayHistory> {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     /**
-     * 视频id
-     */
-    @TableField("video_id")
-    private Integer videoId;
-    /**
-     * 视频名
-     */
-    @TableField("video_name")
-    private String videoName;
-    /**
-     * 说明(BD/高清/更新到6/共8)
-     */
-    @TableField("video_note")
-    private String videoNote;
-    /**
-     * 封面图片
-     */
-    @TableField("video_pic")
-    private String videoPic;
-    /**
-     * 演员
-     */
-    @TableField("video_actor")
-    private String videoActor;
-    /**
      * 用户id
      */
-    @TableField("member_id")
     private Integer memberId;
-    /**
-     * 用户昵称
-     */
     @TableField("member_username")
     private String memberUsername;
     /**
-     * 逻辑删除
+     * 播放视频id
      */
+    private Integer videoId;
+    @TableField("video_name")
+    private String videoName;
+    @TableField("video_note")
+    private String videoNote;
+    @TableField("video_pic")
+    private String videoPic;
+    @TableField("video_actor")
+    private String videoActor;
     @TableField("is_del")
     private Integer isDel;
     /**
-     * 收藏时间
+     * 播放时间
      */
+    @TableField("play_time")
+    private Date playTime;
     @TableField("gmt_created")
     private Date gmtCreated;
     @TableField("gmt_modified")
@@ -78,6 +60,22 @@ public class Favorite extends Model<Favorite> {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
+    }
+
+    public String getMemberUsername() {
+        return memberUsername;
+    }
+
+    public void setMemberUsername(String memberUsername) {
+        this.memberUsername = memberUsername;
     }
 
     public Integer getVideoId() {
@@ -120,28 +118,20 @@ public class Favorite extends Model<Favorite> {
         this.videoActor = videoActor;
     }
 
-    public Integer getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
-    }
-
-    public String getMemberUsername() {
-        return memberUsername;
-    }
-
-    public void setMemberUsername(String memberUsername) {
-        this.memberUsername = memberUsername;
-    }
-
     public Integer getIsDel() {
         return isDel;
     }
 
     public void setIsDel(Integer isDel) {
         this.isDel = isDel;
+    }
+
+    public Date getPlayTime() {
+        return playTime;
+    }
+
+    public void setPlayTime(Date playTime) {
+        this.playTime = playTime;
     }
 
     public Date getGmtCreated() {
@@ -167,16 +157,17 @@ public class Favorite extends Model<Favorite> {
 
     @Override
     public String toString() {
-        return "Favorite{" +
+        return "PlayHistory{" +
         "id=" + id +
+        ", memberId=" + memberId +
+        ", memberUsername=" + memberUsername +
         ", videoId=" + videoId +
         ", videoName=" + videoName +
         ", videoNote=" + videoNote +
         ", videoPic=" + videoPic +
         ", videoActor=" + videoActor +
-        ", memberId=" + memberId +
-        ", memberUsername=" + memberUsername +
         ", isDel=" + isDel +
+        ", playTime=" + playTime +
         ", gmtCreated=" + gmtCreated +
         ", gmtModified=" + gmtModified +
         "}";

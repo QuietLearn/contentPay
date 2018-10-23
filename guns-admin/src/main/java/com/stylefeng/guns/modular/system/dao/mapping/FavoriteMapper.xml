@@ -9,6 +9,7 @@
         <result column="video_name" property="videoName" />
         <result column="video_note" property="videoNote" />
         <result column="video_pic" property="videoPic" />
+        <result column="video_actor" property="videoActor" />
         <result column="member_id" property="memberId" />
         <result column="member_username" property="memberUsername" />
         <result column="is_del" property="isDel" />
@@ -18,7 +19,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, video_id, video_name, video_note, video_pic, member_id, member_username, is_del, gmt_created, gmt_modified
+        id, video_id, video_name, video_note, video_pic, video_actor, member_id, member_username, is_del, gmt_created, gmt_modified
     </sql>
 
 </mapper>

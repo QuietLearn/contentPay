@@ -75,13 +75,13 @@ public class MemberFrontController extends BaseController {
         return memberService.getUuidValidity(uuidToken);
     }
 
-    @RequestMapping(value = "update_user_info",method = RequestMethod.POST)
-    public Result updateUserInfo(MemberVo alterMember,String message){
-        return memberService.updateUserInfo(alterMember,message);
+    @RequestMapping(value = "update_user_info")
+    public Result updateUserInfo(MemberVo alterMember,String message,String safeUuid){
+        return memberService.updateUserInfo(alterMember,message,safeUuid);
     }
 
     @RequestMapping(value = "verify_message")
-    Result verifyMessageResult(String mobile,String message){
-        return memberService.verifyMessageResult(mobile,message);
+    Result verifyMessageResult(String uuidToken,String mobile,String message){
+        return memberService.verifyMessageResult(uuidToken,mobile,message);
     }
 }

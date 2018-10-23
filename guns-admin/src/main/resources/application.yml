@@ -21,7 +21,7 @@ spring:
       prefix: /WEB-INF/view
   devtools:
     restart:
-      enabled: false
+      enabled: true
       additional-paths: guns-admin/src/main/java
       exclude: static/**,WEB-INF/view/**
   servlet:

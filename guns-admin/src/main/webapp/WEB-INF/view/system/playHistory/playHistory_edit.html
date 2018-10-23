@@ -1,0 +1,37 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="" value="${item.id}" underline="true"/>
+                            <#input id="memberId" name="用户id" value="${item.memberId}" underline="true"/>
+                            <#input id="memberUsername" name="" value="${item.memberUsername}" underline="true"/>
+                            <#input id="videoId" name="播放视频id" value="${item.videoId}" underline="true"/>
+                            <#input id="videoName" name="" value="${item.videoName}" underline="true"/>
+                            <#input id="videoNote" name="" value="${item.videoNote}" />
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="videoPic" name="" value="${item.videoPic}" underline="true"/>
+                            <#input id="videoActor" name="" value="${item.videoActor}" underline="true"/>
+                            <#input id="isDel" name="" value="${item.isDel}" underline="true"/>
+                            <#input id="playTime" name="播放时间" value="${item.playTime}" underline="true"/>
+                            <#input id="gmtCreated" name="" value="${item.gmtCreated}" underline="true"/>
+                            <#input id="gmtModified" name="" value="${item.gmtModified}" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="PlayHistoryInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="PlayHistoryInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/playHistory/playHistory_info.js"></script>
+@}

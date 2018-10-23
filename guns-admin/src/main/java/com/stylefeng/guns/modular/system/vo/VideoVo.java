@@ -21,6 +21,11 @@ public class VideoVo {
      * 说明(BD/高清/更新到6/共8)
      */
     private String videoNote;
+
+    /**
+     * 演员
+     */
+    private String videoActor;
     /**
      * 封面图片
      */
@@ -57,5 +62,13 @@ public class VideoVo {
 
     public void setVideoPic(String videoPic) {
         this.videoPic = videoPic;
+    }
+
+    public String getVideoActor() {
+        return videoActor;
+    }
+
+    public void setVideoActor(String videoActor) {
+        this.videoActor = videoActor;
     }
 }
