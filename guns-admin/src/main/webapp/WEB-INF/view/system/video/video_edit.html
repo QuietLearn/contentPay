@@ -1,0 +1,35 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="vId" name="视频id" value="${item.vId}" underline="true"/>
+                            <#input id="tId" name="视频类型id" value="${item.tId}" underline="true"/>
+                            <#input id="vName" name="视频名" value="${item.vName}" underline="true"/>
+                            <#input id="vPic" name="视频图片" value="${item.vPic}" underline="true"/>
+                            <#input id="vPublishyear" name="发行日期" value="${item.vPublishyear}" />
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="vAddtime" name="添加时间" value="${item.vAddtime}" underline="true"/>
+                            <#input id="vMoney" name="消耗金币" value="${item.vMoney}" underline="true"/>
+                            <#input id="vReqVip" name="是否需要会员 0是 1否" value="${item.vReqVip}" underline="true"/>
+                            <#input id="gmtCreated" name="" value="${item.gmtCreated}" underline="true"/>
+                            <#input id="gmtModified" name="" value="${item.gmtModified}" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="VideoInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="VideoInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/video/video_info.js"></script>
+@}

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.modular.system.model.Data;
 import com.baomidou.mybatisplus.service.IService;
+import com.stylefeng.guns.modular.system.vo.DataVo;
 
 import java.util.List;
 
@@ -30,5 +31,6 @@ public interface IDataService extends IService<Data> {
 
     Page<Data> selectPageL(Page<Data> page, Wrapper<Data> wrapper);
 
+    List<DataVo> assemDataVoList(List<Data> dataList);
 
 }
