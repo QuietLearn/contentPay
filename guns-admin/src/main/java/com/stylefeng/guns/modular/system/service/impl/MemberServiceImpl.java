@@ -24,8 +24,10 @@ import com.stylefeng.guns.modular.system.dao.NoteMapper;
 import com.stylefeng.guns.modular.system.model.Data;
 import com.stylefeng.guns.modular.system.model.Member;
 import com.stylefeng.guns.modular.system.model.Note;
+import com.stylefeng.guns.modular.system.model.Video;
 import com.stylefeng.guns.modular.system.service.IDataService;
 import com.stylefeng.guns.modular.system.service.IMemberService;
+import com.stylefeng.guns.modular.system.service.IVideoService;
 import com.stylefeng.guns.modular.system.vo.MemberVo;
 import jdk.nashorn.internal.parser.Token;
 import org.apache.commons.lang3.StringUtils;
@@ -61,9 +63,6 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     private MemberTypeMapper memberTypeMapper;
     
     @Autowired
-    private DataMapper dataMapper;
-
-    @Autowired
     private NoteMapper noteMapper;
 
     @Autowired
@@ -72,6 +71,8 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     @Autowired
     public SaltProperties saltProperties;
 
+    @Autowired
+    private IVideoService videoService;
 
 
 
@@ -419,6 +420,20 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     }
 
 
+    public Result deductedGoin(int vid,String uuidToken){
+        Member member = memberMapper.selectMemberByUuidToken(uuidToken);
+        if (member==null){
+            return Result.createByErrorMessage("请重新登录");
+        }
+
+        Video video = videoService.selectById(vid);
+        if (member.getPoints() >= video.getvMoney()){
+            member.setPoints(member.getPoints()-video.getvMoney());
+            return Result.createBySuccessMessage("扣除成功，欢迎观看");
+        }
+
+        return null;
+    }
 
 
 

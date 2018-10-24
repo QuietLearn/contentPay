@@ -1,5 +1,6 @@
 package com.stylefeng.guns.modular.system.service;
 
+import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.modular.system.model.Video;
 import com.baomidou.mybatisplus.service.IService;
 
@@ -12,5 +13,5 @@ import com.baomidou.mybatisplus.service.IService;
  * @since 2018-10-24
  */
 public interface IVideoService extends IService<Video> {
-
+    Result confirmVideoPrice(int vid);
 }
