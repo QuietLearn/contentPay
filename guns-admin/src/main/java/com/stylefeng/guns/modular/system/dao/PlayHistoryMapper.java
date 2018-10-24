@@ -4,15 +4,19 @@ import com.stylefeng.guns.modular.system.model.PlayHistory;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
- *  Mapper 接口
+ * 播放历史表 Mapper 接口
  * </p>
  *
- * @author stylefeng
- * @since 2018-10-23
+ * @author hyj
+ * @since 2018-10-24
  */
 public interface PlayHistoryMapper extends BaseMapper<PlayHistory> {
 
-    PlayHistory selectByVideoId(@Param("vid") int vid, @Param("memberId") int memberId);
+    PlayHistory selectByVideoId(@Param("vid") int vid, @Param("memberId") Integer memberId);
+
+    List<Integer> selectVideoIdsByMember(Integer memberId);
 }

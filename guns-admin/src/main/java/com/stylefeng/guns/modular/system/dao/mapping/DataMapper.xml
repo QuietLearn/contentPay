@@ -65,4 +65,12 @@
         v_id, tid, v_name, v_state, v_pic, v_spic, v_gpic, v_hit, v_money, v_rank, v_digg, v_tread, v_commend, v_wrong, v_ismake, v_actor, v_color, v_publishyear, v_publisharea, v_addtime, v_topic, v_note, v_tags, v_letter, v_isunion, v_recycled, v_director, v_enname, v_lang, v_score, v_scorenum, v_extratype, v_jq, v_nickname, v_reweek, v_douban, v_mtime, v_imdb, v_tvs, v_company, v_dayhit, v_weekhit, v_monthhit, v_daytime, v_weektime, v_monthtime, v_req_vip, v_len, v_total, v_ver, v_psd, v_longtxt
     </sql>
 
+    <select id="selectVideosByIds" parameterType="map" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from sea_data
+        where v_id in
+        <foreach collection="videoIds" item="videoId" open="(" close=")" separator=",">
+            #{videoId}
+        </foreach>
+    </select>
 </mapper>

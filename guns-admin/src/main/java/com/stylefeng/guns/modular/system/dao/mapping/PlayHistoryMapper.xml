@@ -5,22 +5,25 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.PlayHistory">
         <id column="id" property="id" />
-        <result column="member_id" property="memberId" />
-        <result column="member_username" property="memberUsername" />
-        <result column="videoId" property="videoId" />
+        <result column="type_id" property="typeId" />
+        <result column="video_id" property="videoId" />
         <result column="video_name" property="videoName" />
         <result column="video_note" property="videoNote" />
         <result column="video_pic" property="videoPic" />
         <result column="video_actor" property="videoActor" />
+        <result column="video_director" property="videoDirector" />
+        <result column="video_publisharea" property="videoPublisharea" />
+        <result column="video_publishyear" property="videoPublishyear" />
+        <result column="member_id" property="memberId" />
+        <result column="member_username" property="memberUsername" />
         <result column="is_del" property="isDel" />
-        <result column="play_time" property="playTime" />
         <result column="gmt_created" property="gmtCreated" />
         <result column="gmt_modified" property="gmtModified" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, member_id, member_username, videoId, video_name, video_note, video_pic, video_actor, is_del, play_time, gmt_created, gmt_modified
+        id, type_id, video_id, video_name, video_note, video_pic, video_actor, video_director, video_publisharea, video_publishyear, member_id, member_username, is_del, gmt_created, gmt_modified
     </sql>
 
     <select id="selectByVideoId" parameterType="map" resultMap="BaseResultMap">
@@ -28,5 +31,11 @@
         from cps_play_history
         where member_id = #{memberId}
         and videoId = #{vid}
+    </select>
+
+    <select id="selectVideoIdsByMember" parameterType="int" resultType="int">
+          select video_id
+        from cps_play_history
+        where member_id = #{memberId}
     </select>
 </mapper>

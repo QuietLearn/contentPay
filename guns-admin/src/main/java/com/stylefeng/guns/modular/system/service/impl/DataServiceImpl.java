@@ -38,6 +38,19 @@ public class DataServiceImpl extends ServiceImpl<DataMapper, Data> implements ID
 
     @DataSource(name = DatasourceEnum.DATA_SOURCE_BIZ)
     @Transactional
+    public List<Data> selectVideosByIds(List<Integer> videoIds){
+        return dataMapper.selectVideosByIds(videoIds);
+    }
+
+    @DataSource(name = DatasourceEnum.DATA_SOURCE_BIZ)
+    @Transactional
+    public List<Data> selectBatchVideoIds(List<Integer> vids){
+        return this.selectBatchIds(vids);
+    }
+
+
+    @DataSource(name = DatasourceEnum.DATA_SOURCE_BIZ)
+    @Transactional
     public List<Data> selectList(){
         return this.selectList(null);
     }

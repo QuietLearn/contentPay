@@ -355,20 +355,21 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         if (member==null){
             return Result.createByErrorMessage("请重新登录");
         }
-        int resultCount = memberMapper.checkEmailByUserId(alterMember.getEmail(),alterMember.getId());
+        int resultCount = memberMapper.checkEmailByUserId(alterMember.getEmail(),member.getId());
         if (resultCount>0){
             return Result.createByErrorMessage("该邮箱已被使用");
         }
-        resultCount = memberMapper.checkMobileByUserId(alterMember.getMobile(),alterMember.getId());
+        resultCount = memberMapper.checkMobileByUserId(alterMember.getMobile(),member.getId());
         if (resultCount>0){
             return Result.createByErrorMessage("该手机已被使用");
         }
-        resultCount = memberMapper.checkUsernameByUserId(alterMember.getMobile(),alterMember.getId());
+        resultCount = memberMapper.checkUsernameByUserId(alterMember.getMobile(),member.getId());
         if (resultCount>0){
             return Result.createByErrorMessage("该昵称已被使用");
         }
 
-        if (StringUtils.isNotBlank(message)&&StringUtils.isNotBlank(safeUuid)){
+        if (StringUtils.isNotBlank(alterMember.getMobile())){
+
             String key = TokenCache.getKey(TokenCache.TOKEN_SAFE + member.getUsername());
             if (!StringUtils.equals(key,safeUuid)){
                 return Result.createByErrorMessage("请重新验证旧手机短信");
@@ -377,6 +378,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
                 return Result.createByErrorMessage(AllConst.MESSAGE_ERROR_MSG);
             }
         }
+
 
         Member updateMember = new Member();
         BeanUtils.copyProperties(alterMember,updateMember);

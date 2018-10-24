@@ -2,6 +2,9 @@ package com.stylefeng.guns.modular.system.dao;
 
 import com.stylefeng.guns.modular.system.model.Favorite;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -9,8 +12,13 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * </p>
  *
  * @author hyj
- * @since 2018-10-23
+ * @since 2018-10-24
  */
 public interface FavoriteMapper extends BaseMapper<Favorite> {
 
+    List<Integer> selectVideoIdsByMember(Integer memberId);
+
+    int deleteVideoIdsByMember(@Param("memberId") Integer memberId, @Param("vids")List<Integer> vids);
+
+//    void addVideoIdsByMember(Integer id, List<Integer> vids);
 }

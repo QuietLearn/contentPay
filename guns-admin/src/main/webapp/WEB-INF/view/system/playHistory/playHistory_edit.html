@@ -5,20 +5,23 @@
 
             <div class="row">
                 <div class="col-sm-6 b-r">
-                            <#input id="id" name="" value="${item.id}" underline="true"/>
-                            <#input id="memberId" name="用户id" value="${item.memberId}" underline="true"/>
-                            <#input id="memberUsername" name="" value="${item.memberUsername}" underline="true"/>
-                            <#input id="videoId" name="播放视频id" value="${item.videoId}" underline="true"/>
-                            <#input id="videoName" name="" value="${item.videoName}" underline="true"/>
-                            <#input id="videoNote" name="" value="${item.videoNote}" />
+                            <#input id="id" name="id" value="${item.id}" underline="true"/>
+                            <#input id="typeId" name="视频类型" value="${item.typeId}" underline="true"/>
+                            <#input id="videoId" name="视频id" value="${item.videoId}" underline="true"/>
+                            <#input id="videoName" name="视频名" value="${item.videoName}" underline="true"/>
+                            <#input id="videoNote" name="说明(BD/高清/更新到6/共8)" value="${item.videoNote}" underline="true"/>
+                            <#input id="videoPic" name="封面图片" value="${item.videoPic}" underline="true"/>
+                            <#input id="videoActor" name="演员" value="${item.videoActor}" underline="true"/>
+                            <#input id="videoDirector" name="导演" value="${item.videoDirector}" />
                 </div>
 
                 <div class="col-sm-6">
-                            <#input id="videoPic" name="" value="${item.videoPic}" underline="true"/>
-                            <#input id="videoActor" name="" value="${item.videoActor}" underline="true"/>
-                            <#input id="isDel" name="" value="${item.isDel}" underline="true"/>
-                            <#input id="playTime" name="播放时间" value="${item.playTime}" underline="true"/>
-                            <#input id="gmtCreated" name="" value="${item.gmtCreated}" underline="true"/>
+                            <#input id="videoPublisharea" name="发行地区" value="${item.videoPublisharea}" underline="true"/>
+                            <#input id="videoPublishyear" name="发行年份" value="${item.videoPublishyear}" underline="true"/>
+                            <#input id="memberId" name="用户id" value="${item.memberId}" underline="true"/>
+                            <#input id="memberUsername" name="用户昵称" value="${item.memberUsername}" underline="true"/>
+                            <#input id="isDel" name="逻辑删除" value="${item.isDel}" underline="true"/>
+                            <#input id="gmtCreated" name="收藏时间" value="${item.gmtCreated}" underline="true"/>
                             <#input id="gmtModified" name="" value="${item.gmtModified}" />
                 </div>
             </div>

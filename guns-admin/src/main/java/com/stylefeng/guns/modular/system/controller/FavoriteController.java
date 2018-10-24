@@ -15,10 +15,10 @@ import com.stylefeng.guns.modular.system.service.IFavoriteService;
 import java.util.Date;
 
 /**
- * 用户看单管理控制器
+ * 用户看单控制器
  *
  * @author fengshuonan
- * @Date 2018-10-23 14:54:45
+ * @Date 2018-10-24 11:03:17
  */
 @Controller
 @RequestMapping("/favorite")
@@ -30,7 +30,7 @@ public class FavoriteController extends BaseController {
     private IFavoriteService favoriteService;
 
     /**
-     * 跳转到用户看单管理首页
+     * 跳转到用户看单首页
      */
     @RequestMapping("")
     public String index() {
@@ -38,7 +38,7 @@ public class FavoriteController extends BaseController {
     }
 
     /**
-     * 跳转到添加用户看单管理
+     * 跳转到添加用户看单
      */
     @RequestMapping("/favorite_add")
     public String favoriteAdd() {
@@ -46,7 +46,7 @@ public class FavoriteController extends BaseController {
     }
 
     /**
-     * 跳转到修改用户看单管理
+     * 跳转到修改用户看单
      */
     @RequestMapping("/favorite_update/{favoriteId}")
     public String favoriteUpdate(@PathVariable Integer favoriteId, Model model) {
@@ -57,7 +57,7 @@ public class FavoriteController extends BaseController {
     }
 
     /**
-     * 获取用户看单管理列表
+     * 获取用户看单列表
      */
     @RequestMapping(value = "/list")
     @ResponseBody
@@ -66,7 +66,7 @@ public class FavoriteController extends BaseController {
     }
 
     /**
-     * 新增用户看单管理
+     * 新增用户看单
      */
     @RequestMapping(value = "/add")
     @ResponseBody
@@ -78,7 +78,7 @@ public class FavoriteController extends BaseController {
     }
 
     /**
-     * 删除用户看单管理
+     * 删除用户看单
      */
     @RequestMapping(value = "/delete")
     @ResponseBody
@@ -88,7 +88,7 @@ public class FavoriteController extends BaseController {
     }
 
     /**
-     * 修改用户看单管理
+     * 修改用户看单
      */
     @RequestMapping(value = "/update")
     @ResponseBody
@@ -99,7 +99,7 @@ public class FavoriteController extends BaseController {
     }
 
     /**
-     * 用户看单管理详情
+     * 用户看单详情
      */
     @RequestMapping(value = "/detail/{favoriteId}")
     @ResponseBody

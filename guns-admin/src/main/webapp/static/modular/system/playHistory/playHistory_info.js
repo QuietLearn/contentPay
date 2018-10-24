@@ -46,15 +46,18 @@ PlayHistoryInfoDlg.close = function() {
 PlayHistoryInfoDlg.collectData = function() {
     this
     .set('id')
-    .set('memberId')
-    .set('memberUsername')
+    .set('typeId')
     .set('videoId')
     .set('videoName')
     .set('videoNote')
     .set('videoPic')
     .set('videoActor')
+    .set('videoDirector')
+    .set('videoPublisharea')
+    .set('videoPublishyear')
+    .set('memberId')
+    .set('memberUsername')
     .set('isDel')
-    .set('playTime')
     .set('gmtCreated')
     .set('gmtModified');
 }

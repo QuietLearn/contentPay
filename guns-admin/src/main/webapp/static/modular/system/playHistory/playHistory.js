@@ -14,17 +14,20 @@ var PlayHistory = {
 PlayHistory.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: 'id', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '视频类型', field: 'typeId', visible: true, align: 'center', valign: 'middle'},
+            {title: '视频id', field: 'videoId', visible: true, align: 'center', valign: 'middle'},
+            {title: '视频名', field: 'videoName', visible: true, align: 'center', valign: 'middle'},
+            {title: '说明(BD/高清/更新到6/共8)', field: 'videoNote', visible: true, align: 'center', valign: 'middle'},
+            {title: '封面图片', field: 'videoPic', visible: true, align: 'center', valign: 'middle'},
+            {title: '演员', field: 'videoActor', visible: true, align: 'center', valign: 'middle'},
+            {title: '导演', field: 'videoDirector', visible: true, align: 'center', valign: 'middle'},
+            {title: '发行地区', field: 'videoPublisharea', visible: true, align: 'center', valign: 'middle'},
+            {title: '发行年份', field: 'videoPublishyear', visible: true, align: 'center', valign: 'middle'},
             {title: '用户id', field: 'memberId', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'memberUsername', visible: true, align: 'center', valign: 'middle'},
-            {title: '播放视频id', field: 'videoId', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'videoName', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'videoNote', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'videoPic', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'videoActor', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
-            {title: '播放时间', field: 'playTime', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
+            {title: '用户昵称', field: 'memberUsername', visible: true, align: 'center', valign: 'middle'},
+            {title: '逻辑删除', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
+            {title: '收藏时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtModified', visible: true, align: 'center', valign: 'middle'}
     ];
 };

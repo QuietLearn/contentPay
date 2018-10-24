@@ -5,6 +5,8 @@ import com.stylefeng.guns.modular.system.model.Favorite;
 import com.baomidou.mybatisplus.service.IService;
 import com.stylefeng.guns.modular.system.vo.FavoriteVo;
 
+import java.util.List;
+
 /**
  * <p>
  * 收藏夹表 分别查询三个表(先分别查出每个表资源的ids，在用in查询) 服务类
@@ -24,10 +26,10 @@ public interface IFavoriteService extends IService<Favorite> {
 
     /**
      * 视频加入用户收藏夹
-     * @param vid
+     * @param vids
      * @param uuidToken
      * @return
      */
-    Result addVideoToFav(int vid, String uuidToken);
+    Result addVideoToFav(List<Integer> vids, String uuidToken);
 
 }

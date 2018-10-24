@@ -6,9 +6,12 @@ import com.stylefeng.guns.modular.system.service.IFavoriteService;
 import com.stylefeng.guns.modular.system.service.IPlayHistoryService;
 import com.stylefeng.guns.modular.system.vo.FavoriteVo;
 import com.stylefeng.guns.modular.system.vo.PlayHistoryVo;
+import com.stylefeng.guns.modular.system.vo.VIdList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by hyj on 2018/10/23
@@ -27,7 +30,7 @@ public class PlayHistoryFrontController extends BaseController {
     }
 
     @RequestMapping(value = "/add")
-    public Result addVideoToFav(int vid, String uuidToken){
-        return playHistoryService.addVideoToFav(vid,uuidToken);
+    public Result addVideoToFav(VIdList vid, String uuidToken){
+        return playHistoryService.addVideoToFav(vid.getVid(),uuidToken);
     }
 }

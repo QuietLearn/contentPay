@@ -10,45 +10,85 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ * 播放历史表
  * </p>
  *
  * @author hyj
- * @since 2018-10-23
+ * @since 2018-10-24
  */
 @TableName("cps_play_history")
 public class PlayHistory extends Model<PlayHistory> {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * id
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
+    /**
+     * 视频类型
+     */
+    @TableField("type_id")
+    private Integer typeId;
+    /**
+     * 视频id
+     */
+    @TableField("video_id")
+    private Integer videoId;
+    /**
+     * 视频名
+     */
+    @TableField("video_name")
+    private String videoName;
+    /**
+     * 说明(BD/高清/更新到6/共8)
+     */
+    @TableField("video_note")
+    private String videoNote;
+    /**
+     * 封面图片
+     */
+    @TableField("video_pic")
+    private String videoPic;
+    /**
+     * 演员
+     */
+    @TableField("video_actor")
+    private String videoActor;
+    /**
+     * 导演
+     */
+    @TableField("video_director")
+    private String videoDirector;
+    /**
+     * 发行地区
+     */
+    @TableField("video_publisharea")
+    private String videoPublisharea;
+    /**
+     * 发行年份
+     */
+    @TableField("video_publishyear")
+    private Integer videoPublishyear;
     /**
      * 用户id
      */
     @TableField("member_id")
     private Integer memberId;
+    /**
+     * 用户昵称
+     */
     @TableField("member_username")
     private String memberUsername;
     /**
-     * 播放视频id
+     * 逻辑删除
      */
-    private Integer videoId;
-    @TableField("video_name")
-    private String videoName;
-    @TableField("video_note")
-    private String videoNote;
-    @TableField("video_pic")
-    private String videoPic;
-    @TableField("video_actor")
-    private String videoActor;
     @TableField("is_del")
     private Integer isDel;
     /**
-     * 播放时间
+     * 收藏时间
      */
-    @TableField("play_time")
-    private Date playTime;
     @TableField("gmt_created")
     private Date gmtCreated;
     @TableField("gmt_modified")
@@ -63,20 +103,12 @@ public class PlayHistory extends Model<PlayHistory> {
         this.id = id;
     }
 
-    public Integer getMemberId() {
-        return memberId;
+    public Integer getTypeId() {
+        return typeId;
     }
 
-    public void setMemberId(Integer memberId) {
-        this.memberId = memberId;
-    }
-
-    public String getMemberUsername() {
-        return memberUsername;
-    }
-
-    public void setMemberUsername(String memberUsername) {
-        this.memberUsername = memberUsername;
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
     }
 
     public Integer getVideoId() {
@@ -119,20 +151,52 @@ public class PlayHistory extends Model<PlayHistory> {
         this.videoActor = videoActor;
     }
 
+    public String getVideoDirector() {
+        return videoDirector;
+    }
+
+    public void setVideoDirector(String videoDirector) {
+        this.videoDirector = videoDirector;
+    }
+
+    public String getVideoPublisharea() {
+        return videoPublisharea;
+    }
+
+    public void setVideoPublisharea(String videoPublisharea) {
+        this.videoPublisharea = videoPublisharea;
+    }
+
+    public Integer getVideoPublishyear() {
+        return videoPublishyear;
+    }
+
+    public void setVideoPublishyear(Integer videoPublishyear) {
+        this.videoPublishyear = videoPublishyear;
+    }
+
+    public Integer getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
+    }
+
+    public String getMemberUsername() {
+        return memberUsername;
+    }
+
+    public void setMemberUsername(String memberUsername) {
+        this.memberUsername = memberUsername;
+    }
+
     public Integer getIsDel() {
         return isDel;
     }
 
     public void setIsDel(Integer isDel) {
         this.isDel = isDel;
-    }
-
-    public Date getPlayTime() {
-        return playTime;
-    }
-
-    public void setPlayTime(Date playTime) {
-        this.playTime = playTime;
     }
 
     public Date getGmtCreated() {
@@ -160,15 +224,18 @@ public class PlayHistory extends Model<PlayHistory> {
     public String toString() {
         return "PlayHistory{" +
         "id=" + id +
-        ", memberId=" + memberId +
-        ", memberUsername=" + memberUsername +
+        ", typeId=" + typeId +
         ", videoId=" + videoId +
         ", videoName=" + videoName +
         ", videoNote=" + videoNote +
         ", videoPic=" + videoPic +
         ", videoActor=" + videoActor +
+        ", videoDirector=" + videoDirector +
+        ", videoPublisharea=" + videoPublisharea +
+        ", videoPublishyear=" + videoPublishyear +
+        ", memberId=" + memberId +
+        ", memberUsername=" + memberUsername +
         ", isDel=" + isDel +
-        ", playTime=" + playTime +
         ", gmtCreated=" + gmtCreated +
         ", gmtModified=" + gmtModified +
         "}";

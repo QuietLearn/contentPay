@@ -1,5 +1,5 @@
 /**
- * 初始化用户看单管理详情对话框
+ * 初始化用户看单详情对话框
  */
 var FavoriteInfoDlg = {
     favoriteInfoData : {}
@@ -46,11 +46,15 @@ FavoriteInfoDlg.close = function() {
 FavoriteInfoDlg.collectData = function() {
     this
     .set('id')
+    .set('typeId')
     .set('videoId')
     .set('videoName')
     .set('videoNote')
     .set('videoPic')
     .set('videoActor')
+    .set('videoDirector')
+    .set('videoPublisharea')
+    .set('videoPublishyear')
     .set('memberId')
     .set('memberUsername')
     .set('isDel')

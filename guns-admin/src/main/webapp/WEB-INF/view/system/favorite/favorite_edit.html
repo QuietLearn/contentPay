@@ -5,15 +5,19 @@
 
             <div class="row">
                 <div class="col-sm-6 b-r">
-                            <#input id="id" name="" value="${item.id}" underline="true"/>
+                            <#input id="id" name="id" value="${item.id}" underline="true"/>
+                            <#input id="typeId" name="视频类型" value="${item.typeId}" underline="true"/>
                             <#input id="videoId" name="视频id" value="${item.videoId}" underline="true"/>
                             <#input id="videoName" name="视频名" value="${item.videoName}" underline="true"/>
                             <#input id="videoNote" name="说明(BD/高清/更新到6/共8)" value="${item.videoNote}" underline="true"/>
                             <#input id="videoPic" name="封面图片" value="${item.videoPic}" underline="true"/>
-                            <#input id="videoActor" name="演员" value="${item.videoActor}" />
+                            <#input id="videoActor" name="演员" value="${item.videoActor}" underline="true"/>
+                            <#input id="videoDirector" name="导演" value="${item.videoDirector}" />
                 </div>
 
                 <div class="col-sm-6">
+                            <#input id="videoPublisharea" name="发行地区" value="${item.videoPublisharea}" underline="true"/>
+                            <#input id="videoPublishyear" name="发行年份" value="${item.videoPublishyear}" underline="true"/>
                             <#input id="memberId" name="用户id" value="${item.memberId}" underline="true"/>
                             <#input id="memberUsername" name="用户昵称" value="${item.memberUsername}" underline="true"/>
                             <#input id="isDel" name="逻辑删除" value="${item.isDel}" underline="true"/>

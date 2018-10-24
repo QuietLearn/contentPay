@@ -19,6 +19,11 @@ public interface IDataService extends IService<Data> {
     //通过id查询
     Data getDataByVid(int vid);
 
+    //批量查找
+    List<Data> selectVideosByIds(List<Integer> videoIds);
+    List<Data> selectBatchVideoIds(List<Integer> vids);
+
+
     List<Data> selectList();
 
     Page<Data> selectPageL(Page<Data> page);

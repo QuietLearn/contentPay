@@ -17,6 +17,7 @@ import com.stylefeng.guns.modular.system.vo.FavoriteVo;
 import com.stylefeng.guns.modular.system.vo.PlayHistoryVo;
 import com.stylefeng.guns.modular.system.vo.VideoVo;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,25 +56,42 @@ public class PlayHistoryServiceImpl extends ServiceImpl<PlayHistoryMapper, PlayH
     }
 
     //视频加入用户播放历史
-    public Result addVideoToFav(int vid, String uuidToken){
-        Data video = dataService.getDataByVid(vid);
-        if (video==null){
-            return Result.createByErrorMessage("该视频不存在");
+    //视频加入用户收藏夹
+    public Result addVideoToFav(List<Integer> vids, String uuidToken){
+        if (CollectionUtils.isEmpty(vids)){
+            return Result.createByErrorMessage("请重新同步播放历史");
         }
-
         Member member = memberMapper.selectMemberByUuidToken(uuidToken);
         if(member==null){
             return Result.createByErrorMessage("请重新登录");
         }
 
-        PlayHistory existPlayHistory = playHistoryMapper.selectByVideoId(vid,member.getId());
-        if (existPlayHistory!=null){
-            existPlayHistory.setGmtModified(new Date());
-            playHistoryMapper.updateById(existPlayHistory);
-            return Result.createBySuccessMessage("播放历史更新");
+        //查找该用户的所有播放历史
+        List<Integer> existVids = playHistoryMapper.selectVideoIdsByMember(member.getId());
+        //得到前台给的  还没有添加到数据库的播放视频记录
+        List<Integer> subtract = ListUtils.subtract(vids, existVids);
+
+        //List<Data> videoList = dataService.selectVideosByIds(subtract);
+        //得到未添加到数据库的视频信息
+        List<Data> videoList = dataService.selectBatchVideoIds(subtract);
+
+        //构建插入的播放记录list
+        List<PlayHistory> playHistoryList = Lists.newArrayList();
+        for (Data data:videoList) {
+            PlayHistory playHistory = assemPlayHistoryFromVideoAndMember(member, data);
+            playHistoryList.add(playHistory);
         }
 
-        //进行新增历史记录操作
+        boolean isInsert = this.insertBatch(playHistoryList);
+        if (isInsert){
+            return Result.createBySuccessMessage("同步成功");
+        }
+        return Result.createByErrorMessage("同步失败");
+    }
+
+
+    //装配新增的favorite对象
+    private PlayHistory assemPlayHistoryFromVideoAndMember(Member member,Data video){
         PlayHistory playHistory = new PlayHistory();
         playHistory.setGmtCreated(new Date());
         playHistory.setGmtModified(new Date());
@@ -84,13 +102,13 @@ public class PlayHistoryServiceImpl extends ServiceImpl<PlayHistoryMapper, PlayH
         playHistory.setVideoNote(video.getvNote());
         playHistory.setVideoPic(video.getvPic());
         playHistory.setVideoActor(video.getvActor());
-        Integer insertCount = playHistoryMapper.insert(playHistory);
-        if (insertCount>0){
-            return Result.createBySuccessMessage("添加成功");
-        }
 
+        playHistory.setTypeId(video.getTid());
+        playHistory.setVideoDirector(video.getvDirector());
+        playHistory.setVideoPublisharea(video.getvPublisharea());
+        playHistory.setVideoPublishyear(video.getvPublishyear());
 
-        return Result.createByErrorMessage("添加失败");
+        return playHistory;
     }
 
 

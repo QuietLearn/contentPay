@@ -1,5 +1,5 @@
 /**
- * 用户看单管理管理初始化
+ * 用户看单管理初始化
  */
 var Favorite = {
     id: "FavoriteTable",	//表格id
@@ -14,12 +14,16 @@ var Favorite = {
 Favorite.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: 'id', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '视频类型', field: 'typeId', visible: true, align: 'center', valign: 'middle'},
             {title: '视频id', field: 'videoId', visible: true, align: 'center', valign: 'middle'},
             {title: '视频名', field: 'videoName', visible: true, align: 'center', valign: 'middle'},
             {title: '说明(BD/高清/更新到6/共8)', field: 'videoNote', visible: true, align: 'center', valign: 'middle'},
             {title: '封面图片', field: 'videoPic', visible: true, align: 'center', valign: 'middle'},
             {title: '演员', field: 'videoActor', visible: true, align: 'center', valign: 'middle'},
+            {title: '导演', field: 'videoDirector', visible: true, align: 'center', valign: 'middle'},
+            {title: '发行地区', field: 'videoPublisharea', visible: true, align: 'center', valign: 'middle'},
+            {title: '发行年份', field: 'videoPublishyear', visible: true, align: 'center', valign: 'middle'},
             {title: '用户id', field: 'memberId', visible: true, align: 'center', valign: 'middle'},
             {title: '用户昵称', field: 'memberUsername', visible: true, align: 'center', valign: 'middle'},
             {title: '逻辑删除', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
@@ -43,12 +47,12 @@ Favorite.check = function () {
 };
 
 /**
- * 点击添加用户看单管理
+ * 点击添加用户看单
  */
 Favorite.openAddFavorite = function () {
     var index = layer.open({
         type: 2,
-        title: '添加用户看单管理',
+        title: '添加用户看单',
         area: ['800px', '420px'], //宽高
         fix: false, //不固定
         maxmin: true,
@@ -58,13 +62,13 @@ Favorite.openAddFavorite = function () {
 };
 
 /**
- * 打开查看用户看单管理详情
+ * 打开查看用户看单详情
  */
 Favorite.openFavoriteDetail = function () {
     if (this.check()) {
         var index = layer.open({
             type: 2,
-            title: '用户看单管理详情',
+            title: '用户看单详情',
             area: ['800px', '420px'], //宽高
             fix: false, //不固定
             maxmin: true,
@@ -75,7 +79,7 @@ Favorite.openFavoriteDetail = function () {
 };
 
 /**
- * 删除用户看单管理
+ * 删除用户看单
  */
 Favorite.delete = function () {
     if (this.check()) {
@@ -91,7 +95,7 @@ Favorite.delete = function () {
 };
 
 /**
- * 查询用户看单管理列表
+ * 查询用户看单列表
  */
 Favorite.search = function () {
     var queryData = {};

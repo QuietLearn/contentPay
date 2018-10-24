@@ -4,6 +4,7 @@ import com.alipay.api.domain.ProductVOOptions;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.google.common.collect.Lists;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.modular.system.dao.DataMapper;
 import com.stylefeng.guns.modular.system.dao.MemberMapper;
 import com.stylefeng.guns.modular.system.model.Data;
 import com.stylefeng.guns.modular.system.model.Favorite;
@@ -15,10 +16,14 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.stylefeng.guns.modular.system.vo.FavoriteVo;
 import com.stylefeng.guns.modular.system.vo.VideoVo;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.ListUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +38,7 @@ import java.util.List;
  */
 @Service
 public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> implements IFavoriteService {
-
+    private Logger logger = LoggerFactory.getLogger(FavoriteServiceImpl.class);
     @Autowired
     private IDataService dataService;
 
@@ -42,6 +47,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
 
     @Autowired
     private MemberMapper memberMapper;
+
 
     //列举用户的收藏夹
     public Result<FavoriteVo> list(String uuidToken){
@@ -54,26 +60,57 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
     }
 
     //视频加入用户收藏夹
-    public Result addVideoToFav(int vid, String uuidToken){
-        Data video = dataService.getDataByVid(vid);
-        if (video==null){
-            return Result.createByErrorMessage("该视频不存在");
+    public Result addVideoToFav(List<Integer> vids, String uuidToken){
+        if (CollectionUtils.isEmpty(vids)){
+            return Result.createByErrorMessage("请重新同步收藏夹视频");
         }
         Member member = memberMapper.selectMemberByUuidToken(uuidToken);
         if(member==null){
             return Result.createByErrorMessage("请重新登录");
         }
-        EntityWrapper<Favorite> wrapper=new EntityWrapper<>();
+
+        favoriteMapper.deleteVideoIdsByMember(member.getId(),vids);
+
+
+       /* EntityWrapper<Favorite> wrapper=new EntityWrapper<>();
         wrapper.eq("member_id",member.getId());
-        wrapper.eq("video_id",video.getvId());
-        Integer resultCount = favoriteMapper.selectCount(wrapper);
-        if (resultCount >0){
-            Integer deleteCount = favoriteMapper.delete(wrapper);
-            if (deleteCount>0)
-                return Result.createBySuccessMessage("该视频移出收藏");
-            return Result.createByErrorMessage("移出收藏失败");
+        wrapper.notIn("video_id",vids);
+        wrapper.setSqlSelect("video_id");*/
+        //不在说明数据库是旧的，用户已经取消了收藏
+
+        //wrapper.eq("video_id",video.getvId());
+
+       /* logger.info("videIds有几个:{}",videoIds.size());
+        if (CollectionUtils.isNotEmpty(videoIds)){
+            favoriteMapper.deleteBatchIds(videoIds);
+        }*/
+
+        //查找该用户的所有收藏视频id
+        List<Integer> existVids = favoriteMapper.selectVideoIdsByMember(member.getId());
+//        ListUtils.
+
+        List<Integer> subtract = ListUtils.subtract(vids, existVids);
+
+//        List<Data> videoList = dataService.selectVideosByIds(subtract);
+        List<Data> videoList = dataService.selectBatchVideoIds(subtract);
+
+        //构建插入的收藏夹list
+        List<Favorite> favoriteList = Lists.newArrayList();
+        for (Data data:videoList) {
+            Favorite favorite = assemFavoriteFromVideoAndMember(member, data);
+            favoriteList.add(favorite);
         }
-        //进行新增收藏夹操作
+
+        boolean isInsert = this.insertBatch(favoriteList);
+        if (isInsert){
+            return Result.createBySuccessMessage("同步成功");
+        }
+        return Result.createByErrorMessage("同步失败");
+    }
+
+
+    //装配新增的favorite对象
+    private Favorite assemFavoriteFromVideoAndMember(Member member,Data video){
         Favorite favorite = new Favorite();
         favorite.setGmtCreated(new Date());
         favorite.setGmtModified(new Date());
@@ -84,13 +121,13 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
         favorite.setVideoNote(video.getvNote());
         favorite.setVideoPic(video.getvPic());
         favorite.setVideoActor(video.getvActor());
-        Integer insertCount = favoriteMapper.insert(favorite);
-        if (insertCount>0){
-            return Result.createBySuccessMessage("添加成功");
-        }
 
+        favorite.setTypeId(video.getTid());
+        favorite.setVideoDirector(video.getvDirector());
+        favorite.setVideoPublisharea(video.getvPublisharea());
+        favorite.setVideoPublishyear(video.getvPublishyear());
 
-        return Result.createByErrorMessage("添加失败");
+        return favorite;
     }
 
 

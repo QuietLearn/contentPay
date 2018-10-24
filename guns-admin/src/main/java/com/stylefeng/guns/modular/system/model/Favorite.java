@@ -14,15 +14,23 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-10-23
+ * @since 2018-10-24
  */
 @TableName("cps_favorite")
 public class Favorite extends Model<Favorite> {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * id
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
+    /**
+     * 视频类型
+     */
+    @TableField("type_id")
+    private Integer typeId;
     /**
      * 视频id
      */
@@ -48,6 +56,21 @@ public class Favorite extends Model<Favorite> {
      */
     @TableField("video_actor")
     private String videoActor;
+    /**
+     * 导演
+     */
+    @TableField("video_director")
+    private String videoDirector;
+    /**
+     * 发行地区
+     */
+    @TableField("video_publisharea")
+    private String videoPublisharea;
+    /**
+     * 发行年份
+     */
+    @TableField("video_publishyear")
+    private Integer videoPublishyear;
     /**
      * 用户id
      */
@@ -78,6 +101,14 @@ public class Favorite extends Model<Favorite> {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
     }
 
     public Integer getVideoId() {
@@ -118,6 +149,30 @@ public class Favorite extends Model<Favorite> {
 
     public void setVideoActor(String videoActor) {
         this.videoActor = videoActor;
+    }
+
+    public String getVideoDirector() {
+        return videoDirector;
+    }
+
+    public void setVideoDirector(String videoDirector) {
+        this.videoDirector = videoDirector;
+    }
+
+    public String getVideoPublisharea() {
+        return videoPublisharea;
+    }
+
+    public void setVideoPublisharea(String videoPublisharea) {
+        this.videoPublisharea = videoPublisharea;
+    }
+
+    public Integer getVideoPublishyear() {
+        return videoPublishyear;
+    }
+
+    public void setVideoPublishyear(Integer videoPublishyear) {
+        this.videoPublishyear = videoPublishyear;
     }
 
     public Integer getMemberId() {
@@ -169,11 +224,15 @@ public class Favorite extends Model<Favorite> {
     public String toString() {
         return "Favorite{" +
         "id=" + id +
+        ", typeId=" + typeId +
         ", videoId=" + videoId +
         ", videoName=" + videoName +
         ", videoNote=" + videoNote +
         ", videoPic=" + videoPic +
         ", videoActor=" + videoActor +
+        ", videoDirector=" + videoDirector +
+        ", videoPublisharea=" + videoPublisharea +
+        ", videoPublishyear=" + videoPublishyear +
         ", memberId=" + memberId +
         ", memberUsername=" + memberUsername +
         ", isDel=" + isDel +

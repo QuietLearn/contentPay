@@ -1,8 +1,7 @@
 package com.stylefeng.guns.modular.system.vo;
 
-import com.baomidou.mybatisplus.annotations.TableField;
 
-import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableField;
 
 /**
  * Created by hyj on 2018/10/23
@@ -13,6 +12,11 @@ public class VideoVo {
      * 视频id
      */
     private Integer videoId;
+
+    /**
+     * 视频类型
+     */
+    private Integer typeId;
     /**
      * 视频名
      */
@@ -29,8 +33,20 @@ public class VideoVo {
     /**
      * 封面图片
      */
-    @TableField("video_pic")
     private String videoPic;
+
+
+
+    private String videoDirector;
+    /**
+     * 发行地区
+     */
+    private String videoPublisharea;
+    /**
+     * 发行年份
+     */
+    private Integer videoPublishyear;
+
 
     public Integer getVideoId() {
         return videoId;
@@ -70,5 +86,37 @@ public class VideoVo {
 
     public void setVideoActor(String videoActor) {
         this.videoActor = videoActor;
+    }
+
+    public Integer getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
+    }
+
+    public String getVideoDirector() {
+        return videoDirector;
+    }
+
+    public void setVideoDirector(String videoDirector) {
+        this.videoDirector = videoDirector;
+    }
+
+    public String getVideoPublisharea() {
+        return videoPublisharea;
+    }
+
+    public void setVideoPublisharea(String videoPublisharea) {
+        this.videoPublisharea = videoPublisharea;
+    }
+
+    public Integer getVideoPublishyear() {
+        return videoPublishyear;
+    }
+
+    public void setVideoPublishyear(Integer videoPublishyear) {
+        this.videoPublishyear = videoPublishyear;
     }
 }

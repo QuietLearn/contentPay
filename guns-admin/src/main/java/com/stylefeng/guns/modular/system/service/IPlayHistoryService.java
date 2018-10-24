@@ -5,6 +5,8 @@ import com.stylefeng.guns.modular.system.model.PlayHistory;
 import com.baomidou.mybatisplus.service.IService;
 import com.stylefeng.guns.modular.system.vo.PlayHistoryVo;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -16,7 +18,8 @@ import com.stylefeng.guns.modular.system.vo.PlayHistoryVo;
 public interface IPlayHistoryService extends IService<PlayHistory> {
 
 
-    Result addVideoToFav(int vid, String uuidToken);
 
     Result<PlayHistoryVo> list(String uuidToken);
+
+    Result addVideoToFav(List<Integer> vids, String uuidToken);
 }

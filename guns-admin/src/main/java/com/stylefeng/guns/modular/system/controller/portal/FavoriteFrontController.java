@@ -4,6 +4,7 @@ import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.modular.system.service.IFavoriteService;
 import com.stylefeng.guns.modular.system.vo.FavoriteVo;
+import com.stylefeng.guns.modular.system.vo.VIdList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,7 +26,7 @@ public class FavoriteFrontController extends BaseController {
     }
 
     @RequestMapping(value = "/add")
-    public Result addVideoToFav(int vid, String uuidToken){
-        return favoriteService.addVideoToFav(vid,uuidToken);
+    public Result addVideoToFav(VIdList vid, String uuidToken){
+        return favoriteService.addVideoToFav(vid.getVid(),uuidToken);
     }
 }
