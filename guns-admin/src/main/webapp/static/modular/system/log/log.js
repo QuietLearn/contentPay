@@ -72,10 +72,9 @@ OptLog.delLog = function () {
 OptLog.formParams = function() {
     var queryData = {};
 
-    queryData['logName'] = $("#logName").val();
+    queryData['condition'] = $("#condition").val();
     queryData['beginTime'] = $("#beginTime").val();
     queryData['endTime'] = $("#endTime").val();
-    queryData['logType'] = $("#logType").val();
 
     return queryData;
 }

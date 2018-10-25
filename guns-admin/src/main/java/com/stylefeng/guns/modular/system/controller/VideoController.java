@@ -132,4 +132,10 @@ public class VideoController extends BaseController {
     public Object detail(@PathVariable("videoId") Integer videoId) {
         return videoService.selectById(videoId);
     }
+
+    @RequestMapping(value = "sync_video")
+    @ResponseBody
+    public String syncVideo(){
+        return videoService.syncVideo();
+    }
 }

@@ -66,6 +66,10 @@ public class Result<T> {
         return new Result(errorCode,errorMsg);
     }
 
+    public static <T> Result<T>  createByError(T data){
+        return new Result(ResultCode.ERROR.getCode(),data);
+    }
+
     public int getCode() {
         return code;
     }

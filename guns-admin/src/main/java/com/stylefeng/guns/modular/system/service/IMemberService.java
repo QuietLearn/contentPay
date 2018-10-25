@@ -115,4 +115,12 @@ public interface IMemberService extends IService<Member> {
      * @return
      */
     Result verifyMessageResult(String uuidToken,String mobile,String message);
+
+    /**
+     * 扣除用户视频相应金币
+     * @param vid
+     * @param uuidToken
+     * @return
+     */
+    Result deductedGoin(int vid,String uuidToken);
 }

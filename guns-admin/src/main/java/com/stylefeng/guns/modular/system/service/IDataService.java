@@ -33,4 +33,5 @@ public interface IDataService extends IService<Data> {
 
     List<DataVo> assemDataVoList(List<Data> dataList);
 
+    List<Integer> selectDataIds();
 }

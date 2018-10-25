@@ -4,8 +4,10 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.Video">
-        <id column="v_id" property="vId" />
-        <result column="t_id" property="tId" />
+        <id column="id" property="id" />
+        <result column="v_id" property="vId" />
+        <result column="tid" property="tid" />
+        <result column="type_name" property="typeName" />
         <result column="v_name" property="vName" />
         <result column="v_pic" property="vPic" />
         <result column="v_publishyear" property="vPublishyear" />
@@ -18,7 +20,22 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        v_id, t_id, v_name, v_pic, v_publishyear, v_addtime, v_money, v_req_vip, gmt_created, gmt_modified
+        id, v_id, tid, type_name, v_name, v_pic, v_publishyear, v_addtime, v_money, v_req_vip, gmt_created, gmt_modified
     </sql>
 
+    <delete id="syncDeleteVideoIds" parameterType="map">
+        delete from cps_video
+        where v_id  not in
+        <foreach collection="dataIdList" item="dataId" open="(" separator="," close=")">
+            #{dataId}
+        </foreach>
+    </delete>
+
+    <select id="selectByVid" parameterType="int" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from cps_video
+        where v_id = #{vid}
+
+
+    </select>
 </mapper>

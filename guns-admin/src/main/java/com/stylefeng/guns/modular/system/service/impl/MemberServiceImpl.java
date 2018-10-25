@@ -5,22 +5,21 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.google.common.collect.Maps;
 import com.stylefeng.guns.config.datasource.MultiDataSourceConfig;
 import com.stylefeng.guns.config.properties.SaltProperties;
+import com.stylefeng.guns.core.base.tips.ErrorTip;
 import com.stylefeng.guns.core.common.TokenCache;
 import com.stylefeng.guns.core.common.constant.Const;
 import com.stylefeng.guns.core.common.constant.DatasourceEnum;
 import com.stylefeng.guns.core.common.constant.state.AllConst;
 import com.stylefeng.guns.core.common.constant.state.ServerType;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.common.result.ResultCode;
 import com.stylefeng.guns.core.config.properties.MutiDataSourceProperties;
 import com.stylefeng.guns.core.mutidatasource.annotion.DataSource;
 import com.stylefeng.guns.core.support.HttpKit;
 import com.stylefeng.guns.core.util.MD5Util;
 import com.stylefeng.guns.core.util.meassge.IndustrySMS;
 import com.stylefeng.guns.core.util.meassge.SendSMSUtilLZ;
-import com.stylefeng.guns.modular.system.dao.DataMapper;
-import com.stylefeng.guns.modular.system.dao.MemberMapper;
-import com.stylefeng.guns.modular.system.dao.MemberTypeMapper;
-import com.stylefeng.guns.modular.system.dao.NoteMapper;
+import com.stylefeng.guns.modular.system.dao.*;
 import com.stylefeng.guns.modular.system.model.Data;
 import com.stylefeng.guns.modular.system.model.Member;
 import com.stylefeng.guns.modular.system.model.Note;
@@ -39,6 +38,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.MessageFormat;
 import java.util.*;
 
 import static com.stylefeng.guns.core.common.constant.DatasourceEnum.DATA_SOURCE_GUNS;
@@ -74,7 +74,8 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     @Autowired
     private IVideoService videoService;
 
-
+    @Autowired
+    private VideoMapper videoMapper;
 
     //后台逻辑方法
     public List<Member> list(String condition){
@@ -228,26 +229,31 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
     public Result checkVip(String uuidToken,int vid){
 
-        if (StringUtils.isBlank(uuidToken)){
-            return Result.createByErrorMessage("用户需要登录");
-        }
-
-        Data data = dataService.getDataByVid(vid);
-        if (data==null){
+        Video video = videoMapper.selectByVid(vid);
+        if (video==null){
             return Result.createByErrorMessage("视频不存在");
         }
         Member member = this.getMemberByUuidtoken(uuidToken);
-        if (member==null){
-            return Result.createByErrorMessage("token失效，请重新登录");
-        }
+       /* if (member==null){
+            return Result.createByErrorMessage("请重新登录");
+        }*/
 
-        if (AllConst.VideoReqVip.NO_NEED_VIP==data.getvReqVip()){
+        if (AllConst.VideoReqVip.NO_NEED_VIP==video.getvReqVip()){
             return Result.createBySuccessMessage("欢迎观看");
-        } else if(AllConst.VideoReqVip.NEED_VIP==data.getvReqVip()){
-            if (ServerType.VIP.getCode()==member.getMemberTypeId()){
-                return Result.createBySuccessMessage("欢迎观看");
+        } else if(AllConst.VideoReqVip.NEED_VIP==video.getvReqVip()){
+            if (member==null){
+                return Result.createByErrorCodeMessage(ResultCode.NEDD_LOGIN.getCode(),"已是会员或购买该影片，请登录观看");
+            }else if (member!=null){
+                if (ServerType.VIP.getCode()==member.getMemberTypeId()){
+                    return Result.createBySuccessMessage("欢迎观看");
+                }
+                Map map = Maps.newHashMap();
+                map.put("prompt1","请充值会员后观看");
+                map.put("prompt2", MessageFormat.format("可花费{0}金币观看",video.getvMoney()));
+                return Result.createByError(map);
             }
-            return Result.createByErrorMessage("请充值会员后观看");
+
+
         }
 
         return Result.createBySuccessMessage("欢迎观看");
@@ -426,13 +432,13 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
             return Result.createByErrorMessage("请重新登录");
         }
 
-        Video video = videoService.selectById(vid);
+        Video video = videoMapper.selectByVid(vid);
         if (member.getPoints() >= video.getvMoney()){
             member.setPoints(member.getPoints()-video.getvMoney());
             return Result.createBySuccessMessage("扣除成功，欢迎观看");
         }
 
-        return null;
+        return Result.createByErrorMessage("扣除失败，金币不足");
     }
 
 

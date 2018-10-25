@@ -9,6 +9,12 @@
                 <div class="row row-lg">
                     <div class="col-sm-12">
                         <div class="row">
+                            <div class="col-sm-2">
+                                <#TimeCon id="beginTime" name="发行日期从" isTime="false" pattern="YYYY" />
+                            </div>
+                            <div class="col-sm-2">
+                                <#TimeCon id="endTime" name="到" isTime="false" pattern="YYYY" />
+                            </div>
                             <div class="col-sm-3">
                                 <#NameCon id="condition" name="名称" />
                             </div>
@@ -18,7 +24,7 @@
                         </div>
                         <div class="hidden-xs" id="VideoTableToolbar" role="group">
                             @if(shiro.hasPermission("/video/add")){
-                                <#button name="添加" icon="fa-plus" clickFun="Video.openAddVideo()"/>
+                                <#button name="同步" icon="fa-refresh" clickFun="Video.openAddVideo()"/>
                             @}
                             @if(shiro.hasPermission("/video/update")){
                                 <#button name="修改" icon="fa-edit" clickFun="Video.openVideoDetail()" space="true"/>

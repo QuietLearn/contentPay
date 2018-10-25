@@ -14,13 +14,11 @@ var Video = {
 Video.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
-            {title: '视频id', field: 'vId', visible: true, align: 'center', valign: 'middle',sortable: true},
-            {title: '视频类型id', field: 'tid', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'typeName', visible: true, align: 'center', valign: 'middle'},
+            {title: '视频id', field: 'vId', visible: true, align: 'center', valign: 'middle'},
+            {title: '视频类型id', field: 'tId', visible: true, align: 'center', valign: 'middle'},
             {title: '视频名', field: 'vName', visible: true, align: 'center', valign: 'middle'},
             {title: '视频图片', field: 'vPic', visible: true, align: 'center', valign: 'middle'},
-            {title: '发行日期', field: 'vPublishyear', visible: true, align: 'center', valign: 'middle',sortable: true},
+            {title: '发行日期', field: 'vPublishyear', visible: true, align: 'center', valign: 'middle'},
             {title: '添加时间', field: 'vAddtime', visible: true, align: 'center', valign: 'middle'},
             {title: '消耗金币', field: 'vMoney', visible: true, align: 'center', valign: 'middle'},
             {title: '是否需要会员 0是 1否', field: 'vReqVip', visible: true, align: 'center', valign: 'middle'},
@@ -47,14 +45,17 @@ Video.check = function () {
  * 点击添加视频价格
  */
 Video.openAddVideo = function () {
-    var ajax = new $ax(Feng.ctxPath + "/video/sync_video", function (data) {
-        Feng.success("同步视频数据成功!");
-        Video.table.refresh();
-    }, function (data) {
-        Feng.error("同步视频数据失败!" + data.responseJSON.message + "!");
-    });
-    // ajax.set("videoId",this.seItem.id);
-    ajax.start();
+
+        var ajax = new $ax(Feng.ctxPath + "/video/sync_video", function (data) {
+            Feng.success("同步视频数据成功!");
+            Video.table.refresh();
+        }, function (data) {
+            Feng.error("同步视频数据失败!" + data.responseJSON.message + "!");
+        });
+        // ajax.set("videoId",this.seItem.id);
+        ajax.start();
+
+
 };
 
 /**
@@ -91,32 +92,17 @@ Video.delete = function () {
 };
 
 /**
- * 查询表单提交参数对象
- * @returns {{}}
- */
-Video.formParams = function() {
-    var queryData = {};
-
-    queryData['logName'] = $("#logName").val();
-    queryData['beginTime'] = $("#beginTime").val();
-    queryData['endTime'] = $("#endTime").val();
-
-    return queryData;
-}
-
-/**
  * 查询视频价格列表
  */
 Video.search = function () {
     var queryData = {};
-    //queryData['condition'] = $("#condition").val();
-    Video.table.refresh({query: Video.formParams()});
+    queryData['condition'] = $("#condition").val();
+    Video.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = Video.initColumn();
     var table = new BSTable(Video.id, "/video/list", defaultColunms);
     table.setPaginationType("server");
-    table.setQueryParams(Video.formParams());
     Video.table = table.init();
 });

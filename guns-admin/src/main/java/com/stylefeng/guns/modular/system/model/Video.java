@@ -14,23 +14,26 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-10-24
+ * @since 2018-10-25
  */
 @TableName("cps_video")
 public class Video extends Model<Video> {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
     /**
      * 视频id
      */
-    @TableId(value = "v_id", type = IdType.AUTO)
+    @TableField("v_id")
     private Integer vId;
     /**
      * 视频类型id
      */
-    @TableField("t_id")
-    private Integer tId;
+    private Integer tid;
+    @TableField("type_name")
+    private String typeName;
     /**
      * 视频名
      */
@@ -67,6 +70,14 @@ public class Video extends Model<Video> {
     private Date gmtModified;
 
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public Integer getvId() {
         return vId;
     }
@@ -75,12 +86,20 @@ public class Video extends Model<Video> {
         this.vId = vId;
     }
 
-    public Integer gettId() {
-        return tId;
+    public Integer getTid() {
+        return tid;
     }
 
-    public void settId(Integer tId) {
-        this.tId = tId;
+    public void setTid(Integer tid) {
+        this.tid = tid;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 
     public String getvName() {
@@ -149,14 +168,16 @@ public class Video extends Model<Video> {
 
     @Override
     protected Serializable pkVal() {
-        return this.vId;
+        return this.id;
     }
 
     @Override
     public String toString() {
         return "Video{" +
-        "vId=" + vId +
-        ", tId=" + tId +
+        "id=" + id +
+        ", vId=" + vId +
+        ", tid=" + tid +
+        ", typeName=" + typeName +
         ", vName=" + vName +
         ", vPic=" + vPic +
         ", vPublishyear=" + vPublishyear +

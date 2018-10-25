@@ -1,5 +1,6 @@
 package com.stylefeng.guns.modular.system.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.google.common.collect.Lists;
@@ -7,6 +8,7 @@ import com.stylefeng.guns.core.common.constant.DatasourceEnum;
 import com.stylefeng.guns.core.mutidatasource.annotion.DataSource;
 import com.stylefeng.guns.modular.system.model.Data;
 import com.stylefeng.guns.modular.system.dao.DataMapper;
+import com.stylefeng.guns.modular.system.model.Video;
 import com.stylefeng.guns.modular.system.service.IDataService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.stylefeng.guns.modular.system.vo.DataVo;
@@ -84,5 +86,15 @@ public class DataServiceImpl extends ServiceImpl<DataMapper, Data> implements ID
             dataVoList.add(dataVo);
         }
         return dataVoList;
+    }
+
+    @DataSource(name = DatasourceEnum.DATA_SOURCE_BIZ)
+    @Transactional
+    public List<Integer> selectDataIds(){
+        /*this.selectObjs()*/
+        Wrapper<Data> wrapper = new EntityWrapper<>();
+        wrapper.setSqlSelect("v_id");
+        List<Integer> dataIdList = ( List<Integer>)(List)this.selectObjs(wrapper);
+        return dataIdList;
     }
 }

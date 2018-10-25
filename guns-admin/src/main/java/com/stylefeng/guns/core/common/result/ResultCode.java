@@ -4,7 +4,8 @@ public enum ResultCode {
     UNKNOWN_ERROR(-1,"UNKNOWN_ERROR"),
     SUCCESS(0,"SUCCESS"),
     ERROR(1,"ERROR"),
-    ILLEAGAL_ARGUMENT(-2,"ILLEAGAL_ARGUMENT");
+    ILLEAGAL_ARGUMENT(-2,"ILLEAGAL_ARGUMENT"),
+    NEDD_LOGIN(10,"NEDD_LOGIN");
 
     private int code;
     private String desc;

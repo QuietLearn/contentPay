@@ -14,4 +14,6 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface IVideoService extends IService<Video> {
     Result confirmVideoPrice(int vid);
+
+    String syncVideo();
 }

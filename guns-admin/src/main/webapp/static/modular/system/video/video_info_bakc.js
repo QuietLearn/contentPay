@@ -45,10 +45,8 @@ VideoInfoDlg.close = function() {
  */
 VideoInfoDlg.collectData = function() {
     this
-    .set('id')
     .set('vId')
-    .set('tid')
-    .set('typeName')
+    .set('tId')
     .set('vName')
     .set('vPic')
     .set('vPublishyear')

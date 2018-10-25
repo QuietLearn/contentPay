@@ -9,9 +9,7 @@ import com.stylefeng.guns.modular.system.vo.MemberVo;
 import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -56,7 +54,7 @@ public class MemberFrontController extends BaseController {
     }
 
     @RequestMapping(value = "/checkVip")
-    public Result checkVip(String uuid,int vid){
+    public Result checkVip(@RequestParam(defaultValue = "0") String uuid, int vid){
         return memberService.checkVip(uuid,vid);
     }
 
@@ -83,5 +81,10 @@ public class MemberFrontController extends BaseController {
     @RequestMapping(value = "verify_message")
     Result verifyMessageResult(String uuidToken,String mobile,String message){
         return memberService.verifyMessageResult(uuidToken,mobile,message);
+    }
+
+    @RequestMapping(value = "deducted_goin")
+    Result deductedGoin(int vid,String uuidToken){
+        return memberService.deductedGoin(vid,uuidToken);
     }
 }
