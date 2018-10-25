@@ -19,7 +19,7 @@ public class NoticeWrapper extends BaseControllerWarpper {
 
     @Override
     public void warpTheMap(Map<String, Object> map) {
-        Integer creater = (Integer) map.get("creater");
+        Integer creater = (Integer) map.get("creater"); //通知的创建者是用户id
         map.put("createrName", ConstantFactory.me().getUserNameById(creater));
     }
 
