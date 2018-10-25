@@ -1,6 +1,8 @@
 package com.stylefeng.guns.modular.system.service.impl;
 
 import com.aliyuncs.exceptions.ClientException;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.google.common.collect.Maps;
 import com.stylefeng.guns.config.datasource.MultiDataSourceConfig;
@@ -20,12 +22,10 @@ import com.stylefeng.guns.core.util.MD5Util;
 import com.stylefeng.guns.core.util.meassge.IndustrySMS;
 import com.stylefeng.guns.core.util.meassge.SendSMSUtilLZ;
 import com.stylefeng.guns.modular.system.dao.*;
-import com.stylefeng.guns.modular.system.model.Data;
-import com.stylefeng.guns.modular.system.model.Member;
-import com.stylefeng.guns.modular.system.model.Note;
-import com.stylefeng.guns.modular.system.model.Video;
+import com.stylefeng.guns.modular.system.model.*;
 import com.stylefeng.guns.modular.system.service.IDataService;
 import com.stylefeng.guns.modular.system.service.IMemberService;
+import com.stylefeng.guns.modular.system.service.IPointsConsumeRecordService;
 import com.stylefeng.guns.modular.system.service.IVideoService;
 import com.stylefeng.guns.modular.system.vo.MemberVo;
 import jdk.nashorn.internal.parser.Token;
@@ -35,6 +35,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,16 +67,16 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     private NoteMapper noteMapper;
 
     @Autowired
-    private IDataService dataService;
-
-    @Autowired
     public SaltProperties saltProperties;
 
     @Autowired
-    private IVideoService videoService;
+    private VideoMapper videoMapper;
 
     @Autowired
-    private VideoMapper videoMapper;
+    private PointsConsumeRecordMapper pointsConsumeRecordMapper;
+
+    @Autowired
+    private IPointsConsumeRecordService pointsConsumeRecordService;
 
     //后台逻辑方法
     public List<Member> list(String condition){
@@ -247,6 +248,9 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
                 if (ServerType.VIP.getCode()==member.getMemberTypeId()){
                     return Result.createBySuccessMessage("欢迎观看");
                 }
+                if (pointsConsumeRecordService.isPayVideo(video.getvId(),member.getId())){
+                    return Result.createBySuccessMessage("欢迎观看");
+                }
                 Map map = Maps.newHashMap();
                 map.put("prompt1","请充值会员后观看");
                 map.put("prompt2", MessageFormat.format("可花费{0}金币观看",video.getvMoney()));
@@ -258,6 +262,8 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
         return Result.createBySuccessMessage("欢迎观看");
     }
+
+
 
     //注册获取短信1
     /*
@@ -425,7 +431,8 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         return Result.createBySuccess("验证通过",safeUuid);
     }
 
-
+    //Isolation.REPEATABLE_READ
+    @Transactional
     public Result deductedGoin(int vid,String uuidToken){
         Member member = memberMapper.selectMemberByUuidToken(uuidToken);
         if (member==null){
@@ -433,11 +440,34 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         }
 
         Video video = videoMapper.selectByVid(vid);
-        if (member.getPoints() >= video.getvMoney()){
-            member.setPoints(member.getPoints()-video.getvMoney());
-            return Result.createBySuccessMessage("扣除成功，欢迎观看");
+        if (video ==null){
+            return Result.createByErrorMessage("该视频不存在");
         }
 
+        if (pointsConsumeRecordService.isPayVideo(video.getvId(),member.getId())){
+            return Result.createByErrorMessage("已付费此视频");
+        }
+
+
+        if (member.getPoints() >= video.getvMoney()){
+            member.setPoints(member.getPoints()-video.getvMoney());
+
+            Integer updateCount = memberMapper.updateById(member);
+
+            PointsConsumeRecord pointsConsumeRecord = new PointsConsumeRecord();
+            pointsConsumeRecord.setGmtCreated(new Date());
+            pointsConsumeRecord.setGmtModified(new Date());
+            pointsConsumeRecord.setPoints(video.getvMoney());
+            pointsConsumeRecord.setMemberId(member.getId());
+            pointsConsumeRecord.setVideoId(video.getvId());
+            pointsConsumeRecord.setIsDel(1);
+
+            Integer insertCount = pointsConsumeRecordMapper.insert(pointsConsumeRecord);
+            if (updateCount>0&&insertCount>0){
+                return Result.createBySuccessMessage("扣除成功，欢迎观看");
+            }
+            return Result.createByErrorMessage("扣除失败");
+        }
         return Result.createByErrorMessage("扣除失败，金币不足");
     }
 
@@ -536,7 +566,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     }
 
     /**
-     * 加星隐藏保密隐私(只是电话的)
+     * 加星隐藏保密隐私(是Email的)
      *
      * @param str
      * @return
