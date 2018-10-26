@@ -71,6 +71,9 @@ public class PlayHistoryServiceImpl extends ServiceImpl<PlayHistoryMapper, PlayH
         //得到前台给的  还没有添加到数据库的播放视频记录
         List<Integer> subtract = ListUtils.subtract(vids, existVids);
 
+        if (CollectionUtils.isEmpty(subtract)){
+            return Result.createBySuccessMessage("同步成功");
+        }
         //List<Data> videoList = dataService.selectVideosByIds(subtract);
         //得到未添加到数据库的视频信息
         List<Data> videoList = dataService.selectBatchVideoIds(subtract);
@@ -84,7 +87,8 @@ public class PlayHistoryServiceImpl extends ServiceImpl<PlayHistoryMapper, PlayH
 
         boolean isInsert = this.insertBatch(playHistoryList);
         if (isInsert){
-            return Result.createBySuccessMessage("同步成功");
+            PlayHistoryVo playHistoryVo = getFavortieVoLimit(uuidToken);
+            return Result.createBySuccess("同步成功",playHistoryVo);
         }
         return Result.createByErrorMessage("同步失败");
     }

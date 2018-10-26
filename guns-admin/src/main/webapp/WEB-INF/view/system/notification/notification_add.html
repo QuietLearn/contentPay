@@ -1,0 +1,32 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="主键" underline="true"/>
+                            <#input id="title" name="标题" underline="true"/>
+                            <#input id="type" name="类型(1000 系统消息 1001 热门活动 1002 app异常bug消息)" underline="true"/>
+                            <#input id="content" name="内容" underline="true"/>
+                            <#input id="activityUrl" name="活动地址"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="picAddress" name="图片地址" underline="true"/>
+                            <#input id="isDel" name="逻辑删除 0是 1否" underline="true"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="NotificationInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="NotificationInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/notification/notification_info.js"></script>
+@}

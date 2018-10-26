@@ -1,4 +1,4 @@
-package com.stylefeng.guns.modular.system.controller;
+package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;

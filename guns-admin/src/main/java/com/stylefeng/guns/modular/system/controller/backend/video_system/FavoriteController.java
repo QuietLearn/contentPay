@@ -1,6 +1,9 @@
-package com.stylefeng.guns.modular.system.controller;
+package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.modular.system.warpper.DictWarpper;
+import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +16,8 @@ import com.stylefeng.guns.modular.system.model.Favorite;
 import com.stylefeng.guns.modular.system.service.IFavoriteService;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户看单控制器
@@ -62,7 +67,9 @@ public class FavoriteController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {
-        return favoriteService.selectList(null);
+        List<Favorite> favoriteList = favoriteService.selectList(null);
+
+        return super.warpObject(new TypeWarpper(BeanKit.listToMapList(favoriteList)));
     }
 
     /**

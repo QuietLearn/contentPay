@@ -2,19 +2,24 @@ package com.stylefeng.guns.modular.system.service.impl;
 
 import com.alipay.api.domain.ProductVOOptions;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.google.common.collect.Lists;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.modular.system.dao.DataMapper;
 import com.stylefeng.guns.modular.system.dao.MemberMapper;
 import com.stylefeng.guns.modular.system.model.Data;
 import com.stylefeng.guns.modular.system.model.Favorite;
 import com.stylefeng.guns.modular.system.dao.FavoriteMapper;
 import com.stylefeng.guns.modular.system.model.Member;
+import com.stylefeng.guns.modular.system.model.Type;
 import com.stylefeng.guns.modular.system.service.IDataService;
 import com.stylefeng.guns.modular.system.service.IFavoriteService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.stylefeng.guns.modular.system.service.ITypeService;
 import com.stylefeng.guns.modular.system.vo.FavoriteVo;
 import com.stylefeng.guns.modular.system.vo.VideoVo;
+import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.ListUtils;
 import org.slf4j.Logger;
@@ -23,10 +28,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * <p>
@@ -48,6 +50,8 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
     @Autowired
     private MemberMapper memberMapper;
 
+    @Autowired
+    private ITypeService typeService;
 
     //列举用户的收藏夹
     public Result<FavoriteVo> list(String uuidToken){
@@ -90,6 +94,10 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
 //        ListUtils.
 
         List<Integer> subtract = ListUtils.subtract(vids, existVids);
+        if (CollectionUtils.isEmpty(subtract)){
+            return Result.createBySuccessMessage("同步成功");
+        }
+
 
 //        List<Data> videoList = dataService.selectVideosByIds(subtract);
         List<Data> videoList = dataService.selectBatchVideoIds(subtract);
@@ -103,7 +111,9 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
 
         boolean isInsert = this.insertBatch(favoriteList);
         if (isInsert){
-            return Result.createBySuccessMessage("同步成功");
+            FavoriteVo favoriteVo = getFavortieVoLimit(uuidToken);
+
+            return Result.createBySuccess("同步成功",favoriteVo);
         }
         return Result.createByErrorMessage("同步失败");
     }
@@ -144,6 +154,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
         List<VideoVo> videoVoList = Lists.newArrayList();
         if (CollectionUtils.isNotEmpty(favorites)){
             for (Favorite favorite:favorites){
+
                 VideoVo videoVo = new VideoVo();
                 BeanUtils.copyProperties(favorite,videoVo);
                 videoVoList.add(videoVo);

@@ -113,4 +113,11 @@ public interface IConstantFactory {
      */
     List<Integer> getParentDeptIds(Integer deptid);
 
+    /**
+     * 获取视频类型名
+     * @param typeId
+     * @return
+     */
+    String getTypeName(Integer typeId );
+
 }

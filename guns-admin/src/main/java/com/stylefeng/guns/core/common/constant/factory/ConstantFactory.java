@@ -13,6 +13,8 @@ import com.stylefeng.guns.core.support.StrKit;
 import com.stylefeng.guns.core.util.Convert;
 import com.stylefeng.guns.core.util.SpringContextHolder;
 import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.modular.system.service.IFavoriteService;
+import com.stylefeng.guns.modular.system.service.ITypeService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
@@ -36,6 +38,8 @@ public class ConstantFactory implements IConstantFactory {
     private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
     private MenuMapper menuMapper = SpringContextHolder.getBean(MenuMapper.class);
     private NoticeMapper noticeMapper = SpringContextHolder.getBean(NoticeMapper.class);
+    //video_system
+    private ITypeService typeService = SpringContextHolder.getBean(ITypeService.class);
 
     public static IConstantFactory me() {
         return SpringContextHolder.getBean("constantFactory");
@@ -329,5 +333,18 @@ public class ConstantFactory implements IConstantFactory {
         return parentDeptIds;
     }
 
+
+    /**
+     * 获取视频类型名
+     * @param typeId
+     * @return
+     */
+    public String getTypeName(Integer typeId ){
+        Wrapper<Type> wrapper = new EntityWrapper<>();
+        wrapper.eq("tid",typeId);
+        wrapper.setSqlSelect("tname");
+        String typeName = typeService.getTypeName(wrapper);
+        return typeName;
+    }
 
 }

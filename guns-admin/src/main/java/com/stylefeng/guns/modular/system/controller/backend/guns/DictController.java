@@ -1,4 +1,4 @@
-package com.stylefeng.guns.modular.system.controller;
+package com.stylefeng.guns.modular.system.controller.backend.guns;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.stylefeng.guns.core.base.controller.BaseController;

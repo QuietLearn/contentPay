@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.TypeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.Type">
+        <id column="tid" property="tid" />
+        <result column="upid" property="upid" />
+        <result column="tname" property="tname" />
+        <result column="tenname" property="tenname" />
+        <result column="torder" property="torder" />
+        <result column="templist" property="templist" />
+        <result column="templist_1" property="templist1" />
+        <result column="templist_2" property="templist2" />
+        <result column="title" property="title" />
+        <result column="keyword" property="keyword" />
+        <result column="description" property="description" />
+        <result column="ishidden" property="ishidden" />
+        <result column="unionid" property="unionid" />
+        <result column="tptype" property="tptype" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        tid, upid, tname, tenname, torder, templist, templist_1, templist_2, title, keyword, description, ishidden, unionid, tptype
+    </sql>
+
+</mapper>

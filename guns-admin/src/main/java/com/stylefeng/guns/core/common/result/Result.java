@@ -2,15 +2,19 @@ package com.stylefeng.guns.core.common.result;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import java.io.Serializable;
 
 //@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class Result<T> {
+public class Result<T> implements Serializable {
     /** 错误提示码 */
     private int code;
     /** 提示信息 */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String msg;
     /** 具体内容 */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private T data;
 
     private Result(int code){
