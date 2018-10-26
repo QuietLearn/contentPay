@@ -13,5 +13,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface MemberTypeMapper extends BaseMapper<MemberType> {
 
-    String findNameByCode(int id);
+    String findNameByCode(Integer id);
 }

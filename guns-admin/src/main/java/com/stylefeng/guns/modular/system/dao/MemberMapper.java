@@ -41,4 +41,6 @@ public interface MemberMapper extends BaseMapper<Member> {
     int checkMobileByUserId(@Param("mobile") String mobile, @Param("userId")  Integer userId);
 
     int checkUsernameByUserId(@Param("username") String username,@Param("userId") Integer userId);
+
+    int insertMember(Member member);
 }

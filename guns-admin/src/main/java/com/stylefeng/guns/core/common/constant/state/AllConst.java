@@ -62,4 +62,14 @@ public class AllConst {
         String accessKeySecret ="USzLesKykp7JvzGnBHJPSCjGVdjA3J"; //="4RDLyTeo3ka8aKZyaAJPtC3h661o0d"
         String SignName        ="坚果娱乐";
     }
+
+
+    public enum NotifyTypeEnum{
+        /*SYSTEM(1000,"系统消息"),
+        ACTIVITY(1001,"热门活动"),
+        BUG(1002,"异常bug消息");
+        valueof(){
+
+        }*/
+    }
 }

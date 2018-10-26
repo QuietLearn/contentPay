@@ -45,7 +45,6 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        /* introduction,focus_count, fans_count, hit_count, user_level, experience ,gmt_receive*/
         id, username, nickname, password, Md5_password, gender, pic_address, mobile, qq, weixin, email, member_type_id, member_type_name, vip_level, buy_time, end_time, aging, points, favorites_ids, last_login, last_loginIp, register_time, register_ip, UUID_token, total_money, is_lock, is_del, gmt_created, gmt_modified
     </sql>
 
@@ -146,4 +145,25 @@
     WHERE username = #{username}
     and id != #{userId}
     </select>
+
+    <insert id="insertMember" parameterType="com.stylefeng.guns.modular.system.model.Member" useGeneratedKeys="true" keyProperty="id">
+    insert into cps_member (<include refid="Base_Column_List"/>)
+    values (
+        #{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR},
+      #{password,jdbcType=VARCHAR}, #{md5Password,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR},
+      #{picAddress,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR},
+      #{weixin,jdbcType=VARCHAR},#{memberTypeId,jdbcType=INTEGER},#{memberTypeName,jdbcType=VARCHAR},
+        #{vipLevel,jdbcType=INTEGER},
+        #{buyTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP},#{aging,jdbcType=INTEGER},
+        #{birthday,jdbcType=DATE},#{points,jdbcType=INTEGER},#{favoritesIds,jdbcType=VARCHAR},
+        #{lastLogin,jdbcType=TIMESTAMP},#{lastLoginip,jdbcType=VARCHAR},
+        #{registerTime,jdbcType=TIMESTAMP},#{registerIp,jdbcType=VARCHAR},
+        #{uuidToken,jdbcType=VARCHAR},#{totalMoney,jdbcType=INTEGER},
+        #{isLock,jdbcType=INTEGER},#{isDel,jdbcType=INTEGER},
+        now(), now()
+      )
+
+    </insert>
+
+
 </mapper>
