@@ -94,8 +94,8 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     public Result<MemberVo> register(String mobile,String password,String message) {
         Member existMember = memberMapper.selectMemberByMobile(mobile);
         if (existMember!=null){
-            logger.info("这个手机号还没注册过哦，请先去注册一下吧");
-            return Result.createByErrorMessage("这个手机号还没注册过哦，请先去注册一下吧");
+            logger.info("这个手机已经注册过了");
+            return Result.createByErrorMessage("这个手机已经注册过了");
         }
         if (!verifyMessage(mobile,message)){
             return Result.createByErrorMessage(AllConst.MESSAGE_ERROR_MSG);
