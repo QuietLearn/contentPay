@@ -26,9 +26,9 @@ public class MemberFrontController extends BaseController {
      * 注册会员 除了前端表单的信息也需要设置默认的信息
      */
     @RequestMapping(value = "/register")
-    public Result<MemberVo> register(String mobile, String password, String message) {
+    public Result<MemberVo> register(String mobile, String password, String message,Integer appId,String appVer,String channel) {
 
-        return memberService.register(mobile,password,message);
+        return memberService.register(mobile,password,message,appId,appVer,channel);
     }
 
     /**

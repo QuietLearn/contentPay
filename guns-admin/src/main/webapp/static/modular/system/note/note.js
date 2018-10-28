@@ -14,13 +14,19 @@ var Note = {
 Note.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
             {title: '信息', field: 'message', visible: true, align: 'center', valign: 'middle'},
             {title: '短信有效时间(分)', field: 'aging', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
+            {title: '', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
             {title: '发送手机', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtUpdated', visible: true, align: 'center', valign: 'middle'}
+            {title: '发送时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
+            {title: '', field: 'gmtUpdated', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
+
+        {title: '应用名', field: 'appName', visible: true, align: 'center', valign: 'middle'},
+
+            {title: '应用版本', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
+            {title: '渠道号', field: 'channel', visible: true, align: 'center', valign: 'middle'}
     ];
 };
 

@@ -25,7 +25,7 @@ public interface IMemberService extends IService<Member> {
      * @param password
      * @return
      */
-    Result<MemberVo> register(String mobile, String password, String message);
+    Result register(String mobile,String password,String message,Integer appId,String appVer,String channel);
 
     /**
      * 检查注册页面用户名和邮箱是否已存在

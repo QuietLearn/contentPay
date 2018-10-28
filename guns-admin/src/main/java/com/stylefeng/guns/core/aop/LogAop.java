@@ -96,10 +96,10 @@ public class LogAop {
             msg = Contrast.contrastObj(dictClass, key, obj1, obj2);
         } else {
             Map<String, String> parameters = HttpKit.getRequestParameters();
-            AbstractDictMap dictMap = (AbstractDictMap) dictClass.newInstance();
-            msg = Contrast.parseMutiKey(dictMap,key,parameters);
+            AbstractDictMap dictMap = (AbstractDictMap) dictClass.newInstance(); //获取对应字典类的对象
+            msg = Contrast.parseMutiKey(dictMap,key,parameters); //获取到key的包装
         }
 
-        LogManager.me().executeLog(LogTaskFactory.bussinessLog(user.getId(), bussinessName, className, methodName, msg));
+        LogManager.me().executeLog(LogTaskFactory.bussinessLog(user.getId(), bussinessName, className, methodName, msg));//记录日志保存到数据库 异步方式
     }
 }

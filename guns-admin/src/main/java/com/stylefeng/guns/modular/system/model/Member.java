@@ -6,8 +6,6 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
-
-import javax.annotation.Generated;
 import java.io.Serializable;
 
 /**
@@ -16,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-10-22
+ * @since 2018-10-28
  */
 @TableName("cps_member")
 public class Member extends Model<Member> {
@@ -28,6 +26,18 @@ public class Member extends Model<Member> {
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
+    /**
+     * 应用id
+     */
+    private Integer appId;
+    /**
+     * 应用版本
+     */
+    private String appVer;
+    /**
+     * 渠道号
+     */
+    private String channel;
     /**
      * 用户名
      */
@@ -170,6 +180,30 @@ public class Member extends Model<Member> {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Integer getAppId() {
+        return appId;
+    }
+
+    public void setAppId(Integer appId) {
+        this.appId = appId;
+    }
+
+    public String getAppVer() {
+        return appVer;
+    }
+
+    public void setAppVer(String appVer) {
+        this.appVer = appVer;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
     }
 
     public String getUsername() {
@@ -413,6 +447,9 @@ public class Member extends Model<Member> {
     public String toString() {
         return "Member{" +
         "id=" + id +
+        ", appId=" + appId +
+        ", appVer=" + appVer +
+        ", channel=" + channel +
         ", username=" + username +
         ", nickname=" + nickname +
         ", password=" + password +

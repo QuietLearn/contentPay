@@ -1,5 +1,5 @@
 /**
- * 积分流水记录管理初始化
+ * 积分流水管理管理初始化
  */
 var PointsConsumeRecord = {
     id: "PointsConsumeRecordTable",	//表格id
@@ -16,11 +16,17 @@ PointsConsumeRecord.initColumn = function () {
         {field: 'selectItem', radio: true},
             {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: '消费的积分', field: 'points', visible: true, align: 'center', valign: 'middle'},
-            {title: '消费的用户', field: 'memberId', visible: true, align: 'center', valign: 'middle'},
+            {title: '消费的用户', field: 'memberId', visible: false, align: 'center', valign: 'middle'},
+        {title: '消费的用户', field: 'memberName', visible: true, align: 'center', valign: 'middle'},
             {title: '消费观看的视频', field: 'videoId', visible: true, align: 'center', valign: 'middle'},
-            {title: '是否删除', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtModified', visible: true, align: 'center', valign: 'middle'}
+            {title: '是否删除', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
+            {title: '创建时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
+            {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'},
+            {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
+
+        {title: '应用名', field: 'appName', visible: true, align: 'center', valign: 'middle'},
+            {title: '应用版本', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
+            {title: '渠道号', field: 'channel', visible: true, align: 'center', valign: 'middle'}
     ];
 };
 
@@ -39,12 +45,12 @@ PointsConsumeRecord.check = function () {
 };
 
 /**
- * 点击添加积分流水记录
+ * 点击添加积分流水管理
  */
 PointsConsumeRecord.openAddPointsConsumeRecord = function () {
     var index = layer.open({
         type: 2,
-        title: '添加积分流水记录',
+        title: '添加积分流水管理',
         area: ['800px', '420px'], //宽高
         fix: false, //不固定
         maxmin: true,
@@ -54,13 +60,13 @@ PointsConsumeRecord.openAddPointsConsumeRecord = function () {
 };
 
 /**
- * 打开查看积分流水记录详情
+ * 打开查看积分流水管理详情
  */
 PointsConsumeRecord.openPointsConsumeRecordDetail = function () {
     if (this.check()) {
         var index = layer.open({
             type: 2,
-            title: '积分流水记录详情',
+            title: '积分流水管理详情',
             area: ['800px', '420px'], //宽高
             fix: false, //不固定
             maxmin: true,
@@ -71,7 +77,7 @@ PointsConsumeRecord.openPointsConsumeRecordDetail = function () {
 };
 
 /**
- * 删除积分流水记录
+ * 删除积分流水管理
  */
 PointsConsumeRecord.delete = function () {
     if (this.check()) {
@@ -87,7 +93,7 @@ PointsConsumeRecord.delete = function () {
 };
 
 /**
- * 查询积分流水记录列表
+ * 查询积分流水管理列表
  */
 PointsConsumeRecord.search = function () {
     var queryData = {};

@@ -13,5 +13,5 @@ import com.baomidou.mybatisplus.service.IService;
  * @since 2018-10-26
  */
 public interface ITypeService extends IService<Type> {
-    String getTypeName(Wrapper wrapper);
+    String getTypeName(Integer typeId);
 }

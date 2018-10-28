@@ -11,11 +11,14 @@
         <result column="is_del" property="isDel" />
         <result column="gmt_created" property="gmtCreated" />
         <result column="gmt_modified" property="gmtModified" />
+        <result column="appId" property="appId" />
+        <result column="appVer" property="appVer" />
+        <result column="channel" property="channel" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, points, memberId, videoId, is_del, gmt_created, gmt_modified
+        id, points, memberId, videoId, is_del, gmt_created, gmt_modified, appId, appVer, channel
     </sql>
 
 </mapper>

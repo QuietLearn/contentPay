@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-10-24
+ * @since 2018-10-28
  */
 @TableName("cps_favorite")
 public class Favorite extends Model<Favorite> {
@@ -82,6 +82,10 @@ public class Favorite extends Model<Favorite> {
     @TableField("member_username")
     private String memberUsername;
     /**
+     * 收藏排序
+     */
+    private Integer sort;
+    /**
      * 逻辑删除
      */
     @TableField("is_del")
@@ -93,6 +97,18 @@ public class Favorite extends Model<Favorite> {
     private Date gmtCreated;
     @TableField("gmt_modified")
     private Date gmtModified;
+    /**
+     * 应用id
+     */
+    private Integer appId;
+    /**
+     * 应用版本
+     */
+    private String appVer;
+    /**
+     * 渠道号
+     */
+    private String channel;
 
 
     public Integer getId() {
@@ -191,6 +207,14 @@ public class Favorite extends Model<Favorite> {
         this.memberUsername = memberUsername;
     }
 
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
     public Integer getIsDel() {
         return isDel;
     }
@@ -215,6 +239,30 @@ public class Favorite extends Model<Favorite> {
         this.gmtModified = gmtModified;
     }
 
+    public Integer getAppId() {
+        return appId;
+    }
+
+    public void setAppId(Integer appId) {
+        this.appId = appId;
+    }
+
+    public String getAppVer() {
+        return appVer;
+    }
+
+    public void setAppVer(String appVer) {
+        this.appVer = appVer;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -235,9 +283,13 @@ public class Favorite extends Model<Favorite> {
         ", videoPublishyear=" + videoPublishyear +
         ", memberId=" + memberId +
         ", memberUsername=" + memberUsername +
+        ", sort=" + sort +
         ", isDel=" + isDel +
         ", gmtCreated=" + gmtCreated +
         ", gmtModified=" + gmtModified +
+        ", appId=" + appId +
+        ", appVer=" + appVer +
+        ", channel=" + channel +
         "}";
     }
 }

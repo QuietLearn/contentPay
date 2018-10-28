@@ -9,9 +9,8 @@ import com.baomidou.mybatisplus.service.IService;
  * </p>
  *
  * @author hyj
- * @since 2018-10-25
+ * @since 2018-10-29
  */
 public interface IPointsConsumeRecordService extends IService<PointsConsumeRecord> {
-
     boolean isPayVideo(Integer vid,Integer memberId);
 }

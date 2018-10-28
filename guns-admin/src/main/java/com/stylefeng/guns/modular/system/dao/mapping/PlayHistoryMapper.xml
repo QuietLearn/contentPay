@@ -16,14 +16,18 @@
         <result column="video_publishyear" property="videoPublishyear" />
         <result column="member_id" property="memberId" />
         <result column="member_username" property="memberUsername" />
+        <result column="sort" property="sort" />
         <result column="is_del" property="isDel" />
         <result column="gmt_created" property="gmtCreated" />
         <result column="gmt_modified" property="gmtModified" />
+        <result column="appId" property="appId" />
+        <result column="appVer" property="appVer" />
+        <result column="channel" property="channel" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, type_id, video_id, video_name, video_note, video_pic, video_actor, video_director, video_publisharea, video_publishyear, member_id, member_username, is_del, gmt_created, gmt_modified
+        id, type_id, video_id, video_name, video_note, video_pic, video_actor, video_director, video_publisharea, video_publishyear, member_id, member_username, sort, is_del, gmt_created, gmt_modified, appId, appVer, channel
     </sql>
 
     <select id="selectByVideoId" parameterType="map" resultMap="BaseResultMap">
@@ -34,8 +38,9 @@
     </select>
 
     <select id="selectVideoIdsByMember" parameterType="int" resultType="int">
-          select video_id
+        select video_id
         from cps_play_history
         where member_id = #{memberId}
     </select>
+
 </mapper>

@@ -51,7 +51,10 @@ NoteInfoDlg.collectData = function() {
     .set('isDel')
     .set('mobile')
     .set('gmtCreated')
-    .set('gmtUpdated');
+    .set('gmtUpdated')
+    .set('appId')
+    .set('appVer')
+    .set('channel');
 }
 
 /**

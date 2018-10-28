@@ -10,16 +10,15 @@ import org.apache.ibatis.annotations.Param;
  * </p>
  *
  * @author hyj
- * @since 2018-10-15
+ * @since 2018-10-28
  */
 public interface MemberMapper extends BaseMapper<Member> {
-
 
     int checkName(String name);
 
     int checkEmail(String email);
 
-    int updateGmtLastLoginAndLastIp(@Param("memberId") Integer accountId,@Param("ip") String ip);
+    int updateGmtLastLoginAndLastIp(@Param("memberId") Integer accountId, @Param("ip") String ip);
 
     Member login(@Param("username") String username, @Param("md5Password") String md5Password);
 
@@ -33,14 +32,14 @@ public interface MemberMapper extends BaseMapper<Member> {
 
     Member loginByMobile(@Param("mobile") String mobile, @Param("md5Password") String md5Password);
 
-    int updatePasswordByMobile(@Param("mobile")String mobile,@Param("password")String password
-            ,@Param("md5Password")String md5Password);
+    int updatePasswordByMobile(@Param("mobile") String mobile, @Param("password") String password
+            , @Param("md5Password") String md5Password);
 
-    int checkEmailByUserId(@Param("email") String email,@Param("userId")  Integer userId);
+    int checkEmailByUserId(@Param("email") String email, @Param("userId") Integer userId);
 
-    int checkMobileByUserId(@Param("mobile") String mobile, @Param("userId")  Integer userId);
+    int checkMobileByUserId(@Param("mobile") String mobile, @Param("userId") Integer userId);
 
-    int checkUsernameByUserId(@Param("username") String username,@Param("userId") Integer userId);
+    int checkUsernameByUserId(@Param("username") String username, @Param("userId") Integer userId);
 
-    int insertMember(Member member);
+    int insertSelective(Member member);
 }

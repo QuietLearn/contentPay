@@ -6,8 +6,6 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.io.Serializable;
 
 /**
@@ -16,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-10-19
+ * @since 2018-10-28
  */
 @TableName("cps_note")
 public class Note extends Model<Note> {
@@ -40,11 +38,21 @@ public class Note extends Model<Note> {
      */
     private String mobile;
     @TableField("gmt_created")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date gmtCreated;
     @TableField("gmt_updated")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date gmtUpdated;
+    /**
+     * 应用id
+     */
+    private Integer appId;
+    /**
+     * 应用版本
+     */
+    private String appVer;
+    /**
+     * 渠道号
+     */
+    private String channel;
 
 
     public Integer getId() {
@@ -103,6 +111,30 @@ public class Note extends Model<Note> {
         this.gmtUpdated = gmtUpdated;
     }
 
+    public Integer getAppId() {
+        return appId;
+    }
+
+    public void setAppId(Integer appId) {
+        this.appId = appId;
+    }
+
+    public String getAppVer() {
+        return appVer;
+    }
+
+    public void setAppVer(String appVer) {
+        this.appVer = appVer;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -118,6 +150,9 @@ public class Note extends Model<Note> {
         ", mobile=" + mobile +
         ", gmtCreated=" + gmtCreated +
         ", gmtUpdated=" + gmtUpdated +
+        ", appId=" + appId +
+        ", appVer=" + appVer +
+        ", channel=" + channel +
         "}";
     }
 }

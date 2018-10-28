@@ -71,7 +71,7 @@ public class MemberController extends BaseController {
     @ResponseBody
     public List<Member> list(String condition) {
 
-        return memberService.list(condition);
+        return memberService.list(null);
     }
 
     /**

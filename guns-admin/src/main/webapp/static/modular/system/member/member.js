@@ -1,5 +1,5 @@
 /**
- * 会员管理初始化
+ * 会员管理管理初始化
  */
 var Member = {
     id: "MemberTable",	//表格id
@@ -14,38 +14,52 @@ var Member = {
 Member.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            /*{title: 'id', field: 'id', visible: true, align: 'center', valign: 'middle'},*/
-            {title: '用户名', field: 'username', visible: true, align: 'center', valign: 'middle'},
-            {title: '昵称', field: 'nickname', visible: true, align: 'center', valign: 'middle'},
-            /*{title: '明文密码', field: 'password', visible: true, align: 'center', valign: 'middle'},*/
-            {title: 'md5加密密码', field: 'md5Password', visible: true, align: 'center', valign: 'middle'},
-            {title: '性别', field: 'gender', visible: true, align: 'center', valign: 'middle'},
-            {title: '头像图片地址', field: 'picAddress', visible: true, align: 'center', valign: 'middle'},
-            {title: '手机', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
-            {title: 'qq', field: 'qq', visible: true, align: 'center', valign: 'middle'},
-            {title: '微信', field: 'weixin', visible: true, align: 'center', valign: 'middle'},
-            {title: '邮箱', field: 'email', visible: true, align: 'center', valign: 'middle'},
-           /* {title: '会员类型 表id', field: 'memberTypeId', visible: true, align: 'center', valign: 'middle'},*/
-            {title: '会员类型名称', field: 'memberTypeName', visible: true, align: 'center', valign: 'middle'},
-            {title: '会员等级', field: 'vipLevel', visible: true, align: 'center', valign: 'middle'},
-           /* {title: '购买时间', field: 'buyTime', visible: true, align: 'center', valign: 'middle'},
-            {title: '结束时间', field: 'endTime', visible: true, align: 'center', valign: 'middle'},
-            {title: '有效时间', field: 'aging', visible: true, align: 'center', valign: 'middle'},*/
-            {title: '积分', field: 'points', visible: true, align: 'center', valign: 'middle'},
-            {title: '用户等级', field: 'userLevel', visible: true, align: 'center', valign: 'middle'},
-            {title: '用户经验', field: 'experience', visible: true, align: 'center', valign: 'middle'},
-            /*{title: '收藏夹ids ，分隔', field: 'favoritesIds', visible: true, align: 'center', valign: 'middle'},
-            {title: '最后登录时间', field: 'lastLogin', visible: true, align: 'center', valign: 'middle'},
-            {title: '最后登录ip', field: 'lastLoginip', visible: true, align: 'center', valign: 'middle'},*/
-           /* {title: '注册时间', field: 'registerTime', visible: true, align: 'center', valign: 'middle'},
-            {title: '注册ip', field: 'registerIp', visible: true, align: 'center', valign: 'middle'},
-            {title: 'uuid唯一值', field: 'uuidToken', visible: true, align: 'center', valign: 'middle'},*/
+        {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
 
-            {title: '总消费额', field: 'totalMoney', visible: true, align: 'center', valign: 'middle'}
-            /*{title: '是否锁定 0 是 １否', field: 'isLock', visible: true, align: 'center', valign: 'middle'},
-            {title: '逻辑删除 0 是 １否', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
-            {title: '创建时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
-            {title: '更改时间', field: 'gmtModified', visible: true, align: 'center', valign: 'middle'}*/
+            {title: '应用id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
+            {title: '应用版本', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
+            {title: '渠道号', field: 'channel', visible: true, align: 'center', valign: 'middle'},
+        {title: '用户名', field: 'username', visible: true, align: 'center', valign: 'middle'},
+
+        {title: '昵称', field: 'nickname', visible: false, align: 'center', valign: 'middle'},
+        {title: '明文密码', field: 'password', visible: false, align: 'center', valign: 'middle'},
+        {title: 'md5加密密码', field: 'md5Password', visible: false, align: 'center', valign: 'middle'},
+
+        {title: '性别', field: 'gender', visible: true, align: 'center', valign: 'middle'},
+        {title: '头像图片地址', field: 'picAddress', visible: true, align: 'center', valign: 'middle'},
+        {title: '手机', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
+
+        {title: 'qq', field: 'qq', visible: false, align: 'center', valign: 'middle'},
+        {title: '微信', field: 'weixin', visible: false, align: 'center', valign: 'middle'},
+
+        {title: '邮箱', field: 'email', visible: true, align: 'center', valign: 'middle'},
+
+         {title: '会员类型 表id', field: 'memberTypeId', visible: false, align: 'center', valign: 'middle'},
+
+        {title: '会员类型名称', field: 'memberTypeName', visible: true, align: 'center', valign: 'middle'},
+
+        {title: '会员等级', field: 'vipLevel', visible: false, align: 'center', valign: 'middle'},
+         {title: '购买时间', field: 'buyTime', visible: false, align: 'center', valign: 'middle'},
+         {title: '结束时间', field: 'endTime', visible: false, align: 'center', valign: 'middle'},
+         {title: '有效时间', field: 'aging', visible: true, false: 'center', valign: 'middle'},
+
+        {title: '积分', field: 'points', visible: true, align: 'center', valign: 'middle'},
+
+        {title: '用户等级', field: 'userLevel', visible: false, align: 'center', valign: 'middle'},
+        {title: '用户经验', field: 'experience', visible: false, align: 'center', valign: 'middle'},
+        {title: '收藏夹ids ，分隔', field: 'favoritesIds', visible: false, align: 'center', valign: 'middle'},
+        {title: '最后登录时间', field: 'lastLogin', visible: false, align: 'center', valign: 'middle'},
+        {title: '最后登录ip', field: 'lastLoginip', visible: false, align: 'center', valign: 'middle'},
+
+        {title: '注册时间', field: 'registerTime', visible: false, align: 'center', valign: 'middle'},
+         {title: '注册ip', field: 'registerIp', visible: false, align: 'center', valign: 'middle'},
+         {title: 'uuid唯一值', field: 'uuidToken', visible: false, align: 'center', valign: 'middle'},
+
+        {title: '总消费额', field: 'totalMoney', visible: false, align: 'center', valign: 'middle'},
+        {title: '是否锁定 0 是 １否', field: 'isLock', visible: false, align: 'center', valign: 'middle'},
+        {title: '逻辑删除 0 是 １否', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
+        {title: '创建时间', field: 'gmtCreated', visible: false, align: 'center', valign: 'middle'},
+        {title: '更改时间', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'}
     ];
 };
 

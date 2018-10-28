@@ -1,5 +1,5 @@
 /**
- * 初始化用户看单详情对话框
+ * 初始化用户收藏夹管理详情对话框
  */
 var FavoriteInfoDlg = {
     favoriteInfoData : {}
@@ -57,9 +57,13 @@ FavoriteInfoDlg.collectData = function() {
     .set('videoPublishyear')
     .set('memberId')
     .set('memberUsername')
+    .set('sort')
     .set('isDel')
     .set('gmtCreated')
-    .set('gmtModified');
+    .set('gmtModified')
+    .set('appId')
+    .set('appVer')
+    .set('channel');
 }
 
 /**

@@ -1,6 +1,12 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
+import com.google.common.collect.Lists;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.modular.system.model.PlayHistory;
+import com.stylefeng.guns.modular.system.warpper.AppWarpper;
+import com.stylefeng.guns.modular.system.warpper.MemberWarpper;
+import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +19,8 @@ import com.stylefeng.guns.modular.system.model.PointsConsumeRecord;
 import com.stylefeng.guns.modular.system.service.IPointsConsumeRecordService;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 积分流水记录控制器
@@ -62,7 +70,9 @@ public class PointsConsumeRecordController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {
-        return pointsConsumeRecordService.selectList(null);
+        List<PointsConsumeRecord> pointsConsumeRecords = pointsConsumeRecordService.selectList(null);
+
+        return super.warpObject(new MemberWarpper(BeanKit.listToMapList(pointsConsumeRecords)));
     }
 
     /**

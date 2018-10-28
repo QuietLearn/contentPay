@@ -12,10 +12,9 @@ import java.util.List;
  * </p>
  *
  * @author hyj
- * @since 2018-10-24
+ * @since 2018-10-28
  */
 public interface PlayHistoryMapper extends BaseMapper<PlayHistory> {
-
     PlayHistory selectByVideoId(@Param("vid") int vid, @Param("memberId") Integer memberId);
 
     List<Integer> selectVideoIdsByMember(Integer memberId);

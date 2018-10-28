@@ -1,6 +1,9 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.modular.system.warpper.AppWarpper;
+import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -62,8 +65,9 @@ public class NoteController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public List<Note> list(String condition) {
-        return noteService.selectList(null);
+    public Object list(String condition) {
+        List<Note> noteList = noteService.selectList(null);
+        return super.warpObject(new AppWarpper(BeanKit.listToMapList(noteList)));
     }
 
     /**

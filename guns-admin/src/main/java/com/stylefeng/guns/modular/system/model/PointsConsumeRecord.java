@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-10-25
+ * @since 2018-10-29
  */
 @TableName("cps_points_consume_record")
 public class PointsConsumeRecord extends Model<PointsConsumeRecord> {
@@ -44,6 +44,18 @@ public class PointsConsumeRecord extends Model<PointsConsumeRecord> {
     private Date gmtCreated;
     @TableField("gmt_modified")
     private Date gmtModified;
+    /**
+     * 应用id
+     */
+    private Integer appId;
+    /**
+     * 应用版本
+     */
+    private String appVer;
+    /**
+     * 渠道号
+     */
+    private String channel;
 
 
     public Integer getId() {
@@ -102,6 +114,30 @@ public class PointsConsumeRecord extends Model<PointsConsumeRecord> {
         this.gmtModified = gmtModified;
     }
 
+    public Integer getAppId() {
+        return appId;
+    }
+
+    public void setAppId(Integer appId) {
+        this.appId = appId;
+    }
+
+    public String getAppVer() {
+        return appVer;
+    }
+
+    public void setAppVer(String appVer) {
+        this.appVer = appVer;
+    }
+
+    public String getChannel() {
+        return channel;
+    }
+
+    public void setChannel(String channel) {
+        this.channel = channel;
+    }
+
     @Override
     protected Serializable pkVal() {
         return this.id;
@@ -117,6 +153,9 @@ public class PointsConsumeRecord extends Model<PointsConsumeRecord> {
         ", isDel=" + isDel +
         ", gmtCreated=" + gmtCreated +
         ", gmtModified=" + gmtModified +
+        ", appId=" + appId +
+        ", appVer=" + appVer +
+        ", channel=" + channel +
         "}";
     }
 }

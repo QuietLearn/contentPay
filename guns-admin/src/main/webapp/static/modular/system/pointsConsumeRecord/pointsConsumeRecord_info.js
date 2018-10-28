@@ -1,5 +1,5 @@
 /**
- * 初始化积分流水记录详情对话框
+ * 初始化积分流水管理详情对话框
  */
 var PointsConsumeRecordInfoDlg = {
     pointsConsumeRecordInfoData : {}
@@ -51,7 +51,10 @@ PointsConsumeRecordInfoDlg.collectData = function() {
     .set('videoId')
     .set('isDel')
     .set('gmtCreated')
-    .set('gmtModified');
+    .set('gmtModified')
+    .set('appId')
+    .set('appVer')
+    .set('channel');
 }
 
 /**

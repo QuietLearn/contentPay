@@ -46,6 +46,9 @@ MemberInfoDlg.close = function() {
 MemberInfoDlg.collectData = function() {
     this
     .set('id')
+    .set('appId')
+    .set('appVer')
+    .set('channel')
     .set('username')
     .set('nickname')
     .set('password')
@@ -62,9 +65,8 @@ MemberInfoDlg.collectData = function() {
     .set('buyTime')
     .set('endTime')
     .set('aging')
+    .set('birthday')
     .set('points')
-    .set('userLevel')
-    .set('experience')
     .set('favoritesIds')
     .set('lastLogin')
     .set('lastLoginip')

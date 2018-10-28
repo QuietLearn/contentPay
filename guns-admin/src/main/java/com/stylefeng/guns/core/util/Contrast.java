@@ -16,7 +16,7 @@ import java.util.Map;
  * @author fengshuonan
  * @Date 2017/3/31 10:36
  */
-public class Contrast {
+public class     Contrast {
 
     //记录每个修改字段的分隔符
     public static final String separator = ";;;";
@@ -120,7 +120,7 @@ public class Contrast {
      */
     public static String contrastObjByName(Class dictClass, String key, Object pojo1, Map<String, String> pojo2) throws IllegalAccessException, InstantiationException {
         AbstractDictMap dictMap = (AbstractDictMap) dictClass.newInstance();
-        String str = parseMutiKey(dictMap, key, pojo2) + separator;
+        String str = parseMutiKey(dictMap, key, pojo2) + separator; //(如果是)复合标识符
         try {
             Class clazz = pojo1.getClass();
             Field[] fields = pojo1.getClass().getDeclaredFields();
@@ -137,12 +137,12 @@ public class Contrast {
                 }
                 Method getMethod = null;
                 try {
-                    getMethod = clazz.getDeclaredMethod(prefix + StrKit.firstCharToUpperCase(field.getName()));
+                    getMethod = clazz.getDeclaredMethod(prefix + StrKit.firstCharToUpperCase(field.getName()));//获取get方法(get字段的)
                 } catch (java.lang.NoSuchMethodException e) {
                     System.err.println("this className:" + clazz.getName() + " is not methodName: " + e.getMessage());
                     continue;
                 }
-                Object o1 = getMethod.invoke(pojo1);
+                Object o1 = getMethod.invoke(pojo1);//执行get字段方法 pojo1是类对象 ，返回对应字段
                 Object o2 = pojo2.get(StrKit.firstCharToLowerCase(getMethod.getName().substring(prefixLength)));
                 if (o1 == null || o2 == null) {
                     continue;
@@ -154,7 +154,7 @@ public class Contrast {
                 }
                 if (!o1.toString().equals(o2.toString())) {
                     if (i != 1) {
-                        str += separator;
+                        str += separator; //先拼装分隔符
                     }
                     String fieldName = dictMap.get(field.getName());
                     String fieldWarpperMethodName = dictMap.getFieldWarpperMethodName(field.getName());

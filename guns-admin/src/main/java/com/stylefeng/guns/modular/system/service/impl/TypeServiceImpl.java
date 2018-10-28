@@ -1,5 +1,6 @@
 package com.stylefeng.guns.modular.system.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.stylefeng.guns.core.common.constant.DatasourceEnum;
 import com.stylefeng.guns.core.mutidatasource.annotion.DataSource;
@@ -23,7 +24,10 @@ public class TypeServiceImpl extends ServiceImpl<TypeMapper, Type> implements IT
 
     @DataSource(name = DatasourceEnum.DATA_SOURCE_BIZ)
     @Transactional
-    public String getTypeName(Wrapper wrapper){
+    public String getTypeName(Integer typeId){
+        Wrapper<Type> wrapper = new EntityWrapper<>();
+        wrapper.eq("tid",typeId);
+        wrapper.setSqlSelect("tname");
         return (String)this.selectObj(wrapper);
     }
 

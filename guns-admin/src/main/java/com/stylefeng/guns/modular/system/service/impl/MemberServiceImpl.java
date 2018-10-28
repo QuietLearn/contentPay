@@ -91,7 +91,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
     //前台逻辑方法
     //注册
-    public Result register(String mobile,String password,String message) {
+    public Result register(String mobile,String password,String message,Integer appId,String appVer,String channel) {
         Member existMember = memberMapper.selectMemberByMobile(mobile);
         if (existMember!=null){
             logger.info("这个手机已经注册过了");
@@ -133,8 +133,12 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         //设置积分
         member.setPoints(0);
         //设置用户等级和经验
-        //设置性别
-        member.setGender(1);
+        //设置appId,appver,channel
+
+        member.setAppId(appId);
+        member.setAppVer(appVer);
+        member.setChannel(channel);
+
         //设置注册时间
         member.setRegisterTime(new Date());
         //设置创建时间以及修改时间
@@ -153,16 +157,15 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
                 accountUser.setSignCount(sign.getCount());
             }
         }*/
-        boolean insert = this.insert(member);
+        int insertCount = memberMapper.insertSelective(member);
 
-        if (!insert){
+        if (insertCount<=0){
             return Result.createBySuccessMessage("注册失败");
         }
 
-
-
+        Member member1 = this.selectById(member.getId());
         MemberVo memberVo = new MemberVo();
-        BeanUtils.copyProperties(member,memberVo);
+        BeanUtils.copyProperties(member1,memberVo);
 
 
         return Result.createBySuccess("注册成功",memberVo);

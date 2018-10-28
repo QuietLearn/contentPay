@@ -14,11 +14,10 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author hyj
- * @since 2018-10-25
+ * @since 2018-10-29
  */
 @Service
 public class PointsConsumeRecordServiceImpl extends ServiceImpl<PointsConsumeRecordMapper, PointsConsumeRecord> implements IPointsConsumeRecordService {
-
 
     //公共方法
     public boolean isPayVideo(Integer vid,Integer memberId){

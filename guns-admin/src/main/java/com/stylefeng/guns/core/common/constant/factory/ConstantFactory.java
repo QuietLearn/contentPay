@@ -13,7 +13,9 @@ import com.stylefeng.guns.core.support.StrKit;
 import com.stylefeng.guns.core.util.Convert;
 import com.stylefeng.guns.core.util.SpringContextHolder;
 import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.modular.system.service.IAppService;
 import com.stylefeng.guns.modular.system.service.IFavoriteService;
+import com.stylefeng.guns.modular.system.service.IMemberService;
 import com.stylefeng.guns.modular.system.service.ITypeService;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.DependsOn;
@@ -41,6 +43,9 @@ public class ConstantFactory implements IConstantFactory {
     //video_system
     private ITypeService typeService = SpringContextHolder.getBean(ITypeService.class);
 
+    private IAppService appService = SpringContextHolder.getBean(IAppService.class);
+
+    private IMemberService memberService = SpringContextHolder.getBean(IMemberService.class);
     public static IConstantFactory me() {
         return SpringContextHolder.getBean("constantFactory");
     }
@@ -339,12 +344,25 @@ public class ConstantFactory implements IConstantFactory {
      * @param typeId
      * @return
      */
-    public String getTypeName(Integer typeId ){
-        Wrapper<Type> wrapper = new EntityWrapper<>();
-        wrapper.eq("tid",typeId);
-        wrapper.setSqlSelect("tname");
-        String typeName = typeService.getTypeName(wrapper);
+    public String getTypeName(Integer typeId){
+
+        String typeName = typeService.getTypeName(typeId);
         return typeName;
     }
 
+    public String getAppName(Integer appId) {
+        Wrapper<App> wrapper = new EntityWrapper<>();
+        wrapper.setSqlSelect("app_name");
+        wrapper.eq("app_id",appId);
+        String appName = (String)appService.selectObj(wrapper);
+        return appName;
+    }
+
+    public String getMemberName(Integer memberId) {
+        Wrapper<Member> wrapper = new EntityWrapper<>();
+        wrapper.setSqlSelect("username");
+        wrapper.eq("id",memberId);
+        String memberName = (String)memberService.selectObj(wrapper);
+        return memberName;
+    }
 }

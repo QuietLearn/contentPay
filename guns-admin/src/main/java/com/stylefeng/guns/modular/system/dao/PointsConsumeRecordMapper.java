@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * </p>
  *
  * @author hyj
- * @since 2018-10-25
+ * @since 2018-10-29
  */
 public interface PointsConsumeRecordMapper extends BaseMapper<PointsConsumeRecord> {
 

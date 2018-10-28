@@ -120,4 +120,17 @@ public interface IConstantFactory {
      */
     String getTypeName(Integer typeId );
 
+    /**
+     * 获取app名
+     * @param appId
+     * @return
+     */
+    String getAppName(Integer appId);
+
+    /**
+     * 获取 会员名
+     * @param memberId
+     * @return
+     */
+    String getMemberName(Integer memberId);
 }

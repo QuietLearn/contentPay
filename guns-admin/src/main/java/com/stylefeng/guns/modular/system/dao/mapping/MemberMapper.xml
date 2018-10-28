@@ -5,17 +5,16 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.Member">
         <id column="id" property="id" />
+        <result column="appId" property="appId" />
+        <result column="appVer" property="appVer" />
+        <result column="channel" property="channel" />
         <result column="username" property="username" />
         <result column="nickname" property="nickname" />
         <result column="password" property="password" />
         <result column="Md5_password" property="md5Password" />
         <result column="gender" property="gender" />
-        <!--<result column="introduction" property="introduction" />-->
         <result column="pic_address" property="picAddress" />
         <result column="mobile" property="mobile" />
-        <!--<result column="focus_count" property="focusCount" />
-        <result column="fans_count" property="fansCount" />
-        <result column="hit_count" property="hitCount" />-->
         <result column="qq" property="qq" />
         <result column="weixin" property="weixin" />
         <result column="email" property="email" />
@@ -25,10 +24,8 @@
         <result column="buy_time" property="buyTime" />
         <result column="end_time" property="endTime" />
         <result column="aging" property="aging" />
-        <result column="birthday" property="birthday"/>
+        <result column="birthday" property="birthday" />
         <result column="points" property="points" />
-       <!-- <result column="user_level" property="userLevel" />
-        <result column="experience" property="experience" />-->
         <result column="favorites_ids" property="favoritesIds" />
         <result column="last_login" property="lastLogin" />
         <result column="last_loginIp" property="lastLoginip" />
@@ -38,14 +35,13 @@
         <result column="total_money" property="totalMoney" />
         <result column="is_lock" property="isLock" />
         <result column="is_del" property="isDel" />
-       <!-- <result column="gmt_receive" property="gmtReceive" />-->
         <result column="gmt_created" property="gmtCreated" />
         <result column="gmt_modified" property="gmtModified" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, username, nickname, password, Md5_password, gender, pic_address, mobile, qq, weixin, email, member_type_id, member_type_name, vip_level, buy_time, end_time, aging, points, favorites_ids, last_login, last_loginIp, register_time, register_ip, UUID_token, total_money, is_lock, is_del, gmt_created, gmt_modified
+        id, appId, appVer, channel, username, nickname, password, Md5_password, gender, pic_address, mobile, qq, weixin, email, member_type_id, member_type_name, vip_level, buy_time, end_time, aging, birthday, points, favorites_ids, last_login, last_loginIp, register_time, register_ip, UUID_token, total_money, is_lock, is_del, gmt_created, gmt_modified
     </sql>
 
     <select id="checkName" parameterType="string" resultType="int">
@@ -61,13 +57,13 @@
     </select>
 
     <update id="updateGmtLastLoginAndLastIp" parameterType="map">
-      update cps_member
-      <set>
-          <if test="ip!=null">
-              last_loginIp=#{ip},
-          </if>
-          last_login=now()
-      </set>
+        update cps_member
+        <set>
+            <if test="ip!=null">
+                last_loginIp=#{ip},
+            </if>
+            last_login=now()
+        </set>
         where id = #{memberId}
     </update>
 
@@ -85,15 +81,15 @@
     </select>
 
     <select id="selectMemberByUuidToken" parameterType="string" resultMap="BaseResultMap">
-      select <include refid="Base_Column_List"/>
-      from cps_member
-      where UUID_token = #{uuidToken}
+        select <include refid="Base_Column_List"/>
+        from cps_member
+        where UUID_token = #{uuidToken}
     </select>
 
     <update id="updateUuidById" parameterType="com.stylefeng.guns.modular.system.model.Member">
         update cps_member
         set UUID_token = #{uuidToken,jdbcType=VARCHAR}
-       where id = #{id,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
     </update>
 
     <select id="selectMemberByMobile" parameterType="string" resultMap="BaseResultMap">
@@ -119,51 +115,238 @@
                 Md5_password = #{md5Password},
             </if>
 
-             gmt_modified=now()
+            gmt_modified=now()
         </set>
 
         where mobile = #{mobile}
     </update>
 
     <select id="checkEmailByUserId" resultType="int" parameterType="map">
-    SELECT count(1)
-    FROM cps_member
-    WHERE email = #{email}
-    and id != #{userId}
-  </select>
+        SELECT count(1)
+        FROM cps_member
+        WHERE email = #{email}
+        and id != #{userId}
+    </select>
 
     <select id="checkMobileByUserId" resultType="int" parameterType="map">
-       SELECT count(1)
-    FROM cps_member
-    WHERE mobile = #{mobile}
-    and id != #{userId}
+        SELECT count(1)
+        FROM cps_member
+        WHERE mobile = #{mobile}
+        and id != #{userId}
     </select>
 
     <select id="checkUsernameByUserId" resultType="int" parameterType="map">
-         SELECT count(1)
-    FROM cps_member
-    WHERE username = #{username}
-    and id != #{userId}
+        SELECT count(1)
+        FROM cps_member
+        WHERE username = #{username}
+        and id != #{userId}
     </select>
 
-    <insert id="insertMember" parameterType="com.stylefeng.guns.modular.system.model.Member" useGeneratedKeys="true" keyProperty="id">
-    insert into cps_member (<include refid="Base_Column_List"/>)
-    values (
-        #{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR},
-      #{password,jdbcType=VARCHAR}, #{md5Password,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR},
-      #{picAddress,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR},
-      #{weixin,jdbcType=VARCHAR},#{memberTypeId,jdbcType=INTEGER},#{memberTypeName,jdbcType=VARCHAR},
-        #{vipLevel,jdbcType=INTEGER},
-        #{buyTime,jdbcType=TIMESTAMP},#{endTime,jdbcType=TIMESTAMP},#{aging,jdbcType=INTEGER},
-        #{birthday,jdbcType=DATE},#{points,jdbcType=INTEGER},#{favoritesIds,jdbcType=VARCHAR},
-        #{lastLogin,jdbcType=TIMESTAMP},#{lastLoginip,jdbcType=VARCHAR},
-        #{registerTime,jdbcType=TIMESTAMP},#{registerIp,jdbcType=VARCHAR},
-        #{uuidToken,jdbcType=VARCHAR},#{totalMoney,jdbcType=INTEGER},
-        #{isLock,jdbcType=INTEGER},#{isDel,jdbcType=INTEGER},
-        now(), now()
-      )
 
+
+    <insert id="insertSelective" parameterType="com.stylefeng.guns.modular.system.model.Member" useGeneratedKeys="true" keyProperty="id">
+        insert into cps_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="appid != null">
+                appId,
+            </if>
+            <if test="appver != null">
+                appVer,
+            </if>
+            <if test="channel != null">
+                channel,
+            </if>
+            <if test="username != null">
+                username,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="md5Password != null">
+                Md5_password,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="mobile != null">
+                mobile,
+            </if>
+            <if test="qq != null">
+                qq,
+            </if>
+            <if test="weixin != null">
+                weixin,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="memberTypeId != null">
+                member_type_id,
+            </if>
+            <if test="memberTypeName != null">
+                member_type_name,
+            </if>
+            <if test="vipLevel != null">
+                vip_level,
+            </if>
+            <if test="buyTime != null">
+                buy_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="aging != null">
+                aging,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="points != null">
+                points,
+            </if>
+            <if test="lastLogin != null">
+                last_login,
+            </if>
+            <if test="lastLoginip != null">
+                last_loginIp,
+            </if>
+            <if test="registerTime != null">
+                register_time,
+            </if>
+            <if test="registerIp != null">
+                register_ip,
+            </if>
+            <if test="uuidToken != null">
+                UUID_token,
+            </if>
+            <if test="totalMoney != null">
+                total_money,
+            </if>
+            <if test="isLock != null">
+                is_lock,
+            </if>
+            <if test="isDel != null">
+                is_del,
+            </if>
+            <if test="gmtCreated != null">
+                gmt_created,
+            </if>
+            <if test="gmtModified != null">
+                gmt_modified,
+            </if>
+            <if test="picAddress != null">
+                pic_address,
+            </if>
+            <if test="favoritesIds != null">
+                favorites_ids,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="appid != null">
+                #{appid,jdbcType=INTEGER},
+            </if>
+            <if test="appver != null">
+                #{appver,jdbcType=VARCHAR},
+            </if>
+            <if test="channel != null">
+                #{channel,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="md5Password != null">
+                #{md5Password,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=INTEGER},
+            </if>
+            <if test="mobile != null">
+                #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="qq != null">
+                #{qq,jdbcType=VARCHAR},
+            </if>
+            <if test="weixin != null">
+                #{weixin,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="memberTypeId != null">
+                #{memberTypeId,jdbcType=INTEGER},
+            </if>
+            <if test="memberTypeName != null">
+                #{memberTypeName,jdbcType=VARCHAR},
+            </if>
+            <if test="vipLevel != null">
+                #{vipLevel,jdbcType=INTEGER},
+            </if>
+            <if test="buyTime != null">
+                #{buyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="aging != null">
+                #{aging,jdbcType=INTEGER},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="points != null">
+                #{points,jdbcType=INTEGER},
+            </if>
+            <if test="lastLogin != null">
+                #{lastLogin,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginip != null">
+                #{lastLoginip,jdbcType=VARCHAR},
+            </if>
+            <if test="registerTime != null">
+                #{registerTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="registerIp != null">
+                #{registerIp,jdbcType=VARCHAR},
+            </if>
+            <if test="uuidToken != null">
+                #{uuidToken,jdbcType=VARCHAR},
+            </if>
+            <if test="totalMoney != null">
+                #{totalMoney,jdbcType=INTEGER},
+            </if>
+            <if test="isLock != null">
+                #{isLock,jdbcType=INTEGER},
+            </if>
+            <if test="isDel != null">
+                #{isDel,jdbcType=INTEGER},
+            </if>
+            <if test="gmtCreated != null">
+                #{gmtCreated,jdbcType=TIMESTAMP},
+            </if>
+            <if test="gmtModified != null">
+                #{gmtModified,jdbcType=TIMESTAMP},
+            </if>
+            <if test="picAddress != null">
+                #{picAddress,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="favoritesIds != null">
+                #{favoritesIds,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
     </insert>
-
-
 </mapper>

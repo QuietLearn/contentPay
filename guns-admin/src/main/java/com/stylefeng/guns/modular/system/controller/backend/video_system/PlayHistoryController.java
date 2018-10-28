@@ -1,6 +1,9 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.modular.system.model.Favorite;
+import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +16,7 @@ import com.stylefeng.guns.modular.system.model.PlayHistory;
 import com.stylefeng.guns.modular.system.service.IPlayHistoryService;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户播放历史控制器
@@ -62,7 +66,9 @@ public class PlayHistoryController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {
-        return playHistoryService.selectList(null);
+        List<PlayHistory> playHistories = playHistoryService.selectList(null);
+
+        return super.warpObject(new TypeWarpper(BeanKit.listToMapList(playHistories)));
     }
 
     /**

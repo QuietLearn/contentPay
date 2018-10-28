@@ -57,9 +57,13 @@ PlayHistoryInfoDlg.collectData = function() {
     .set('videoPublishyear')
     .set('memberId')
     .set('memberUsername')
+    .set('sort')
     .set('isDel')
     .set('gmtCreated')
-    .set('gmtModified');
+    .set('gmtModified')
+    .set('appId')
+    .set('appVer')
+    .set('channel');
 }
 
 /**

@@ -12,13 +12,12 @@ import java.util.List;
  * </p>
  *
  * @author hyj
- * @since 2018-10-24
+ * @since 2018-10-28
  */
 public interface FavoriteMapper extends BaseMapper<Favorite> {
+     List<Integer> selectVideoIdsByMember(Integer memberId);
 
-    List<Integer> selectVideoIdsByMember(Integer memberId);
-
-    int deleteVideoIdsByMember(@Param("memberId") Integer memberId, @Param("vids")List<Integer> vids);
+      int deleteVideoIdsByMember(@Param("memberId") Integer memberId, @Param("vids") List<Integer> vids);
 
 //    void addVideoIdsByMember(Integer id, List<Integer> vids);
 }

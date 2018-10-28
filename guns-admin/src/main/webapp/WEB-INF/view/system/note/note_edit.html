@@ -8,13 +8,16 @@
                             <#input id="id" name="" value="${item.id}" underline="true"/>
                             <#input id="message" name="信息" value="${item.message}" underline="true"/>
                             <#input id="aging" name="短信有效时间(分)" value="${item.aging}" underline="true"/>
-                            <#input id="isDel" name="" value="${item.isDel}" />
+                            <#input id="isDel" name="" value="${item.isDel}" underline="true"/>
+                            <#input id="mobile" name="发送手机" value="${item.mobile}" />
                 </div>
 
                 <div class="col-sm-6">
-                            <#input id="mobile" name="发送手机" value="${item.mobile}" underline="true"/>
                             <#input id="gmtCreated" name="" value="${item.gmtCreated}" underline="true"/>
-                            <#input id="gmtUpdated" name="" value="${item.gmtUpdated}" />
+                            <#input id="gmtUpdated" name="" value="${item.gmtUpdated}" underline="true"/>
+                            <#input id="appId" name="应用id" value="${item.appId}" underline="true"/>
+                            <#input id="appVer" name="应用版本" value="${item.appVer}" underline="true"/>
+                            <#input id="channel" name="渠道号" value="${item.channel}" />
                 </div>
             </div>
 
