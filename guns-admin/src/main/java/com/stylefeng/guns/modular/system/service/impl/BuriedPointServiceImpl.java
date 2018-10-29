@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * <p>
  * 埋点 服务实现类
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 public class BuriedPointServiceImpl extends ServiceImpl<BuriedPointMapper, BuriedPoint> implements IBuriedPointService {
 
 
+    @Override
     public Result insertAssemBuriedPoint(BuriedPoint buriedPoint){
         BuriedPoint insertBuriedPoint = assemBuriedPoint(buriedPoint);
         boolean insert = this.insert(insertBuriedPoint);
@@ -34,6 +37,8 @@ public class BuriedPointServiceImpl extends ServiceImpl<BuriedPointMapper, Burie
         BuriedPoint insertBuriedPoint = new BuriedPoint();
         BeanUtils.copyProperties(buriedPoint,insertBuriedPoint);
         String mobile = buriedPoint.getMobile();
+        insertBuriedPoint.setGmtCreated(new Date());
+        insertBuriedPoint.setGmtModified(new Date());
         return insertBuriedPoint;
     }
 }
