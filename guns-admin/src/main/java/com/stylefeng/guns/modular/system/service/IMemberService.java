@@ -56,7 +56,7 @@ public interface IMemberService extends IService<Member> {
      * @param password
      * @return
      */
-    Result loginByMobile(String mobile, String password,Integer appId);
+    Result<MemberVo>  loginByMobile(String mobile, String password,Integer appId);
 
     /**
      * 检测用户是否是vip
@@ -68,12 +68,19 @@ public interface IMemberService extends IService<Member> {
 
 
     /*Result getMessage(String mobile);*/
+
     /**
      * 获取短信验证码
      * @param mobile
+     * @param type
+     * @param appId
+     * @param appVer
+     * @param channel
      * @return
+     * @throws ClientException
+     * @throws InterruptedException
      */
-    Result getMessage2(String mobile,String type) throws ClientException, InterruptedException;
+    Result getMessage2(String mobile,String type,Integer appId,String appVer,String channel) throws ClientException, InterruptedException;
 
     /**
      * 忘记密码确认短信

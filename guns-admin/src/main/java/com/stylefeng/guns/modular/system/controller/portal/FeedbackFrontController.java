@@ -9,6 +9,8 @@ import com.stylefeng.guns.modular.system.service.IFeedbackService;
 import com.stylefeng.guns.modular.system.vo.FavoriteVo;
 import com.stylefeng.guns.modular.system.vo.VIdList;
 import com.stylefeng.guns.modular.system.vo.VideoVo;
+import com.stylefeng.guns.modular.system.warpper.FeedbackTypeWarpper;
+import com.stylefeng.guns.modular.system.warpper.FeedbackWarpper;
 import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +36,13 @@ public class FeedbackFrontController extends BaseController {
         list.getData().setVideoVoList(videoVoList);
         return list;
     }*/
+
+    @RequestMapping(value = "/list")
+    public Result listFeedbakcRecord(String uuidToken){
+        List<Feedback> data = feedbackService.list(uuidToken).getData();
+        return Result.createBySuccess(super.warpObject(new FeedbackWarpper(BeanKit.listToMapList(data))));
+    }
+
 
     @RequestMapping(value = "/add")
     public Result addFeedback(String uuidToken, Feedback feedback){

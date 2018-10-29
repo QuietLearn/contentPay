@@ -4,6 +4,8 @@ import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.modular.system.model.Feedback;
 import com.baomidou.mybatisplus.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 回馈表 服务类
@@ -15,4 +17,6 @@ import com.baomidou.mybatisplus.service.IService;
 public interface IFeedbackService extends IService<Feedback> {
 
     Result addFeedback(String uuidToken, Feedback feedback);
+
+    Result<List<Feedback>> list(String uuidToken);
 }

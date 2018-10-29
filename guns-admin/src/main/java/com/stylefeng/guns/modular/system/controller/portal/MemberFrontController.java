@@ -4,12 +4,17 @@ import com.aliyuncs.exceptions.ClientException;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.TokenCache;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.log.LogManager;
+import com.stylefeng.guns.core.log.factory.LogTaskFactory;
+import com.stylefeng.guns.core.log.factory.MemberLogTaskFactory;
 import com.stylefeng.guns.modular.system.service.IMemberService;
 import com.stylefeng.guns.modular.system.vo.MemberVo;
 import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import static com.stylefeng.guns.core.support.HttpKit.getIp;
 
 
 /**
@@ -49,8 +54,14 @@ public class MemberFrontController extends BaseController {
     }
 
     @RequestMapping(value = "/login_use_mobile",method = RequestMethod.POST)
-    public Result loginByMobile(String mobile,String password,Integer appId){
-        return memberService.loginByMobile(mobile,password,appId);
+    public Result loginByMobile(String mobile,String password,Integer appId,String appVer,String channel){
+        Result<MemberVo> memberVoResult = memberService.loginByMobile(mobile, password, appId);
+        MemberVo memberVo = memberVoResult.getData();
+        if (memberVo!=null){
+            LogManager.me().executeLog(MemberLogTaskFactory.memberLoginLog(memberVo.getId(), getIp(),appId, appVer,channel));
+        }
+
+        return memberVoResult;
     }
 
     @RequestMapping(value = "/checkVip")
@@ -59,8 +70,8 @@ public class MemberFrontController extends BaseController {
     }
 
     @RequestMapping(value="/getMessage")
-    public Result getMessage(String mobile,String type) throws ClientException, InterruptedException {
-        return memberService.getMessage2(mobile,type);
+    public Result getMessage(String mobile,String type,Integer appId,String appVer,String channel) throws ClientException, InterruptedException {
+        return memberService.getMessage2(mobile,type,appId,appVer,channel);
     }
 
     @RequestMapping(value="/reset_password",method = RequestMethod.POST)

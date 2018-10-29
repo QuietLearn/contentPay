@@ -14,17 +14,19 @@ public enum LogType {
     EXCEPTION("异常日志"),
     BUSSINESS("业务日志");
 
+    //日志类型
     String message;
 
     LogType(String message) {
         this.message = message;
     }
 
+    //获取日志类型
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    /*public void setMessage(String message) {
         this.message = message;
-    }
+    }*/
 }

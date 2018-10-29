@@ -22,10 +22,11 @@
     </sql>
 
 
-    <select id="selectSendMobileNoteNum" parameterType="string" resultType="int">
+    <select id="selectSendMobileNoteNum" parameterType="map" resultType="int">
         select
         count(1) FROM cps_note
         WHERE mobile = #{mobile}
+        and appId = #{appId}
         <!--<if test="appId!=null">
             and appId = #{appId}
         </if>-->

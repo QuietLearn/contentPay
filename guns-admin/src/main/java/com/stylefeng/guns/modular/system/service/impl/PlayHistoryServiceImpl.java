@@ -4,11 +4,9 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.google.common.collect.Lists;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.modular.system.dao.FavoriteMapper;
+import com.stylefeng.guns.modular.system.dao.MemberLoginLogMapper;
 import com.stylefeng.guns.modular.system.dao.MemberMapper;
-import com.stylefeng.guns.modular.system.model.Data;
-import com.stylefeng.guns.modular.system.model.Favorite;
-import com.stylefeng.guns.modular.system.model.Member;
-import com.stylefeng.guns.modular.system.model.PlayHistory;
+import com.stylefeng.guns.modular.system.model.*;
 import com.stylefeng.guns.modular.system.dao.PlayHistoryMapper;
 import com.stylefeng.guns.modular.system.service.IDataService;
 import com.stylefeng.guns.modular.system.service.IPlayHistoryService;
@@ -44,6 +42,8 @@ public class PlayHistoryServiceImpl extends ServiceImpl<PlayHistoryMapper, PlayH
     @Autowired
     private MemberMapper memberMapper;
 
+    @Autowired
+    private MemberLoginLogMapper memberLoginLogMapper;
 
     //列举用户的收藏夹
     public Result<PlayHistoryVo> list(String uuidToken){
@@ -66,6 +66,12 @@ public class PlayHistoryServiceImpl extends ServiceImpl<PlayHistoryMapper, PlayH
             return Result.createByErrorMessage("请重新登录");
         }
 
+        Date date = memberLoginLogMapper.selectMaxCreatime(member.getId());
+
+        MemberLoginLog memberLoginLog = memberLoginLogMapper.selectLoginLogByCreateTime(date, member.getId());
+
+
+
         //查找该用户的所有播放历史
         List<Integer> existVids = playHistoryMapper.selectVideoIdsByMember(member.getId());
         //得到前台给的  还没有添加到数据库的播放视频记录
@@ -81,7 +87,7 @@ public class PlayHistoryServiceImpl extends ServiceImpl<PlayHistoryMapper, PlayH
         //构建插入的播放记录list
         List<PlayHistory> playHistoryList = Lists.newArrayList();
         for (Data data:videoList) {
-            PlayHistory playHistory = assemPlayHistoryFromVideoAndMember(member, data);
+            PlayHistory playHistory = assemPlayHistoryFromVideoAndMember(member, data,memberLoginLog);
             playHistoryList.add(playHistory);
         }
 
@@ -95,7 +101,7 @@ public class PlayHistoryServiceImpl extends ServiceImpl<PlayHistoryMapper, PlayH
 
 
     //装配新增的favorite对象
-    private PlayHistory assemPlayHistoryFromVideoAndMember(Member member,Data video){
+    private PlayHistory assemPlayHistoryFromVideoAndMember(Member member, Data video, MemberLoginLog memberLoginLog){
         PlayHistory playHistory = new PlayHistory();
         playHistory.setGmtCreated(new Date());
         playHistory.setGmtModified(new Date());
@@ -111,6 +117,10 @@ public class PlayHistoryServiceImpl extends ServiceImpl<PlayHistoryMapper, PlayH
         playHistory.setVideoDirector(video.getvDirector());
         playHistory.setVideoPublisharea(video.getvPublisharea());
         playHistory.setVideoPublishyear(video.getvPublishyear());
+
+        playHistory.setAppId(memberLoginLog.getAppId());
+        playHistory.setAppVer(memberLoginLog.getAppVer());
+        playHistory.setChannel(memberLoginLog.getChannel());
 
         return playHistory;
     }

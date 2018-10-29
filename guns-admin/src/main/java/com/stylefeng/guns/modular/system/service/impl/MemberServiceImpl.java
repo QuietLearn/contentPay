@@ -16,6 +16,7 @@ import com.stylefeng.guns.core.common.constant.state.ServerType;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.common.result.ResultCode;
 import com.stylefeng.guns.core.config.properties.MutiDataSourceProperties;
+import com.stylefeng.guns.core.factory.AllFactory;
 import com.stylefeng.guns.core.mutidatasource.annotion.DataSource;
 import com.stylefeng.guns.core.support.HttpKit;
 import com.stylefeng.guns.core.util.MD5Util;
@@ -78,6 +79,8 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     @Autowired
     private IPointsConsumeRecordService pointsConsumeRecordService;
 
+    @Autowired
+    private MemberLoginLogMapper memberLoginLogMapper;
     //后台逻辑方法
     public List<Member> list(String condition){
         List<Member> members = this.selectList(null);
@@ -198,7 +201,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     }
 
 
-    public Result loginByMobile(String mobile, String password,Integer appId){
+    public Result<MemberVo> loginByMobile(String mobile, String password,Integer appId){
         Member existMember = memberMapper.selectMemberByMobile(mobile,appId);
         if (existMember==null){
             return Result.createByErrorMessage("这个手机号还没注册过哦，请先去注册一下吧");
@@ -307,14 +310,14 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     }*/
 
     //2
-    public Result getMessage2(String mobile,String type) throws ClientException, InterruptedException {
+    public Result getMessage2(String mobile,String type,Integer appId,String appVer,String channel) throws ClientException, InterruptedException {
 
         if(StringUtils.isBlank(mobile)){
             logger.info("手机号为空，请重新传值");
             return null;
         }
 
-        int i = noteMapper.selectSendMobileNoteNum(mobile);
+        int i = noteMapper.selectSendMobileNoteNum(mobile,appId);
         logger.info("同手机超过1分钟发送短信的次数:{}",i);
         if (i>=1){
             return Result.createByErrorMessage("1分钟内发送短信不能超过1条");
@@ -329,15 +332,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
             TokenCache.setKey(TokenCache.TOKEN_PREFIX+mobile,message);
             logger.info("Token mobile message:{}", TokenCache.getKey(TokenCache.TOKEN_PREFIX+mobile));
 
-            Note note = new Note();
-            note.setAging(AllConst.timeout);
-            note.setIsDel(1);
-            note.setMessage(message);
-            note.setMobile(mobile);
-
-
-            note.setGmtCreated(new Date());
-            note.setGmtUpdated(new Date());
+            Note note = AllFactory.createNote(message, mobile,appId,appVer,channel);
             noteMapper.insert(note);
 
         }
@@ -457,6 +452,10 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         }
 
 
+        Date date = memberLoginLogMapper.selectMaxCreatime(member.getId());
+
+        MemberLoginLog memberLoginLog = memberLoginLogMapper.selectLoginLogByCreateTime(date, member.getId());
+
         if (member.getPoints() >= video.getvMoney()){
             member.setPoints(member.getPoints()-video.getvMoney());
 
@@ -469,6 +468,11 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
             pointsConsumeRecord.setMemberId(member.getId());
             pointsConsumeRecord.setVideoId(video.getvId());
             pointsConsumeRecord.setIsDel(1);
+
+            pointsConsumeRecord.setAppId(memberLoginLog.getAppId());
+            pointsConsumeRecord.setAppVer(memberLoginLog.getAppVer());
+            pointsConsumeRecord.setChannel(memberLoginLog.getChannel());
+
 
             Integer insertCount = pointsConsumeRecordMapper.insert(pointsConsumeRecord);
             if (updateCount>0&&insertCount>0){

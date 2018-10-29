@@ -1,8 +1,9 @@
 package com.stylefeng.guns.modular.system.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.modular.system.dao.MemberMapper;
-import com.stylefeng.guns.modular.system.model.Favorite;
 import com.stylefeng.guns.modular.system.model.Feedback;
 import com.stylefeng.guns.modular.system.dao.FeedbackMapper;
 import com.stylefeng.guns.modular.system.model.Member;
@@ -11,7 +12,8 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.ws.soap.Addressing;
+import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -27,6 +29,16 @@ public class FeedbackServiceImpl extends ServiceImpl<FeedbackMapper, Feedback> i
     @Autowired
     private MemberMapper memberMapper;
 
+    @Autowired
+    private FeedbackMapper feedbackMapper;
+
+    public Result<List<Feedback>> list(String uuidToken){
+        Member member = memberMapper.selectMemberByUuidToken(uuidToken);
+        Wrapper<Feedback> wrapper = new EntityWrapper<>();
+        wrapper.eq("memberId",member.getId());
+        List<Feedback> feedbackList = this.selectList(wrapper);
+        return Result.createBySuccess(feedbackList);
+    }
 
     public Result addFeedback(String uuidToken,Feedback feedback){
         Member member = memberMapper.selectMemberByUuidToken(uuidToken);
@@ -44,14 +56,17 @@ public class FeedbackServiceImpl extends ServiceImpl<FeedbackMapper, Feedback> i
 
     public Feedback assemFeedback(Member member,Feedback feedback){
         Feedback insertFeedback = new Feedback();
-        feedback.setMemberId(member.getId());
-        feedback.setMemberName(member.getUsername());
+        insertFeedback.setMemberId(member.getId());
+        insertFeedback.setMemberName(member.getUsername());
 
-        feedback.setFeedbackType(feedback.getFeedbackType());
-        feedback.setAppId(feedback.getAppId());
-        feedback.setAppVer(feedback.getAppVer());
-        feedback.setChannel(feedback.getAppVer());
-        feedback.setInfo(feedback.getInfo());
+        insertFeedback.setGmtCreated(new Date());
+        insertFeedback.setGmtModified(new Date());
+
+        insertFeedback.setFeedbackType(feedback.getFeedbackType());
+        insertFeedback.setAppId(feedback.getAppId());
+        insertFeedback.setAppVer(feedback.getAppVer());
+        insertFeedback.setChannel(feedback.getChannel());
+        insertFeedback.setInfo(feedback.getInfo());
         return insertFeedback;
     }
 }

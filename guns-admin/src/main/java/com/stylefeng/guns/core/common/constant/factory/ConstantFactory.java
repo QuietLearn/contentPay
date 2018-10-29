@@ -13,10 +13,7 @@ import com.stylefeng.guns.core.support.StrKit;
 import com.stylefeng.guns.core.util.Convert;
 import com.stylefeng.guns.core.util.SpringContextHolder;
 import com.stylefeng.guns.core.util.ToolUtil;
-import com.stylefeng.guns.modular.system.service.IAppService;
-import com.stylefeng.guns.modular.system.service.IFavoriteService;
-import com.stylefeng.guns.modular.system.service.IMemberService;
-import com.stylefeng.guns.modular.system.service.ITypeService;
+import com.stylefeng.guns.modular.system.service.*;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
@@ -46,6 +43,9 @@ public class ConstantFactory implements IConstantFactory {
     private IAppService appService = SpringContextHolder.getBean(IAppService.class);
 
     private IMemberService memberService = SpringContextHolder.getBean(IMemberService.class);
+
+    private IFeedbackTypeService feedbackTypeService = SpringContextHolder.getBean(IFeedbackTypeService.class);
+
     public static IConstantFactory me() {
         return SpringContextHolder.getBean("constantFactory");
     }
@@ -364,5 +364,13 @@ public class ConstantFactory implements IConstantFactory {
         wrapper.eq("id",memberId);
         String memberName = (String)memberService.selectObj(wrapper);
         return memberName;
+    }
+
+    public String getFeedbackTypeName(String feedbackType){
+        Wrapper<FeedbackType> wrapper = new EntityWrapper<>();
+        wrapper.setSqlSelect("type_name");
+        wrapper.eq("type_code",feedbackType);
+        String feedbackTypeName = (String) feedbackTypeService.selectObj(wrapper);
+        return feedbackTypeName;
     }
 }

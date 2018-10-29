@@ -132,5 +132,13 @@ public interface IConstantFactory {
      * @param memberId
      * @return
      */
+
     String getMemberName(Integer memberId);
+
+    /**
+     * 获取反馈类型名
+     * @param feedbackType
+     * @return
+     */
+    String getFeedbackTypeName(String feedbackType);
 }

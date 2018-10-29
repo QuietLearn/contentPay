@@ -19,7 +19,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class PointsConsumeRecordServiceImpl extends ServiceImpl<PointsConsumeRecordMapper, PointsConsumeRecord> implements IPointsConsumeRecordService {
 
-    //公共方法
+    /**
+     * 检测是否是已付费视频
+     * @param vid
+     * @param memberId
+     * @return
+     */
+    @Override
     public boolean isPayVideo(Integer vid,Integer memberId){
         Wrapper<PointsConsumeRecord> wrapper = new EntityWrapper<>();
         wrapper.eq("videoId",vid);

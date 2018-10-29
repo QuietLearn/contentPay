@@ -2,6 +2,7 @@ package com.stylefeng.guns.modular.system.dao;
 
 import com.stylefeng.guns.modular.system.model.Note;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
@@ -12,5 +13,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @since 2018-10-28
  */
 public interface NoteMapper extends BaseMapper<Note> {
-    int selectSendMobileNoteNum(String mobile);
+    int selectSendMobileNoteNum(@Param("mobile") String mobile, @Param("appId") Integer appId);
 }

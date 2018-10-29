@@ -25,12 +25,15 @@ public class NotificationServiceImpl extends ServiceImpl<NotificationMapper, Not
     @Autowired
     private NotificationMapper notificationMapper;
 
+    //String uuidToken,int appId,String appVer
     public Result getAllNotify(){
         Wrapper<Notification> wrapper = new EntityWrapper<>();
         wrapper.orderBy("id",false);
         List<Notification> notifications = this.selectList(wrapper);
         return Result.createBySuccess(notifications);
     }
+
+
 
     public Result getPushNotify(){
 

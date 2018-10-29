@@ -7,12 +7,10 @@ import com.google.common.collect.Lists;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.modular.system.dao.DataMapper;
+import com.stylefeng.guns.modular.system.dao.MemberLoginLogMapper;
 import com.stylefeng.guns.modular.system.dao.MemberMapper;
-import com.stylefeng.guns.modular.system.model.Data;
-import com.stylefeng.guns.modular.system.model.Favorite;
+import com.stylefeng.guns.modular.system.model.*;
 import com.stylefeng.guns.modular.system.dao.FavoriteMapper;
-import com.stylefeng.guns.modular.system.model.Member;
-import com.stylefeng.guns.modular.system.model.Type;
 import com.stylefeng.guns.modular.system.service.IDataService;
 import com.stylefeng.guns.modular.system.service.IFavoriteService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
@@ -53,6 +51,10 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
     @Autowired
     private ITypeService typeService;
 
+    @Autowired
+    private MemberLoginLogMapper memberLoginLogMapper;
+
+    @Override
     //列举用户的收藏夹
     public Result<FavoriteVo> list(String uuidToken){
         Member member = memberMapper.selectMemberByUuidToken(uuidToken);
@@ -63,7 +65,15 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
         return Result.createBySuccess(favoriteVo);
     }
 
-    //视频加入用户收藏夹
+
+    /**
+     * //视频加入用户收藏夹 ,String appVer,String channel
+     * //如果后面同步收藏夹内容，app 版本要不要覆盖之前的（收藏夹相同不会做处理）
+     * @param vids
+     * @param uuidToken
+     * @return
+     */
+    @Override
     public Result addVideoToFav(List<Integer> vids, String uuidToken){
         if (CollectionUtils.isEmpty(vids)){
             return Result.createByErrorMessage("请重新同步收藏夹视频");
@@ -72,6 +82,12 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
         if(member==null){
             return Result.createByErrorMessage("请重新登录");
         }
+
+
+        Date date = memberLoginLogMapper.selectMaxCreatime(member.getId());
+
+        MemberLoginLog memberLoginLog = memberLoginLogMapper.selectLoginLogByCreateTime(date, member.getId());
+
 
         favoriteMapper.deleteVideoIdsByMember(member.getId(),vids);
 
@@ -91,7 +107,6 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
 
         //查找该用户的所有收藏视频id
         List<Integer> existVids = favoriteMapper.selectVideoIdsByMember(member.getId());
-//        ListUtils.
 
         List<Integer> subtract = ListUtils.subtract(vids, existVids);
         if (CollectionUtils.isEmpty(subtract)){
@@ -105,7 +120,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
         //构建插入的收藏夹list
         List<Favorite> favoriteList = Lists.newArrayList();
         for (Data data:videoList) {
-            Favorite favorite = assemFavoriteFromVideoAndMember(member, data);
+            Favorite favorite = assemFavoriteFromVideoAndMember(member, data,memberLoginLog);
             favoriteList.add(favorite);
         }
 
@@ -120,7 +135,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
 
 
     //装配新增的favorite对象
-    private Favorite assemFavoriteFromVideoAndMember(Member member,Data video){
+    private Favorite assemFavoriteFromVideoAndMember(Member member,Data video,MemberLoginLog memberLoginLog){
         Favorite favorite = new Favorite();
         favorite.setGmtCreated(new Date());
         favorite.setGmtModified(new Date());
@@ -136,6 +151,13 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
         favorite.setVideoDirector(video.getvDirector());
         favorite.setVideoPublisharea(video.getvPublisharea());
         favorite.setVideoPublishyear(video.getvPublishyear());
+
+        if (memberLoginLog!=null){
+            favorite.setAppId(memberLoginLog.getAppId());
+            favorite.setAppVer(memberLoginLog.getAppVer());
+            favorite.setChannel(memberLoginLog.getChannel());
+        }
+
 
         return favorite;
     }

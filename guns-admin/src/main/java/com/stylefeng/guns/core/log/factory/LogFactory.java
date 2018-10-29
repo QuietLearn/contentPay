@@ -3,6 +3,7 @@ package com.stylefeng.guns.core.log.factory;
 import com.stylefeng.guns.core.common.constant.state.LogSucceed;
 import com.stylefeng.guns.core.common.constant.state.LogType;
 import com.stylefeng.guns.modular.system.model.LoginLog;
+import com.stylefeng.guns.modular.system.model.MemberLoginLog;
 import com.stylefeng.guns.modular.system.model.OperationLog;
 
 import java.util.Date;
@@ -44,4 +45,23 @@ public class LogFactory {
         loginLog.setMessage(msg);
         return loginLog;
     }
+
+
+    public static MemberLoginLog createMemberLoginLog(LogType logType, Integer memebrId, String msg, String ip,int appId,String appVer,String channel) {
+        MemberLoginLog memberLoginLog = new MemberLoginLog();
+        memberLoginLog.setLogname(logType.getMessage());
+        memberLoginLog.setMemberid(memebrId);
+        memberLoginLog.setCreatetime(new Date());
+        memberLoginLog.setSucceed(LogSucceed.SUCCESS.getMessage());
+        memberLoginLog.setIp(ip);
+        memberLoginLog.setMessage(msg);
+
+        memberLoginLog.setAppId(appId);
+        memberLoginLog.setAppVer(appVer);
+        memberLoginLog.setChannel(channel);
+
+
+        return memberLoginLog;
+    }
+
 }
