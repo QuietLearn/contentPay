@@ -48,7 +48,7 @@ public interface IMemberService extends IService<Member> {
      * @param password
      * @return
      */
-    Result login(String username, String password);
+    Result login(String username, String password,Integer appId);
 
     /**
      * 根据电话登录
@@ -56,7 +56,7 @@ public interface IMemberService extends IService<Member> {
      * @param password
      * @return
      */
-    Result loginByMobile(String mobile, String password);
+    Result loginByMobile(String mobile, String password,Integer appId);
 
     /**
      * 检测用户是否是vip
@@ -81,7 +81,7 @@ public interface IMemberService extends IService<Member> {
      * @param message
      * @return
      */
-    Result resetPassword(String mobile,String message,String password);
+    Result resetPassword(String mobile,String message,String password,Integer appId);
 
     /**
      * 重置用户密码

@@ -28,9 +28,9 @@ public interface MemberMapper extends BaseMapper<Member> {
 
     int updateUuidById(Member member);
 
-    Member selectMemberByMobile(String mobile);
+    Member selectMemberByMobile(@Param("mobile") String mobile,@Param("appId")Integer appId);
 
-    Member loginByMobile(@Param("mobile") String mobile, @Param("md5Password") String md5Password);
+    Member loginByMobile(@Param("mobile") String mobile, @Param("md5Password") String md5Password,@Param("appId") Integer appId);
 
     int updatePasswordByMobile(@Param("mobile") String mobile, @Param("password") String password
             , @Param("md5Password") String md5Password);

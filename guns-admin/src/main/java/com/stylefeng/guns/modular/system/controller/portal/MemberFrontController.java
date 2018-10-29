@@ -44,13 +44,13 @@ public class MemberFrontController extends BaseController {
 
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public Result login(String username ,String password){
-        return memberService.login(username,password);
+    public Result login(String username ,String password,Integer appId){
+        return memberService.login(username,password,appId);
     }
 
     @RequestMapping(value = "/login_use_mobile",method = RequestMethod.POST)
-    public Result loginByMobile(String mobile,String password){
-        return memberService.loginByMobile(mobile,password);
+    public Result loginByMobile(String mobile,String password,Integer appId){
+        return memberService.loginByMobile(mobile,password,appId);
     }
 
     @RequestMapping(value = "/checkVip")
@@ -64,8 +64,8 @@ public class MemberFrontController extends BaseController {
     }
 
     @RequestMapping(value="/reset_password",method = RequestMethod.POST)
-    public Result resetPassword(String mobile,String message,String password){
-        return memberService.resetPassword(mobile,message,password);
+    public Result resetPassword(String mobile,String message,String password,Integer appId){
+        return memberService.resetPassword(mobile,message,password,appId);
     }
 
     @RequestMapping(value = "get_uuid_validity",method = RequestMethod.GET)

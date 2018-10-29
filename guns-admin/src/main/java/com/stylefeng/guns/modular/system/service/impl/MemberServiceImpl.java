@@ -92,7 +92,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     //前台逻辑方法
     //注册
     public Result register(String mobile,String password,String message,Integer appId,String appVer,String channel) {
-        Member existMember = memberMapper.selectMemberByMobile(mobile);
+        Member existMember = memberMapper.selectMemberByMobile(mobile,appId);
         if (existMember!=null){
             logger.info("这个手机已经注册过了");
             return Result.createByErrorMessage("这个手机已经注册过了");
@@ -173,7 +173,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
 
 
-    public Result login(String username,String password){
+    public Result login(String username,String password,Integer appId){
         int userNum = memberMapper.checkName(username);
         if (userNum==0){
             return Result.createByErrorMessage("用户名不存在");
@@ -198,15 +198,15 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     }
 
 
-    public Result loginByMobile(String mobile, String password){
-        Member existMember = memberMapper.selectMemberByMobile(mobile);
+    public Result loginByMobile(String mobile, String password,Integer appId){
+        Member existMember = memberMapper.selectMemberByMobile(mobile,appId);
         if (existMember==null){
             return Result.createByErrorMessage("这个手机号还没注册过哦，请先去注册一下吧");
         }
         //MD5加密 加盐，
         String md5Password = MD5Util.encrypt(password+saltProperties.getSalt1());
         //根据手机密码登录
-        Member member = memberMapper.loginByMobile(mobile,md5Password);
+        Member member = memberMapper.loginByMobile(mobile,md5Password,appId);
         if (member==null){
             return Result.createByErrorMessage("密码错误");
         }
@@ -347,8 +347,8 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     }
 
 
-    public Result resetPassword(String mobile,String message,String password){
-        Member member = memberMapper.selectMemberByMobile(mobile);
+    public Result resetPassword(String mobile,String message,String password,Integer appId){
+        Member member = memberMapper.selectMemberByMobile(mobile,appId);
         if (member==null){
             return Result.createByErrorMessage("这个手机号还没注册过哦，请先去注册一下吧");
         }
