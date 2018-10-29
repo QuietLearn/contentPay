@@ -1,5 +1,6 @@
 package com.stylefeng.guns.modular.system.service;
 
+import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.modular.system.model.Active;
 import com.baomidou.mybatisplus.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface IActiveService extends IService<Active> {
 
+    Result insertAssemActive(Active active);
 }
