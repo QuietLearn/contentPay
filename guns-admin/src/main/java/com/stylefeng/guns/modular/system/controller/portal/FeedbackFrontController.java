@@ -36,7 +36,7 @@ public class FeedbackFrontController extends BaseController {
     }*/
 
     @RequestMapping(value = "/add")
-    Result addFeedback(String uuidToken, Feedback feedback){
+    public Result addFeedback(String uuidToken, Feedback feedback){
        return feedbackService.addFeedback(uuidToken,feedback);
     }
 
