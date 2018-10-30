@@ -14,9 +14,9 @@ import java.net.URLConnection;
 /**
  * Created by hyj on 2018/10/30
  */
-public class ActiveUtil {
+public class MobileInfoUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(ActiveUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(MobileInfoUtil.class);
 
     public static String getMobileAreaInfo (String mobile)
     {
@@ -40,7 +40,8 @@ public class ActiveUtil {
 
 
     private static JSONObject loadJson(String mobile) {
-        String url = "https://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=" + mobile;
+        String changemobile = mobile.substring(3);
+        String url = "https://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=" + changemobile;
 
         StringBuilder json = new StringBuilder();
         try {
@@ -68,6 +69,6 @@ public class ActiveUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(getMobileAreaInfo("13065708090"));
+        System.out.println(getMobileAreaInfo("+8613065708090"));
     }
 }

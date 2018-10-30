@@ -3,14 +3,13 @@ package com.stylefeng.guns.modular.system.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.stylefeng.guns.core.common.result.Result;
-import com.stylefeng.guns.core.util.mobile.ActiveUtil;
+import com.stylefeng.guns.core.util.mobile.MobileInfoUtil;
 import com.stylefeng.guns.modular.system.model.Active;
 import com.stylefeng.guns.modular.system.dao.ActiveMapper;
 import com.stylefeng.guns.modular.system.model.BuriedPoint;
 import com.stylefeng.guns.modular.system.service.IActiveService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.stylefeng.guns.modular.system.service.IBuriedPointService;
-import org.aspectj.lang.annotation.After;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,10 +62,10 @@ public class ActiveServiceImpl extends ServiceImpl<ActiveMapper, Active> impleme
         insertActive.setPhoneBrand(phoneBrand);
         insertActive.setPhoneSystem(phoneSystem);
         insertActive.setDpi(dpi);
-        String mobileAreaInfo = ActiveUtil.getMobileAreaInfo(buriedPoint.getMobile());
+        String mobileAreaInfo = MobileInfoUtil.getMobileAreaInfo(buriedPoint.getMobile());
         insertActive.setAddress(mobileAreaInfo);
 
-        insertActive.setOperator(ActiveUtil.getMobileOperatorInfo(buriedPoint.getMobile()));
+        insertActive.setOperator(MobileInfoUtil.getMobileOperatorInfo(buriedPoint.getMobile()));
 
         insertActive.setGmtCreated(new Date());
         insertActive.setGmtModified(new Date());
