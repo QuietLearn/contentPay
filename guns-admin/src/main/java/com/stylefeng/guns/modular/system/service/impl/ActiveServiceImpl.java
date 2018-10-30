@@ -9,7 +9,10 @@ import com.stylefeng.guns.modular.system.dao.ActiveMapper;
 import com.stylefeng.guns.modular.system.model.BuriedPoint;
 import com.stylefeng.guns.modular.system.service.IActiveService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.stylefeng.guns.modular.system.service.IBuriedPointService;
+import org.aspectj.lang.annotation.After;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -25,9 +28,14 @@ import java.util.Date;
 @Service
 public class ActiveServiceImpl extends ServiceImpl<ActiveMapper, Active> implements IActiveService {
 
+    @Autowired
+    private IBuriedPointService buriedPointService;
 
-    public Result insertAssemActive(Active active){
-        Active insertActive = assemActive(active);
+    public Result insertAssemActive(BuriedPoint buriedPoint,String phoneType,String phoneBrand,String phoneSystem,String dpi){
+
+        Active insertActive = assemActive(buriedPoint,phoneType,phoneBrand,phoneSystem,dpi);
+
+
 
         Wrapper<Active> wrapper = new EntityWrapper<>();
         wrapper.eq("IMEI",insertActive.getImei());
@@ -43,16 +51,22 @@ public class ActiveServiceImpl extends ServiceImpl<ActiveMapper, Active> impleme
             return Result.createByErrorMessage("激活失败");
         }
 
+        buriedPointService.insertAssemBuriedPoint(buriedPoint);
+
         return Result.createBySuccessMessage("激活成功");
     }
 
-    public Active assemActive(Active active){
+    public Active assemActive(BuriedPoint buriedPoint,String phoneType,String phoneBrand,String phoneSystem,String dpi){
         Active insertActive = new Active();
-        BeanUtils.copyProperties(active,insertActive);
-        String mobileAreaInfo = ActiveUtil.getMobileAreaInfo(active.getMobile());
+        BeanUtils.copyProperties(buriedPoint,insertActive);
+        insertActive.setPhoneType(phoneType);
+        insertActive.setPhoneBrand(phoneBrand);
+        insertActive.setPhoneSystem(phoneSystem);
+        insertActive.setDpi(dpi);
+        String mobileAreaInfo = ActiveUtil.getMobileAreaInfo(buriedPoint.getMobile());
         insertActive.setAddress(mobileAreaInfo);
 
-        insertActive.setOperator(ActiveUtil.getMobileOperatorInfo(active.getMobile()));
+        insertActive.setOperator(ActiveUtil.getMobileOperatorInfo(buriedPoint.getMobile()));
 
         insertActive.setGmtCreated(new Date());
         insertActive.setGmtModified(new Date());

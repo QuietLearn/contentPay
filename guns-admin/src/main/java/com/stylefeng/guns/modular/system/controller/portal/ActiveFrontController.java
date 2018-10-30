@@ -23,8 +23,8 @@ public class ActiveFrontController extends BaseController {
     private IActiveService activeService;
 
     @RequestMapping(value = "/add")
-    public Result insertActive(Active active){
-       return activeService.insertAssemActive(active);
+    public Result insertActive(BuriedPoint buriedPoint,String phoneType,String phoneBrand,String phoneSystem,String dpi){
+       return activeService.insertAssemActive(buriedPoint,phoneType,phoneBrand,phoneSystem,dpi);
     }
 
 

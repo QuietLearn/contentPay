@@ -3,6 +3,7 @@ package com.stylefeng.guns.modular.system.service;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.modular.system.model.Active;
 import com.baomidou.mybatisplus.service.IService;
+import com.stylefeng.guns.modular.system.model.BuriedPoint;
 
 /**
  * <p>
@@ -14,5 +15,5 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface IActiveService extends IService<Active> {
 
-    Result insertAssemActive(Active active);
+    Result insertAssemActive(BuriedPoint buriedPoint, String phoneType, String phoneBrand, String phoneSystem, String dpi);
 }

@@ -7,8 +7,8 @@ package com.stylefeng.guns.core.common.constant.state;
  * @Date 2017年1月22日 下午12:14:59
  */
 public enum BizLogType {
-
-    ALL(0, null),//全部日志
+    //全部日志
+    ALL(0, null),
     BUSSINESS(1, "业务日志"),
     EXCEPTION(2, "异常日志");
 
