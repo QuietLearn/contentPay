@@ -72,4 +72,45 @@ public class AllConst {
 
         }*/
     }
+
+    public enum PointMessageEnum{
+        ENABLE(100,"开启"),
+        ACTIVE(101,"激活"),
+        //CTRL
+        GOBACK(103,"切换到后台"),
+        CUTAPP(104,"切回应用"),
+        EXITAPP(105,"应用退出"),
+        APP_CRASH(106,"应用崩溃"),
+        REGISTER(107,"注册"),
+        RESET_PASS(108,"忘记密码"),
+        LOGIN(111,"登录"),
+        HOME(112,"首页"),
+        CHANNEL(114,"频道页"),
+        LIST(116,"列表页"),
+        DETAIL(118,"详情页"),
+        PLAY(120,"播放页");
+
+
+        private int code;
+        private String message;
+
+        PointMessageEnum(int code,String message){
+            this.code = code;
+            this.message = message;
+        }
+
+        public static String valueOf(Integer value) {
+            if (value == null) {
+                return null;
+            } else {
+                for (BizLogType bizLogType : BizLogType.values()) {
+                    if (bizLogType.getVal().equals(value)) {
+                        return bizLogType.getMessage();
+                    }
+                }
+                return null;
+            }
+        }
+    }
+
 }
