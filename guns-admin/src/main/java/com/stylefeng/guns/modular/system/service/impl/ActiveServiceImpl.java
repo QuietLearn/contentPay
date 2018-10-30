@@ -1,5 +1,7 @@
 package com.stylefeng.guns.modular.system.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.modular.system.model.Active;
 import com.stylefeng.guns.modular.system.dao.ActiveMapper;
@@ -25,12 +27,22 @@ public class ActiveServiceImpl extends ServiceImpl<ActiveMapper, Active> impleme
 
     public Result insertAssemActive(Active active){
         Active insertActive = assemActive(active);
-        boolean insert = this.insert(insertActive);
-        if (!insert ){
-            return Result.createByErrorMessage("激活统计失败");
+
+        Wrapper<Active> wrapper = new EntityWrapper<>();
+        wrapper.eq("IMEI",insertActive.getImei());
+        wrapper.eq("appId",insertActive.getAppId());
+
+        int count = this.selectCount(wrapper);
+        if (count>0){
+            return Result.createBySuccessMessage("该用户已激活");
         }
 
-        return Result.createBySuccessMessage("激活统计成功");
+        boolean insert = this.insert(insertActive);
+        if (!insert ){
+            return Result.createByErrorMessage("激活失败");
+        }
+
+        return Result.createBySuccessMessage("激活成功");
     }
 
     public Active assemActive(Active active){
