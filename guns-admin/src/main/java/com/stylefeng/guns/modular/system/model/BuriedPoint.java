@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-10-29
+ * @since 2018-10-30
  */
 @TableName("cps_buried_point")
 public class BuriedPoint extends Model<BuriedPoint> {
@@ -54,10 +54,6 @@ public class BuriedPoint extends Model<BuriedPoint> {
     @TableField("IMEI")
     private String imei;
     /**
-     * 短信中心号码
-     */
-    private String smsc;
-    /**
      * 100  开启　101 激活　102　弹出计费框　 103 切换到后台 104 切回应用 105 应用退出 106 应用崩溃 107 注册  108 取消注册 109 忘记密码 111 登录  112 登录取消 113 首页  115 频道页   117 列表页 119 详情页 121 播放页
      */
     @TableField("point_id")
@@ -94,10 +90,10 @@ public class BuriedPoint extends Model<BuriedPoint> {
     @TableField("ICCID")
     private String iccid;
     /**
-     * 支付渠道号
+     * 手机型号
      */
-    @TableField("pay_channelId")
-    private String payChannelid;
+    @TableField("phone_type")
+    private String phoneType;
     /**
      * 错误信息
      */
@@ -187,14 +183,6 @@ public class BuriedPoint extends Model<BuriedPoint> {
         this.imei = imei;
     }
 
-    public String getSmsc() {
-        return smsc;
-    }
-
-    public void setSmsc(String smsc) {
-        this.smsc = smsc;
-    }
-
     public Integer getPointId() {
         return pointId;
     }
@@ -259,12 +247,12 @@ public class BuriedPoint extends Model<BuriedPoint> {
         this.iccid = iccid;
     }
 
-    public String getPayChannelid() {
-        return payChannelid;
+    public String getPhoneType() {
+        return phoneType;
     }
 
-    public void setPayChannelid(String payChannelid) {
-        this.payChannelid = payChannelid;
+    public void setPhoneType(String phoneType) {
+        this.phoneType = phoneType;
     }
 
     public String getErrorMessage() {
@@ -331,7 +319,6 @@ public class BuriedPoint extends Model<BuriedPoint> {
         ", address=" + address +
         ", imsi=" + imsi +
         ", imei=" + imei +
-        ", smsc=" + smsc +
         ", pointId=" + pointId +
         ", pointMessage=" + pointMessage +
         ", payType=" + payType +
@@ -340,7 +327,7 @@ public class BuriedPoint extends Model<BuriedPoint> {
         ", wifiType=" + wifiType +
         ", mobile=" + mobile +
         ", iccid=" + iccid +
-        ", payChannelid=" + payChannelid +
+        ", phoneType=" + phoneType +
         ", errorMessage=" + errorMessage +
         ", pointType=" + pointType +
         ", idfa=" + idfa +

@@ -6,6 +6,7 @@ import com.stylefeng.guns.core.base.tips.ErrorTip;
 import com.stylefeng.guns.core.exception.GunsException;
 import com.stylefeng.guns.core.log.LogManager;
 import com.stylefeng.guns.core.log.factory.LogTaskFactory;
+import com.stylefeng.guns.core.log.factory.MemberLogTaskFactory;
 import com.stylefeng.guns.core.shiro.ShiroKit;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.CredentialsException;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import java.lang.reflect.UndeclaredThrowableException;
 
@@ -44,9 +46,12 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ErrorTip notFount(GunsException e) {
-        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(), e));
+        if (ShiroKit.getUser()!=null) {
+            LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(),1, e));
+        }
         getRequest().setAttribute("tip", e.getMessage());
         log.error("业务异常:", e);
+
         return new ErrorTip(e.getCode(), e.getMessage());
     }
 
@@ -115,7 +120,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ErrorTip notFount(RuntimeException e) {
-        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(), e));
+        if (ShiroKit.getUser()!=null){
+            LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(),1, e));
+        }
+
+
+        LogManager.me().executeLog(MemberLogTaskFactory.exceptionLog(2,e));
+
         getRequest().setAttribute("tip", "服务器未知运行时异常");
         log.error("运行时异常:", e);
         return new ErrorTip(BizExceptionEnum.SERVER_ERROR.getCode(), BizExceptionEnum.SERVER_ERROR.getMessage());

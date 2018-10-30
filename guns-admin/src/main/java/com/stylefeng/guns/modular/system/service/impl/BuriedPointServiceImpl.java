@@ -1,6 +1,7 @@
 package com.stylefeng.guns.modular.system.service.impl;
 
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.util.mobile.ActiveUtil;
 import com.stylefeng.guns.modular.system.model.BuriedPoint;
 import com.stylefeng.guns.modular.system.dao.BuriedPointMapper;
 import com.stylefeng.guns.modular.system.service.IBuriedPointService;
@@ -27,16 +28,18 @@ public class BuriedPointServiceImpl extends ServiceImpl<BuriedPointMapper, Burie
         BuriedPoint insertBuriedPoint = assemBuriedPoint(buriedPoint);
         boolean insert = this.insert(insertBuriedPoint);
         if (!insert ){
-            return Result.createByErrorMessage("埋点统计失败");
+            return Result.createByErrorMessage("埋点失败");
         }
 
-        return Result.createBySuccessMessage("埋点统计成功");
+        return Result.createBySuccessMessage("埋点成功");
     }
 
     public BuriedPoint assemBuriedPoint(BuriedPoint buriedPoint){
         BuriedPoint insertBuriedPoint = new BuriedPoint();
         BeanUtils.copyProperties(buriedPoint,insertBuriedPoint);
-        String mobile = buriedPoint.getMobile();
+        String mobileAreaInfo = ActiveUtil.getMobileAreaInfo(buriedPoint.getMobile());
+        insertBuriedPoint.setAddress(mobileAreaInfo);
+        insertBuriedPoint.setOperator(ActiveUtil.getMobileOperatorInfo(buriedPoint.getMobile()));
         insertBuriedPoint.setGmtCreated(new Date());
         insertBuriedPoint.setGmtModified(new Date());
         return insertBuriedPoint;

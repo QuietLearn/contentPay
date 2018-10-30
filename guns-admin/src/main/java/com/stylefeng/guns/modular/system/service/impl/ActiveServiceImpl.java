@@ -49,9 +49,11 @@ public class ActiveServiceImpl extends ServiceImpl<ActiveMapper, Active> impleme
     public Active assemActive(Active active){
         Active insertActive = new Active();
         BeanUtils.copyProperties(active,insertActive);
-        String mobile = active.getMobile();
         String mobileAreaInfo = ActiveUtil.getMobileAreaInfo(active.getMobile());
         insertActive.setAddress(mobileAreaInfo);
+
+        insertActive.setOperator(ActiveUtil.getMobileOperatorInfo(active.getMobile()));
+
         insertActive.setGmtCreated(new Date());
         insertActive.setGmtModified(new Date());
         return insertActive;

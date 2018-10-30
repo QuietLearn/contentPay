@@ -1,0 +1,35 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="主键" underline="true"/>
+                            <#input id="logtype" name="日志类型" underline="true"/>
+                            <#input id="errorsite" name="1 后台 2 前台" underline="true"/>
+                            <#input id="logname" name="日志名称" underline="true"/>
+                            <#input id="userid" name="用户id"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="classname" name="类名称" underline="true"/>
+                            <#input id="method" name="方法名称" underline="true"/>
+                            <#input id="createtime" name="创建时间" underline="true"/>
+                            <#input id="succeed" name="是否成功" underline="true"/>
+                            <#input id="message" name="备注" underline="true"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="OperationLogInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="OperationLogInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/operationLog/operationLog_info.js"></script>
+@}

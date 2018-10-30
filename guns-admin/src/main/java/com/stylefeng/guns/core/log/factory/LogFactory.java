@@ -19,11 +19,12 @@ public class LogFactory {
     /**
      * 创建操作日志
      */
-    public static OperationLog createOperationLog(LogType logType, Integer userId, String bussinessName, String clazzName, String methodName, String msg, LogSucceed succeed) {
+    public static OperationLog createOperationLog(LogType logType, Integer userId,Integer errorSite, String bussinessName, String clazzName, String methodName, String msg, LogSucceed succeed) {
         OperationLog operationLog = new OperationLog();
         operationLog.setLogtype(logType.getMessage());
         operationLog.setLogname(bussinessName);
         operationLog.setUserid(userId);
+        operationLog.setErrorsite(errorSite);
         operationLog.setClassname(clazzName);
         operationLog.setMethod(methodName);
         operationLog.setCreatetime(new Date());

@@ -125,7 +125,7 @@ public class MemberLogTaskFactory {
             @Override
             public void run() {
                 OperationLog operationLog = LogFactory.createOperationLog(
-                        LogType.BUSSINESS, userId, bussinessName, clazzName, methodName, msg, LogSucceed.SUCCESS);
+                        LogType.BUSSINESS, userId,2, bussinessName, clazzName, methodName, msg, LogSucceed.SUCCESS);
                 try {
                     operationLogMapper.insert(operationLog);
                 } catch (Exception e) {
@@ -135,13 +135,13 @@ public class MemberLogTaskFactory {
         };
     }
 
-    public static TimerTask exceptionLog(final Integer userId, final Exception exception) {
+    public static TimerTask exceptionLog(final Integer errorsite, final Exception exception) {
         return new TimerTask() {
             @Override
             public void run() {
                 String msg = ToolUtil.getExceptionMsg(exception);
                 OperationLog operationLog = LogFactory.createOperationLog(
-                        LogType.EXCEPTION, userId, "", null, null, msg, LogSucceed.FAIL);
+                        LogType.EXCEPTION, null, errorsite, "",null, null, msg, LogSucceed.FAIL);
                 try {
                     operationLogMapper.insert(operationLog);
                 } catch (Exception e) {

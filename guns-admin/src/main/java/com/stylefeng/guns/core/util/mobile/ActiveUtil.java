@@ -28,6 +28,16 @@ public class ActiveUtil {
         return province;
     }
 
+    public static String getMobileOperatorInfo (String mobile)
+    {
+        JSONObject mobileJson = loadJson(mobile);
+
+        String catName = mobileJson.getString("catName");
+
+        logger.info("catName:{}",catName);
+        return catName;
+    }
+
 
     private static JSONObject loadJson(String mobile) {
         String url = "https://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=" + mobile;

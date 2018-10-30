@@ -13,19 +13,18 @@
                             <#input id="address" name="省份 地区" value="${item.address}" underline="true"/>
                             <#input id="imsi" name="移动设备识别码" value="${item.imsi}" underline="true"/>
                             <#input id="imei" name="移动设备身份码" value="${item.imei}" underline="true"/>
-                            <#input id="smsc" name="短信中心号码" value="${item.smsc}" underline="true"/>
                             <#input id="pointId" name="100  开启　101 激活　102　弹出计费框　 103 切换到后台 104 切回应用 105 应用退出 106 应用崩溃 107 注册  108 取消注册 109 忘记密码 111 登录  112 登录取消 113 首页  115 频道页   117 列表页 119 详情页 121 播放页" value="${item.pointId}" underline="true"/>
                             <#input id="pointMessage" name="埋点信息" value="${item.pointMessage}" underline="true"/>
-                            <#input id="payType" name="支付类型 1 ZZF  2 DM 3 LFT" value="${item.payType}" />
+                            <#input id="payType" name="支付类型 1 ZZF  2 DM 3 LFT" value="${item.payType}" underline="true"/>
+                            <#input id="uuid" name="用户唯一识别号码" value="${item.uuid}" />
                 </div>
 
                 <div class="col-sm-6">
-                            <#input id="uuid" name="用户唯一识别号码" value="${item.uuid}" underline="true"/>
                             <#input id="isDel" name="" value="${item.isDel}" underline="true"/>
                             <#input id="wifiType" name="网络类型" value="${item.wifiType}" underline="true"/>
                             <#input id="mobile" name="手机号码" value="${item.mobile}" underline="true"/>
                             <#input id="iccid" name="手机识别码" value="${item.iccid}" underline="true"/>
-                            <#input id="payChannelid" name="支付渠道号" value="${item.payChannelid}" underline="true"/>
+                            <#input id="phoneType" name="手机型号" value="${item.phoneType}" underline="true"/>
                             <#input id="errorMessage" name="错误信息" value="${item.errorMessage}" underline="true"/>
                             <#input id="pointType" name="//埋点类型  1 安卓 2 ios" value="${item.pointType}" underline="true"/>
                             <#input id="idfa" name="广告标识" value="${item.idfa}" underline="true"/>

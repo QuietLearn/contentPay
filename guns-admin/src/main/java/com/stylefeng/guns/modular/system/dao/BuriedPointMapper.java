@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * </p>
  *
  * @author hyj
- * @since 2018-10-29
+ * @since 2018-10-30
  */
 public interface BuriedPointMapper extends BaseMapper<BuriedPoint> {
 

@@ -12,7 +12,6 @@
         <result column="address" property="address" />
         <result column="IMSI" property="imsi" />
         <result column="IMEI" property="imei" />
-        <result column="smsc" property="smsc" />
         <result column="point_id" property="pointId" />
         <result column="point_message" property="pointMessage" />
         <result column="pay_type" property="payType" />
@@ -21,7 +20,7 @@
         <result column="wifi_type" property="wifiType" />
         <result column="mobile" property="mobile" />
         <result column="ICCID" property="iccid" />
-        <result column="pay_channelId" property="payChannelid" />
+        <result column="phone_type" property="phoneType" />
         <result column="error_message" property="errorMessage" />
         <result column="point_type" property="pointType" />
         <result column="idfa" property="idfa" />
@@ -32,7 +31,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, appId, appVer, channelId, operator, address, IMSI, IMEI, smsc, point_id, point_message, pay_type, UUID, is_del, wifi_type, mobile, ICCID, pay_channelId, error_message, point_type, idfa, open_UDID, gmt_created, gmt_modified
+        id, appId, appVer, channelId, operator, address, IMSI, IMEI, point_id, point_message, pay_type, UUID, is_del, wifi_type, mobile, ICCID, phone_type, error_message, point_type, idfa, open_UDID, gmt_created, gmt_modified
     </sql>
 
 </mapper>

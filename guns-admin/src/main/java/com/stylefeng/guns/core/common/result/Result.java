@@ -58,7 +58,7 @@ public class Result<T> implements Serializable {
     }
 
 
-    public static Result createByError(String msg){
+    public static Result createByError(){
         return new Result(ResultCode.ERROR.getCode());
     }
 

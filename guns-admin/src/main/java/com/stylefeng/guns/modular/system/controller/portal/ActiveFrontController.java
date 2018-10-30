@@ -8,6 +8,7 @@ import com.stylefeng.guns.modular.system.service.IActiveService;
 import com.stylefeng.guns.modular.system.service.IBuriedPointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -27,5 +28,9 @@ public class ActiveFrontController extends BaseController {
     }
 
 
+    /*@RequestMapping(value="/error")
+    public Result Get(){
+        throw new RuntimeException();
+    }*/
 
 }
