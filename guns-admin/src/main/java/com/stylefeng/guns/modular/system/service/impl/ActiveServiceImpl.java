@@ -3,6 +3,7 @@ package com.stylefeng.guns.modular.system.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.util.mobile.ActiveUtil;
 import com.stylefeng.guns.modular.system.model.Active;
 import com.stylefeng.guns.modular.system.dao.ActiveMapper;
 import com.stylefeng.guns.modular.system.model.BuriedPoint;
@@ -49,6 +50,8 @@ public class ActiveServiceImpl extends ServiceImpl<ActiveMapper, Active> impleme
         Active insertActive = new Active();
         BeanUtils.copyProperties(active,insertActive);
         String mobile = active.getMobile();
+        String mobileAreaInfo = ActiveUtil.getMobileAreaInfo(active.getMobile());
+        insertActive.setAddress(mobileAreaInfo);
         insertActive.setGmtCreated(new Date());
         insertActive.setGmtModified(new Date());
         return insertActive;
