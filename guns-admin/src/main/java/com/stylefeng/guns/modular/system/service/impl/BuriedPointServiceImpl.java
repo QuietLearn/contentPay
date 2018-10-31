@@ -1,5 +1,6 @@
 package com.stylefeng.guns.modular.system.service.impl;
 
+import com.stylefeng.guns.core.common.constant.state.AllConst;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.util.mobile.MobileInfoUtil;
 import com.stylefeng.guns.modular.system.model.BuriedPoint;
@@ -40,6 +41,8 @@ public class BuriedPointServiceImpl extends ServiceImpl<BuriedPointMapper, Burie
         String mobileAreaInfo = MobileInfoUtil.getMobileAreaInfo(buriedPoint.getMobile());
         insertBuriedPoint.setAddress(mobileAreaInfo);
         insertBuriedPoint.setOperator(MobileInfoUtil.getMobileOperatorInfo(buriedPoint.getMobile()));
+
+        insertBuriedPoint.setPointMessage(AllConst.PointMessageEnum.valueOf(buriedPoint.getPointId()));
         insertBuriedPoint.setGmtCreated(new Date());
         insertBuriedPoint.setGmtModified(new Date());
         return insertBuriedPoint;

@@ -53,13 +53,19 @@ public class AllConst {
 
         String signin  = "SMS_144455793";
 //        String signin  = "SMS_148590553";
-        String findPass  = "SMS_144455795"        ;//密码找回 = "SMS_144455795";
-        String replacephone = "SMS_144455799"      ;//解绑手机= "SMS_144455799";
-        String unbundlingphone = "SMS_144450770"     ;//绑定手机= "SMS_144450770";
-        String guardNotice  = "SMS_144455809" ;//守护到期提醒= "SMS_144455809";
+        //密码找回 = "SMS_144455795";
+        String findPass  = "SMS_144455795"        ;
+        //解绑手机= "SMS_144455799";
+        String replacephone = "SMS_144455799";
+        //绑定手机= "SMS_144450770";
+        String unbundlingphone = "SMS_144450770"     ;
+        //守护到期提醒= "SMS_144455809";
+        String guardNotice  = "SMS_144455809" ;
 
-        String accessKeyId     ="LTAIlB7K8erciXPg";//= "LTAIlB7K8erciXPg";LTAINyZShGhQRGet
-        String accessKeySecret ="USzLesKykp7JvzGnBHJPSCjGVdjA3J"; //="4RDLyTeo3ka8aKZyaAJPtC3h661o0d"
+        //= "LTAIlB7K8erciXPg";LTAINyZShGhQRGet
+        String accessKeyId     ="LTAIlB7K8erciXPg";
+        //="4RDLyTeo3ka8aKZyaAJPtC3h661o0d"
+        String accessKeySecret ="USzLesKykp7JvzGnBHJPSCjGVdjA3J";
         String SignName        ="坚果娱乐";
     }
 
@@ -91,10 +97,11 @@ public class AllConst {
         PLAY(120,"播放页");
 
 
-        private int code;
+        private Integer code;
         private String message;
 
-        PointMessageEnum(int code,String message){
+
+        PointMessageEnum(Integer code,String message){
             this.code = code;
             this.message = message;
         }
@@ -103,13 +110,23 @@ public class AllConst {
             if (value == null) {
                 return null;
             } else {
-                for (BizLogType bizLogType : BizLogType.values()) {
-                    if (bizLogType.getVal().equals(value)) {
-                        return bizLogType.getMessage();
+                for (PointMessageEnum pointMessageEnum : PointMessageEnum.values()) {
+
+                    if (value.equals(pointMessageEnum.getCode())) {
+                        return pointMessageEnum.getMessage();
                     }
                 }
                 return null;
             }
+        }
+
+
+        public Integer getCode() {
+            return code;
+        }
+
+        public String getMessage() {
+            return message;
         }
     }
 
