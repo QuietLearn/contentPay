@@ -54,7 +54,7 @@ public class FileServiceImpl implements IFileService {
             logger.error("文件上传到目标目录异常",e);
             return null;
         } finally {
-            //targetFile.delete();
+            targetFile.delete();
         }
         return targetFile;
     }
