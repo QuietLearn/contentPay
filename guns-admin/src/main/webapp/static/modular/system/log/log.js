@@ -16,6 +16,7 @@ OptLog.initColumn = function () {
         {field: 'selectItem', radio: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
         {title: '日志类型', field: 'logtype', align: 'center', valign: 'middle', sortable: true},
+        {title: '1 后台 2 前台', field: 'errorsite', align: 'center', valign: 'middle', sortable: true},
         {title: '日志名称', field: 'logname', align: 'center', valign: 'middle', sortable: true},
         // {title: '用户名称', field: 'userName', align: 'center', valign: 'middle', sortable: true, sortName: 'userid'},
         {title: '用户名称', field: 'userName', align: 'center', valign: 'middle',sortable: true},
@@ -73,6 +74,9 @@ OptLog.formParams = function() {
     var queryData = {};
 
     queryData['condition'] = $("#condition").val();
+    queryData['logName'] = $("#logName").val();
+    queryData['logType'] = $("#logType").val();
+
     queryData['beginTime'] = $("#beginTime").val();
     queryData['endTime'] = $("#endTime").val();
 

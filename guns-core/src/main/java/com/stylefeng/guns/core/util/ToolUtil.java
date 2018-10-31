@@ -80,7 +80,7 @@ public class ToolUtil {
                 e1.printStackTrace();
             }
         }
-        return sw.getBuffer().toString().replaceAll("\\$", "T");
+            return sw.getBuffer().toString().replaceAll("\\$", "T");
     }
 
     /**

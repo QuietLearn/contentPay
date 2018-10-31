@@ -12,7 +12,8 @@ public enum LogType {
     LOGIN_FAIL("登录失败日志"),
     EXIT("退出日志"),
     EXCEPTION("异常日志"),
-    BUSSINESS("业务日志");
+    BUSSINESS("业务日志"),
+    CLIENTBUG("客户端BUG日志");
 
     //日志类型
     String message;

@@ -74,6 +74,6 @@ public class MobileInfoUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(getMobileAreaInfo(null));
+        System.out.println(getMobileAreaInfo("+8613065708090"));
     }
 }

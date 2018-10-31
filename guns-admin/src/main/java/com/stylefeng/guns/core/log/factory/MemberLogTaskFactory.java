@@ -150,4 +150,20 @@ public class MemberLogTaskFactory {
             }
         };
     }
+
+    public static TimerTask androidBugLog(final Integer errorsite, final String androidBug) {
+        return new TimerTask() {
+            @Override
+            public void run() {
+                OperationLog operationLog = LogFactory.createOperationLog(
+                        LogType.CLIENTBUG, null, errorsite, "",null, null, androidBug, LogSucceed.FAIL);
+                try {
+                    operationLogMapper.insert(operationLog);
+                } catch (Exception e) {
+                    logger.error("创建客户端BUG日志异常!", e);
+                }
+            }
+        };
+    }
+
 }
