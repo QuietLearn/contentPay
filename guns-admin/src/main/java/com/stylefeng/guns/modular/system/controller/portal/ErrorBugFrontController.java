@@ -45,6 +45,9 @@ public class ErrorBugFrontController extends BaseController {
         String path = request.getSession().getServletContext().getRealPath("upload");
 
         File targetFile = iFileService.uploadPhoto(file, path);
+        if (targetFile==null){
+            return Result.createByErrorMessage("文件上传到服務器异常");
+        }
         String bugLogString = iFileService.getBugLogString(targetFile);
         LogManager.me().executeLog(MemberLogTaskFactory.androidBugLog(2,bugLogString));
 
@@ -60,5 +63,7 @@ public class ErrorBugFrontController extends BaseController {
 //            return iFileService.uploadPhoto(file,request);
         return Result.createBySuccessMessage(map.get("msg"));
         }
+
+
 
 }

@@ -63,17 +63,17 @@ public class MobileInfoUtil {
         }
 
         String jsonString = json.toString();
-        System.out.println(jsonString);
+        logger.info("jsonString：{}",jsonString);
 
         String substring = jsonString.substring(jsonString.indexOf("= ") + "= ".length());
 
-        System.out.println(substring);
+        logger.info("substring：{}",substring);
         JSONObject obj = JSONObject.parseObject(substring);
-        System.out.println(obj);
+        logger.info("obj：{}",obj);
         return obj;
     }
 
     public static void main(String[] args) {
-        System.out.println(getMobileAreaInfo("+8613065708090"));
+        System.out.println(getMobileAreaInfo(null));
     }
 }

@@ -42,7 +42,7 @@ public class FtpUtil {
         FtpUtil ftpUtil = new FtpUtil(ftpIp,21,ftpUser,ftpPass);
         logger.info("开始连接ftp服务器,准备上传图片");
 
-        boolean result = ftpUtil.uploadFile("img/", fileList);
+        boolean result = ftpUtil.uploadFile("log/", fileList);
         logger.info("结束上传，图片上传结果为{}",result);
         return result;
     }

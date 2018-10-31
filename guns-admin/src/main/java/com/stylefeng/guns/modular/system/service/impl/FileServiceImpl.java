@@ -1,5 +1,7 @@
 package com.stylefeng.guns.modular.system.service.impl;
 
+import com.google.common.collect.Lists;
+import com.stylefeng.guns.core.util.file.FtpUtil;
 import com.stylefeng.guns.modular.system.service.IFileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,9 +44,9 @@ public class FileServiceImpl implements IFileService {
 
             // list为以后多文件上传扩展使用
 
-           /* if (!FtpUtil.uploadFile(Lists.newArrayList(targetFile))){// 当时是因为没有在linux的 /ftpfile文件创建img并赋予ftpuser权限导致不能写入的原因
-                return ""; //如果没有将文件写入ftp服务器，返回的文件名为""代表失败，因为返回string，不知道如何表示错误
-            }*/
+            if (!FtpUtil.uploadFile(Lists.newArrayList(targetFile))){// 当时是因为没有在linux的 /ftpfile文件创建img并赋予ftpuser权限导致不能写入的原因
+                return null; //如果没有将文件写入ftp服务器，返回的文件名为""代表失败，因为返回string，不知道如何表示错误
+            }
 
             //已经上传到ftp服务器上
 
@@ -63,16 +65,19 @@ public class FileServiceImpl implements IFileService {
         InputStreamReader isr = null;
         // 用于包装InputStreamReader,提高处理性能。因为BufferedReader有缓冲的，而InputStreamReader没有。
         BufferedReader br = null;
-        String str = "";
+        StringBuilder clientBug = new StringBuilder();
+
         try {
             fis = new FileInputStream(file);
             // 从文件系统中的某个文件中获取字节
             isr = new InputStreamReader(fis);// InputStreamReader 是字节流通向字符流的桥梁,
             br = new BufferedReader(isr);// 从字符输入流中读取文件中的内容,封装了一个new
             // InputStreamReader的对象
-            while ((str = br.readLine()) != null) {
+            String str ="";
+            while (( str= br.readLine()) != null) {
                 //截取得到的一行数据
-                str += str;
+                clientBug.append(str);
+                clientBug.append("\r\n");
                 //跳过第一行
                 //if(parms[0].equals("No")) continue;
                 //把得到的数据放进list
@@ -94,7 +99,7 @@ public class FileServiceImpl implements IFileService {
                 e.printStackTrace();
             }
         }
-        return str;
+        return clientBug.toString();
     }
 
 }
