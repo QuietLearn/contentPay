@@ -40,8 +40,12 @@ public class MobileInfoUtil {
 
 
     private static JSONObject loadJson(String mobile) {
-        String changemobile = mobile.substring(3);
-        String url = "https://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=" + changemobile;
+
+        if(mobile!=null&&!mobile.equals("")){
+            mobile = mobile.substring(3);
+        }
+
+        String url = "https://tcc.taobao.com/cc/json/mobile_tel_segment.htm?tel=" + mobile;
 
         StringBuilder json = new StringBuilder();
         try {
@@ -63,12 +67,13 @@ public class MobileInfoUtil {
 
         String substring = jsonString.substring(jsonString.indexOf("= ") + "= ".length());
 
+        System.out.println(substring);
         JSONObject obj = JSONObject.parseObject(substring);
-
+        System.out.println(obj);
         return obj;
     }
 
     public static void main(String[] args) {
-        System.out.println(getMobileAreaInfo("+8613065708090"));
+        System.out.println(getMobileAreaInfo(null));
     }
 }

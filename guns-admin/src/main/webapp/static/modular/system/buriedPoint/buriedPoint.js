@@ -14,7 +14,7 @@ var BuriedPoint = {
 BuriedPoint.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
             {title: 'app  id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
             {title: 'app 版本号', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
             {title: ' 渠道号', field: 'channelId', visible: true, align: 'center', valign: 'middle'},
@@ -30,7 +30,7 @@ BuriedPoint.initColumn = function () {
             {title: '网络类型', field: 'wifiType', visible: true, align: 'center', valign: 'middle'},
             {title: '手机号码', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
             {title: '手机识别码', field: 'iccid', visible: true, align: 'center', valign: 'middle'},
-            {title: '手机型号', field: 'phoneType', visible: true, align: 'center', valign: 'middle'},
+            {title: '手机型号', field: 'phoneType', visible: false, align: 'center', valign: 'middle'},
             {title: '错误信息', field: 'errorMessage', visible: false, align: 'center', valign: 'middle'},
             {title: '埋点类型 ', field: 'pointType', visible: true, align: 'center', valign: 'middle'},
             {title: '广告标识', field: 'idfa', visible: false, align: 'center', valign: 'middle'},
