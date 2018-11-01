@@ -68,10 +68,12 @@ public class FileServiceImpl implements IFileService {
         StringBuilder clientBug = new StringBuilder();
 
         try {
-            fis = new FileInputStream(file);
             // 从文件系统中的某个文件中获取字节
-            isr = new InputStreamReader(fis);// InputStreamReader 是字节流通向字符流的桥梁,
-            br = new BufferedReader(isr);// 从字符输入流中读取文件中的内容,封装了一个new
+            fis = new FileInputStream(file);
+            // InputStreamReader 是字节流通向字符流的桥梁,
+            isr = new InputStreamReader(fis);
+            // 从字符输入流中读取文件中的内容,封装了一个new
+            br = new BufferedReader(isr);
             // InputStreamReader的对象
             String str ="";
             while (( str= br.readLine()) != null) {

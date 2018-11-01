@@ -50,7 +50,7 @@ var Feng = {
             type: 1,
             skin: 'layui-layer-rim', //加上边框
             area: ['950px', '600px'], //宽高
-            content: '<div style="padding: 20px;">' + display + '</div>'
+            content: '<div style="padding: 20px;white-space: pre-line;">' + display + '</div>'
         });
     },
     writeObj: function (obj) {

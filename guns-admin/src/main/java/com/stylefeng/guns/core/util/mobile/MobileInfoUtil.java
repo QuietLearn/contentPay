@@ -22,6 +22,9 @@ public class MobileInfoUtil {
     {
         JSONObject mobileJson = loadJson(mobile);
 
+        if (mobileJson==null){
+            return "";
+        }
         String province = mobileJson.getString("province");
 
         logger.info("province:{}",province);
@@ -32,6 +35,9 @@ public class MobileInfoUtil {
     {
         JSONObject mobileJson = loadJson(mobile);
 
+        if (mobileJson==null){
+            return "";
+        }
         String catName = mobileJson.getString("catName");
 
         logger.info("catName:{}",catName);
@@ -41,7 +47,7 @@ public class MobileInfoUtil {
 
     private static JSONObject loadJson(String mobile) {
 
-        if(mobile!=null&&!mobile.equals("")){
+        if(mobile!=null&&!mobile.equals("")&&mobile.length()>3){
             mobile = mobile.substring(3);
         }
 
@@ -50,6 +56,7 @@ public class MobileInfoUtil {
         StringBuilder json = new StringBuilder();
         try {
             URL oracle = new URL(url);
+            //可以转成HttpURLConnection
             URLConnection yc = oracle.openConnection();
             //utf-8
             BufferedReader in = new BufferedReader(new InputStreamReader(yc.getInputStream(), "gbk"));
@@ -65,15 +72,21 @@ public class MobileInfoUtil {
         String jsonString = json.toString();
         logger.info("jsonString：{}",jsonString);
 
-        String substring = jsonString.substring(jsonString.indexOf("= ") + "= ".length());
+        String substring ="";
+        if (jsonString!=null&&jsonString.indexOf("= ")>0){
+            substring = jsonString.substring(jsonString.indexOf("= ") + "= ".length());
+            logger.info("substring：{}",substring);//substring
+            JSONObject obj = JSONObject.parseObject(substring);
+            logger.info("obj：{}",obj);
+            return obj;
+        }
 
-        logger.info("substring：{}",substring);
-        JSONObject obj = JSONObject.parseObject(substring);
-        logger.info("obj：{}",obj);
-        return obj;
+
+
+        return null;
     }
 
     public static void main(String[] args) {
-        System.out.println(getMobileAreaInfo(null));
+        System.out.println(getMobileAreaInfo("+8613065708090"));
     }
 }

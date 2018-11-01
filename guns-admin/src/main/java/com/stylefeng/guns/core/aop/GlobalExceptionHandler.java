@@ -120,6 +120,8 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ErrorTip notFount(RuntimeException e) {
+
+
         if (ShiroKit.getUser()!=null){
             LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(),1, e));
         }

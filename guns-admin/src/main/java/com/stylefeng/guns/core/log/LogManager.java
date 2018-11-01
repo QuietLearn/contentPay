@@ -27,7 +27,10 @@ public class LogManager {
         return logManager;
     }
 
-    //传递task即可记录，不会占用业务时间
+    /**
+     * 传递task即可记录，不会占用业务时间
+     * @param task
+     */
     public void executeLog(TimerTask task) {
         executor.schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
     }
