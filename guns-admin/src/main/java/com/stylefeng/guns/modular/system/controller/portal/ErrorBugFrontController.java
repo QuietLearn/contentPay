@@ -30,7 +30,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/front/error_bug")
-public class ErrorBugFrontController extends BaseController {
+public class ErrorBugFrontController  extends BaseController{
     @Autowired
     private IFileService iFileService;
 

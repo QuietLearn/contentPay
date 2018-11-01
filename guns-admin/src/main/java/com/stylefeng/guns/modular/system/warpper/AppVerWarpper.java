@@ -12,9 +12,9 @@ import java.util.Map;
  * @author fengshuonan
  * @date 2017年2月19日15:07:29
  */
-public class AppWarpper extends BaseControllerWarpper {
+public class AppVerWarpper extends BaseControllerWarpper {
 
-    public AppWarpper(List<Map<String, Object>> list) {
+    public AppVerWarpper(List<Map<String, Object>> list) {
         super(list);
     }
 
@@ -22,7 +22,7 @@ public class AppWarpper extends BaseControllerWarpper {
     public void warpTheMap(Map<String, Object> map) {
         //typeName
         //me工厂方法
-        map.put("appName", ConstantFactory.me().getAppName((Integer) map.get("appId")));
+        map.put("appVerName", ConstantFactory.me().getAppVerName( (String)map.get("appVer")));
     }
 
 }

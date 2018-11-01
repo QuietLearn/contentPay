@@ -16,7 +16,7 @@ import java.io.Serializable;
  * @author wangyang
  * @since 2018-10-14
  */
-@TableName("pay_channel")
+@TableName("cps_pay_channel")
 public class PayChannel extends Model<PayChannel> {
 
     private static final long serialVersionUID = 1L;

@@ -128,6 +128,20 @@ public interface IConstantFactory {
     String getAppName(Integer appId);
 
     /**
+     * 获取版本名
+     * @param appVer
+     * @return
+     */
+    String getAppVerName(String appVer);
+
+    /**
+     * 获取渠道号名
+     * @param channel
+     * @return
+     */
+    String getChannelName(String channel);
+
+    /**
      * 获取 会员名
      * @param memberId
      * @return

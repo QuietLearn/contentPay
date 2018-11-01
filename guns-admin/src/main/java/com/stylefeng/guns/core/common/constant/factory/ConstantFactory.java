@@ -6,6 +6,8 @@ import com.stylefeng.guns.core.common.constant.cache.Cache;
 import com.stylefeng.guns.core.common.constant.cache.CacheKey;
 import com.stylefeng.guns.core.common.constant.state.ManagerStatus;
 import com.stylefeng.guns.core.common.constant.state.MenuStatus;
+import com.stylefeng.guns.modular.appver.service.IAppVerService;
+import com.stylefeng.guns.modular.channel.service.IChannelService;
 import com.stylefeng.guns.modular.system.dao.*;
 import com.stylefeng.guns.modular.system.model.*;
 import com.stylefeng.guns.core.log.LogObjectHolder;
@@ -41,10 +43,12 @@ public class ConstantFactory implements IConstantFactory {
     private ITypeService typeService = SpringContextHolder.getBean(ITypeService.class);
 
     private IAppService appService = SpringContextHolder.getBean(IAppService.class);
+    private IAppVerService appVerService = SpringContextHolder.getBean(IAppVerService.class);
+    private IChannelService channelService = SpringContextHolder.getBean(IChannelService.class);
 
     private IMemberService memberService = SpringContextHolder.getBean(IMemberService.class);
-
     private IFeedbackTypeService feedbackTypeService = SpringContextHolder.getBean(IFeedbackTypeService.class);
+
 
     public static IConstantFactory me() {
         return SpringContextHolder.getBean("constantFactory");
@@ -358,6 +362,23 @@ public class ConstantFactory implements IConstantFactory {
         return appName;
     }
 
+    public String getAppVerName(String appVer) {
+        Wrapper<AppVer> wrapper = new EntityWrapper<>();
+        wrapper.setSqlSelect("label");
+        wrapper.eq("appVer",appVer);
+        String appName = (String)appVerService.selectObj(wrapper);
+        return appName;
+    }
+
+    public String getChannelName(String channel) {
+        Wrapper<Channel> wrapper = new EntityWrapper<>();
+        wrapper.setSqlSelect("name");
+        wrapper.eq("channel",channel);
+        String channelName = (String)channelService.selectObj(wrapper);
+        return channelName;
+    }
+
+    @Override
     public String getMemberName(Integer memberId) {
         Wrapper<Member> wrapper = new EntityWrapper<>();
         wrapper.setSqlSelect("username");
@@ -366,6 +387,8 @@ public class ConstantFactory implements IConstantFactory {
         return memberName;
     }
 
+
+    @Override
     public String getFeedbackTypeName(String feedbackType){
         Wrapper<FeedbackType> wrapper = new EntityWrapper<>();
         wrapper.setSqlSelect("type_name");

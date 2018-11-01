@@ -26,7 +26,7 @@ Member.initColumn = function () {
         {title: 'md5加密密码', field: 'md5Password', visible: false, align: 'center', valign: 'middle'},
 
         {title: '性别', field: 'gender', visible: true, align: 'center', valign: 'middle'},
-        {title: '头像图片地址', field: 'picAddress', visible: true, align: 'center', valign: 'middle'},
+        {title: '头像', field: 'picAddress', visible: true, align: 'center', valign: 'middle'},
         {title: '手机', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
 
         {title: 'qq', field: 'qq', visible: false, align: 'center', valign: 'middle'},

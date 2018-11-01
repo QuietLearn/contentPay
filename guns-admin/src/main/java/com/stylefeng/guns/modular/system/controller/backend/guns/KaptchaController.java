@@ -1,4 +1,4 @@
-package com.stylefeng.guns.modular.system.controller;
+package com.stylefeng.guns.modular.system.controller.backend.guns;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
