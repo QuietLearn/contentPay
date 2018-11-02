@@ -77,23 +77,37 @@ public class MemberController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-
-        if (ToolUtil.isEmpty(condition)){
+    public Object list(String username,Integer appId) {
+        if (ToolUtil.isEmpty(username)&&appId==null){
             Page<Member> page =new PageFactory<Member>().defaultPage();
 
             page = memberService.selectPage(page);
 
-            List<Member> members = page.getRecords();
-            page.setRecords((List<Member>)super.warpObject(new AppWarpper(BeanKit.listToMapList(members))));
+            List<Member> memberList = page.getRecords();
+            page.setRecords((List<Member>)super.warpObject(new AppWarpper(BeanKit.listToMapList(memberList))));
 
             PageInfoBT<Member> pageInfoBT =this.packForBT(page);
+
+            /* Page page =new PageFactory().defaultPage();
+
+            page = memberService.selectPage(page);
+
+            List members = page.getRecords();
+            page.setRecords((List)super.warpObject(new AppWarpper(BeanKit.listToMapList(members))));
+
+            PageInfoBT pageInfoBT =this.packForBT(page);*/
 
             return pageInfoBT;
         }else {
             Page<Member> page = new PageFactory<Member>().defaultPage();
             EntityWrapper<Member> entityWrapper = new EntityWrapper<>();
-            entityWrapper.like("title","%"+condition+"%");
+            if (appId!=null&&appId!=0){
+                entityWrapper.eq("appId",appId);
+            }
+            if (ToolUtil.isNotEmpty(username)){
+                entityWrapper.like("username","%"+username+"%");
+            }
+
             page = memberService.selectPage(page,entityWrapper);
             List<Member> members = page.getRecords();
             page.setRecords((List<Member>)super.warpObject(new AppWarpper(BeanKit.listToMapList(members))));

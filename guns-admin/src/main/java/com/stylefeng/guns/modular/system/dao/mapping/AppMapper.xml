@@ -17,4 +17,8 @@
         id, app_id, app_name, is_del, gmt_created, gmt_modified
     </sql>
 
+
+    <select id="tree" resultType="com.stylefeng.guns.core.node.ZTreeNode">
+		select id,app_id as appId,app_name as appName from cps_app
+	</select>
 </mapper>

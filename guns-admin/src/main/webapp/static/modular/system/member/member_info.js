@@ -80,6 +80,9 @@ MemberInfoDlg.collectData = function() {
     .set('gmtModified');
 }
 
+
+
+
 /**
  * 提交添加
  */
@@ -120,6 +123,56 @@ MemberInfoDlg.editSubmit = function() {
     ajax.start();
 }
 
-$(function() {
 
-});
+
+/**
+ * 显示部门选择的树
+ *
+ * @returns
+ */
+MemberInfoDlg.showAppSelectTree = function () {
+    var cityObj = $("#appSel");
+    var cityOffset = $("#appSel").offset();
+    $("#menuContent").css({
+        left: cityOffset.left + "px",
+        top: cityOffset.top + cityObj.outerHeight() + "px"
+    }).slideDown("fast");
+
+    $("body").bind("mousedown", onBodyDown);
+};
+
+/**
+ * 隐藏部门选择的树
+ */
+MemberInfoDlg.hideAppSelectTree = function () {
+    $("#menuContent").fadeOut("fast");
+    $("body").unbind("mousedown", onBodyDown);// mousedown当鼠标按下就可以触发，不用弹起
+};
+
+function onBodyDown(event) {
+    if (!(event.target.id == "menuBtn" || event.target.id == "appContent" || $(
+        event.target).parents("#appContent").length > 0)) {
+        MemberInfoDlg.hideAppSelectTree();
+    }
+}
+
+/**
+ * 点击应用input框时
+ *
+ * @param e
+ * @param treeId
+ * @param treeNode
+ * @returns
+ */
+MemberInfoDlg.onClickApp = function (e, treeId, treeNode) {
+    $("#appSel").attr("value", instance.getSelectedVal());
+    $("#appId").attr("value", treeNode.id);
+};
+
+/*$(function() {
+
+    var ztree = new $ZTree("appTreeDemo", "/app/tree");
+    ztree.bindOnClick(MemberInfoDlg.onClickApp);
+    ztree.init();
+    instance = ztree;
+});*/

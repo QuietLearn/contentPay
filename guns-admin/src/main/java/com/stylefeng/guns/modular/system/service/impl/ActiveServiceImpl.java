@@ -38,7 +38,7 @@ public class ActiveServiceImpl extends ServiceImpl<ActiveMapper, Active> impleme
 
         Wrapper<Active> wrapper = new EntityWrapper<>();
         wrapper.eq("IMEI",insertActive.getImei());
-        wrapper.eq("appId",insertActive.getAppId());
+        wrapper.eq("app_id",insertActive.getAppId());
 
         int count = this.selectCount(wrapper);
         if (count>0){

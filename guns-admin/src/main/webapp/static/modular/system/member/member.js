@@ -131,13 +131,35 @@ Member.delete = function () {
  */
 Member.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['username'] = $("#username").val();
+    queryData['appId'] = $("#appId").val();
     Member.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = Member.initColumn();
     var table = new BSTable(Member.id, "/member/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     Member.table = table.init();
+});
+
+$(function () {
+    $.ajax({
+        url: "/app/list",    //后台webservice里的方法名称
+        contentType: "application/json; charset=utf-8",
+        type: "get",
+        async : true ,
+        dataType: "json",
+        success: function (data) {
+            var optionstring = "";
+            for (var j = 0; j < data.length;j++) {
+                optionstring += "<option value=\"" + data[j].appId + "\" >" +data[j].appName + "</option>";
+                $("#appId").html("<option value='0'>全部</option> "+optionstring);
+            }
+        },
+        error: function (msg) {
+            alert("出错了！");
+        }
+    });
+
 });

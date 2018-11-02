@@ -1,6 +1,8 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.node.AppNode;
+import com.stylefeng.guns.core.node.ZTreeNode;
 import com.stylefeng.guns.modular.system.warpper.AppWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,10 +66,20 @@ public class AppController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {
-      /*  List<App> apps = appService.selectList(null);
-        return super.warpObject(new AppWarpper());*/
         return appService.selectList(null);
     }
+
+    /**
+     * 获取应用的tree列表
+     */
+    @RequestMapping(value = "/tree")
+    @ResponseBody
+    public List<App> tree() {
+        List<App> list = this.appService.selectList(null);
+
+        return list;
+    }
+
 
     /**
      * 新增应用管理
