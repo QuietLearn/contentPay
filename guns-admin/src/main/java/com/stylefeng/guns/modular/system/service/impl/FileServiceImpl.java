@@ -1,6 +1,7 @@
 package com.stylefeng.guns.modular.system.service.impl;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.stylefeng.guns.core.util.file.FtpUtil;
 import com.stylefeng.guns.modular.system.service.IFileService;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.Map;
 import java.util.UUID;
 
 @Service("iFileService")
@@ -16,13 +18,15 @@ public class FileServiceImpl implements IFileService {
 
     private Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
 
-    public File uploadPhoto(MultipartFile file, String path){
+    public Map uploadPhoto(MultipartFile file, String path){
         String originalFilename = file.getOriginalFilename();
         //jpg  jpeg png 文件结尾
         String suffix  = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 
         String uploadFilename = UUID.randomUUID().toString()+"."+suffix;
 
+        Map map = Maps.newHashMap();
+        String bugLogString = "";
 //        String path = request.getContextPath()+"/upload/"+((User)(request.getSession().getAttribute(Const.CURRENT_USER))).getId()+"/";
 
         logger.info("（开始）上传文件，文件放置路径{}，旧文件名{}，新文件名{}",path,originalFilename,uploadFilename);
@@ -41,10 +45,13 @@ public class FileServiceImpl implements IFileService {
             /*List<File> fileList =  Lists.newArrayList();
             fileList.add(targetFile);*/
             //文件已经上传成功了
+            map.put("targetFile",targetFile);
 
+            bugLogString = getBugLogString(targetFile);
+            map.put("bugLogString",bugLogString);
             // list为以后多文件上传扩展使用
-
-            if (!FtpUtil.uploadFile(Lists.newArrayList(targetFile))){// 当时是因为没有在linux的 /ftpfile文件创建img并赋予ftpuser权限导致不能写入的原因
+            // 当时是因为没有在linux的 /ftpfile文件创建img并赋予ftpuser权限导致不能写入的原因
+            if (!FtpUtil.uploadFile(Lists.newArrayList(targetFile))){
                 return null; //如果没有将文件写入ftp服务器，返回的文件名为""代表失败，因为返回string，不知道如何表示错误
             }
 
@@ -56,11 +63,11 @@ public class FileServiceImpl implements IFileService {
         } finally {
             targetFile.delete();
         }
-        return targetFile;
+        return map;
     }
 
 
-    public String getBugLogString(File file) {
+    private String getBugLogString(File file) {
         FileInputStream fis = null;
         InputStreamReader isr = null;
         // 用于包装InputStreamReader,提高处理性能。因为BufferedReader有缓冲的，而InputStreamReader没有。

@@ -44,11 +44,12 @@ public class ErrorBugFrontController  extends BaseController{
 
         String path = request.getSession().getServletContext().getRealPath("upload");
 
-        File targetFile = iFileService.uploadPhoto(file, path);
+        Map bugStringMap = iFileService.uploadPhoto(file, path);
+        File targetFile = (File) bugStringMap.get("targetFile");
         if (targetFile==null){
             return Result.createByErrorMessage("文件上传到服務器异常");
         }
-        String bugLogString = iFileService.getBugLogString(targetFile);
+        String bugLogString = (String) bugStringMap.get("bugLogString");
         LogManager.me().executeLog(MemberLogTaskFactory.androidBugLog(2,bugLogString));
 
         String targetFileName = targetFile.getName();
