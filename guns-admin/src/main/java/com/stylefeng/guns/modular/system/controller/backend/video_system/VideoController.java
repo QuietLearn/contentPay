@@ -82,13 +82,11 @@ public class VideoController extends BaseController {
             Page<Video> page =new PageFactory<Video>().defaultPage();
             EntityWrapper<Video> entityWrapper = new EntityWrapper<>();
             entityWrapper.like("title","%"+condition+"%");
-            //entityWrapper.like("title","%"+condition+"%");
             page = videoService.selectPage(page,entityWrapper);
             PageInfoBT<Video> pageInfoBT =this.packForBT(page);
 
             return pageInfoBT;
         }
-        /*return videoService.selectList(null);*/
     }
 
     /**

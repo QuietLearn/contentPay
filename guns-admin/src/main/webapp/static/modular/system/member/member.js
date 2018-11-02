@@ -16,9 +16,10 @@ Member.initColumn = function () {
         {field: 'selectItem', radio: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
 
-            {title: '应用id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
-            {title: '应用版本', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
-            {title: '渠道号', field: 'channel', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用', field: 'appName', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channel', visible: true, align: 'center', valign: 'middle'},
         {title: '用户名', field: 'username', visible: true, align: 'center', valign: 'middle'},
 
         {title: '昵称', field: 'nickname', visible: false, align: 'center', valign: 'middle'},

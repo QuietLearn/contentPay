@@ -5,9 +5,9 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.Active">
         <id column="id" property="id" />
-        <result column="appId" property="appId" />
-        <result column="appVer" property="appVer" />
-        <result column="channelId" property="channelId" />
+        <result column="app_id" property="appId" />
+        <result column="app_ver" property="appVer" />
+        <result column="channel_id" property="channelId" />
         <result column="operator" property="operator" />
         <result column="address" property="address" />
         <result column="IMSI" property="imsi" />
@@ -33,7 +33,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, appId, appVer, channelId, operator, address, IMSI, IMEI, smsc, is_del, active_type, phone_type, phone_brand, phone_system, DPI, UUID, mobile, ICCID, point_type, wifi_type, idfa, open_UDID, is_toutiao, gmt_created, gmt_modified
+        id, app_id, app_ver, channel_id, operator, address, IMSI, IMEI, smsc, is_del, active_type, phone_type, phone_brand, phone_system, DPI, UUID, mobile, ICCID, point_type, wifi_type, idfa, open_UDID, is_toutiao, gmt_created, gmt_modified
     </sql>
 
 </mapper>

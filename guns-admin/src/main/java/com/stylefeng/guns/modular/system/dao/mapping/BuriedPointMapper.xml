@@ -5,9 +5,9 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.BuriedPoint">
         <id column="id" property="id" />
-        <result column="appId" property="appId" />
-        <result column="appVer" property="appVer" />
-        <result column="channelId" property="channelId" />
+        <result column="app_id" property="appId" />
+        <result column="app_ver" property="appVer" />
+        <result column="channel_id" property="channelId" />
         <result column="operator" property="operator" />
         <result column="address" property="address" />
         <result column="IMSI" property="imsi" />
@@ -31,7 +31,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, appId, appVer, channelId, operator, address, IMSI, IMEI, point_id, point_message, pay_type, UUID, is_del, wifi_type, mobile, ICCID, phone_type, error_message, point_type, idfa, open_UDID, gmt_created, gmt_modified
+        id, app_id, app_ver, channel_id, operator, address, IMSI, IMEI, point_id, point_message, pay_type, UUID, is_del, wifi_type, mobile, ICCID, phone_type, error_message, point_type, idfa, open_UDID, gmt_created, gmt_modified
     </sql>
 
 </mapper>

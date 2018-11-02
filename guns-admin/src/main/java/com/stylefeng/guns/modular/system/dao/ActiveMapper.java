@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * </p>
  *
  * @author hyj
- * @since 2018-10-29
+ * @since 2018-11-02
  */
 public interface ActiveMapper extends BaseMapper<Active> {
 

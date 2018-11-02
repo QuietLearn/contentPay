@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-10-29
+ * @since 2018-11-02
  */
 @TableName("cps_active")
 public class Active extends Model<Active> {
@@ -26,14 +26,17 @@ public class Active extends Model<Active> {
     /**
      * app id
      */
+    @TableField("app_id")
     private String appId;
     /**
      * app 版本号
      */
+    @TableField("app_ver")
     private String appVer;
     /**
      *  渠道号
      */
+    @TableField("channel_id")
     private String channelId;
     /**
      * 运营商

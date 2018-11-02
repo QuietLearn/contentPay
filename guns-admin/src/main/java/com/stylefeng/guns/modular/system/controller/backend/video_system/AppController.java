@@ -1,6 +1,7 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.modular.system.warpper.AppWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +14,7 @@ import com.stylefeng.guns.modular.system.model.App;
 import com.stylefeng.guns.modular.system.service.IAppService;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 应用管理控制器
@@ -62,6 +64,8 @@ public class AppController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {
+      /*  List<App> apps = appService.selectList(null);
+        return super.warpObject(new AppWarpper());*/
         return appService.selectList(null);
     }
 

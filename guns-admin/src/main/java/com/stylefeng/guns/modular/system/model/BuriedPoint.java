@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-10-30
+ * @since 2018-11-02
  */
 @TableName("cps_buried_point")
 public class BuriedPoint extends Model<BuriedPoint> {
@@ -26,14 +26,17 @@ public class BuriedPoint extends Model<BuriedPoint> {
     /**
      * app  id
      */
+    @TableField("app_id")
     private String appId;
     /**
      * app 版本号
      */
+    @TableField("app_ver")
     private String appVer;
     /**
      *  渠道号
      */
+    @TableField("channel_id")
     private String channelId;
     /**
      * 运营商 1移动 2联通 3 电信

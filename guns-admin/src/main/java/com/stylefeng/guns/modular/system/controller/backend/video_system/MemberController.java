@@ -1,10 +1,18 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.constant.state.ServerType;
+import com.stylefeng.guns.core.page.PageInfoBT;
+import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.core.support.DateTime;
 import com.stylefeng.guns.core.util.MD5Util;
+import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.modular.system.dao.MemberTypeMapper;
+import com.stylefeng.guns.modular.system.model.Video;
+import com.stylefeng.guns.modular.system.warpper.AppWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
@@ -69,9 +77,30 @@ public class MemberController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public List<Member> list(String condition) {
+    public Object list(String condition) {
 
-        return memberService.list(null);
+        if (ToolUtil.isEmpty(condition)){
+            Page<Member> page =new PageFactory<Member>().defaultPage();
+
+            page = memberService.selectPage(page);
+
+            List<Member> members = page.getRecords();
+            page.setRecords((List<Member>)super.warpObject(new AppWarpper(BeanKit.listToMapList(members))));
+
+            PageInfoBT<Member> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }else {
+            Page<Member> page = new PageFactory<Member>().defaultPage();
+            EntityWrapper<Member> entityWrapper = new EntityWrapper<>();
+            entityWrapper.like("title","%"+condition+"%");
+            page = memberService.selectPage(page,entityWrapper);
+            List<Member> members = page.getRecords();
+            page.setRecords((List<Member>)super.warpObject(new AppWarpper(BeanKit.listToMapList(members))));
+            PageInfoBT<Member> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }
     }
 
     /**
