@@ -112,7 +112,7 @@ BuriedPoint.delete = function () {
  */
 BuriedPoint.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['pointId'] = $("#pointId").val();
     queryData['appId'] = $("#appId").val();
     BuriedPoint.table.refresh({query: queryData});
 };
