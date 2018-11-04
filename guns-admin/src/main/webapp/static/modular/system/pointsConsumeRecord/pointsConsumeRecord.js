@@ -14,21 +14,22 @@ var PointsConsumeRecord = {
 PointsConsumeRecord.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
             {title: '消费的积分', field: 'points', visible: true, align: 'center', valign: 'middle'},
             {title: '消费的用户', field: 'memberId', visible: false, align: 'center', valign: 'middle'},
-        {title: '消费的用户', field: 'memberName', visible: true, align: 'center', valign: 'middle'},
-            {title: '消费观看的视频', field: 'videoId', visible: true, align: 'center', valign: 'middle'},
+        {title: '消费的用户', field: 'mem    berName', visible: true, align: 'center', valign: 'middle'},
+            {title: '消费观看的视频', field: 'videoId', visible: false, align: 'center', valign: 'middle'},
+        {title: '消费观看的视频', field: 'videoName', visible: true, align: 'center', valign: 'middle'},
             {title: '是否删除', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
-            {title: '创建时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
+            {title: '消费时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'},
         {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
 
         {title: '应用名', field: 'appName', visible: true, align: 'center', valign: 'middle',sortable: true},
         {title: '应用版本ver', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle',sortable: true},
+        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle'},
         {title: '渠道号', field: 'channel', visible: false, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle',sortable: true},
+        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle'},
     ];
 };
 
@@ -99,13 +100,15 @@ PointsConsumeRecord.delete = function () {
  */
 PointsConsumeRecord.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['username'] = $("#username").val();
+    queryData['videoId'] = $("#videoId").val();
+    queryData['appId'] = $("#appId").val();
     PointsConsumeRecord.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = PointsConsumeRecord.initColumn();
     var table = new BSTable(PointsConsumeRecord.id, "/pointsConsumeRecord/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     PointsConsumeRecord.table = table.init();
 });

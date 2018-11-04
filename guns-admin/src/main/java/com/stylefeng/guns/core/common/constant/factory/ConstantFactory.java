@@ -48,6 +48,7 @@ public class ConstantFactory implements IConstantFactory {
     private IMemberService memberService = SpringContextHolder.getBean(IMemberService.class);
     private IFeedbackTypeService feedbackTypeService = SpringContextHolder.getBean(IFeedbackTypeService.class);
 
+    private IVideoService videoService = SpringContextHolder.getBean(IVideoService.class);
 
     public static IConstantFactory me() {
         return SpringContextHolder.getBean("constantFactory");
@@ -395,5 +396,13 @@ public class ConstantFactory implements IConstantFactory {
         wrapper.eq("type_code",feedbackType);
         String feedbackTypeName = (String) feedbackTypeService.selectObj(wrapper);
         return feedbackTypeName;
+    }
+
+    public String getVideoName(String videoId){
+        Wrapper<Video> wrapper = new EntityWrapper<>();
+        wrapper.setSqlSelect("v_name");
+        wrapper.eq("v_id",videoId);
+        String videoName = (String) videoService.selectObj(wrapper);
+        return videoName;
     }
 }

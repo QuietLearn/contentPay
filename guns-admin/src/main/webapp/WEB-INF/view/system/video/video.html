@@ -16,7 +16,7 @@
                                 <#TimeCon id="endTime" name="到" isTime="false" pattern="YYYY" />
                             </div>
                             <div class="col-sm-3">
-                                <#NameCon id="condition" name="名称" />
+                                <#NameCon id="videoName" name="视频名" />
                             </div>
                             <div class="col-sm-3">
                                 <#button name="搜索" icon="fa-search" clickFun="Video.search()"/>
@@ -41,4 +41,13 @@
     </div>
 </div>
 <script src="${ctxPath}/static/modular/system/video/video.js"></script>
+
+<script>
+    laydate.render({
+        elem: '#beginTime'
+    });
+    laydate.render({
+        elem: '#endTime'
+    });
+</script>
 @}

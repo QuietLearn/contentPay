@@ -14,17 +14,22 @@ var Active = {
 Active.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
-            {title: 'app id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
-            {title: 'app 版本号', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
-            {title: ' 渠道号', field: 'channelId', visible: true, align: 'center', valign: 'middle'},
+            {title: '', field: 'id', visible: false , align: 'center', valign: 'middle'},
+
+        {title: '应用', field: 'appName', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本ver', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channel', visible: false, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle'},
+
             {title: '运营商', field: 'operator', visible: true, align: 'center', valign: 'middle'},
             {title: '省份地区', field: 'address', visible: true, align: 'center', valign: 'middle'},
             {title: 'IMSI', field: 'imsi', visible: true, align: 'center', valign: 'middle'},
             {title: 'IMEI', field: 'imei', visible: true, align: 'center', valign: 'middle'},
             {title: '短信中心号码', field: 'smsc', visible: false, align: 'center', valign: 'middle'},
-            {title: '是否删除 0 未删除 1 删除', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
-            {title: '0  开启   1  激活  2  手动开启', field: 'activeType', visible: true, align: 'center', valign: 'middle'},
+            {title: '是否删除 ', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
+            {title: '0  开启   1  激活  2  手动开启', field: 'activeType', visible: false, align: 'center', valign: 'middle'},
             {title: '手机型号', field: 'phoneType', visible: true, align: 'center', valign: 'middle'},
             {title: '手机品牌', field: 'phoneBrand', visible: true, align: 'center', valign: 'middle'},
             {title: '手机系统', field: 'phoneSystem', visible: true, align: 'center', valign: 'middle'},

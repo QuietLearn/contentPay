@@ -19,6 +19,9 @@ public class ZTreeNode {
 	
 	private Boolean checked;//是否被选中
 
+	private Integer pointId;
+
+
 	public Long getId() {
 		return id;
 	}
@@ -66,14 +69,23 @@ public class ZTreeNode {
 	public void setChecked(Boolean checked) {
 		this.checked = checked;
 	}
-	
+
+	public Integer getPointId() {
+		return pointId;
+	}
+
+	public void setPointId(Integer pointId) {
+		this.pointId = pointId;
+	}
+
 	public static ZTreeNode createParent(){
 		ZTreeNode zTreeNode = new ZTreeNode();
 		zTreeNode.setChecked(true);
 		zTreeNode.setId(0L);
-		zTreeNode.setName("顶级");
+		zTreeNode.setName("全部");
 		zTreeNode.setOpen(true);
 		zTreeNode.setpId(0L);
+		zTreeNode.setPointId(0);
 		return zTreeNode;
 	}
 }

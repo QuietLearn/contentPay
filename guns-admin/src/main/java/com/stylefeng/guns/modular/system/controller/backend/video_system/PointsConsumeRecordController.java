@@ -1,12 +1,15 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.google.common.collect.Lists;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
-import com.stylefeng.guns.modular.system.model.PlayHistory;
-import com.stylefeng.guns.modular.system.warpper.AppWarpper;
+import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.modular.system.warpper.AppInfoWarpper;
 import com.stylefeng.guns.modular.system.warpper.MemberWarpper;
-import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -69,10 +72,40 @@ public class PointsConsumeRecordController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        List<PointsConsumeRecord> pointsConsumeRecords = pointsConsumeRecordService.selectList(null);
+    public Object list(String username,Integer appId,Integer videoId) {
+        //注意改成server
+        if (ToolUtil.isEmpty(username)&&videoId==null&&appId==null){
+            Page<PointsConsumeRecord> page =new PageFactory<PointsConsumeRecord>().defaultPage();
 
-        return super.warpObject(new MemberWarpper(BeanKit.listToMapList(pointsConsumeRecords)));
+            page = pointsConsumeRecordService.selectPage(page);
+
+            List<PointsConsumeRecord> PointsConsumeRecordList = page.getRecords();
+            page.setRecords((List<PointsConsumeRecord>)super.warpObject(new MemberWarpper(BeanKit.listToMapList(PointsConsumeRecordList))));
+
+            PageInfoBT<PointsConsumeRecord> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }else {
+            Page<PointsConsumeRecord> page = new PageFactory<PointsConsumeRecord>().defaultPage();
+            EntityWrapper<PointsConsumeRecord> entityWrapper = new EntityWrapper<>();
+            if (appId!=null&&appId!=0){
+                entityWrapper.eq("appId",appId);
+            }
+            if (ToolUtil.isNotEmpty(username)){
+                entityWrapper.like("member_username","%"+username+"%");
+            }
+            if (videoId!=null&&videoId!=0){
+                entityWrapper.eq("videoId",videoId);
+            }
+
+            page = pointsConsumeRecordService.selectPage(page,entityWrapper);
+            List<PointsConsumeRecord> PointsConsumeRecords = page.getRecords();
+            page.setRecords((List<PointsConsumeRecord>)super.warpObject(new MemberWarpper(BeanKit.listToMapList(PointsConsumeRecords))));
+            PageInfoBT<PointsConsumeRecord> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }
+
     }
 
     /**

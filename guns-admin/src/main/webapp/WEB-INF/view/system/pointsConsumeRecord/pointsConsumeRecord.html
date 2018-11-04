@@ -10,11 +10,16 @@
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-3">
+                                <#SelectCon id="appId" name="应用" >
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
                                 <#NameCon id="username" name="消费用户" />
                             </div>
                             <div class="col-sm-3">
-                                <#NameCon id="videoName" name="消费视频" />
+                                <#NameCon id="videoId" name="消费视频" />
                             </div>
+
                             <div class="col-sm-3">
                                 <#button name="搜索" icon="fa-search" clickFun="PointsConsumeRecord.search()"/>
                             </div>

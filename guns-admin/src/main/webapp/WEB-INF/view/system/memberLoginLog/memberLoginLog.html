@@ -1,4 +1,4 @@
-@layout("/common/_container.html"){
+    @layout("/common/_container.html"){
 <div class="row">
     <div class="col-sm-12">
         <div class="ibox float-e-margins">
@@ -10,7 +10,15 @@
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-3">
-                                <#NameCon id="condition" name="名称" />
+                                <#SelectCon id="appId" name="应用" >
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="userId" name="用户" />
+                            </div>
+
+                            <div class="col-sm-3">
+                                <#NameCon id="membertypeId" name="反馈类型" />
                             </div>
                             <div class="col-sm-3">
                                 <#button name="搜索" icon="fa-search" clickFun="MemberLoginLog.search()"/>

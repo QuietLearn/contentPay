@@ -1,6 +1,14 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.core.page.PageInfoBT;
+import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.modular.system.model.Favorite;
+import com.stylefeng.guns.modular.system.warpper.AppInfoWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +21,7 @@ import com.stylefeng.guns.modular.system.model.MemberLoginLog;
 import com.stylefeng.guns.modular.system.service.IMemberLoginLogService;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 会员登录日志控制器
@@ -61,8 +70,37 @@ public class MemberLoginLogController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        return memberLoginLogService.selectList(null);
+    public Object list(Integer userId,Integer appId) {
+        //注意改成server
+        if (userId==null&&appId==null){
+            Page<MemberLoginLog> page =new PageFactory<MemberLoginLog>().defaultPage();
+
+            page = memberLoginLogService.selectPage(page);
+
+            List<MemberLoginLog> MemberLoginLogList = page.getRecords();
+            page.setRecords((List<MemberLoginLog>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(MemberLoginLogList))));
+
+            PageInfoBT<MemberLoginLog> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }else {
+            Page<MemberLoginLog> page = new PageFactory<MemberLoginLog>().defaultPage();
+            EntityWrapper<MemberLoginLog> entityWrapper = new EntityWrapper<>();
+            if (appId!=null&&appId!=0){
+                entityWrapper.eq("appId",appId);
+            }
+            if (userId!=null&&userId!=0){
+                entityWrapper.eq("memberid",userId);
+            }
+
+            page = memberLoginLogService.selectPage(page,entityWrapper);
+            List<MemberLoginLog> MemberLoginLogs = page.getRecords();
+            page.setRecords((List<MemberLoginLog>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(MemberLoginLogs))));
+            PageInfoBT<MemberLoginLog> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }
+
     }
 
     /**

@@ -15,9 +15,14 @@ BuriedPoint.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
             {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
-            {title: 'app  id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
-            {title: 'app 版本号', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
-            {title: ' 渠道号', field: 'channelId', visible: true, align: 'center', valign: 'middle'},
+
+        {title: '应用', field: 'appName', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本ver', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channel', visible: false, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle'},
+
             {title: '运营商', field: 'operator', visible: true, align: 'center', valign: 'middle'},
             {title: '省份地区', field: 'address', visible: true, align: 'center', valign: 'middle'},
             {title: 'IMSI', field: 'imsi', visible: true, align: 'center', valign: 'middle'},
@@ -108,12 +113,35 @@ BuriedPoint.delete = function () {
 BuriedPoint.search = function () {
     var queryData = {};
     queryData['condition'] = $("#condition").val();
+    queryData['appId'] = $("#appId").val();
     BuriedPoint.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = BuriedPoint.initColumn();
     var table = new BSTable(BuriedPoint.id, "/buriedPoint/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     BuriedPoint.table = table.init();
+});
+
+
+$(function () {
+    $.ajax({
+        url: "/app/list",    //后台webservice里的方法名称
+        contentType: "application/json; charset=utf-8",
+        type: "get",
+        async : true ,
+        dataType: "json",
+        success: function (data) {
+            var optionstring = "";
+            for (var j = 0; j < data.length;j++) {
+                optionstring += "<option value=\"" + data[j].appId + "\" >" +data[j].appName + "</option>";
+                $("#appId").html("<option value='0'>全部</option> "+optionstring);
+            }
+        },
+        error: function (msg) {
+            alert("出错了！");
+        }
+    });
+
 });

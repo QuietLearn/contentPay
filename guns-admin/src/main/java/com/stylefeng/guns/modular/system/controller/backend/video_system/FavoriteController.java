@@ -74,9 +74,9 @@ public class FavoriteController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String username,Integer appId,String mobile) {
+    public Object list(String username,Integer appId,String videoName) {
         //注意改成server
-        if (ToolUtil.isEmpty(username)&&ToolUtil.isEmpty(mobile)&&appId==null){
+        if (ToolUtil.isEmpty(username)&&ToolUtil.isEmpty(videoName)&&appId==null){
             Page<Favorite> page =new PageFactory<Favorite>().defaultPage();
 
             page = favoriteService.selectPage(page);
@@ -96,8 +96,8 @@ public class FavoriteController extends BaseController {
             if (ToolUtil.isNotEmpty(username)){
                 entityWrapper.like("member_username","%"+username+"%");
             }
-            if (ToolUtil.isNotEmpty(mobile)){
-                entityWrapper.like("mobile","%"+mobile+"%");
+            if (ToolUtil.isNotEmpty(videoName)){
+                entityWrapper.like("video_name","%"+videoName+"%");
             }
 
             page = favoriteService.selectPage(page,entityWrapper);

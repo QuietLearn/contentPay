@@ -119,7 +119,7 @@ public class PlayHistoryServiceImpl extends ServiceImpl<PlayHistoryMapper, PlayH
         playHistory.setVideoPublishyear(video.getvPublishyear());
 
         playHistory.setAppId(memberLoginLog.getAppId());
-        playHistory.setAppVer(memberLoginLog.getAppVer());
+        playHistory.setAppVer(memberLoginLog.getUpdateAppver());
         playHistory.setChannel(memberLoginLog.getChannel());
 
         return playHistory;

@@ -154,7 +154,7 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
 
         if (memberLoginLog!=null){
             favorite.setAppId(memberLoginLog.getAppId());
-            favorite.setAppVer(memberLoginLog.getAppVer());
+            favorite.setAppVer(memberLoginLog.getUpdateAppver());
             favorite.setChannel(memberLoginLog.getChannel());
         }
 

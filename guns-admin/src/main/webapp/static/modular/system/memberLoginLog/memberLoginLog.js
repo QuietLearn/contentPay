@@ -16,14 +16,20 @@ MemberLoginLog.initColumn = function () {
         {field: 'selectItem', radio: true},
             {title: '主键', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: '日志名称', field: 'logname', visible: true, align: 'center', valign: 'middle'},
-            {title: '应用id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
-            {title: '应用版本', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
-            {title: '用户更新app后的版本', field: 'updateAppver', visible: true, align: 'center', valign: 'middle'},
-            {title: '渠道号', field: 'channel', visible: true, align: 'center', valign: 'middle'},
-            {title: '会员id', field: 'memberid', visible: true, align: 'center', valign: 'middle'},
-            {title: '创建时间', field: 'createtime', visible: true, align: 'center', valign: 'middle'},
-            {title: '是否执行成功', field: 'succeed', visible: true, align: 'center', valign: 'middle'},
-            {title: '具体消息', field: 'message', visible: true, align: 'center', valign: 'middle'},
+            {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用名', field: 'appName', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用版本ver', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle'},
+            {title: '登录状态-更新版本', field: 'updateAppver', visible: false, align: 'center', valign: 'middle'},
+        {title: '登录状态-更新版本', field: 'updateAppverName', visible: true, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channel', visible: false, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle'},
+            {title: '会员id', field: 'memberid', visible: false, align: 'center', valign: 'middle'},
+        {title: '用户', field: 'memberName', visible: true, align: 'center', valign: 'middle'},
+
+            {title: '登录时间', field: 'createtime', visible: true, align: 'center', valign: 'middle'},
+            {title: '是否执行成功', field: 'succeed', visible: false, align: 'center', valign: 'middle'},
+            {title: '具体消息', field: 'message', visible: false, align: 'center', valign: 'middle'},
             {title: '登录ip', field: 'ip', visible: true, align: 'center', valign: 'middle'}
     ];
 };
@@ -95,13 +101,35 @@ MemberLoginLog.delete = function () {
  */
 MemberLoginLog.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['appId'] = $("#appId  ").val();
+    queryData['userId'] = $("#userId").val();
     MemberLoginLog.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = MemberLoginLog.initColumn();
     var table = new BSTable(MemberLoginLog.id, "/memberLoginLog/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     MemberLoginLog.table = table.init();
+});
+
+$(function () {
+    $.ajax({
+        url: "/app/list",    //后台webservice里的方法名称
+        contentType: "application/json; charset=utf-8",
+        type: "get",
+        async : true ,
+        dataType: "json",
+        success: function (data) {
+            var optionstring = "";
+            for (var j = 0; j < data.length;j++) {
+                optionstring += "<option value=\"" + data[j].appId + "\" >" +data[j].appName + "</option>";
+                $("#appId").html("<option value='0'>全部</option> "+optionstring);
+            }
+        },
+        error: function (msg) {
+            alert("出错了！");
+        }
+    });
+
 });

@@ -15,7 +15,7 @@ Note.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
             {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
-            {title: '信息', field: 'message', visible: true, align: 'center', valign: 'middle'},
+            {title: '短信码', field: 'message', visible: true, align: 'center', valign: 'middle'},
             {title: '短信有效时间(分)', field: 'aging', visible: true, align: 'center', valign: 'middle'},
             {title: '', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
             {title: '发送手机', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
@@ -25,8 +25,10 @@ Note.initColumn = function () {
 
         {title: '应用名', field: 'appName', visible: true, align: 'center', valign: 'middle'},
 
-            {title: '应用版本', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
-            {title: '渠道号', field: 'channel', visible: true, align: 'center', valign: 'middle'}
+        {title: '应用版本ver', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channel', visible: false, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle'},
     ];
 };
 
@@ -97,13 +99,35 @@ Note.delete = function () {
  */
 Note.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['mobile'] = $("#mobile").val();
+    queryData['appId'] = $("#appId").val();
     Note.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = Note.initColumn();
     var table = new BSTable(Note.id, "/note/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     Note.table = table.init();
+});
+
+$(function () {
+    $.ajax({
+        url: "/app/list",    //后台webservice里的方法名称
+        contentType: "application/json; charset=utf-8",
+        type: "get",
+        async : true ,
+        dataType: "json",
+        success: function (data) {
+            var optionstring = "";
+            for (var j = 0; j < data.length;j++) {
+                optionstring += "<option value=\"" + data[j].appId + "\" >" +data[j].appName + "</option>";
+                $("#appId").html("<option value='0'>全部</option> "+optionstring);
+            }
+        },
+        error: function (msg) {
+            alert("出错了！");
+        }
+    });
+
 });

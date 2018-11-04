@@ -79,7 +79,15 @@ public class AllConst {
         }*/
     }
 
+    public interface PointMessageType{
+        String CODE = "code";
+        String MESSAGE = "message";
+    }
+
     public enum PointMessageEnum {
+        BEHAVIOR(10, "行为埋点"),
+        AXN(20, "频道埋点"),
+
         ENABLE(100, "开启"),
         ACTIVE(101, "激活"),
         //CTRL
@@ -114,6 +122,46 @@ public class AllConst {
 
                     if (value.equals(pointMessageEnum.getCode())) {
                         return pointMessageEnum.getMessage();
+                    }
+                }
+                return null;
+            }
+        }
+
+
+        public Integer getCode() {
+            return code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
+
+    public enum NotificationEnum {
+        //(1000 系统消息 1001 热门活动 1002 app异常bug消息)
+        SYSTEM(1000, "系统消息"),
+        ACTIVITIES(1001, "热门活动"),
+        //CTRL
+        APP_BUG(1002, "app异常bug消息");
+
+        private Integer code;
+        private String message;
+
+
+        NotificationEnum(Integer code, String message) {
+            this.code = code;
+            this.message = message;
+        }
+
+        public static String valueOf(Integer value) {
+            if (value == null) {
+                return null;
+            } else {
+                for (NotificationEnum notificationEnum : NotificationEnum.values()) {
+
+                    if (value.equals(notificationEnum.getCode())) {
+                        return notificationEnum.getMessage();
                     }
                 }
                 return null;

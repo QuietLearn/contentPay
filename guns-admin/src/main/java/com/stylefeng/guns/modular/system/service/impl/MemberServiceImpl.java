@@ -470,7 +470,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
             pointsConsumeRecord.setIsDel(1);
 
             pointsConsumeRecord.setAppId(memberLoginLog.getAppId());
-            pointsConsumeRecord.setAppVer(memberLoginLog.getAppVer());
+            pointsConsumeRecord.setAppVer(memberLoginLog.getUpdateAppver());
             pointsConsumeRecord.setChannel(memberLoginLog.getChannel());
 
 

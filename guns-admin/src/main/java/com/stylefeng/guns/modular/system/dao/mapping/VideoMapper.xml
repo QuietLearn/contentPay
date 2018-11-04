@@ -38,4 +38,18 @@
 
 
     </select>
+
+    <select id="selectVideos" parameterType="map" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from cps_video
+        <where>
+        <if test="videoName != null and videoName != ''">
+             v_name like CONCAT('%',#{videoName},'%'))
+        </if>
+        <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+            and (v_publishyear between CONCAT(#{beginTime}) and CONCAT(#{endTime}))
+        </if>
+        </where>
+    </select>
 </mapper>

@@ -14,15 +14,16 @@ var Notification = {
 Notification.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '主键', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '主键', field: 'id', visible: false, align: 'center', valign: 'middle'},
             {title: '标题', field: 'title', visible: true, align: 'center', valign: 'middle'},
-            {title: '类型(1000 系统消息 1001 热门活动 1002 app异常bug消息)', field: 'type', visible: true, align: 'center', valign: 'middle'},
+            {title: '类型', field: 'type', visible: false, align: 'center', valign: 'middle'},
+          {title: '类型', field: 'notiType', visible: true, align: 'center', valign: 'middle'},
             {title: '内容', field: 'content', visible: true, align: 'center', valign: 'middle'},
             {title: '活动地址', field: 'activityUrl', visible: true, align: 'center', valign: 'middle'},
             {title: '图片地址', field: 'picAddress', visible: true, align: 'center', valign: 'middle'},
-            {title: '逻辑删除 0是 1否', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
-            {title: '创建时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
-            {title: '修改时间', field: 'gmtModified', visible: true, align: 'center', valign: 'middle'},
+            {title: '逻辑删除 0是 1否', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
+            {title: '创建时间', field: 'gmtCreated', visible: false, align: 'center', valign: 'middle'},
+            {title: '修改时间', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'},
             {title: '创建人', field: 'creater', visible: true, align: 'center', valign: 'middle'}
     ];
 };
@@ -94,13 +95,13 @@ Notification.delete = function () {
  */
 Notification.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['notiType'] = $("#notiType").val();
     Notification.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = Notification.initColumn();
     var table = new BSTable(Notification.id, "/notification/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     Notification.table = table.init();
 });

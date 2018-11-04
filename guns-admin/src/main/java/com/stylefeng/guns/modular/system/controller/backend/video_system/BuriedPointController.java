@@ -1,6 +1,18 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.google.common.collect.Lists;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.TokenCache;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.core.common.constant.state.AllConst;
+import com.stylefeng.guns.core.node.ZTreeNode;
+import com.stylefeng.guns.core.page.PageInfoBT;
+import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.modular.system.model.Note;
+import com.stylefeng.guns.modular.system.warpper.AppInfoWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +25,7 @@ import com.stylefeng.guns.modular.system.model.BuriedPoint;
 import com.stylefeng.guns.modular.system.service.IBuriedPointService;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 埋点统计控制器
@@ -61,7 +74,101 @@ public class BuriedPointController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
+    public Object list(Integer appId,Integer pointId) {
+        //注意改成server
+        if (appId==null ){
+            Page<BuriedPoint> page =new PageFactory<BuriedPoint>().defaultPage();
+
+            page = buriedPointService.selectPage(page);
+
+            List<BuriedPoint> BuriedPointList = page.getRecords();
+            page.setRecords((List<BuriedPoint>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(BuriedPointList))));
+
+            PageInfoBT<BuriedPoint> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }else {
+            Page<BuriedPoint> page = new PageFactory<BuriedPoint>().defaultPage();
+            EntityWrapper<BuriedPoint> entityWrapper = new EntityWrapper<>();
+            if (appId!=null&&appId!=0){
+                entityWrapper.eq("app_id",appId);
+
+            }
+            if (pointId!=null&&pointId!=0){
+                List<Integer> pointIdList = Lists.newArrayList();
+
+                if (AllConst.PointMessageEnum.BEHAVIOR.getCode()==pointId){
+                    for (AllConst.PointMessageEnum pointMessageEnum:AllConst.PointMessageEnum.values()) {
+                        if (pointMessageEnum.getCode()<AllConst.PointMessageEnum.HOME.getCode()){
+                            pointIdList.add(pointMessageEnum.getCode());
+                        }
+                    }
+                    entityWrapper.in("point_id",pointIdList);
+                } else if(AllConst.PointMessageEnum.AXN.getCode()==pointId){
+                    for (AllConst.PointMessageEnum pointMessageEnum:AllConst.PointMessageEnum.values()) {
+                        if (pointMessageEnum.getCode()>=AllConst.PointMessageEnum.HOME.getCode()){
+                            pointIdList.add(pointMessageEnum.getCode());
+                        }
+                    }
+                    entityWrapper.in("point_id",pointIdList);
+                } else{
+                    entityWrapper.eq("point_id",pointId);
+                }
+            }
+
+            page = buriedPointService.selectPage(page,entityWrapper);
+            List<BuriedPoint> BuriedPoints = page.getRecords();
+            page.setRecords((List<BuriedPoint>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(BuriedPoints))));
+            PageInfoBT<BuriedPoint> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }
+    }
+
+    /**
+     * 获取埋点统计的tree
+     */
+    @RequestMapping(value = "/tree")
+    @ResponseBody
+    public List<ZTreeNode> tree() {
+        List<ZTreeNode> tree = Lists.newArrayList();
+        String[] node = {"行为埋点","频道埋点"};
+        int i = 1;
+
+        for (AllConst.PointMessageEnum pointMessageEnum:AllConst.PointMessageEnum.values()) {
+            ZTreeNode zTreeNode = new ZTreeNode();
+            zTreeNode.setChecked(true);
+            zTreeNode.setIsOpen(true);
+            if (i<=2){
+                zTreeNode.setName(node[i-1]);
+                zTreeNode.setpId(0l);
+            }else{
+                zTreeNode.setName(pointMessageEnum.getMessage());
+                if (pointMessageEnum.getCode()<AllConst.PointMessageEnum.HOME.getCode()){
+                    zTreeNode.setpId(1l);
+                } else {
+                    zTreeNode.setpId(2l);
+                }
+            }
+
+            zTreeNode.setId(Integer.valueOf(i).longValue());
+            zTreeNode.setPointId(pointMessageEnum.getCode());
+
+            tree.add(zTreeNode);
+            i++;
+        }
+        tree.add(ZTreeNode.createParent());
+
+
+        return tree;
+    }
+
+    /**
+     * 获取埋点统计类型
+     */
+    @RequestMapping(value = "/list_point_type")
+    @ResponseBody
+    public Object listType(String condition) {
         return buriedPointService.selectList(null);
     }
 

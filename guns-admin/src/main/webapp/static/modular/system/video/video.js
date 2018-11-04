@@ -14,18 +14,19 @@ var Video = {
 Video.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
             {title: '视频id', field: 'vId', visible: true, align: 'center', valign: 'middle',sortable: true},
-            {title: '视频类型id', field: 'tid', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'typeName', visible: true, align: 'center', valign: 'middle'},
+            {title: '视频类型id', field: 'tid', visible: false, align: 'center', valign: 'middle'},
+        {title: '视频类型', field: 'typeName', visible: true, align: 'center', valign: 'middle'},
+
             {title: '视频名', field: 'vName', visible: true, align: 'center', valign: 'middle'},
             {title: '视频图片', field: 'vPic', visible: true, align: 'center', valign: 'middle'},
             {title: '发行日期', field: 'vPublishyear', visible: true, align: 'center', valign: 'middle',sortable: true},
             {title: '添加时间', field: 'vAddtime', visible: true, align: 'center', valign: 'middle'},
             {title: '消耗金币', field: 'vMoney', visible: true, align: 'center', valign: 'middle'},
-            {title: '是否需要会员 0是 1否', field: 'vReqVip', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtModified', visible: true, align: 'center', valign: 'middle'}
+            {title: '是否需要会员 ', field: 'vReqVip', visible: true, align: 'center', valign: 'middle'},
+            {title: '', field: 'gmtCreated', visible: false, align: 'center', valign: 'middle'},
+            {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'}
     ];
 };
 
@@ -97,7 +98,7 @@ Video.delete = function () {
 Video.formParams = function() {
     var queryData = {};
 
-    queryData['logName'] = $("#logName").val();
+    queryData['videoName'] = $("#videoName").val();
     queryData['beginTime'] = $("#beginTime").val();
     queryData['endTime'] = $("#endTime").val();
 

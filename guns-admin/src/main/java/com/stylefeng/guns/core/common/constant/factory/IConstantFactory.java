@@ -155,4 +155,6 @@ public interface IConstantFactory {
      * @return
      */
     String getFeedbackTypeName(String feedbackType);
+
+    String getVideoName(String videoId);
 }

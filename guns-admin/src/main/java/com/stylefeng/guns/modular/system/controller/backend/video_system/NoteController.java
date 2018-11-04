@@ -1,7 +1,14 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.modular.system.model.Member;
+import com.stylefeng.guns.modular.system.warpper.AppInfoWarpper;
 import com.stylefeng.guns.modular.system.warpper.AppWarpper;
 import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
 import org.springframework.stereotype.Controller;
@@ -65,9 +72,36 @@ public class NoteController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        List<Note> noteList = noteService.selectList(null);
-        return super.warpObject(new AppWarpper(BeanKit.listToMapList(noteList)));
+    public Object list(Integer appId,String mobile) {
+        //注意改成server
+        if (ToolUtil.isEmpty(mobile)&&appId==null){
+            Page<Note> page =new PageFactory<Note>().defaultPage();
+
+            page = noteService.selectPage(page);
+
+            List<Note> NoteList = page.getRecords();
+            page.setRecords((List<Note>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(NoteList))));
+
+            PageInfoBT<Note> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }else {
+            Page<Note> page = new PageFactory<Note>().defaultPage();
+            EntityWrapper<Note> entityWrapper = new EntityWrapper<>();
+            if (appId!=null&&appId!=0){
+                entityWrapper.eq("appId",appId);
+            }
+            if (ToolUtil.isNotEmpty(mobile)){
+                entityWrapper.like("mobile","%"+mobile+"%");
+            }
+
+            page = noteService.selectPage(page,entityWrapper);
+            List<Note> Notes = page.getRecords();
+            page.setRecords((List<Note>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(Notes))));
+            PageInfoBT<Note> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }
     }
 
     /**

@@ -10,8 +10,16 @@
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-3">
-                                <#NameCon id="condition" name="名称" />
+                                <#SelectCon id="appId" name="应用" >
+                                </#SelectCon>
                             </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="username" name="用户" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="membertypeCode" name="反馈类型" />
+                            </div>
+
                             <div class="col-sm-3">
                                 <#button name="搜索" icon="fa-search" clickFun="Feedback.search()"/>
                             </div>

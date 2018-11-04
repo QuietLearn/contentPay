@@ -34,4 +34,15 @@
         id, app_id, app_ver, channel_id, operator, address, IMSI, IMEI, point_id, point_message, pay_type, UUID, is_del, wifi_type, mobile, ICCID, phone_type, error_message, point_type, idfa, open_UDID, gmt_created, gmt_modified
     </sql>
 
+    <select id="tree" resultType="com.stylefeng.guns.core.node.ZTreeNode">
+        select id,pid as pId,simplename as name,
+        (
+        CASE
+        WHEN (pId = 0 OR pId IS NULL) THEN
+        'true'
+        ELSE
+        'false'
+        END
+        ) as isOpen from sys_dept
+    </select>
 </mapper>

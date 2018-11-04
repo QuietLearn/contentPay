@@ -1,5 +1,7 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,7 +64,11 @@ public class FeedbackTypeController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {
-        return feedbackTypeService.selectList(null);
+        Wrapper<FeedbackType> wrapper = new EntityWrapper<>();
+
+        wrapper.like("type_name","%"+condition+"%");
+
+        return feedbackTypeService.selectList(wrapper);
     }
 
     /**

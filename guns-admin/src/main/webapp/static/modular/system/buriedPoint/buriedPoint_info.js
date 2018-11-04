@@ -110,6 +110,55 @@ BuriedPointInfoDlg.editSubmit = function() {
     ajax.start();
 }
 
-$(function() {
+/**
+ * 显示埋点类型选择的树
+ *
+ * @returns
+ */
+BuriedPointInfoDlg.showDeptSelectTree = function () {
+    var cityObj = $("#citySel");
+    var cityOffset = $("#citySel").offset();
+    $("#menuContent").css({
+        left: cityOffset.left + "px",
+        top: cityOffset.top + cityObj.outerHeight() + "px"
+    }).slideDown("fast");
+
+    $("body").bind("mousedown", onBodyDown);
+};
+
+/**
+ * 隐藏部门选择的树
+ */
+BuriedPointInfoDlg.hideDeptSelectTree = function () {
+    $("#menuContent").fadeOut("fast");
+    $("body").unbind("mousedown", onBodyDown);// mousedown当鼠标按下就可以触发，不用弹起
+};
+
+
+function onBodyDown(event) {
+    if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(
+            event.target).parents("#menuContent").length > 0)) {
+        BuriedPointInfoDlg.hideDeptSelectTree();
+    }
+}
+
+BuriedPointInfoDlg.onClickDept = function (e, treeId, treeNode) {
+    $("#citySel").attr("value", instance.getSelectedVal());
+    $("#pointId").attr("value", treeNode.pointId);
+};
+
+$(function () {
+    /*Feng.initValidator("userInfoForm", UserInfoDlg.validateFields);*/
+
+
+    var ztree = new $ZTree("treeDemo", "/buriedPoint/tree");
+    ztree.bindOnClick(BuriedPointInfoDlg.onClickDept);
+    ztree.init();
+    instance = ztree;
+
+   /* 初始化头像上传
+    var avatarUp = new $WebUpload("avatar");
+    avatarUp.setUploadBarId("progressBar");
+    avatarUp.init();*/
 
 });

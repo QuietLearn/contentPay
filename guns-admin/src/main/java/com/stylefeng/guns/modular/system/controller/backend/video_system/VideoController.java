@@ -5,9 +5,13 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.page.PageInfoBT;
+import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.modular.system.model.Data;
+import com.stylefeng.guns.modular.system.model.Note;
 import com.stylefeng.guns.modular.system.vo.DataVo;
+import com.stylefeng.guns.modular.system.warpper.AppInfoWarpper;
+import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -69,20 +73,33 @@ public class VideoController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        if (ToolUtil.isEmpty(condition)){
+    public Object list(@RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime,String videoName ) {
+        if (ToolUtil.isEmpty(beginTime)&&ToolUtil.isEmpty(beginTime)&&ToolUtil.isEmpty(videoName)){
             Page<Video> page =new PageFactory<Video>().defaultPage();
 
             page = videoService.selectPage(page);
 
-            PageInfoBT<Video> pageInfoBT =this.packForBT(page);
+            List<Video> videoList = page.getRecords();
+            page.setRecords((List<Video>)super.warpObject(new TypeWarpper(BeanKit.listToMapList(videoList))));
+
+            PageInfoBT<Video> pageInfoBT = this.packForBT(page);
 
             return pageInfoBT;
         }else {
             Page<Video> page =new PageFactory<Video>().defaultPage();
             EntityWrapper<Video> entityWrapper = new EntityWrapper<>();
-            entityWrapper.like("title","%"+condition+"%");
+            if (ToolUtil.isNotEmpty(beginTime)&&ToolUtil.isNotEmpty(endTime)){
+                entityWrapper.between("v_publishyear",beginTime,endTime);
+            }
+            if (ToolUtil.isNotEmpty(videoName)){
+                entityWrapper.like("v_name","%"+videoName+"%");
+            }
+
             page = videoService.selectPage(page,entityWrapper);
+
+            List<Video> videoList = page.getRecords();
+            page.setRecords((List<Video>)super.warpObject(new TypeWarpper(BeanKit.listToMapList(videoList))));
+
             PageInfoBT<Video> pageInfoBT =this.packForBT(page);
 
             return pageInfoBT;

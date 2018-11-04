@@ -1,7 +1,16 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.shiro.ShiroUser;
+import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.modular.system.model.Note;
+import com.stylefeng.guns.modular.system.warpper.AppInfoWarpper;
+import com.stylefeng.guns.modular.system.warpper.NotificationTypeWarpper;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +24,7 @@ import com.stylefeng.guns.modular.system.model.Notification;
 import com.stylefeng.guns.modular.system.service.INotificationService;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 消息推送控制器
@@ -63,8 +73,36 @@ public class NotificationController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        return notificationService.selectList(null);
+    public Object list(Integer notiType,String mobile) {
+        //注意改成server
+        if (ToolUtil.isEmpty(mobile)&&notiType==null){
+            Page<Notification> page =new PageFactory<Notification>().defaultPage();
+
+            page = notificationService.selectPage(page);
+
+            List<Notification> NotificationList = page.getRecords();
+            page.setRecords((List<Notification>)super.warpObject(new NotificationTypeWarpper(BeanKit.listToMapList(NotificationList))));
+
+            PageInfoBT<Notification> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }else {
+            Page<Notification> page = new PageFactory<Notification>().defaultPage();
+            EntityWrapper<Notification> entityWrapper = new EntityWrapper<>();
+            if (notiType!=null&&notiType!=0){
+                entityWrapper.eq("type",notiType);
+            }
+            if (ToolUtil.isNotEmpty(mobile)){
+                entityWrapper.like("mobile","%"+mobile+"%");
+            }
+
+            page = notificationService.selectPage(page,entityWrapper);
+            List<Notification> Notifications = page.getRecords();
+            page.setRecords((List<Notification>)super.warpObject(new NotificationTypeWarpper(BeanKit.listToMapList(Notifications))));
+            PageInfoBT<Notification> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }
     }
 
     /**

@@ -1,8 +1,11 @@
 package com.stylefeng.guns.modular.system.service;
 
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.node.ZTreeNode;
 import com.stylefeng.guns.modular.system.model.BuriedPoint;
 import com.baomidou.mybatisplus.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -20,4 +23,7 @@ public interface IBuriedPointService extends IService<BuriedPoint> {
      * @return
      */
     Result insertAssemBuriedPoint(BuriedPoint buriedPoint);
+
+    List<ZTreeNode> tree();
+
 }

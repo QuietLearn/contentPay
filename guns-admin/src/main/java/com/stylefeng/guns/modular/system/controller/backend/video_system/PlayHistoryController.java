@@ -94,7 +94,7 @@ public class PlayHistoryController extends BaseController {
                 entityWrapper.like("member_username","%"+username+"%");
             }
             if (ToolUtil.isNotEmpty(videoName)){
-                entityWrapper.like("mobile","%"+videoName+"%");
+                entityWrapper.like("video_name","%"+videoName+"%");
             }
 
             page = playHistoryService.selectPage(page,entityWrapper);

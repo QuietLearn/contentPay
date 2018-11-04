@@ -1,16 +1,21 @@
 package com.stylefeng.guns.modular.system.service.impl;
 
+import com.google.common.collect.Lists;
 import com.stylefeng.guns.core.common.constant.state.AllConst;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.node.ZTreeNode;
 import com.stylefeng.guns.core.util.mobile.MobileInfoUtil;
 import com.stylefeng.guns.modular.system.model.BuriedPoint;
 import com.stylefeng.guns.modular.system.dao.BuriedPointMapper;
 import com.stylefeng.guns.modular.system.service.IBuriedPointService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -47,4 +52,28 @@ public class BuriedPointServiceImpl extends ServiceImpl<BuriedPointMapper, Burie
         insertBuriedPoint.setGmtModified(new Date());
         return insertBuriedPoint;
     }
+
+
+    public List<ZTreeNode> tree(){
+        return this.baseMapper.tree();
+    }
+
+    /*public Map<Integer,String> listMessageOrCode() {
+
+            List<Integer> pointIdList = Lists.newArrayList();
+            for( AllConst.PointMessageEnum pointMessageEnum:AllConst.PointMessageEnum.values()) {
+                Integer code = pointMessageEnum.getCode();
+                pointIdList.add(code);
+            }
+
+            List<String> pointTypeList = Lists.newArrayList();
+            for( AllConst.PointMessageEnum pointMessageEnum:AllConst.PointMessageEnum.values()) {
+                String message = pointMessageEnum.getMessage();
+                pointTypeList.add(message);
+            }
+            return pointTypeList;
+
+    }*/
+
+
 }
