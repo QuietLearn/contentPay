@@ -22,11 +22,13 @@ PointsConsumeRecord.initColumn = function () {
             {title: '是否删除', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
             {title: '创建时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'},
-            {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
 
-        {title: '应用名', field: 'appName', visible: true, align: 'center', valign: 'middle'},
-            {title: '应用版本', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
-            {title: '渠道号', field: 'channel', visible: true, align: 'center', valign: 'middle'}
+        {title: '应用名', field: 'appName', visible: true, align: 'center', valign: 'middle',sortable: true},
+        {title: '应用版本ver', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle',sortable: true},
+        {title: '渠道号', field: 'channel', visible: false, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle',sortable: true},
     ];
 };
 

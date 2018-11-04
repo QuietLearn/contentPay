@@ -152,10 +152,10 @@
             <if test="id != null">
                 id,
             </if>
-            <if test="appid != null">
+            <if test="appId != null">
                 appId,
             </if>
-            <if test="appver != null">
+            <if test="appVer != null">
                 appVer,
             </if>
             <if test="channel != null">
@@ -253,11 +253,11 @@
             <if test="id != null">
                 #{id,jdbcType=INTEGER},
             </if>
-            <if test="appid != null">
-                #{appid,jdbcType=INTEGER},
+            <if test="appId != null">
+                #{appId,jdbcType=INTEGER},
             </if>
-            <if test="appver != null">
-                #{appver,jdbcType=VARCHAR},
+            <if test="appVer != null">
+                #{appVer,jdbcType=VARCHAR},
             </if>
             <if test="channel != null">
                 #{channel,jdbcType=VARCHAR},

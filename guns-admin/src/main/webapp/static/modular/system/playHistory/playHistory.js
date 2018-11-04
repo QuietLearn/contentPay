@@ -15,27 +15,33 @@ PlayHistory.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
-        {title: '视频类型', field: 'typeId', visible: true, align: 'center', valign: 'middle'},
-        {title: '视频id', field: 'videoId', visible: true, align: 'center', valign: 'middle'},
+        {title: '封面图片', field: 'videoPic', visible: true, align: 'center', valign: 'middle'},
+
+        {title: '视频类型id', field: 'typeId', visible: false, align: 'center', valign: 'middle'},
+        {title: '视频类型', field: 'typeName', visible: true, align: 'center', valign: 'middle'},
+        {title: '视频id', field: 'videoId', visible: false, align: 'center', valign: 'middle'},
         {title: '视频名', field: 'videoName', visible: true, align: 'center', valign: 'middle'},
         {title: '说明(BD/高清/更新到6/共8)', field: 'videoNote', visible: false, align: 'center', valign: 'middle'},
-        {title: '封面图片', field: 'videoPic', visible: true, align: 'center', valign: 'middle'},
+
         {title: '演员', field: 'videoActor', visible: false, align: 'center', valign: 'middle'},
         {title: '导演', field: 'videoDirector', visible: false, align: 'center', valign: 'middle'},
-        {title: '发行地区', field: 'videoPublisharea', visible: true, align: 'center', valign: 'middle'},
-        {title: '发行年份', field: 'videoPublishyear', visible: true, align: 'center', valign: 'middle'},
+        {title: '发行地区', field: 'videoPublisharea', visible: false, align: 'center', valign: 'middle'},
+        {title: '发行年份', field: 'videoPublishyear', visible: false, align: 'center', valign: 'middle'},
         {title: '用户id', field: 'memberId', visible: false, align: 'center', valign: 'middle'},
-        {title: '用户昵称', field: 'memberUsername', visible: true, align: 'center', valign: 'middle'},
+        {title: '用户', field: 'memberUsername', visible: true, align: 'center', valign: 'middle'},
 
-            {title: '排序', field: 'sort', visible: true, align: 'center', valign: 'middle'},
+            {title: '排序', field: 'sort', visible: false, align: 'center', valign: 'middle'},
         {title: '逻辑删除', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
         {title: '收藏时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
         {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'},
         {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
 
         {title: '应用名', field: 'appName', visible: true, align: 'center', valign: 'middle'},
-        {title: '应用版本', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channel', visible: true, align: 'center', valign: 'middle'}
+
+        {title: '应用版本ver', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channel', visible: false, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle'},
     ];
 };
 
@@ -106,13 +112,37 @@ PlayHistory.delete = function () {
  */
 PlayHistory.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['videoName'] = $("#videoName").val();
+    queryData['username'] = $("#username").val();
+    queryData['appId'] = $("#appId").val();
     PlayHistory.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = PlayHistory.initColumn();
     var table = new BSTable(PlayHistory.id, "/playHistory/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     PlayHistory.table = table.init();
+});
+
+
+$(function () {
+    $.ajax({
+        url: "/app/list",    //后台webservice里的方法名称
+        contentType: "application/json; charset=utf-8",
+        type: "get",
+        async : true ,
+        dataType: "json",
+        success: function (data) {
+            var optionstring = "";
+            for (var j = 0; j < data.length;j++) {
+                optionstring += "<option value=\"" + data[j].appId + "\" >" +data[j].appName + "</option>";
+                $("#appId").html("<option value='0'>全部</option> "+optionstring);
+            }
+        },
+        error: function (msg) {
+            alert("出错了！");
+        }
+    });
+
 });

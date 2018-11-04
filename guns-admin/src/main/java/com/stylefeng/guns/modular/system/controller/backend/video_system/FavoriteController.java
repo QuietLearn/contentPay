@@ -1,7 +1,15 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.modular.system.model.Member;
+import com.stylefeng.guns.modular.system.model.PlayHistory;
+import com.stylefeng.guns.modular.system.warpper.AppInfoWarpper;
 import com.stylefeng.guns.modular.system.warpper.DictWarpper;
 import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
 import org.springframework.stereotype.Controller;
@@ -66,10 +74,40 @@ public class FavoriteController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        List<Favorite> favoriteList = favoriteService.selectList(null);
+    public Object list(String username,Integer appId,String mobile) {
+        //注意改成server
+        if (ToolUtil.isEmpty(username)&&ToolUtil.isEmpty(mobile)&&appId==null){
+            Page<Favorite> page =new PageFactory<Favorite>().defaultPage();
 
-        return super.warpObject(new TypeWarpper(BeanKit.listToMapList(favoriteList)));
+            page = favoriteService.selectPage(page);
+
+            List<Favorite> favoriteList = page.getRecords();
+            page.setRecords((List<Favorite>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(favoriteList))));
+
+            PageInfoBT<Favorite> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }else {
+            Page<Favorite> page = new PageFactory<Favorite>().defaultPage();
+            EntityWrapper<Favorite> entityWrapper = new EntityWrapper<>();
+            if (appId!=null&&appId!=0){
+                entityWrapper.eq("appId",appId);
+            }
+            if (ToolUtil.isNotEmpty(username)){
+                entityWrapper.like("member_username","%"+username+"%");
+            }
+            if (ToolUtil.isNotEmpty(mobile)){
+                entityWrapper.like("mobile","%"+mobile+"%");
+            }
+
+            page = favoriteService.selectPage(page,entityWrapper);
+            List<Favorite> Favorites = page.getRecords();
+            page.setRecords((List<Favorite>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(Favorites))));
+            PageInfoBT<Favorite> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }
+
     }
 
     /**

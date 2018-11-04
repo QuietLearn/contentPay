@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * </p>
  *
  * @author hyj
- * @since 2018-11-01
+ * @since 2018-11-04
  */
 public interface ChannelMapper extends BaseMapper<Channel> {
 

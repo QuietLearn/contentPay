@@ -12,6 +12,7 @@ import com.stylefeng.guns.core.util.MD5Util;
 import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.modular.system.dao.MemberTypeMapper;
 import com.stylefeng.guns.modular.system.model.Video;
+import com.stylefeng.guns.modular.system.warpper.AppInfoWarpper;
 import com.stylefeng.guns.modular.system.warpper.AppWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -85,7 +86,7 @@ public class MemberController extends BaseController {
             page = memberService.selectPage(page);
 
             List<Member> memberList = page.getRecords();
-            page.setRecords((List<Member>)super.warpObject(new AppWarpper(BeanKit.listToMapList(memberList))));
+            page.setRecords((List<Member>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(memberList))));
 
             PageInfoBT<Member> pageInfoBT =this.packForBT(page);
 
@@ -105,7 +106,7 @@ public class MemberController extends BaseController {
 
             page = memberService.selectPage(page,entityWrapper);
             List<Member> members = page.getRecords();
-            page.setRecords((List<Member>)super.warpObject(new AppWarpper(BeanKit.listToMapList(members))));
+            page.setRecords((List<Member>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(members))));
             PageInfoBT<Member> pageInfoBT =this.packForBT(page);
 
             return pageInfoBT;

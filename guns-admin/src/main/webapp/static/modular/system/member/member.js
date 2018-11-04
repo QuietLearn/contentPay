@@ -18,15 +18,20 @@ Member.initColumn = function () {
 
         {title: '应用', field: 'appName', visible: true, align: 'center', valign: 'middle'},
         {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用版本', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channel', visible: true, align: 'center', valign: 'middle'},
-        {title: '用户名', field: 'username', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用版本ver', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channel', visible: false, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle'},
+
+        {title: '用户名', field: 'username', visible: true, align: 'center', valign: 'middle',sortable: true},
 
         {title: '昵称', field: 'nickname', visible: false, align: 'center', valign: 'middle'},
         {title: '明文密码', field: 'password', visible: false, align: 'center', valign: 'middle'},
         {title: 'md5加密密码', field: 'md5Password', visible: false, align: 'center', valign: 'middle'},
 
-        {title: '性别', field: 'gender', visible: true, align: 'center', valign: 'middle'},
+        {title: '性别', field: 'gender', visible: false, align: 'center', valign: 'middle'},
+        {title: '性别', field: 'genderName', visible: true, align: 'center', valign: 'middle'},
+
         {title: '头像', field: 'picAddress', visible: true, align: 'center', valign: 'middle'},
         {title: '手机', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
 

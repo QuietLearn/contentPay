@@ -1,4 +1,4 @@
-package com.stylefeng.guns.modular.channel.service;
+package com.stylefeng.guns.modular.system.service;
 
 import com.stylefeng.guns.modular.system.model.Channel;
 import com.baomidou.mybatisplus.service.IService;
@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.service.IService;
  * </p>
  *
  * @author hyj
- * @since 2018-11-01
+ * @since 2018-11-04
  */
 public interface IChannelService extends IService<Channel> {
 

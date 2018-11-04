@@ -7,7 +7,6 @@ import com.stylefeng.guns.core.common.constant.cache.CacheKey;
 import com.stylefeng.guns.core.common.constant.state.ManagerStatus;
 import com.stylefeng.guns.core.common.constant.state.MenuStatus;
 import com.stylefeng.guns.modular.appver.service.IAppVerService;
-import com.stylefeng.guns.modular.channel.service.IChannelService;
 import com.stylefeng.guns.modular.system.dao.*;
 import com.stylefeng.guns.modular.system.model.*;
 import com.stylefeng.guns.core.log.LogObjectHolder;
@@ -242,6 +241,7 @@ public class ConstantFactory implements IConstantFactory {
         Dict temp = new Dict();
         temp.setName(name);
         Dict dict = dictMapper.selectOne(temp);
+
         if (dict == null) {
             return "";
         } else {

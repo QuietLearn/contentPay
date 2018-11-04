@@ -1,8 +1,14 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.modular.system.model.Favorite;
+import com.stylefeng.guns.modular.system.warpper.AppInfoWarpper;
 import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,10 +71,39 @@ public class PlayHistoryController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        List<PlayHistory> playHistories = playHistoryService.selectList(null);
+    public Object list(String username,Integer appId,String videoName) {
+        //注意改成server
+        if (ToolUtil.isEmpty(username)&&ToolUtil.isEmpty(videoName)&&appId==null){
+            Page<PlayHistory> page =new PageFactory<PlayHistory>().defaultPage();
 
-        return super.warpObject(new TypeWarpper(BeanKit.listToMapList(playHistories)));
+            page = playHistoryService.selectPage(page);
+
+            List<PlayHistory> PlayHistoryList = page.getRecords();
+            page.setRecords((List<PlayHistory>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(PlayHistoryList))));
+
+            PageInfoBT<PlayHistory> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }else {
+            Page<PlayHistory> page = new PageFactory<PlayHistory>().defaultPage();
+            EntityWrapper<PlayHistory> entityWrapper = new EntityWrapper<>();
+            if (appId!=null&&appId!=0){
+                entityWrapper.eq("appId",appId);
+            }
+            if (ToolUtil.isNotEmpty(username)){
+                entityWrapper.like("member_username","%"+username+"%");
+            }
+            if (ToolUtil.isNotEmpty(videoName)){
+                entityWrapper.like("mobile","%"+videoName+"%");
+            }
+
+            page = playHistoryService.selectPage(page,entityWrapper);
+            List<PlayHistory> PlayHistorys = page.getRecords();
+            page.setRecords((List<PlayHistory>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(PlayHistorys))));
+            PageInfoBT<PlayHistory> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }
     }
 
     /**

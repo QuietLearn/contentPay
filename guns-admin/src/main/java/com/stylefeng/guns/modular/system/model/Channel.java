@@ -1,6 +1,8 @@
 package com.stylefeng.guns.modular.system.model;
 
+import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -12,13 +14,14 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-11-01
+ * @since 2018-11-04
  */
 @TableName("cps_channel")
 public class Channel extends Model<Channel> {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     /**
      * 定义渠道号
@@ -89,7 +92,7 @@ public class Channel extends Model<Channel> {
 
     @Override
     protected Serializable pkVal() {
-        return null;
+        return this.id;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.stylefeng.guns.modular.channel.controller;
+package com.stylefeng.guns.modular.system.controller;
 
 import com.stylefeng.guns.core.base.controller.BaseController;
 import org.springframework.stereotype.Controller;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.stylefeng.guns.core.log.LogObjectHolder;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.stylefeng.guns.modular.system.model.Channel;
-import com.stylefeng.guns.modular.channel.service.IChannelService;
+import com.stylefeng.guns.modular.system.service.IChannelService;
 
 import java.util.Date;
 
@@ -18,13 +18,13 @@ import java.util.Date;
  * 应用下载渠道控制器
  *
  * @author fengshuonan
- * @Date 2018-11-01 10:11:59
+ * @Date 2018-11-04 19:23:36
  */
 @Controller
 @RequestMapping("/channel")
 public class ChannelController extends BaseController {
 
-    private String PREFIX = "/channel/channel/";
+    private String PREFIX = "/system/channel/";
 
     @Autowired
     private IChannelService channelService;
