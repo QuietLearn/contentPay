@@ -23,19 +23,27 @@ public class ShiroDbRealm extends AuthorizingRealm {
 
     /**
      * 登录认证
+     * 就是告诉shiro正确的密码是什么，然后进行验证
+     * 登录时数据库和shiro做的交互
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken)
             throws AuthenticationException {
         IShiro shiroFactory = ShiroFactroy.me();
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-        User user = shiroFactory.user(token.getUsername());
+        //这里抛出异常的话会反馈显示到页面上
+        User user = shiroFactory.user(token.getUsername()); //通过账号获取user实体
+        //shiro可识别的一个对象
         ShiroUser shiroUser = shiroFactory.shiroUser(user);
+        //realName 类的名称
+        //将查到的东西返回给SimpleAuthenticationInfo这个对象，并传给shiro做交互，检验密码是否正确
         return shiroFactory.info(shiroUser, user, super.getName());
     }
 
     /**
      * 权限认证
+     * 告诉shiro（这个用户）有哪些角色，哪些权限，
+     * 不然权限的管理怎么控制
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -43,10 +51,14 @@ public class ShiroDbRealm extends AuthorizingRealm {
         ShiroUser shiroUser = (ShiroUser) principals.getPrimaryPrincipal();
         List<Integer> roleList = shiroUser.getRoleList();
 
+        //从数据库中查出来 这样shiro才知道当前登录用户有哪些角色哪些权限
+        //当前登录用户相关的权限
         Set<String> permissionSet = new HashSet<>();
+        //当前登录用户相关的角色
         Set<String> roleNameSet = new HashSet<>();
 
         for (Integer roleId : roleList) {
+            //从数据库查出权限
             List<String> permissions = shiroFactory.findPermissionsByRoleId(roleId);
             if (permissions != null) {
                 for (String permission : permissions) {
@@ -55,10 +67,12 @@ public class ShiroDbRealm extends AuthorizingRealm {
                     }
                 }
             }
+            //从数据库查出名称
             String roleName = shiroFactory.findRoleNameByRoleId(roleId);
             roleNameSet.add(roleName);
         }
 
+        //主要目的，生成这个，返回给shiro，告诉shiro我们的权限角色都包含在这，封装了
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.addStringPermissions(permissionSet);
         info.addRoles(roleNameSet);
@@ -67,6 +81,9 @@ public class ShiroDbRealm extends AuthorizingRealm {
 
     /**
      * 设置认证加密方式
+     * 设置密码的加密方式
+     * 不仅仅是密码+盐值直接加密的方法
+     * 可能还有它自己独特的算法加密
      */
     @Override
     public void setCredentialsMatcher(CredentialsMatcher credentialsMatcher) {

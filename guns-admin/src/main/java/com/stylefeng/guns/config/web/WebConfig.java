@@ -42,6 +42,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     /**
      * 增加swagger的支持
+     * 让springmvc对静态资源做映射访问，而不是默认访问controller的映射
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

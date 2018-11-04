@@ -26,6 +26,7 @@ public class DecryptTest {
 
         String jsonString = JSON.toJSONString(simpleObject);
         String encode = new Base64SecurityAction().doAction(jsonString);
+        //加上混淆的随机字符串
         String md5 = MD5Util.encrypt(encode + salt);
 
         BaseTransferEntity baseTransferEntity = new BaseTransferEntity();

@@ -58,6 +58,7 @@ public class MemberFrontController extends BaseController {
         Result<MemberVo> memberVoResult = memberService.loginByMobile(mobile, password, appId);
         MemberVo memberVo = memberVoResult.getData();
         if (memberVo!=null){
+            //传递task即可记录，不会占用业务时间,所以不直接用insert
             LogManager.me().executeLog(MemberLogTaskFactory.memberLoginLog(memberVo.getId(), getIp(),appId, appVer,channel));
         }
 

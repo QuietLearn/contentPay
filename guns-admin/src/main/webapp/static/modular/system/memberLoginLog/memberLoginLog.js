@@ -1,5 +1,5 @@
 /**
- * 会员登录日志管理初始化
+ * 用户登录日志管理初始化
  */
 var MemberLoginLog = {
     id: "MemberLoginLogTable",	//表格id
@@ -18,6 +18,7 @@ MemberLoginLog.initColumn = function () {
             {title: '日志名称', field: 'logname', visible: true, align: 'center', valign: 'middle'},
             {title: '应用id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
             {title: '应用版本', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
+            {title: '用户更新app后的版本', field: 'updateAppver', visible: true, align: 'center', valign: 'middle'},
             {title: '渠道号', field: 'channel', visible: true, align: 'center', valign: 'middle'},
             {title: '会员id', field: 'memberid', visible: true, align: 'center', valign: 'middle'},
             {title: '创建时间', field: 'createtime', visible: true, align: 'center', valign: 'middle'},
@@ -42,12 +43,12 @@ MemberLoginLog.check = function () {
 };
 
 /**
- * 点击添加会员登录日志
+ * 点击添加用户登录日志
  */
 MemberLoginLog.openAddMemberLoginLog = function () {
     var index = layer.open({
         type: 2,
-        title: '添加会员登录日志',
+        title: '添加用户登录日志',
         area: ['800px', '420px'], //宽高
         fix: false, //不固定
         maxmin: true,
@@ -57,13 +58,13 @@ MemberLoginLog.openAddMemberLoginLog = function () {
 };
 
 /**
- * 打开查看会员登录日志详情
+ * 打开查看用户登录日志详情
  */
 MemberLoginLog.openMemberLoginLogDetail = function () {
     if (this.check()) {
         var index = layer.open({
             type: 2,
-            title: '会员登录日志详情',
+            title: '用户登录日志详情',
             area: ['800px', '420px'], //宽高
             fix: false, //不固定
             maxmin: true,
@@ -74,7 +75,7 @@ MemberLoginLog.openMemberLoginLogDetail = function () {
 };
 
 /**
- * 删除会员登录日志
+ * 删除用户登录日志
  */
 MemberLoginLog.delete = function () {
     if (this.check()) {
@@ -90,7 +91,7 @@ MemberLoginLog.delete = function () {
 };
 
 /**
- * 查询会员登录日志列表
+ * 查询用户登录日志列表
  */
 MemberLoginLog.search = function () {
     var queryData = {};

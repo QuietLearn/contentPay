@@ -6,6 +6,7 @@ import com.stylefeng.guns.generator.action.config.WebGeneratorConfig;
 import com.stylefeng.guns.generator.action.model.GenQo;
 import com.stylefeng.guns.modular.code.factory.DefaultTemplateFactory;
 import com.stylefeng.guns.modular.code.service.TableService;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,6 +48,7 @@ public class CodeController extends BaseController {
      * 生成代码
      */
     @ApiOperation("生成代码")
+    //ApiImplicitParams()
     @RequestMapping(value = "/generate", method = RequestMethod.POST)
     @ResponseBody
     public Object generate(GenQo genQo) {

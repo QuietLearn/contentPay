@@ -42,6 +42,7 @@ public class ShiroFactroy implements IShiro {
         User user = userMapper.getByAccount(account);
 
         // 账号不存在
+        //直接抛出异常
         if (null == user) {
             throw new CredentialsException();
         }
@@ -92,6 +93,7 @@ public class ShiroFactroy implements IShiro {
         // 密码加盐处理
         String source = user.getSalt();
         ByteSource credentialsSalt = new Md5Hash(source);
+        //找到shiro它存储起来的账号密码和正确密码，MD5盐值加密密码做比对
         return new SimpleAuthenticationInfo(shiroUser, credentials, credentialsSalt, realmName);
     }
 

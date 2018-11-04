@@ -59,6 +59,7 @@ public class LogFactory {
 
         memberLoginLog.setAppId(appId);
         memberLoginLog.setAppVer(appVer);
+        memberLoginLog.setUpdateAppver(appVer);
         memberLoginLog.setChannel(channel);
 
 

@@ -16,10 +16,9 @@ import java.util.Map;
  * </p>
  *
  * @author hyj
- * @since 2018-10-29
+ * @since 2018-11-04
  */
 public interface MemberLoginLogMapper extends BaseMapper<MemberLoginLog> {
-
     /**
      * 获取登录日志
      */
@@ -28,5 +27,5 @@ public interface MemberLoginLogMapper extends BaseMapper<MemberLoginLog> {
 
     Date selectMaxCreatime(Integer memberId);
 
-    MemberLoginLog selectLoginLogByCreateTime(@Param("creatime") Date creatime,@Param("memberId")Integer memberId);
+    MemberLoginLog selectLoginLogByCreateTime(@Param("creatime") Date creatime, @Param("memberId") Integer memberId);
 }

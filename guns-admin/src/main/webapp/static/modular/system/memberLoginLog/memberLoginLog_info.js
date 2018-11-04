@@ -1,5 +1,5 @@
 /**
- * 初始化会员登录日志详情对话框
+ * 初始化用户登录日志详情对话框
  */
 var MemberLoginLogInfoDlg = {
     memberLoginLogInfoData : {}
@@ -49,6 +49,7 @@ MemberLoginLogInfoDlg.collectData = function() {
     .set('logname')
     .set('appId')
     .set('appVer')
+    .set('updateAppver')
     .set('channel')
     .set('memberid')
     .set('createtime')

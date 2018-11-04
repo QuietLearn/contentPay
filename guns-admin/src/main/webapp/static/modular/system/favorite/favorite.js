@@ -15,7 +15,8 @@ Favorite.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
             {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
-            {title: '视频类型', field: 'typeId', visible: true, align: 'center', valign: 'middle'},
+            {title: '视频类型id', field: 'typeId', visible: false, align: 'center', valign: 'middle'},
+            {title: '视频类型', field: 'typeName', visible: true, align: 'center', valign: 'middle'},
             {title: '视频id', field: 'videoId', visible: true, align: 'center', valign: 'middle'},
             {title: '视频名', field: 'videoName', visible: true, align: 'center', valign: 'middle'},
             {title: '说明(BD/高清/更新到6/共8)', field: 'videoNote', visible: false, align: 'center', valign: 'middle'},

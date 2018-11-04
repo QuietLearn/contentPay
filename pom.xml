@@ -137,6 +137,7 @@
                 <artifactId>beetl</artifactId>
                 <version>${beetl.version}</version>
             </dependency>
+            <!--swaggeer测试接口插件api-->
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
@@ -147,6 +148,7 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>

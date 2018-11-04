@@ -77,8 +77,9 @@ public class MemberController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String username,Integer appId) {
-        if (ToolUtil.isEmpty(username)&&appId==null){
+    public Object list(String username,Integer appId,String mobile) {
+        //注意改成server
+        if (ToolUtil.isEmpty(username)&&ToolUtil.isEmpty(mobile)&&appId==null){
             Page<Member> page =new PageFactory<Member>().defaultPage();
 
             page = memberService.selectPage(page);
@@ -87,15 +88,6 @@ public class MemberController extends BaseController {
             page.setRecords((List<Member>)super.warpObject(new AppWarpper(BeanKit.listToMapList(memberList))));
 
             PageInfoBT<Member> pageInfoBT =this.packForBT(page);
-
-            /* Page page =new PageFactory().defaultPage();
-
-            page = memberService.selectPage(page);
-
-            List members = page.getRecords();
-            page.setRecords((List)super.warpObject(new AppWarpper(BeanKit.listToMapList(members))));
-
-            PageInfoBT pageInfoBT =this.packForBT(page);*/
 
             return pageInfoBT;
         }else {
@@ -106,6 +98,9 @@ public class MemberController extends BaseController {
             }
             if (ToolUtil.isNotEmpty(username)){
                 entityWrapper.like("username","%"+username+"%");
+            }
+            if (ToolUtil.isNotEmpty(mobile)){
+                entityWrapper.like("mobile","%"+mobile+"%");
             }
 
             page = memberService.selectPage(page,entityWrapper);

@@ -69,7 +69,8 @@ public class ShiroKit {
 
     /**
      * 获取当前 Subject
-     *
+     * 获得当前用户的一些信息，包括包含了哪些权限，包括 是否有权限访问一些资源的方法
+     * shiro封装的当前用户拥有哪些权限，哪些资源的一个类
      * @return Subject
      */
     public static Subject getSubject() {

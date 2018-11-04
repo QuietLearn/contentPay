@@ -8,6 +8,7 @@
         <result column="logname" property="logname" />
         <result column="appId" property="appId" />
         <result column="appVer" property="appVer" />
+        <result column="update_appver" property="updateAppver" />
         <result column="channel" property="channel" />
         <result column="memberid" property="memberid" />
         <result column="createtime" property="createtime" />
@@ -18,7 +19,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, logname, appId, appVer, channel, memberid, createtime, succeed, message, ip
+        id, logname, appId, appVer, update_appver, channel, memberid, createtime, succeed, message, ip
     </sql>
 
     <select id="getLoginLogs" resultType="map" parameterType="com.baomidou.mybatisplus.plugins.Page">

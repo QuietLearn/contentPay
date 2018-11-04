@@ -6,8 +6,10 @@ import com.stylefeng.guns.modular.system.model.Active;
 import com.stylefeng.guns.modular.system.model.BuriedPoint;
 import com.stylefeng.guns.modular.system.service.IActiveService;
 import com.stylefeng.guns.modular.system.service.IBuriedPointService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +24,8 @@ public class ActiveFrontController extends BaseController {
     @Autowired
     private IActiveService activeService;
 
-    @RequestMapping(value = "/add")
+    @ApiOperation(value = "激活",notes = "www.relaxstudy.top/front/active/add")
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
     public Result insertActive(BuriedPoint buriedPoint,String phoneType,String phoneBrand,String phoneSystem,String dpi){
        return activeService.insertAssemActive(buriedPoint,phoneType,phoneBrand,phoneSystem,dpi);
     }

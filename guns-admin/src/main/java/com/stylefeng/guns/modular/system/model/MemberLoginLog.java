@@ -3,6 +3,7 @@ package com.stylefeng.guns.modular.system.model;
 import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-10-29
+ * @since 2018-11-04
  */
 @TableName("cps_member_login_log")
 public class MemberLoginLog extends Model<MemberLoginLog> {
@@ -37,6 +38,11 @@ public class MemberLoginLog extends Model<MemberLoginLog> {
      * 应用版本
      */
     private String appVer;
+    /**
+     * 用户更新app后的版本
+     */
+    @TableField("update_appver")
+    private String updateAppver;
     /**
      * 渠道号
      */
@@ -93,6 +99,14 @@ public class MemberLoginLog extends Model<MemberLoginLog> {
 
     public void setAppVer(String appVer) {
         this.appVer = appVer;
+    }
+
+    public String getUpdateAppver() {
+        return updateAppver;
+    }
+
+    public void setUpdateAppver(String updateAppver) {
+        this.updateAppver = updateAppver;
     }
 
     public String getChannel() {
@@ -155,6 +169,7 @@ public class MemberLoginLog extends Model<MemberLoginLog> {
         ", logname=" + logname +
         ", appId=" + appId +
         ", appVer=" + appVer +
+        ", updateAppver=" + updateAppver +
         ", channel=" + channel +
         ", memberid=" + memberid +
         ", createtime=" + createtime +
