@@ -45,6 +45,17 @@ public class PlayHistoryServiceImpl extends ServiceImpl<PlayHistoryMapper, PlayH
     @Autowired
     private MemberLoginLogMapper memberLoginLogMapper;
 
+    //后端接口
+    public long deletePointList(String ids) {
+        String[] ss = ids.split(",");
+        long count= 0;
+        for (String s : ss) {
+            this.deleteById(Integer.parseInt(s));
+            count++;
+        }
+        return count;
+    }
+
     //列举用户的收藏夹
     public Result<PlayHistoryVo> list(String uuidToken){
         Member member = memberMapper.selectMemberByUuidToken(uuidToken);

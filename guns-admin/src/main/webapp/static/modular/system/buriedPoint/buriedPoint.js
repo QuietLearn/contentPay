@@ -13,7 +13,7 @@ var BuriedPoint = {
  */
 BuriedPoint.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
+        {field: 'selectItem', checkbox: true},
             {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
 
         {title: '应用', field: 'appName', visible: true, align: 'center', valign: 'middle'},
@@ -58,6 +58,24 @@ BuriedPoint.check = function () {
         return true;
     }
 };
+
+//批量删除
+function deletePointList() {
+    //获取所有被选中的记录
+    // + this.id
+    var rows = $('#BuriedPointTable').bootstrapTable('getSelections');
+    if (rows.length == 0) {
+        alert("请先选择要删除的记录!");
+        return;
+    }
+    var ids = '';
+    for (var i = 0; i < rows.length; i++) {
+        ids += rows[i]['id'] + ",";
+    }
+    ids = ids.substring(0, ids.length - 1);
+    deletePoints(ids);
+};
+
 
 /**
  * 点击添加埋点统计
@@ -108,6 +126,34 @@ BuriedPoint.delete = function () {
 };
 
 /**
+ * 批量删除埋点统计
+ */
+function deletePoints(ids) {
+    var msg = "您真的确定要删除吗？";
+    if (confirm(msg) == true) {
+        $.ajax({
+            url: Feng.ctxPath +"/buriedPoint/delete_list",
+            type: "post",
+            data: {
+                ids: ids
+            },
+            success: function (data) {
+                alert(data.message);
+                //重新加载记录
+                //重新加载数据
+                //Feng.success("删除成功!");
+                BuriedPoint.table.refresh();
+                /* $("#user").bootstrapTable('refresh', {url: '/user/getUserList.do'});*/
+            }, error:function (data) {
+                alert(data.msg);
+                BuriedPoint.table.refresh();
+            }
+        });
+    }
+};
+
+
+/**
  * 查询埋点统计列表
  */
 BuriedPoint.search = function () {
@@ -116,6 +162,63 @@ BuriedPoint.search = function () {
     queryData['appId'] = $("#appId").val();
     BuriedPoint.table.refresh({query: queryData});
 };
+
+/**
+ * 显示埋点类型选择的树
+ *
+ * @returns
+ */
+BuriedPoint.showDeptSelectTree = function () {
+    var cityObj = $("#citySel");
+    var cityOffset = $("#citySel").offset();
+    $("#menuContent").css({
+        left:cityOffset.left-30 + "px",
+        //+ cityOffset.top
+        top:  cityObj.outerHeight() + "px"
+    }).slideDown("fast");
+
+    $("body").bind("mousedown", onBodyDown);
+};
+
+/**
+ * 隐藏部门选择的树
+ */
+BuriedPoint.hideDeptSelectTree = function () {
+    $("#menuContent").fadeOut("fast");
+    $("body").unbind("mousedown", onBodyDown);// mousedown当鼠标按下就可以触发，不用弹起
+};
+
+
+function onBodyDown(event) {
+    if (!(event.target.id == "menuBtn" || event.target.id == "menuContent" || $(
+        event.target).parents("#menuContent").length > 0)) {
+        BuriedPoint.hideDeptSelectTree();
+    }
+}
+
+BuriedPoint.onClickDept = function (e, treeId, treeNode) {
+    $("#citySel").attr("value", instance.getSelectedVal());
+    $("#pointId").attr("value", treeNode.pointId);
+};
+
+$(function () {
+    /*Feng.initValidator("userInfoForm", UserInfoDlg.validateFields);*/
+
+
+    var ztree = new $ZTree("treeDemo", "/buriedPoint/tree");
+    ztree.bindOnClick(BuriedPoint.onClickDept);
+    ztree.init();
+    instance = ztree;
+
+    /* 初始化头像上传
+     var avatarUp = new $WebUpload("avatar");
+     avatarUp.setUploadBarId("progressBar");
+     avatarUp.init();*/
+
+});
+
+
+
 
 $(function () {
     var defaultColunms = BuriedPoint.initColumn();

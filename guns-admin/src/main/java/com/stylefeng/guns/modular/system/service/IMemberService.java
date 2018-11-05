@@ -20,6 +20,13 @@ import java.util.List;
 public interface IMemberService extends IService<Member> {
 
     /**
+     * 后台批量删除功能
+     * @param ids
+     * @return
+     */
+    long deleteMemberList(String ids);
+
+    /**
      * 注册功能
      * @param mobile
      * @param password

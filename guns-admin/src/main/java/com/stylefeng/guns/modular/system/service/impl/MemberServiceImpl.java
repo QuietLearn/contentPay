@@ -92,6 +92,18 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     }
 
 
+    public long deleteMemberList(String ids) {
+        String[] ss = ids.split(",");
+        long count= 0;
+        for (String s : ss) {
+            this.deleteById(Integer.parseInt(s));
+            count++;
+        }
+        return count;
+    }
+
+
+
     //前台逻辑方法
     //注册
     public Result register(String mobile,String password,String message,Integer appId,String appVer,String channel) {

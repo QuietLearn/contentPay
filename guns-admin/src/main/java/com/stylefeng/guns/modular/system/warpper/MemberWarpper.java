@@ -2,6 +2,7 @@ package com.stylefeng.guns.modular.system.warpper;
 
 import com.stylefeng.guns.core.base.warpper.BaseControllerWarpper;
 import com.stylefeng.guns.core.common.constant.factory.ConstantFactory;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -21,11 +22,15 @@ public class MemberWarpper extends BaseControllerWarpper {
     @Override
     public void warpTheMap(Map<String, Object> map) {
         //typeName
-        map.put("memberName", ConstantFactory.me().getMemberName((Integer) map.get("memberId"))); //me工厂方法
-        map.put("appName", ConstantFactory.me().getAppName((Integer) map.get("appId"))); //me工厂方法
+        //me工厂方法
+        map.put("memberName", ConstantFactory.me().getMemberName((Integer) map.get("memberId")));
+        map.put("appName", ConstantFactory.me().getAppName(Integer.valueOf((String) map.get("appId"))));
         map.put("appVerName", ConstantFactory.me().getAppVerName( (String)map.get("appVer")));
         map.put("channelName", ConstantFactory.me().getChannelName((String) map.get("channel")));
-        map.put("videoName", ConstantFactory.me().getVideoName((String) map.get("videoId")));
+        if (map.get("channelId")!=null&& !StringUtils.equals("",(String)map.get("channelId"))) {
+            map.put("channelName", ConstantFactory.me().getChannelName((String) map.get("channelId")));
+        }
+        map.put("videoName", ConstantFactory.me().getVideoName(String.valueOf((Integer)map.get("videoId"))));
     }
 
 }

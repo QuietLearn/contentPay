@@ -13,7 +13,7 @@ var Active = {
  */
 Active.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
+        {field: 'selectItem', checkbox: true},
             {title: '', field: 'id', visible: false , align: 'center', valign: 'middle'},
 
         {title: '应用', field: 'appName', visible: true, align: 'center', valign: 'middle'},
@@ -34,7 +34,7 @@ Active.initColumn = function () {
             {title: '手机品牌', field: 'phoneBrand', visible: true, align: 'center', valign: 'middle'},
             {title: '手机系统', field: 'phoneSystem', visible: true, align: 'center', valign: 'middle'},
             {title: '分辨率', field: 'dpi', visible: true, align: 'center', valign: 'middle'},
-            {title: 'uuid', field: 'uuid', visible: true, align: 'center', valign: 'middle'},
+            {title: 'uuid', field: 'uuid', visible: false, align: 'center', valign: 'middle'},
             {title: '手机号', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
             {title: '手机识别码', field: 'iccid', visible: true, align: 'center', valign: 'middle'},
             // 1 安卓 2ios
@@ -60,6 +60,23 @@ Active.check = function () {
         Active.seItem = selected[0];
         return true;
     }
+};
+
+//批量删除
+function deleteActiveList() {
+    //获取所有被选中的记录
+    // + this.id
+    var rows = $('#ActiveTable').bootstrapTable('getSelections');
+    if (rows.length == 0) {
+        alert("请先选择要删除的记录!");
+        return;
+    }
+    var ids = '';
+    for (var i = 0; i < rows.length; i++) {
+        ids += rows[i]['id'] + ",";
+    }
+    ids = ids.substring(0, ids.length - 1);
+    deleteActives(ids);
 };
 
 /**
@@ -110,18 +127,67 @@ Active.delete = function () {
     }
 };
 
+//删除
+function deleteActives(ids) {
+    var msg = "您真的确定要删除吗？";
+    if (confirm(msg) == true) {
+        $.ajax({
+            url: Feng.ctxPath +"/active/delete_list",
+            type: "post",
+            data: {
+                ids: ids
+            },
+            success: function (data) {
+                alert(data.message);
+                //重新加载记录
+                //重新加载数据
+                //Feng.success("删除成功!");
+                Active.table.refresh();
+                /* $("#user").bootstrapTable('refresh', {url: '/user/getUserList.do'});*/
+            }, error:function (data) {
+                alert(data.msg);
+                Active.table.refresh();
+            }
+        });
+    }
+};
+
+
 /**
  * 查询激活统计列表
  */
 Active.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['province'] = $("#province").val();
+    queryData['appId'] = $("#appId").val();
+    queryData['mobile'] = $("#mobile").val();
     Active.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = Active.initColumn();
     var table = new BSTable(Active.id, "/active/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     Active.table = table.init();
+});
+
+$(function () {
+    $.ajax({
+        url: "/app/list",    //后台webservice里的方法名称
+        contentType: "application/json; charset=utf-8",
+        type: "get",
+        async : true ,
+        dataType: "json",
+        success: function (data) {
+            var optionstring = "";
+            for (var j = 0; j < data.length;j++) {
+                optionstring += "<option value=\"" + data[j].appId + "\" >" +data[j].appName + "</option>";
+                $("#appId").html("<option value='0'>全部</option> "+optionstring);
+            }
+        },
+        error: function (msg) {
+            alert("出错了！");
+        }
+    });
+
 });

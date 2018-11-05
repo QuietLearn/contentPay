@@ -33,6 +33,9 @@
                             @if(shiro.hasPermission("/playHistory/delete")){
                                 <#button name="删除" icon="fa-remove" clickFun="PlayHistory.delete()" space="true"/>
                             @}
+                            @if(shiro.hasPermission("/playHistory/delete_list")){
+                            <#button name="批量删除" icon="fa-remove" clickFun="deletePlayhistoryList()" space="true"/>
+                            @}
                         </div>
                         <#table id="PlayHistoryTable"/>
                     </div>

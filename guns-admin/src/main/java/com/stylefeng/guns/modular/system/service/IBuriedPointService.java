@@ -26,4 +26,10 @@ public interface IBuriedPointService extends IService<BuriedPoint> {
 
     List<ZTreeNode> tree();
 
+    /**
+     * 批量删除埋点记录
+     * @param ids
+     * @return
+     */
+    long deletePointList(String ids);
 }

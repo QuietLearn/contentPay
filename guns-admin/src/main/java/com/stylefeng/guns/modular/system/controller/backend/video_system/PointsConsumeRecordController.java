@@ -8,7 +8,6 @@ import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.core.util.ToolUtil;
-import com.stylefeng.guns.modular.system.warpper.AppInfoWarpper;
 import com.stylefeng.guns.modular.system.warpper.MemberWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

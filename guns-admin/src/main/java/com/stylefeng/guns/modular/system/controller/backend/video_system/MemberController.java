@@ -3,8 +3,10 @@ package com.stylefeng.guns.modular.system.controller.backend.video_system;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.base.tips.ErrorTip;
 import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.constant.state.ServerType;
+import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.core.support.DateTime;
@@ -133,6 +135,19 @@ public class MemberController extends BaseController {
     public Object delete(@RequestParam Integer memberId) {
         memberService.deleteById(memberId);
         return SUCCESS_TIP;
+    }
+
+    /**
+     * 批量删除会员
+     */
+    @RequestMapping(value = "/delete_list")
+    @ResponseBody
+    public Object deleteMemberList(@RequestParam String ids) {
+        long deleteCount = memberService.deleteMemberList(ids);
+        if (deleteCount > 0){
+            return SUCCESS_TIP;
+        }
+        return Result.createByErrorMessage("用户记录批量删除失败，请稍后再试");
     }
 
     /**

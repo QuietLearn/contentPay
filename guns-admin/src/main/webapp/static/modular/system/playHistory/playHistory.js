@@ -13,7 +13,7 @@ var PlayHistory = {
  */
 PlayHistory.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
+        {field: 'selectItem', checkbox: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
         {title: '封面图片', field: 'videoPic', visible: true, align: 'center', valign: 'middle'},
 
@@ -58,6 +58,25 @@ PlayHistory.check = function () {
         return true;
     }
 };
+
+
+//批量删除
+function deletePlayhistoryList() {
+    //获取所有被选中的记录
+    // + this.id
+    var rows = $('#PlayHistoryTable').bootstrapTable('getSelections');
+    if (rows.length == 0) {
+        alert("请先选择要删除的记录!");
+        return;
+    }
+    var ids = '';
+    for (var i = 0; i < rows.length; i++) {
+        ids += rows[i]['id'] + ",";
+    }
+    ids = ids.substring(0, ids.length - 1);
+    deletePlayhistory(ids);
+};
+
 
 /**
  * 点击添加用户播放历史
@@ -106,6 +125,32 @@ PlayHistory.delete = function () {
         ajax.start();
     }
 };
+
+//删除
+function deletePlayhistory(ids) {
+    var msg = "您真的确定要删除吗？";
+    if (confirm(msg) == true) {
+        $.ajax({
+            url: Feng.ctxPath +"/playHistory/delete_list",
+            type: "post",
+            data: {
+                ids: ids
+            },
+            success: function (data) {
+                alert(data.message);
+                //重新加载记录
+                //重新加载数据
+                //Feng.success("删除成功!");
+                PlayHistory.table.refresh();
+                /* $("#user").bootstrapTable('refresh', {url: '/user/getUserList.do'});*/
+            }, error:function (data) {
+                alert(data.msg);
+                PlayHistory.table.refresh();
+            }
+        });
+    }
+};
+
 
 /**
  * 查询用户播放历史列表

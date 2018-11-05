@@ -40,7 +40,9 @@ public class AppInfoWarpper extends BaseControllerWarpper {
             map.put("updateAppverName", ConstantFactory.me().getAppVerName( (String)map.get("updateAppver")));
         }
         map.put("channelName", ConstantFactory.me().getChannelName((String) map.get("channel")));
-
+        if (map.get("channelId")!=null&& !StringUtils.equals("",(String)map.get("channelId"))) {
+            map.put("channelName", ConstantFactory.me().getChannelName((String) map.get("channelId")));
+        }
         if (map.get("gender")!=null){
             map.put("genderName", ConstantFactory.me().getSexName((Integer) map.get("gender")));
         }

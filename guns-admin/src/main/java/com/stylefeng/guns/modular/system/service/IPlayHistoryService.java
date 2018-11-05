@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface IPlayHistoryService extends IService<PlayHistory> {
 
-
+    long deletePointList(String ids);
 
     Result<PlayHistoryVo> list(String uuidToken);
 

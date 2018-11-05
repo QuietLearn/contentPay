@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.core.util.ToolUtil;
@@ -126,6 +127,19 @@ public class PlayHistoryController extends BaseController {
     public Object delete(@RequestParam Integer playHistoryId) {
         playHistoryService.deleteById(playHistoryId);
         return SUCCESS_TIP;
+    }
+
+    /**
+     * 批量删除埋点统计
+     */
+    @RequestMapping(value = "/delete_list")
+    @ResponseBody
+    public Object deletePlayhistoryList(@RequestParam String ids) {
+        long deleteCount = playHistoryService.deletePointList(ids);
+        if (deleteCount > 0){
+            return SUCCESS_TIP;
+        }
+        return Result.createByErrorMessage("埋点记录批量删除失败，请稍后再试");
     }
 
     /**

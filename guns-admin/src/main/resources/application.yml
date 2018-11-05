@@ -1,6 +1,10 @@
 server:
   port: 8080
-  address: 0.0.0.0
+  # address: 0.0.0.0
+  #ssl:
+  #  key-store: classpath:tv2.onlinetech.com.cn.jks
+  #  key-password: z87786130
+
 saltpasswd:
   salt1: 532ap.opgg
 
@@ -85,8 +89,9 @@ spring:
 spring:
   profiles: produce
   datasource:
-      url: jdbc:mysql://127.0.0.1:3306/guns?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=CTT
-      username: root
-      password: 123456
-      filters: wall,mergeStat
+    url: jdbc:mysql://127.0.0.1:3306/sql056779?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=CTT
+    username: sql056779
+    password: 2ba5deb6
+    db-name: sql056779 #用来搜集数据库的所有表
+    filters: wall,mer
 

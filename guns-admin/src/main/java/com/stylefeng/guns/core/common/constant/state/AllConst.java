@@ -79,14 +79,9 @@ public class AllConst {
         }*/
     }
 
-    public interface PointMessageType{
-        String CODE = "code";
-        String MESSAGE = "message";
-    }
-
     public enum PointMessageEnum {
         BEHAVIOR(10, "行为埋点"),
-        AXN(20, "频道埋点"),
+        AXN(20, "内容埋点"),
 
         ENABLE(100, "开启"),
         ACTIVE(101, "激活"),
@@ -177,6 +172,8 @@ public class AllConst {
             return message;
         }
     }
+
+
 
 
 

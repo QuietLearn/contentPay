@@ -1,6 +1,16 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.google.common.collect.Lists;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.page.PageInfoBT;
+import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.modular.system.warpper.MemberWarpper;
+import org.apache.commons.collections.ListUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.stylefeng.guns.modular.system.model.Active;
 import com.stylefeng.guns.modular.system.service.IActiveService;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 激活统计控制器
@@ -61,8 +73,39 @@ public class ActiveController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        return activeService.selectList(null);
+    public Object list(String province,Integer appId,String mobile) {
+        //注意改成server
+        if (ToolUtil.isEmpty(province)&&ToolUtil.isEmpty(mobile)&&appId==null){
+            Page<Active> page =new PageFactory<Active>().defaultPage();
+
+            page = activeService.selectPage(page);
+
+            List<Active> ActiveList = page.getRecords();
+            page.setRecords((List<Active>)super.warpObject(new MemberWarpper(BeanKit.listToMapList(ActiveList))));
+
+            PageInfoBT<Active> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }else {
+            Page<Active> page = new PageFactory<Active>().defaultPage();
+            EntityWrapper<Active> entityWrapper = new EntityWrapper<>();
+            if (appId!=null&&appId!=0){
+                entityWrapper.eq("appId",appId);
+            }
+            if (ToolUtil.isNotEmpty(mobile)){
+                entityWrapper.like("mobile","%"+mobile+"%");
+            }
+            if (ToolUtil.isNotEmpty(province)){
+                entityWrapper.like("address","%"+province+"%");
+            }
+
+            page = activeService.selectPage(page,entityWrapper);
+            List<Active> Actives = page.getRecords();
+            page.setRecords((List<Active>)super.warpObject(new MemberWarpper(BeanKit.listToMapList(Actives))));
+            PageInfoBT<Active> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }
     }
 
     /**
@@ -86,6 +129,22 @@ public class ActiveController extends BaseController {
         activeService.deleteById(activeId);
         return SUCCESS_TIP;
     }
+
+    /**
+     * 批量激活埋点统计
+     */
+    @RequestMapping(value = "/delete_list")
+    @ResponseBody
+    public Object deletePointList(@RequestParam String ids) {
+        String[] ss = ids.split(",");
+        List<String>  activeIdList = Arrays.asList(ss);
+        boolean deleteResult = activeService.deleteBatchIds(activeIdList);
+        if (deleteResult){
+            return SUCCESS_TIP;
+        }
+        return Result.createByErrorMessage("激活记录批量删除失败，请稍后再试");
+    }
+
 
     /**
      * 修改激活统计

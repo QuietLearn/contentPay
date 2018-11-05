@@ -13,11 +13,11 @@ var PointsConsumeRecord = {
  */
 PointsConsumeRecord.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
+        {field: 'selectItem', checkbox: true},
             {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
             {title: '消费的积分', field: 'points', visible: true, align: 'center', valign: 'middle'},
             {title: '消费的用户', field: 'memberId', visible: false, align: 'center', valign: 'middle'},
-        {title: '消费的用户', field: 'mem    berName', visible: true, align: 'center', valign: 'middle'},
+        {title: '消费的用户', field: 'memberName', visible: true, align: 'center', valign: 'middle'},
             {title: '消费观看的视频', field: 'videoId', visible: false, align: 'center', valign: 'middle'},
         {title: '消费观看的视频', field: 'videoName', visible: true, align: 'center', valign: 'middle'},
             {title: '是否删除', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
@@ -111,4 +111,26 @@ $(function () {
     var table = new BSTable(PointsConsumeRecord.id, "/pointsConsumeRecord/list", defaultColunms);
     table.setPaginationType("server");
     PointsConsumeRecord.table = table.init();
+});
+
+
+$(function () {
+    $.ajax({
+        url: "/app/list",    //后台webservice里的方法名称
+        contentType: "application/json; charset=utf-8",
+        type: "get",
+        async : true ,
+        dataType: "json",
+        success: function (data) {
+            var optionstring = "";
+            for (var j = 0; j < data.length;j++) {
+                optionstring += "<option value=\"" + data[j].appId + "\" >" +data[j].appName + "</option>";
+                $("#appId").html("<option value='0'>全部</option> "+optionstring);
+            }
+        },
+        error: function (msg) {
+            alert("出错了！");
+        }
+    });
+
 });

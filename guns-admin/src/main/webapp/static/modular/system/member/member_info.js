@@ -169,6 +169,10 @@ MemberInfoDlg.onClickApp = function (e, treeId, treeNode) {
     $("#appId").attr("value", treeNode.id);
 };
 
+
+$(function(){
+
+});
 /*$(function() {
 
     var ztree = new $ZTree("appTreeDemo", "/app/tree");

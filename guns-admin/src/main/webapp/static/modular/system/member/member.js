@@ -5,7 +5,9 @@ var Member = {
     id: "MemberTable",	//表格id
     seItem: null,		//选中的条目
     table: null,
+    //checkbox : true,
     layerIndex: -1
+
 };
 
 /**
@@ -13,7 +15,9 @@ var Member = {
  */
 Member.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
+
+        {field: 'selectItem', checkbox: true},
+
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
 
         {title: '应用', field: 'appName', visible: true, align: 'center', valign: 'middle'},
@@ -66,6 +70,7 @@ Member.initColumn = function () {
         {title: '逻辑删除 0 是 １否', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
         {title: '创建时间', field: 'gmtCreated', visible: false, align: 'center', valign: 'middle'},
         {title: '更改时间', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'}
+        ,{title: '', visible: true, icon:'fa-edit',align: 'center', valign: 'middle'}
     ];
 };
 
@@ -82,6 +87,24 @@ Member.check = function () {
         return true;
     }
 };
+
+//批量删除
+function deleteUserList() {
+    //获取所有被选中的记录
+    // + this.id
+    var rows = $('#MemberTable').bootstrapTable('getSelections');
+    if (rows.length == 0) {
+        alert("请先选择要删除的记录!");
+        return;
+    }
+    var ids = '';
+    for (var i = 0; i < rows.length; i++) {
+        ids += rows[i]['id'] + ",";
+    }
+    ids = ids.substring(0, ids.length - 1);
+    deleteUser(ids);
+};
+
 
 /**
  * 点击添加会员管理
@@ -130,6 +153,33 @@ Member.delete = function () {
         ajax.start();
     }
 };
+
+
+//删除
+function deleteUser(ids) {
+    var msg = "您真的确定要删除吗？";
+    if (confirm(msg) == true) {
+        $.ajax({
+            url: Feng.ctxPath +"/member/delete_list",
+            type: "post",
+            data: {
+                ids: ids
+            },
+            success: function (data) {
+                alert(data.message);
+                //重新加载记录
+                //重新加载数据
+                //Feng.success("删除成功!");
+                Member.table.refresh();
+                /* $("#user").bootstrapTable('refresh', {url: '/user/getUserList.do'});*/
+            }, error:function (data) {
+                alert(data.msg);
+                Member.table.refresh();
+            }
+        });
+    }
+};
+
 
 /**
  * 查询会员管理列表

@@ -29,6 +29,19 @@ import java.util.Map;
 public class BuriedPointServiceImpl extends ServiceImpl<BuriedPointMapper, BuriedPoint> implements IBuriedPointService {
 
 
+    //后端接口
+    public long deletePointList(String ids) {
+        String[] ss = ids.split(",");
+        long count= 0;
+        for (String s : ss) {
+            this.deleteById(Integer.parseInt(s));
+            count++;
+        }
+        return count;
+    }
+
+
+    //前端接口
     @Override
     public Result insertAssemBuriedPoint(BuriedPoint buriedPoint){
         BuriedPoint insertBuriedPoint = assemBuriedPoint(buriedPoint);

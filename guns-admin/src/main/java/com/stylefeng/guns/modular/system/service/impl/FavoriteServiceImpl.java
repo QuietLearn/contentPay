@@ -54,6 +54,19 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
     @Autowired
     private MemberLoginLogMapper memberLoginLogMapper;
 
+    //后端接口
+    public long deletePointList(String ids) {
+        String[] ss = ids.split(",");
+        long count= 0;
+        for (String s : ss) {
+            this.deleteById(Integer.parseInt(s));
+            count++;
+        }
+        return count;
+    }
+
+
+
     @Override
     //列举用户的收藏夹
     public Result<FavoriteVo> list(String uuidToken){

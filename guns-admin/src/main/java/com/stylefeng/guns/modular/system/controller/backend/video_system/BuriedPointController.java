@@ -7,6 +7,7 @@ import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.TokenCache;
 import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.constant.state.AllConst;
+import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.node.ZTreeNode;
 import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
@@ -132,7 +133,7 @@ public class BuriedPointController extends BaseController {
     @ResponseBody
     public List<ZTreeNode> tree() {
         List<ZTreeNode> tree = Lists.newArrayList();
-        String[] node = {"行为埋点","频道埋点"};
+        String[] node = {AllConst.PointMessageEnum.BEHAVIOR.getMessage(),AllConst.PointMessageEnum.AXN.getMessage()};
         int i = 1;
 
         for (AllConst.PointMessageEnum pointMessageEnum:AllConst.PointMessageEnum.values()) {
@@ -141,13 +142,13 @@ public class BuriedPointController extends BaseController {
             zTreeNode.setIsOpen(true);
             if (i<=2){
                 zTreeNode.setName(node[i-1]);
-                zTreeNode.setpId(0l);
+                zTreeNode.setpId(0L);
             }else{
                 zTreeNode.setName(pointMessageEnum.getMessage());
                 if (pointMessageEnum.getCode()<AllConst.PointMessageEnum.HOME.getCode()){
-                    zTreeNode.setpId(1l);
+                    zTreeNode.setpId(1L);
                 } else {
-                    zTreeNode.setpId(2l);
+                    zTreeNode.setpId(2L);
                 }
             }
 
@@ -192,6 +193,19 @@ public class BuriedPointController extends BaseController {
     public Object delete(@RequestParam Integer buriedPointId) {
         buriedPointService.deleteById(buriedPointId);
         return SUCCESS_TIP;
+    }
+
+    /**
+     * 批量删除埋点统计
+     */
+    @RequestMapping(value = "/delete_list")
+    @ResponseBody
+    public Object deletePointList(@RequestParam String ids) {
+        long deleteCount = buriedPointService.deletePointList(ids);
+        if (deleteCount > 0){
+            return SUCCESS_TIP;
+        }
+        return Result.createByErrorMessage("埋点记录批量删除失败，请稍后再试");
     }
 
     /**

@@ -17,6 +17,9 @@ import java.util.List;
  */
 public interface IFavoriteService extends IService<Favorite> {
 
+
+    long deletePointList(String ids);
+
     /**
      * 列举用户的收藏夹
      * @param uuidToken
