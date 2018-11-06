@@ -218,8 +218,6 @@ $(function () {
 });
 
 
-
-
 $(function () {
     var defaultColunms = BuriedPoint.initColumn();
     var table = new BSTable(BuriedPoint.id, "/buriedPoint/list", defaultColunms);

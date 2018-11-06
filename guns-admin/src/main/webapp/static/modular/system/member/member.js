@@ -18,14 +18,15 @@ Member.initColumn = function () {
 
         {field: 'selectItem', checkbox: true},
 
-        {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
+        {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle',},
 
+
+        {title: '应用id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
         {title: '应用', field: 'appName', visible: true, align: 'center', valign: 'middle'},
-        {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用版本ver', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channel', visible: false, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVerName', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本备注', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channel', visible: true, align: 'center', valign: 'middle'},
+        {title: '渠道号备注', field: 'channelName', visible: false, align: 'center', valign: 'middle'},
 
         {title: '用户名', field: 'username', visible: true, align: 'center', valign: 'middle',sortable: true},
 
@@ -33,7 +34,7 @@ Member.initColumn = function () {
         {title: '明文密码', field: 'password', visible: false, align: 'center', valign: 'middle'},
         {title: 'md5加密密码', field: 'md5Password', visible: false, align: 'center', valign: 'middle'},
 
-        {title: '性别', field: 'gender', visible: false, align: 'center', valign: 'middle'},
+        /*{title: '性别码', field: 'gender', visible: false, align: 'center', valign: 'middle'},*/
         {title: '性别', field: 'genderName', visible: true, align: 'center', valign: 'middle'},
 
         {title: '头像', field: 'picAddress', visible: true, align: 'center', valign: 'middle'},
@@ -58,7 +59,7 @@ Member.initColumn = function () {
         {title: '用户等级', field: 'userLevel', visible: false, align: 'center', valign: 'middle'},
         {title: '用户经验', field: 'experience', visible: false, align: 'center', valign: 'middle'},
         {title: '收藏夹ids ，分隔', field: 'favoritesIds', visible: false, align: 'center', valign: 'middle'},
-        {title: '最后登录时间', field: 'lastLogin', visible: false, align: 'center', valign: 'middle'},
+        {title: '最后登录时间', field: 'lastLogin', visible: true, align: 'center', valign: 'middle'},
         {title: '最后登录ip', field: 'lastLoginip', visible: false, align: 'center', valign: 'middle'},
 
         {title: '注册时间', field: 'registerTime', visible: false, align: 'center', valign: 'middle'},
@@ -70,7 +71,7 @@ Member.initColumn = function () {
         {title: '逻辑删除 0 是 １否', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
         {title: '创建时间', field: 'gmtCreated', visible: false, align: 'center', valign: 'middle'},
         {title: '更改时间', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'}
-        ,{title: '', visible: true, icon:'fa-edit',align: 'center', valign: 'middle'}
+        /*,{title: '', visible: true, icon:'fa-edit',align: 'center', valign: 'middle'}*/
     ];
 };
 
@@ -132,7 +133,7 @@ Member.openMemberDetail = function () {
             area: ['800px', '420px'], //宽高
             fix: false, //不固定
             maxmin: true,
-            content: Feng.ctxPath + '/member/member_update/' + Member.seItem.id
+            content: Feng.ctxPath + '/member/member_update      /' + Member.seItem.id
         });
         this.layerIndex = index;
     }
@@ -219,3 +220,24 @@ $(function () {
     });
 
 });
+
+
+/*$("#MemberTable").colResizable({
+    liveDrag: true,//实时显示滑动位置
+    resizable : true,
+    //gripInnerHtml: "<div class='grip'></div>",
+    //draggingClass: "dragging",
+    postbackSafe: true,//刷新后保留之前的拖拽宽度
+    headerOnly:true,
+    resizeMode:"overflow",
+    //onResize: onSampleResized
+});*/
+
+/*//拖拽排序
+$("#gridtbody").dragsort({
+    itemSelector: "tr",
+    dragSelector: "tr",
+    dragBetween: false,
+    //dragEnd: saveOrder1(),//拖拽完成后调用方法
+    placeHolderTemplate: "<tr><td></td></tr>"
+});*/

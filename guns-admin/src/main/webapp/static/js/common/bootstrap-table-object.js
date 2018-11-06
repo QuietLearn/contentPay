@@ -50,8 +50,10 @@
                     sidePagination: this.paginationType,   //分页方式：client客户端分页，server服务端分页（*）
                     search: false,      		//是否显示表格搜索，此搜索是客户端搜索，不会进服务端
                     strictSearch: true,			//设置为 true启用 全匹配搜索，否则为模糊搜索
-                    showColumns: true,     		//是否显示所有的列
+                    showColumns: true,     		//是否显示所有的列（是否显示列控制按钮）
                     showRefresh: true,     		//是否显示刷新按钮
+                    /*resizable : true,          //列是否可拖拽
+                    liveDrag: true,*/
                     minimumCountColumns: 2,    	//最少允许的列数
                     clickToSelect: true,    	//是否启用点击选中行
                     searchOnEnterKey: true,		//设置为 true时，按回车触发搜索方法，否则自动触发搜索方法

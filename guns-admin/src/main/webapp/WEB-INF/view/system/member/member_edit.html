@@ -7,13 +7,16 @@
                 <div class="col-sm-6 b-r">
                             <#input id="id" name="id" value="${item.id}" underline="true"/>
                             <#input id="appId" name="应用id" value="${item.appId}" underline="true"/>
-                            <#input id="appVer" name="应用版本" value="${item.appVer}" underline="true"/>
-                            <#input id="channel" name="渠道号" value="${item.channel}" underline="true"/>
+                           <!-- <#input id="appVer" name="应用版本" value="${item.appVer}" underline="true"/>
+                            <#input id="channel" name="渠道号" value="${item.channel}" underline="true"/>-->
                             <#input id="username" name="用户名" value="${item.username}" underline="true"/>
                             <#input id="nickname" name="昵称" value="${item.nickname}" underline="true"/>
                             <#input id="password" name="明文密码" value="${item.password}" underline="true"/>
                             <#input id="md5Password" name="md5加密密码" value="${item.md5Password}" underline="true"/>
-                            <#input id="gender" name="性别" value="${item.gender}" underline="true"/>
+                                <#select id="gender" name="性别" underline="true">
+                                <option value="1">男</option>
+                                <option value="2">女</option>
+                            </#select>
                             <#input id="picAddress" name="头像图片地址" value="${item.picAddress}" underline="true"/>
                             <#input id="mobile" name="手机" value="${item.mobile}" underline="true"/>
                             <#input id="qq" name="qq" value="${item.qq}" underline="true"/>
@@ -35,12 +38,14 @@
                             <#input id="lastLoginip" name="最后登录ip" value="${item.lastLoginip}" underline="true"/>
                             <#input id="registerTime" name="注册时间" value="${item.registerTime}" underline="true"/>
                             <#input id="registerIp" name="注册ip" value="${item.registerIp}" underline="true"/>
-                            <#input id="uuidToken" name="uuid唯一值，避免多端登录" value="${item.uuidToken}" underline="true"/>
+
                             <#input id="totalMoney" name="总消费额" value="${item.totalMoney}" underline="true"/>
                             <#input id="isLock" name="是否锁定 0 是 １否" value="${item.isLock}" underline="true"/>
-                            <#input id="isDel" name="逻辑删除 0 是 １否" value="${item.isDel}" underline="true"/>
-                            <#input id="gmtCreated" name="创建时间" value="${item.gmtCreated}" underline="true"/>
-                            <#input id="gmtModified" name="更改时间" value="${item.gmtModified}" />
+                    <!--
+                       <#input id="uuidToken" name="uuid唯一值，避免多端登录" value="${item.uuidToken}" underline="true"/>
+                    <#input id="isDel" name="逻辑删除 0 是 １否" value="${item.isDel}" underline="true"/>
+                    <#input id="gmtCreated" name="创建时间" value="${item.gmtCreated}" underline="true"/>
+                    <#input id="gmtModified" name="更改时间" value="${item.gmtModified}" />-->
                 </div>
             </div>
 

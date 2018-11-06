@@ -16,12 +16,12 @@ Active.initColumn = function () {
         {field: 'selectItem', checkbox: true},
             {title: '', field: 'id', visible: false , align: 'center', valign: 'middle'},
 
-        {title: '应用', field: 'appName', visible: true, align: 'center', valign: 'middle'},
-        {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用版本ver', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用', field: 'appName', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVerName', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本备注', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
         {title: '渠道号', field: 'channel', visible: false, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle'},
+        {title: '渠道号备注', field: 'channelName', visible: false, align: 'center', valign: 'middle'},
 
             {title: '运营商', field: 'operator', visible: true, align: 'center', valign: 'middle'},
             {title: '省份地区', field: 'address', visible: true, align: 'center', valign: 'middle'},

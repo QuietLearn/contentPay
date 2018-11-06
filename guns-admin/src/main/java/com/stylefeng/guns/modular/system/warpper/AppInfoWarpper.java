@@ -35,7 +35,7 @@ public class AppInfoWarpper extends BaseControllerWarpper {
             map.put("appName", ConstantFactory.me().getAppName((Integer)map.get("appId")));
         }
 
-        map.put("appVerName", ConstantFactory.me().getAppVerName( (String)map.get("appVer")));
+        /*  map.put("appVerName", ConstantFactory.me().getAppVerName( (String)map.get("appVer")));
         if (map.get("updateAppver")!=null&& !StringUtils.equals("",(String)map.get("updateAppver"))){
             map.put("updateAppverName", ConstantFactory.me().getAppVerName( (String)map.get("updateAppver")));
         }
@@ -43,13 +43,15 @@ public class AppInfoWarpper extends BaseControllerWarpper {
         if (map.get("channelId")!=null&& !StringUtils.equals("",(String)map.get("channelId"))) {
             map.put("channelName", ConstantFactory.me().getChannelName((String) map.get("channelId")));
         }
+         if (map.get("memberid")!=null){
+            map.put("memberName", ConstantFactory.me().getMemberName((Integer) map.get("memberid")));
+        }
+        */
         if (map.get("gender")!=null){
             map.put("genderName", ConstantFactory.me().getSexName((Integer) map.get("gender")));
         }
 
-        if (map.get("memberid")!=null){
-            map.put("memberName", ConstantFactory.me().getMemberName((Integer) map.get("memberid")));
-        }
+
 
     }
 
