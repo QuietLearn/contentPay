@@ -22,14 +22,13 @@ Feedback.initColumn = function () {
             {title: '是否删除 ', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
             {title: '反馈时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
 
-        {title: '应用名', field: 'appName', visible: true, align: 'center', valign: 'middle'},
-
-        {title: '应用版本ver', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channel', visible: false, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用', field: 'appName', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用版本备注', field: 'appVerName', visible: false, align: 'center', valign: 'middle'},
+        {title: '分发渠道', field: 'channel', visible: true, align: 'center', valign: 'middle'},
+        {title: '分发渠道备注', field: 'channelName', visible: false, align: 'center', valign: 'middle'},
     ];
 };
 

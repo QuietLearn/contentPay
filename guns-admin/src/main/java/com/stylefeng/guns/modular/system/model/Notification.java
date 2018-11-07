@@ -13,8 +13,8 @@ import java.io.Serializable;
  * 消息推送表
  * </p>
  *
- * @author stylefeng
- * @since 2018-10-26
+ * @author hyj
+ * @since 2018-11-07
  */
 @TableName("cps_notification")
 public class Notification extends Model<Notification> {
@@ -31,13 +31,22 @@ public class Notification extends Model<Notification> {
      */
     private String title;
     /**
-     * 类型(1000 系统消息 1001 热门活动 1002 app异常bug消息)
+     * 类型(1000 系统消息 1001 热门活动 1002 app异常bug反馈消息)
      */
     private Integer type;
+    /**
+     * 会员id
+     */
+    private Integer memberId;
     /**
      * 内容
      */
     private String content;
+    /**
+     * 0 草稿 1 正式
+     */
+    @TableField("is_official")
+    private Integer isOfficial;
     /**
      * 活动地址
      */
@@ -93,12 +102,28 @@ public class Notification extends Model<Notification> {
         this.type = type;
     }
 
+    public Integer getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Integer memberId) {
+        this.memberId = memberId;
+    }
+
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Integer getIsOfficial() {
+        return isOfficial;
+    }
+
+    public void setIsOfficial(Integer isOfficial) {
+        this.isOfficial = isOfficial;
     }
 
     public String getActivityUrl() {
@@ -160,7 +185,9 @@ public class Notification extends Model<Notification> {
         "id=" + id +
         ", title=" + title +
         ", type=" + type +
+        ", memberId=" + memberId +
         ", content=" + content +
+        ", isOfficial=" + isOfficial +
         ", activityUrl=" + activityUrl +
         ", picAddress=" + picAddress +
         ", isDel=" + isDel +

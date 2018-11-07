@@ -40,7 +40,7 @@ public interface IMemberService extends IService<Member> {
      * @param type
      * @return
      */
-    Result<String> checkValid(String str, String type);
+    Result<String> checkValid(String str, String type,Integer appId);
 
     /**
      * 根据条件列表

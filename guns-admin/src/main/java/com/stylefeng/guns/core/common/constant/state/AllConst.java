@@ -135,6 +135,11 @@ public class AllConst {
 
     public enum NotificationEnum {
         //(1000 系统消息 1001 热门活动 1002 app异常bug消息)
+
+
+        DRAFT(0, "草稿"),
+        OFFICIAL(1, "正式"),
+
         SYSTEM(1000, "系统消息"),
         ACTIVITIES(1001, "热门活动"),
         //CTRL
@@ -172,6 +177,8 @@ public class AllConst {
             return message;
         }
     }
+
+
 
 
 

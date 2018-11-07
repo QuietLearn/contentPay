@@ -14,22 +14,24 @@ var PointsConsumeRecord = {
 PointsConsumeRecord.initColumn = function () {
     return [
         {field: 'selectItem', checkbox: true},
-            {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
-            {title: '消费的积分', field: 'points', visible: true, align: 'center', valign: 'middle'},
-            {title: '消费的用户', field: 'memberId', visible: false, align: 'center', valign: 'middle'},
-        {title: '消费的用户', field: 'memberName', visible: true, align: 'center', valign: 'middle'},
-            {title: '消费观看的视频', field: 'videoId', visible: false, align: 'center', valign: 'middle'},
-        {title: '消费观看的视频', field: 'videoName', visible: true, align: 'center', valign: 'middle'},
+            {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '积分流水', field: 'points', visible: true, align: 'center', valign: 'middle'},
+            {title: '用户id', field: 'memberId', visible: false, align: 'center', valign: 'middle'},
+        {title: '操作用户', field: 'memberName', visible: true, align: 'center', valign: 'middle'},
+
+            {title: '观看视频id', field: 'videoId', visible: false, align: 'center', valign: 'middle'},
+        {title: '消费观看的视频', field: 'videoName', visible: false, align: 'center', valign: 'middle'},
+        {title: '原因', field: 'reason', visible: true, align: 'center', valign: 'middle'},
             {title: '是否删除', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
             {title: '消费时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
 
-        {title: '应用名', field: 'appName', visible: true, align: 'center', valign: 'middle',sortable: true},
+        {title: '应用名', field: 'appName', visible: false, align: 'center', valign: 'middle',sortable: true},
         {title: '应用版本ver', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channel', visible: false, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVerName', visible: false, align: 'center', valign: 'middle'},
+        {title: '分发渠道', field: 'channel', visible: false, align: 'center', valign: 'middle'},
+        {title: '分发渠道', field: 'channelName', visible: false, align: 'center', valign: 'middle'},
     ];
 };
 

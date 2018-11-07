@@ -18,15 +18,15 @@ Member.initColumn = function () {
 
         {field: 'selectItem', checkbox: true},
 
-        {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle',},
+        {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle',},
 
 
         {title: '应用id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
-        {title: '应用', field: 'appName', visible: true, align: 'center', valign: 'middle'},
-        {title: '应用版本', field: 'appVerName', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用版本备注', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channel', visible: true, align: 'center', valign: 'middle'},
-        {title: '渠道号备注', field: 'channelName', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用', field: 'appName', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用版本备注', field: 'appVerName', visible: false, align: 'center', valign: 'middle'},
+        {title: '分发渠道', field: 'channel', visible: true, align: 'center', valign: 'middle'},
+        {title: '分发渠道备注', field: 'channelName', visible: false, align: 'center', valign: 'middle'},
 
         {title: '用户名', field: 'username', visible: true, align: 'center', valign: 'middle',sortable: true},
 
@@ -37,7 +37,7 @@ Member.initColumn = function () {
         /*{title: '性别码', field: 'gender', visible: false, align: 'center', valign: 'middle'},*/
         {title: '性别', field: 'genderName', visible: true, align: 'center', valign: 'middle'},
 
-        {title: '头像', field: 'picAddress', visible: true, align: 'center', valign: 'middle'},
+        {title: '头像', field: 'picAddress', visible: false, align: 'center', valign: 'middle'},
         {title: '手机', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
 
         {title: 'qq', field: 'qq', visible: false, align: 'center', valign: 'middle'},
@@ -59,16 +59,17 @@ Member.initColumn = function () {
         {title: '用户等级', field: 'userLevel', visible: false, align: 'center', valign: 'middle'},
         {title: '用户经验', field: 'experience', visible: false, align: 'center', valign: 'middle'},
         {title: '收藏夹ids ，分隔', field: 'favoritesIds', visible: false, align: 'center', valign: 'middle'},
-        {title: '最后登录时间', field: 'lastLogin', visible: true, align: 'center', valign: 'middle'},
+        {title: '最后上线时间', field: 'lastLogin', visible: true, align: 'center', valign: 'middle'},
         {title: '最后登录ip', field: 'lastLoginip', visible: false, align: 'center', valign: 'middle'},
 
         {title: '注册时间', field: 'registerTime', visible: false, align: 'center', valign: 'middle'},
          {title: '注册ip', field: 'registerIp', visible: false, align: 'center', valign: 'middle'},
          {title: 'uuid唯一值', field: 'uuidToken', visible: false, align: 'center', valign: 'middle'},
 
-        {title: '总消费额', field: 'totalMoney', visible: false, align: 'center', valign: 'middle'},
-        {title: '是否锁定 0 是 １否', field: 'isLock', visible: false, align: 'center', valign: 'middle'},
-        {title: '逻辑删除 0 是 １否', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
+        {title: '总消费额', field: 'totalMoney', visible: true, align: 'center', valign: 'middle'},
+        {title: '是否锁定', field: 'isLock', visible: false, align: 'center', valign: 'middle'},
+        {title: '用户状态', field: 'lockStatus', visible: true, align: 'center', valign: 'middle'},
+        {title: '逻辑删除 ', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
         {title: '创建时间', field: 'gmtCreated', visible: false, align: 'center', valign: 'middle'},
         {title: '更改时间', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'}
         /*,{title: '', visible: true, icon:'fa-edit',align: 'center', valign: 'middle'}*/

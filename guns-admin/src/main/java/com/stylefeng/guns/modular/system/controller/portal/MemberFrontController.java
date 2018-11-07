@@ -43,8 +43,8 @@ public class MemberFrontController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/checkValid")
-    public Result<String> checkValid(String str,String type){
-        return memberService.checkValid(str,type);
+    public Result<String> checkValid(String str,String type,Integer appId){
+        return memberService.checkValid(str,type,appId);
     }
 
 

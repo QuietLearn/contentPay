@@ -7,7 +7,9 @@
         <id column="id" property="id" />
         <result column="title" property="title" />
         <result column="type" property="type" />
+        <result column="memberId" property="memberId" />
         <result column="content" property="content" />
+        <result column="is_official" property="isOfficial" />
         <result column="activity_url" property="activityUrl" />
         <result column="pic_address" property="picAddress" />
         <result column="is_del" property="isDel" />
@@ -18,7 +20,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, title, type, content, activity_url, pic_address, is_del, gmt_created, gmt_modified, creater
+        id, title, type, memberId, content, is_official, activity_url, pic_address, is_del, gmt_created, gmt_modified, creater
     </sql>
 
     <select id="selectMaxId" resultType="int">

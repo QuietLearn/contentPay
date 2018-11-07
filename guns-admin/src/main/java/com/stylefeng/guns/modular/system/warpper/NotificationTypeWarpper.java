@@ -24,6 +24,9 @@ public class NotificationTypeWarpper extends BaseControllerWarpper {
         //typeName
         //me工厂方法
         map.put("notiType", AllConst.NotificationEnum.valueOf((Integer) map.get("type")));
+
+        map.put("isOfficialName", AllConst.NotificationEnum.valueOf((Integer) map.get("isOfficial")));
+
     }
 
 }

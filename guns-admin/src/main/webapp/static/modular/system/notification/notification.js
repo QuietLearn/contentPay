@@ -16,13 +16,17 @@ Notification.initColumn = function () {
         {field: 'selectItem', radio: true},
             {title: '主键', field: 'id', visible: false, align: 'center', valign: 'middle'},
             {title: '标题', field: 'title', visible: true, align: 'center', valign: 'middle'},
-            {title: '类型', field: 'type', visible: false, align: 'center', valign: 'middle'},
-          {title: '类型', field: 'notiType', visible: true, align: 'center', valign: 'middle'},
+            {title: '类型code', field: 'type', visible: false, align: 'center', valign: 'middle'},
+          {title: '类型', field: 'notiType', visible: false, align: 'center', valign: 'middle'},
+
             {title: '内容', field: 'content', visible: true, align: 'center', valign: 'middle'},
+
+        {title: '版本', field: 'isOfficialName', visible: true, align: 'center', valign: 'middle'},
+
             {title: '活动地址', field: 'activityUrl', visible: true, align: 'center', valign: 'middle'},
-            {title: '图片地址', field: 'picAddress', visible: true, align: 'center', valign: 'middle'},
+            {title: '图片地址', field: 'picAddress', visible: false, align: 'center', valign: 'middle'},
             {title: '逻辑删除 0是 1否', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
-            {title: '创建时间', field: 'gmtCreated', visible: false, align: 'center', valign: 'middle'},
+            {title: '创建时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
             {title: '修改时间', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'},
             {title: '创建人', field: 'creater', visible: true, align: 'center', valign: 'middle'}
     ];

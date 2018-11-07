@@ -24,10 +24,7 @@ import com.stylefeng.guns.core.util.meassge.IndustrySMS;
 import com.stylefeng.guns.core.util.meassge.SendSMSUtilLZ;
 import com.stylefeng.guns.modular.system.dao.*;
 import com.stylefeng.guns.modular.system.model.*;
-import com.stylefeng.guns.modular.system.service.IDataService;
-import com.stylefeng.guns.modular.system.service.IMemberService;
-import com.stylefeng.guns.modular.system.service.IPointsConsumeRecordService;
-import com.stylefeng.guns.modular.system.service.IVideoService;
+import com.stylefeng.guns.modular.system.service.*;
 import com.stylefeng.guns.modular.system.vo.MemberVo;
 import jdk.nashorn.internal.parser.Token;
 import org.apache.commons.lang3.StringUtils;
@@ -38,6 +35,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
@@ -57,6 +56,8 @@ import static com.stylefeng.guns.core.common.constant.DatasourceEnum.DATA_SOURCE
 public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> implements IMemberService {
 
     private static final Logger logger = LoggerFactory.getLogger(MemberServiceImpl.class);
+    @Autowired
+    private TemplateEngine templateEngine;
 
     @Autowired
     private MemberMapper memberMapper;
@@ -81,6 +82,12 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
     @Autowired
     private MemberLoginLogMapper memberLoginLogMapper;
+
+    @Autowired
+    private IMailService mailService;
+
+    @Autowired
+    private EmailMapper emailMapper;
     //后台逻辑方法
     public List<Member> list(String condition){
         List<Member> members = this.selectList(null);
@@ -189,7 +196,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
 
     public Result login(String username,String password,Integer appId){
-        int userNum = memberMapper.checkName(username);
+        int userNum = memberMapper.checkName(username,appId);
         if (userNum==0){
             return Result.createByErrorMessage("用户名不存在");
         }
@@ -407,6 +414,19 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
             }
         }
 
+        if (StringUtils.isNotBlank(alterMember.getEmail())){
+
+            Email email = AllFactory.assemEmail(member.getId(), alterMember.getEmail(), member.getAppId());
+
+            Integer insert = emailMapper.insert(email);
+            if (insert<=0){
+                logger.error("邮箱记录插入失败");
+            }
+
+            mailService.sendHtmlMail(alterMember.getEmail(),"主题：这是模板邮件",member);
+
+            //mailService.sendSimpleMail("784510436@qq.com","测试邮件"," 你好");
+        }
 
         Member updateMember = new Member();
         BeanUtils.copyProperties(alterMember,updateMember);
@@ -473,18 +493,8 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
 
             Integer updateCount = memberMapper.updateById(member);
 
-            PointsConsumeRecord pointsConsumeRecord = new PointsConsumeRecord();
-            pointsConsumeRecord.setGmtCreated(new Date());
-            pointsConsumeRecord.setGmtModified(new Date());
-            pointsConsumeRecord.setPoints(video.getvMoney());
-            pointsConsumeRecord.setMemberId(member.getId());
-            pointsConsumeRecord.setVideoId(video.getvId());
-            pointsConsumeRecord.setIsDel(1);
 
-            pointsConsumeRecord.setAppId(memberLoginLog.getAppId());
-            pointsConsumeRecord.setAppVer(memberLoginLog.getUpdateAppver());
-            pointsConsumeRecord.setChannel(memberLoginLog.getChannel());
-
+            PointsConsumeRecord pointsConsumeRecord = AllFactory.assemPointsConsumeRecord(video,null, member, memberLoginLog);
 
             Integer insertCount = pointsConsumeRecordMapper.insert(pointsConsumeRecord);
             if (updateCount>0&&insertCount>0){
@@ -494,6 +504,8 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         }
         return Result.createByErrorMessage("扣除失败，金币不足");
     }
+
+
 
 
 
@@ -518,17 +530,23 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         return Result.createByErrorMessage("密码修改错误");
     }*/
 
-    public Result<String> checkValid(String str, String type){
+    public Result<String> checkValid(String str, String type,Integer appId){
         if (StringUtils.isBlank(type)){
             return Result.createByErrorMessage("type为空，无法检测类型是否已存在");
         }
         if (Const.USERNAME.equals(type)){
-            int resultCount = memberMapper.checkName(str);
+            int resultCount = memberMapper.checkName(str,appId);
             if(resultCount > 0){
                 return Result.createByErrorMessage("用户名已存在");
             }
         } else if (Const.EMAIL.equals(type)){
-            int resultCount = memberMapper.checkEmail(str);
+            int resultCount = memberMapper.checkEmail(str,appId);
+            if(resultCount > 0){
+                return Result.createByErrorMessage("邮箱已存在");
+            }
+        }
+        else if (Const.MOBILE.equals(type)){
+            int resultCount = memberMapper.checkMobile(str,appId);
             if(resultCount > 0){
                 return Result.createByErrorMessage("邮箱已存在");
             }

@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.stylefeng.guns.core.common.constant.cache.Cache;
 import com.stylefeng.guns.core.common.constant.cache.CacheKey;
+import com.stylefeng.guns.core.common.constant.state.AllConst;
 import com.stylefeng.guns.core.common.constant.state.ManagerStatus;
+import com.stylefeng.guns.core.common.constant.state.MemberStatus;
 import com.stylefeng.guns.core.common.constant.state.MenuStatus;
 import com.stylefeng.guns.modular.appver.service.IAppVerService;
 import com.stylefeng.guns.modular.system.dao.*;
@@ -272,6 +274,23 @@ public class ConstantFactory implements IConstantFactory {
     @Override
     public String getStatusName(Integer status) {
         return ManagerStatus.valueOf(status);
+    }
+
+    /**
+     * 获取用户登录状态
+     */
+    @Override
+    public String getNotifyOfficialRemark(Integer isOfficial) {
+        return AllConst.NotificationEnum.valueOf(isOfficial);
+    }
+
+
+    /**
+     * 获取注册用户状态
+     */
+    @Override
+    public String getMemberStatusName(Integer status) {
+        return MemberStatus.valueOf(status);
     }
 
     /**

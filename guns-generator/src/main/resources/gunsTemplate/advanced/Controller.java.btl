@@ -78,11 +78,11 @@ public class ${context.bizEnBigName}Controller extends BaseController {
     }
 
     /**
-     * 批量${context.bizChName}统计
+     * 批量删除${context.bizChName}
      */
     @RequestMapping(value = "/delete_list")
     @ResponseBody
-    public Object delete${context.bizEnName}List(@RequestParam String ids) {
+    public Object delete${context.bizEnBigName}List(@RequestParam String ids) {
         String[] ss = ids.split(",");
         List<String>  ${context.bizEnName}IdList = Arrays.asList(ss);
         boolean deleteResult = ${context.bizEnName}Service.deleteBatchIds(${context.bizEnName}IdList);

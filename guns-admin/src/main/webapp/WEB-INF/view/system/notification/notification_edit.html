@@ -5,16 +5,17 @@
 
             <div class="row">
                 <div class="col-sm-6 b-r">
-                            <#input id="id" name="主键" value="${item.id}" underline="true"/>
                             <#input id="title" name="标题" value="${item.title}" underline="true"/>
-                            <#input id="type" name="类型(1000 系统消息 1001 热门活动 1002 app异常bug消息)" value="${item.type}" underline="true"/>
                             <#input id="content" name="内容" value="${item.content}" underline="true"/>
+                            <!--<#input id="picAddress" name="图片地址" underline="true"/>-->
                             <#input id="activityUrl" name="活动地址" value="${item.activityUrl}" />
                 </div>
 
                 <div class="col-sm-6">
-                            <#input id="picAddress" name="图片地址" value="${item.picAddress}" underline="true"/>
-                            <#input id="isDel" name="逻辑删除 0是 1否" value="${item.isDel}" underline="true"/>
+                            <#select id="isDel" name="逻辑删除" underline="true">
+                                <option value="0">已删除</option>
+                                <option value="1">未删除</option>
+                            </#select>
                             <#input id="gmtCreated" name="创建时间" value="${item.gmtCreated}" underline="true"/>
                             <#input id="gmtModified" name="修改时间" value="${item.gmtModified}" underline="true"/>
                             <#input id="creater" name="创建人" value="${item.creater}" />

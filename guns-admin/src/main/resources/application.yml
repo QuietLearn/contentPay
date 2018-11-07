@@ -32,6 +32,17 @@ spring:
     multipart:
       max-request-size: 100MB
       max-file-size: 100MB
+  mail:
+    host: smtp.163.com
+    username: 13065708090@163.com
+    password: hyj78586421
+    #password: WMMszmsl78586421
+    default-encoding: UTF-8
+    fromMail:
+      addr: 13065708090@163.com
+
+
+
 
 mybatis-plus:
   typeAliasesPackage: com.stylefeng.guns.modular.system.model

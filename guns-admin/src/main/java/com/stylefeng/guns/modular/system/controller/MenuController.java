@@ -10,6 +10,7 @@ import com.stylefeng.guns.core.common.constant.dictmap.MenuDict;
 import com.stylefeng.guns.core.common.constant.factory.ConstantFactory;
 import com.stylefeng.guns.core.common.constant.state.MenuStatus;
 import com.stylefeng.guns.core.common.exception.BizExceptionEnum;
+import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.exception.GunsException;
 import com.stylefeng.guns.core.log.LogObjectHolder;
 import com.stylefeng.guns.core.node.ZTreeNode;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -165,6 +167,21 @@ public class MenuController extends BaseController {
 
         this.menuService.delMenuContainSubMenus(menuId);
         return SUCCESS_TIP;
+    }
+
+    /**
+     * 批量删除菜单
+     */
+    @RequestMapping(value = "/delete_list")
+    @ResponseBody
+    public Object deleteMenuList(@RequestParam String ids) {
+        String[] ss = ids.split(",");
+        List<String>  menuIdList = Arrays.asList(ss);
+        boolean deleteResult = menuService.deleteBatchIds(menuIdList);
+        if (deleteResult){
+            return SUCCESS_TIP;
+        }
+        return Result.createByErrorMessage("菜单批量删除失败，请稍后再试");
     }
 
     /**

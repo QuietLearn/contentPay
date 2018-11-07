@@ -81,6 +81,9 @@ public class PlayHistoryServiceImpl extends ServiceImpl<PlayHistoryMapper, PlayH
 
         MemberLoginLog memberLoginLog = memberLoginLogMapper.selectLoginLogByCreateTime(date, member.getId());
 
+        if (memberLoginLog==null){
+            return Result.createByErrorMessage("请重新登录");
+        }
 
 
         //查找该用户的所有播放历史

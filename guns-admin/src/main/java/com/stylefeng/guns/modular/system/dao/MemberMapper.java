@@ -14,9 +14,11 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface MemberMapper extends BaseMapper<Member> {
 
-    int checkName(String name);
+    int checkName(@Param("name") String name,@Param("appId")Integer appId);
 
-    int checkEmail(String email);
+    int checkEmail(@Param("email")String email,@Param("appId")Integer appId);
+
+    int checkMobile(@Param("mobile")String mobile,@Param("appId")Integer appId);
 
     int updateGmtLastLoginAndLastIp(@Param("memberId") Integer accountId, @Param("ip") String ip);
 

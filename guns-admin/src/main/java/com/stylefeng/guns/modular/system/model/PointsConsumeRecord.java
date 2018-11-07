@@ -14,27 +14,34 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-10-29
+ * @since 2018-11-07
  */
 @TableName("cps_points_consume_record")
 public class PointsConsumeRecord extends Model<PointsConsumeRecord> {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 自动编号
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     /**
-     * 消费的积分
+     * 积分流水
      */
-    private Integer points;
+    private String points;
     /**
-     * 消费的用户
+     * 用户
      */
     private Integer memberId;
     /**
      * 消费观看的视频
      */
     private Integer videoId;
+    /**
+     * 原因
+     */
+    private String reason;
     /**
      * 是否删除
      */
@@ -66,11 +73,11 @@ public class PointsConsumeRecord extends Model<PointsConsumeRecord> {
         this.id = id;
     }
 
-    public Integer getPoints() {
+    public String getPoints() {
         return points;
     }
 
-    public void setPoints(Integer points) {
+    public void setPoints(String points) {
         this.points = points;
     }
 
@@ -88,6 +95,14 @@ public class PointsConsumeRecord extends Model<PointsConsumeRecord> {
 
     public void setVideoId(Integer videoId) {
         this.videoId = videoId;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     public Integer getIsDel() {
@@ -150,6 +165,7 @@ public class PointsConsumeRecord extends Model<PointsConsumeRecord> {
         ", points=" + points +
         ", memberId=" + memberId +
         ", videoId=" + videoId +
+        ", reason=" + reason +
         ", isDel=" + isDel +
         ", gmtCreated=" + gmtCreated +
         ", gmtModified=" + gmtModified +

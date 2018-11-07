@@ -47,6 +47,9 @@ public class AppInfoWarpper extends BaseControllerWarpper {
             map.put("memberName", ConstantFactory.me().getMemberName((Integer) map.get("memberid")));
         }
         */
+        if (map.get("isLock")!=null){
+            map.put("lockStatus", ConstantFactory.me().getMemberStatusName((Integer) map.get("isLock")));
+        }
         if (map.get("gender")!=null){
             map.put("genderName", ConstantFactory.me().getSexName((Integer) map.get("gender")));
         }

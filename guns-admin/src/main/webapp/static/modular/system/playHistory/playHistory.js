@@ -27,21 +27,20 @@ PlayHistory.initColumn = function () {
         {title: '导演', field: 'videoDirector', visible: false, align: 'center', valign: 'middle'},
         {title: '发行地区', field: 'videoPublisharea', visible: false, align: 'center', valign: 'middle'},
         {title: '发行年份', field: 'videoPublishyear', visible: false, align: 'center', valign: 'middle'},
-        {title: '用户id', field: 'memberId', visible: false, align: 'center', valign: 'middle'},
-        {title: '用户', field: 'memberUsername', visible: true, align: 'center', valign: 'middle'},
+        {title: '用户id', field: 'memberId', visible: true, align: 'center', valign: 'middle'},
+        {title: '用户', field: 'memberUsername', visible: false, align: 'center', valign: 'middle'},
 
             {title: '排序', field: 'sort', visible: false, align: 'center', valign: 'middle'},
         {title: '逻辑删除', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
         {title: '收藏时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
         {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
 
-        {title: '应用名', field: 'appName', visible: true, align: 'center', valign: 'middle'},
-
-        {title: '应用版本ver', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channel', visible: false, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用', field: 'appName', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用版本备注', field: 'appVerName', visible: false, align: 'center', valign: 'middle'},
+        {title: '分发渠道', field: 'channel', visible: false, align: 'center', valign: 'middle'},
+        {title: '分发渠道备注', field: 'channelName', visible: false, align: 'center', valign: 'middle'},
     ];
 };
 

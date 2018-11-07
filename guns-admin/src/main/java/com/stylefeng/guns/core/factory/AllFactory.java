@@ -1,7 +1,8 @@
 package com.stylefeng.guns.core.factory;
 
+import com.stylefeng.guns.core.common.constant.factory.ConstantFactory;
 import com.stylefeng.guns.core.common.constant.state.AllConst;
-import com.stylefeng.guns.modular.system.model.Note;
+import com.stylefeng.guns.modular.system.model.*;
 
 import java.util.Date;
 
@@ -25,5 +26,42 @@ public class AllFactory {
         note.setGmtUpdated(new Date());
 
         return note;
+    }
+
+    public static PointsConsumeRecord assemPointsConsumeRecord(Video video,Integer points, Member member, MemberLoginLog memberLoginLog){
+        PointsConsumeRecord pointsConsumeRecord = new PointsConsumeRecord();
+        pointsConsumeRecord.setGmtCreated(new Date());
+        pointsConsumeRecord.setGmtModified(new Date());
+        if (video!=null){
+            pointsConsumeRecord.setPoints("-"+video.getvMoney());
+            //todo 获得视频名的表可能需要改动
+            pointsConsumeRecord.setReason( "观看"+ConstantFactory.me().getVideoName(String.valueOf(video.getvId())));
+        } else {
+            pointsConsumeRecord.setPoints("+"+points);
+            pointsConsumeRecord.setReason("签到");
+        }
+
+        pointsConsumeRecord.setMemberId(member.getId());
+        pointsConsumeRecord.setVideoId(video.getvId());
+
+
+        pointsConsumeRecord.setIsDel(1);
+
+        pointsConsumeRecord.setAppId(memberLoginLog.getAppId());
+        pointsConsumeRecord.setAppVer(memberLoginLog.getUpdateAppver());
+        pointsConsumeRecord.setChannel(memberLoginLog.getChannel());
+        return pointsConsumeRecord;
+    }
+
+
+    public static Email assemEmail(Integer memberId,String emailString,Integer appId){
+        Email email = new Email();
+        email.setMemberId(memberId);
+        email.setEmail(emailString);
+        email.setActive(0);
+        email.setAppId(appId);
+        email.setGmtCreated(new Date());
+        email.setGmtModified(new Date());
+        return email;
     }
 }

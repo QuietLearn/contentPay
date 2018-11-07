@@ -80,7 +80,7 @@ public class PlayHistoryController extends BaseController {
             page = playHistoryService.selectPage(page);
 
             List<PlayHistory> PlayHistoryList = page.getRecords();
-            page.setRecords((List<PlayHistory>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(PlayHistoryList))));
+            page.setRecords((List<PlayHistory>)super.warpObject(new TypeWarpper(BeanKit.listToMapList(PlayHistoryList))));
 
             PageInfoBT<PlayHistory> pageInfoBT =this.packForBT(page);
 
@@ -100,7 +100,7 @@ public class PlayHistoryController extends BaseController {
 
             page = playHistoryService.selectPage(page,entityWrapper);
             List<PlayHistory> PlayHistorys = page.getRecords();
-            page.setRecords((List<PlayHistory>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(PlayHistorys))));
+            page.setRecords((List<PlayHistory>)super.warpObject(new TypeWarpper(BeanKit.listToMapList(PlayHistorys))));
             PageInfoBT<PlayHistory> pageInfoBT =this.packForBT(page);
 
             return pageInfoBT;

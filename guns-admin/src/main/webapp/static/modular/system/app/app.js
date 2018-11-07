@@ -14,9 +14,9 @@ var App = {
 App.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: 'app_id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
-            {title: '应用名', field: 'appName', visible: true, align: 'center', valign: 'middle'},
+            {title: '备注', field: 'appName', visible: true, align: 'center', valign: 'middle'},
             {title: '逻辑删除 0是 1否', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
             {title: '创建时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
             {title: '更新时间', field: 'gmtModified', visible: true, align: 'center', valign: 'middle'}

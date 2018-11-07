@@ -23,7 +23,7 @@
                                 <#button name="搜索" icon="fa-search" clickFun="Favorite.search()"/>
                             </div>
                         </div>
-                        <div class="hidden-xs" id="FavoriteTableToolbar" role="group">
+                       <!-- <div class="hidden-xs" id="FavoriteTableToolbar" role="group">
                             @if(shiro.hasPermission("/favorite/add")){
                                 <#button name="添加" icon="fa-plus" clickFun="Favorite.openAddFavorite()"/>
                             @}
@@ -36,7 +36,7 @@
                             @if(shiro.hasPermission("/favorite/delete_list")){
                             <#button name="批量删除" icon="fa-remove" clickFun="deleteFavoriteList()" space="true"/>
                             @}
-                        </div>
+                        </div>-->
                         <#table id="FavoriteTable"/>
                     </div>
                 </div>

@@ -14,10 +14,10 @@ var Channel = {
 Channel.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
-            {title: '定义渠道号', field: 'channel', visible: true, align: 'center', valign: 'middle'},
-            {title: '渠道名称', field: 'name', visible: true, align: 'center', valign: 'middle'},
-            {title: '是否删除', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
+            {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '分发渠道', field: 'channel', visible: true, align: 'center', valign: 'middle'},
+            {title: '备注', field: 'name', visible: true, align: 'center', valign: 'middle'},
+            {title: '是否删除', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtModified', visible: true, align: 'center', valign: 'middle'}
     ];

@@ -8,8 +8,8 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * 消息推送表 Mapper 接口
  * </p>
  *
- * @author stylefeng
- * @since 2018-10-26
+ * @author hyj
+ * @since 2018-11-07
  */
 public interface NotificationMapper extends BaseMapper<Notification> {
 

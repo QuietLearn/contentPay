@@ -14,10 +14,10 @@ var AppVer = {
 AppVer.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: '版本号', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
-            {title: '版本名称', field: 'label', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
+            {title: '备注', field: 'label', visible: true, align: 'center', valign: 'middle'},
+            {title: '逻辑删除', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtModified', visible: true, align: 'center', valign: 'middle'}
     ];

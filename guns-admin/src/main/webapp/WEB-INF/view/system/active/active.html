@@ -16,7 +16,7 @@
                             <div class="col-sm-3">
                                 <#NameCon id="mobile" name="手机" />
                             </div>
-                        <div class="col-sm-3">
+                       <!-- <div class="col-sm-3">
                             <#select id="province" name="省份" underline="true">
                                 <option value="山东">山东</option>
                                 <option value="上海">上海</option>
@@ -52,22 +52,12 @@
                                 <option value="澳门">澳门</option>
                                 <option value="台湾">台湾</option>
                             </#select>
-                    </div>
+                    </div>-->
                             <div class="col-sm-3">
                                 <#button name="搜索" icon="fa-search" clickFun="Active.search()"/>
                             </div>
                         </div>
-                        <div class="hidden-xs" id="ActiveTableToolbar" role="group">
-                            @if(shiro.hasPermission("/active/add")){
-                                <#button name="添加" icon="fa-plus" clickFun="Active.openAddActive()"/>
-                            @}
-                            @if(shiro.hasPermission("/active/update")){
-                                <#button name="修改" icon="fa-edit" clickFun="Active.openActiveDetail()" space="true"/>
-                            @}
-                            @if(shiro.hasPermission("/active/delete_list")){
-                            <#button name="批量删除" icon="fa-remove" clickFun="deletePlayhistoryList()" space="true"/>
-                            @}
-                        </div>
+
                         <#table id="ActiveTable"/>
                     </div>
                 </div>

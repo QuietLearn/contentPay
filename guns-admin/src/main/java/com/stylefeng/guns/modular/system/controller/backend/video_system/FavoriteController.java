@@ -8,10 +8,7 @@ import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.core.util.ToolUtil;
-import com.stylefeng.guns.modular.system.model.Member;
-import com.stylefeng.guns.modular.system.model.PlayHistory;
 import com.stylefeng.guns.modular.system.warpper.AppInfoWarpper;
-import com.stylefeng.guns.modular.system.warpper.DictWarpper;
 import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,7 +80,7 @@ public class FavoriteController extends BaseController {
             page = favoriteService.selectPage(page);
 
             List<Favorite> favoriteList = page.getRecords();
-            page.setRecords((List<Favorite>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(favoriteList))));
+            page.setRecords((List<Favorite>)super.warpObject(new TypeWarpper(BeanKit.listToMapList(favoriteList))));
 
             PageInfoBT<Favorite> pageInfoBT =this.packForBT(page);
 
@@ -103,7 +100,7 @@ public class FavoriteController extends BaseController {
 
             page = favoriteService.selectPage(page,entityWrapper);
             List<Favorite> Favorites = page.getRecords();
-            page.setRecords((List<Favorite>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(Favorites))));
+            page.setRecords((List<Favorite>)super.warpObject(new TypeWarpper(BeanKit.listToMapList(Favorites))));
             PageInfoBT<Favorite> pageInfoBT =this.packForBT(page);
 
             return pageInfoBT;

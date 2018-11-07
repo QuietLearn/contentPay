@@ -157,4 +157,19 @@ public interface IConstantFactory {
     String getFeedbackTypeName(String feedbackType);
 
     String getVideoName(String videoId);
+
+    /**
+     * 获取注册用户状态
+     * @param status
+     * @return
+     */
+    String getMemberStatusName(Integer status);
+
+
+    /**
+     * 获取推送消息是否正式 中文名
+     * @param isOfficial
+     * @return
+     */
+    String getNotifyOfficialRemark(Integer isOfficial);
 }

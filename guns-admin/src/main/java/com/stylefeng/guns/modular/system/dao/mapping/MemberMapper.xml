@@ -44,17 +44,27 @@
         id, appId, appVer, channel, username, nickname, password, Md5_password, gender, pic_address, mobile, qq, weixin, email, member_type_id, member_type_name, vip_level, buy_time, end_time, aging, birthday, points, favorites_ids, last_login, last_loginIp, register_time, register_ip, UUID_token, total_money, is_lock, is_del, gmt_created, gmt_modified
     </sql>
 
-    <select id="checkName" parameterType="string" resultType="int">
+    <select id="checkName" parameterType="map" resultType="int">
         select count(1)
         from cps_member
         where username = #{name}
+        and appId = #{appId}
     </select>
 
-    <select id="checkEmail" parameterType="string" resultType="int">
+    <select id="checkEmail" parameterType="map" resultType="int">
         select count(1)
         from cps_member
         where email = #{email}
+        and appId = #{appId}
     </select>
+
+    <select id="checkMobile" parameterType="map" resultType="int">
+        select count(1)
+        from cps_member
+        where mobile = #{mobile}
+        and appId = #{appId}
+    </select>
+
 
     <update id="updateGmtLastLoginAndLastIp" parameterType="map">
         update cps_member
