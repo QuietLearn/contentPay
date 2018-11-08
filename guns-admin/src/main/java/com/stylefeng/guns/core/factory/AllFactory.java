@@ -35,7 +35,9 @@ public class AllFactory {
         if (video!=null){
             pointsConsumeRecord.setPoints("-"+video.getvMoney());
             //todo 获得视频名的表可能需要改动
-            pointsConsumeRecord.setReason( "观看"+ConstantFactory.me().getVideoName(String.valueOf(video.getvId())));
+            StringBuilder sb = new StringBuilder();
+            String pointWaterGenerateReason = sb.append("观看《").append(ConstantFactory.me().getVideoName(String.valueOf(video.getvId()))) + "》".toString();
+            pointsConsumeRecord.setReason(pointWaterGenerateReason);
         } else {
             pointsConsumeRecord.setPoints("+"+points);
             pointsConsumeRecord.setReason("签到");

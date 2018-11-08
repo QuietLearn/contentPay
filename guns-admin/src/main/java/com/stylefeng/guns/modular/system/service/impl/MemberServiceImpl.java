@@ -22,6 +22,7 @@ import com.stylefeng.guns.core.support.HttpKit;
 import com.stylefeng.guns.core.util.MD5Util;
 import com.stylefeng.guns.core.util.meassge.IndustrySMS;
 import com.stylefeng.guns.core.util.meassge.SendSMSUtilLZ;
+import com.stylefeng.guns.core.util.registerIp.IpUtil;
 import com.stylefeng.guns.modular.system.dao.*;
 import com.stylefeng.guns.modular.system.model.*;
 import com.stylefeng.guns.modular.system.service.*;
@@ -145,7 +146,8 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         //获取HttpServletRequest   HttpKit.getRequest();
         HttpServletRequest request = HttpKit.getRequest();
         //设置获取到的请求方ip
-        member.setRegisterIp(request.getRemoteAddr());
+
+        member.setRegisterIp(IpUtil.getIpAddr(request));
         //设置md5加密以及盐值
         member.setMd5Password(MD5Util.encrypt(member.getPassword()+saltProperties.getSalt1()));
         //设置会员购买类型和会员等级
@@ -479,9 +481,14 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
             return Result.createByErrorMessage("该视频不存在");
         }
 
-        if (pointsConsumeRecordService.isPayVideo(video.getvId(),member.getId())){
-            return Result.createByErrorMessage("已付费此视频");
+        if (0==video.getvMoney()){
+            return Result.createBySuccessMessage("该视频免费");
         }
+
+        if (pointsConsumeRecordService.isPayVideo(video.getvId(),member.getId())){
+            return Result.createBySuccessMessage("已付费此视频");
+        }
+
 
 
         Date date = memberLoginLogMapper.selectMaxCreatime(member.getId());

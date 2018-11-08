@@ -101,9 +101,11 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
 
         MemberLoginLog memberLoginLog = memberLoginLogMapper.selectLoginLogByCreateTime(date, member.getId());
 
+        if (memberLoginLog==null){
+            return Result.createByErrorMessage("请重新登录");
+        }
 
         favoriteMapper.deleteVideoIdsByMember(member.getId(),vids);
-
 
        /* EntityWrapper<Favorite> wrapper=new EntityWrapper<>();
         wrapper.eq("member_id",member.getId());
