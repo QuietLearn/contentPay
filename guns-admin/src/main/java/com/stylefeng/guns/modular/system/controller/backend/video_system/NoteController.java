@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.core.util.ToolUtil;
@@ -11,6 +12,7 @@ import com.stylefeng.guns.modular.system.model.Member;
 import com.stylefeng.guns.modular.system.warpper.AppInfoWarpper;
 import com.stylefeng.guns.modular.system.warpper.AppWarpper;
 import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.stylefeng.guns.modular.system.model.Note;
 import com.stylefeng.guns.modular.system.service.INoteService;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -49,25 +52,6 @@ public class NoteController extends BaseController {
     }
 
     /**
-     * 跳转到添加短信管理
-     */
-    @RequestMapping("/note_add")
-    public String noteAdd() {
-        return PREFIX + "note_add.html";
-    }
-
-    /**
-     * 跳转到修改短信管理
-     */
-    @RequestMapping("/note_update/{noteId}")
-    public String noteUpdate(@PathVariable Integer noteId, Model model) {
-        Note note = noteService.selectById(noteId);
-        model.addAttribute("item",note);
-        LogObjectHolder.me().set(note);
-        return PREFIX + "note_edit.html";
-    }
-
-    /**
      * 获取短信管理列表
      */
     @RequestMapping(value = "/list")
@@ -80,7 +64,7 @@ public class NoteController extends BaseController {
             page = noteService.selectPage(page);
 
             List<Note> NoteList = page.getRecords();
-            page.setRecords((List<Note>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(NoteList))));
+            page.setRecords((List<Note>)super.warpObject(new TypeWarpper(BeanKit.listToMapList(NoteList))));
 
             PageInfoBT<Note> pageInfoBT =this.packForBT(page);
 
@@ -97,24 +81,13 @@ public class NoteController extends BaseController {
 
             page = noteService.selectPage(page,entityWrapper);
             List<Note> Notes = page.getRecords();
-            page.setRecords((List<Note>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(Notes))));
+            page.setRecords((List<Note>)super.warpObject(new TypeWarpper(BeanKit.listToMapList(Notes))));
             PageInfoBT<Note> pageInfoBT =this.packForBT(page);
 
             return pageInfoBT;
         }
     }
 
-    /**
-     * 新增短信管理
-     */
-    @RequestMapping(value = "/add")
-    @ResponseBody
-    public Object add(Note note) {
-        note.setGmtCreated(new Date());
-        note.setGmtUpdated(new Date());
-        noteService.insert(note);
-        return SUCCESS_TIP;
-    }
 
     /**
      * 删除短信管理
@@ -126,16 +99,22 @@ public class NoteController extends BaseController {
         return SUCCESS_TIP;
     }
 
+    @ConditionalOnProperty(prefix = "batchDelete", name = "open", havingValue = "true")
     /**
-     * 修改短信管理
+     * 批量删除短信记录
      */
-    @RequestMapping(value = "/update")
+    @RequestMapping(value = "/delete_list")
     @ResponseBody
-    public Object update(Note note) {
-        note.setGmtUpdated(new Date());
-        noteService.updateById(note);
-        return SUCCESS_TIP;
+    public Object deleteNoteList(@RequestParam String ids) {
+        String[] ss = ids.split(",");
+        List<String>  noteIdList = Arrays.asList(ss);
+        boolean deleteResult = noteService.deleteBatchIds(noteIdList);
+        if (deleteResult){
+            return SUCCESS_TIP;
+        }
+        return Result.createByErrorMessage("批量删除短信记录失败，请稍后再试");
     }
+
 
     /**
      * 短信管理详情

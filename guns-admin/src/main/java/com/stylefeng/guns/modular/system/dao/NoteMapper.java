@@ -6,12 +6,13 @@ import org.apache.ibatis.annotations.Param;
 
 /**
  * <p>
- *  Mapper 接口
+ *  Mapper 接口git
  * </p>
  *
  * @author hyj
- * @since 2018-10-28
+ * @since 2018-11-08
  */
 public interface NoteMapper extends BaseMapper<Note> {
+
     int selectSendMobileNoteNum(@Param("mobile") String mobile, @Param("appId") Integer appId);
 }

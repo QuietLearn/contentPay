@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-10-28
+ * @since 2018-11-08
  */
 @TableName("cps_note")
 public class Note extends Model<Note> {
@@ -28,15 +28,25 @@ public class Note extends Model<Note> {
      */
     private String message;
     /**
+     * 1000 注册 1001 找回密码 1002解绑手机 1003换绑手机
+     */
+    private Integer type;
+    /**
      * 短信有效时间(分)
      */
     private Integer aging;
+    /**
+     * 是否删除
+     */
     @TableField("is_del")
     private Integer isDel;
     /**
      * 发送手机
      */
     private String mobile;
+    /**
+     * 发送时间
+     */
     @TableField("gmt_created")
     private Date gmtCreated;
     @TableField("gmt_updated")
@@ -69,6 +79,14 @@ public class Note extends Model<Note> {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Integer getAging() {
@@ -145,6 +163,7 @@ public class Note extends Model<Note> {
         return "Note{" +
         "id=" + id +
         ", message=" + message +
+        ", type=" + type +
         ", aging=" + aging +
         ", isDel=" + isDel +
         ", mobile=" + mobile +

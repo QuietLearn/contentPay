@@ -13,12 +13,14 @@ var Feedback = {
  */
 Feedback.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
+        {field: 'selectItem', checkbox: true},
             {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
             {title: '反馈信息', field: 'info', visible: true, align: 'center', valign: 'middle'},
             {title: '用户id', field: 'memberId', visible: false, align: 'center', valign: 'middle'},
             {title: '用户名', field: 'memberName', visible: true, align: 'center', valign: 'middle'},
             {title: '反馈类型', field: 'feedbackType', visible: true, align: 'center', valign: 'middle'},
+        {title: '反馈类型', field: 'feedbackType', visible: true, align: 'center',  valign: 'middle'},
+
             {title: '是否删除 ', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
             {title: '反馈时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'},
@@ -44,6 +46,24 @@ Feedback.check = function () {
         Feedback.seItem = selected[0];
         return true;
     }
+};
+
+
+//批量删除
+function deleteFeedbackList() {
+    //获取所有被选中的记录
+    // + this.id
+    var rows = $('#FeedbackTable').bootstrapTable('getSelections');
+    if (rows.length == 0) {
+        alert("请先选择要删除的记录!");
+        return;
+    }
+    var ids = '';
+    for (var i = 0; i < rows.length; i++) {
+        ids += rows[i]['id'] + ",";
+    }
+    ids = ids.substring(0, ids.length - 1);
+    deleteFeedbacks(ids);
 };
 
 /**
@@ -93,6 +113,32 @@ Feedback.delete = function () {
         ajax.start();
     }
 };
+
+//删除
+function deleteFeedbacks(ids) {
+    var msg = "您真的确定要删除吗？";
+    if (confirm(msg) == true) {
+        $.ajax({
+            url: Feng.ctxPath +"/feedback/delete_list",
+            type: "post",
+            data: {
+                ids: ids
+            },
+            success: function (data) {
+                alert(data.message);
+                //重新加载记录
+                //重新加载数据
+                //Feng.success("删除成功!");
+                Feedback.table.refresh();
+                /* $("#user").bootstrapTable('refresh', {url: '/user/getUserList.do'});*/
+            }, error:function (data) {
+                alert(data.msg);
+                Feedback.table.refresh();
+            }
+        });
+    }
+};
+
 
 /**
  * 查询用户反馈列表

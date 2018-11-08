@@ -66,9 +66,9 @@ public class FeedbackTypeController extends BaseController {
     public Object list(String condition) {
         Wrapper<FeedbackType> wrapper = new EntityWrapper<>();
 
-        wrapper.like("type_name","%"+condition+"%");
+        wrapper.like("type_name",condition);
 
-        return feedbackTypeService.selectList(wrapper);
+        return feedbackTypeService.selectList(null);
     }
 
     /**

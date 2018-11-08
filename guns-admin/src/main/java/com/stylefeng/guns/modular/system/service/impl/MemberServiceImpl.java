@@ -353,7 +353,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
             TokenCache.setKey(TokenCache.TOKEN_PREFIX+mobile,message);
             logger.info("Token mobile message:{}", TokenCache.getKey(TokenCache.TOKEN_PREFIX+mobile));
 
-            Note note = AllFactory.createNote(message, mobile,appId,appVer,channel);
+            Note note = AllFactory.createNote(message,Integer.valueOf(type),mobile,appId,appVer,channel);
             noteMapper.insert(note);
 
         }

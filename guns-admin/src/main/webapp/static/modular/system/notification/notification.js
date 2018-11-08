@@ -13,13 +13,15 @@ var Notification = {
  */
 Notification.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
+        {field: 'selectItem', checkbox: true},
             {title: '主键', field: 'id', visible: false, align: 'center', valign: 'middle'},
             {title: '标题', field: 'title', visible: true, align: 'center', valign: 'middle'},
             {title: '类型code', field: 'type', visible: false, align: 'center', valign: 'middle'},
           {title: '类型', field: 'notiType', visible: false, align: 'center', valign: 'middle'},
 
             {title: '内容', field: 'content', visible: true, align: 'center', valign: 'middle'},
+
+        {title: '推送用户', field: 'memberId', visible: true, align: 'center', valign: 'middle'},
 
         {title: '版本', field: 'isOfficialName', visible: true, align: 'center', valign: 'middle'},
 
@@ -44,6 +46,23 @@ Notification.check = function () {
         Notification.seItem = selected[0];
         return true;
     }
+};
+
+//批量删除
+function deleteNotificationList() {
+    //获取所有被选中的记录
+    // + this.id
+    var rows = $('#NotificationTable').bootstrapTable('getSelections');
+    if (rows.length == 0) {
+        alert("请先选择要删除的记录!");
+        return;
+    }
+    var ids = '';
+    for (var i = 0; i < rows.length; i++) {
+        ids += rows[i]['id'] + ",";
+    }
+    ids = ids.substring(0, ids.length - 1);
+    deleteNotifications(ids);
 };
 
 /**
@@ -91,6 +110,31 @@ Notification.delete = function () {
         });
         ajax.set("notificationId",this.seItem.id);
         ajax.start();
+    }
+};
+
+//删除
+function deleteNotifications(ids) {
+    var msg = "您真的确定要删除吗？";
+    if (confirm(msg) == true) {
+        $.ajax({
+            url: Feng.ctxPath +"/notification/delete_list",
+            type: "post",
+            data: {
+                ids: ids
+            },
+            success: function (data) {
+                alert(data.message);
+                //重新加载记录
+                //重新加载数据
+                //Feng.success("删除成功!");
+                Notification.table.refresh();
+                /* $("#user").bootstrapTable('refresh', {url: '/user/getUserList.do'});*/
+            }, error:function (data) {
+                alert(data.msg);
+                Notification.table.refresh();
+            }
+        });
     }
 };
 

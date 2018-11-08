@@ -2,6 +2,7 @@ package com.stylefeng.guns.modular.system.controller;
 
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.modular.system.service.IMailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,6 +33,8 @@ public class EmailController extends BaseController {
     @Autowired
     private IEmailService emailService;
 
+    @Autowired
+    private IMailService mailService;
     /**
      * 跳转到邮箱激活首页
      */

@@ -57,6 +57,13 @@ public class MemberController extends BaseController {
     }
 
     /**
+     * 跳转到会员管理首页
+     */
+    @RequestMapping("/select")
+    public String select() {
+        return PREFIX + "member_select.html";
+    }
+    /**
      * 跳转到添加会员管理
      */
     @RequestMapping("/member_add")

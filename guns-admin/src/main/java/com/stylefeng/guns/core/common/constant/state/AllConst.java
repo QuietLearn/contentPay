@@ -69,6 +69,47 @@ public class AllConst {
         String SignName = "坚果娱乐";
     }
 
+    public enum MessageEnum {
+        //(1000 系统消息 1001 热门活动 1002 app异常bug消息)
+        REGISTER(1000,"注册"),
+        RETRIEVE_PASSWORD(1001,"找回密码"),
+        UNTIED_PHONE(1002,"解绑手机"),
+        SWAP_PHONE(1003,"换绑手机");
+
+        private Integer code;
+        private String message;
+
+
+        MessageEnum(Integer code, String message) {
+            this.code = code;
+            this.message = message;
+        }
+
+        public static String valueOf(Integer value) {
+            if (value == null) {
+                return null;
+            } else {
+                for (MessageEnum messageEnum : MessageEnum.values()) {
+
+                    if (value.equals(messageEnum.getCode())) {
+                        return messageEnum.getMessage();
+                    }
+                }
+                return null;
+            }
+        }
+
+
+        public Integer getCode() {
+            return code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
+
+
 
     public enum NotifyTypeEnum {
         /*SYSTEM(1000,"系统消息"),

@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-11-07
+ * @since 2018-11-08
  */
 @TableName("cps_notification")
 public class Notification extends Model<Notification> {
@@ -37,7 +37,7 @@ public class Notification extends Model<Notification> {
     /**
      * 会员id
      */
-    private Integer memberId;
+    private String memberId;
     /**
      * 内容
      */
@@ -102,11 +102,11 @@ public class Notification extends Model<Notification> {
         this.type = type;
     }
 
-    public Integer getMemberId() {
+    public String getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(Integer memberId) {
+    public void setMemberId(String memberId) {
         this.memberId = memberId;
     }
 

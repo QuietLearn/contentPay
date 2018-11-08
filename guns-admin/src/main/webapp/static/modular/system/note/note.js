@@ -13,22 +13,24 @@ var Note = {
  */
 Note.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
+        {field: 'selectItem', checkbox: true},
             {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
             {title: '短信码', field: 'message', visible: true, align: 'center', valign: 'middle'},
             {title: '短信有效时间(分)', field: 'aging', visible: true, align: 'center', valign: 'middle'},
             {title: '', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
             {title: '发送手机', field: 'mobile', visible: true, align: 'center', valign: 'middle'},
+        {title: '短信类型', field: 'type', visible: false, align: 'center', valign: 'middle'},
+        {title: '短信用途', field: 'messageTypeName', visible: true, align: 'center', valign: 'middle'},
             {title: '发送时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtUpdated', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
 
-        {title: '应用名', field: 'appName', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用名', field: 'appName', visible: false, align: 'center', valign: 'middle'},
 
         {title: '应用版本ver', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVerName', visible: false, align: 'center', valign: 'middle'},
         {title: '渠道号', field: 'channel', visible: false, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channelName', visible: false, align: 'center', valign: 'middle'},
     ];
 };
 
@@ -44,6 +46,23 @@ Note.check = function () {
         Note.seItem = selected[0];
         return true;
     }
+};
+
+//批量删除
+function deleteNoteList() {
+    //获取所有被选中的记录
+    // + this.id
+    var rows = $('#NoteTable').bootstrapTable('getSelections');
+    if (rows.length == 0) {
+        alert("请先选择要删除的记录!");
+        return;
+    }
+    var ids = '';
+    for (var i = 0; i < rows.length; i++) {
+        ids += rows[i]['id'] + ",";
+    }
+    ids = ids.substring(0, ids.length - 1);
+    deleteNotes(ids);
 };
 
 /**
@@ -93,6 +112,32 @@ Note.delete = function () {
         ajax.start();
     }
 };
+
+//删除
+function deleteNotes(ids) {
+    var msg = "您真的确定要删除吗？";
+    if (confirm(msg) == true) {
+        $.ajax({
+            url: Feng.ctxPath +"/note/delete_list",
+            type: "post",
+            data: {
+                ids: ids
+            },
+            success: function (data) {
+                alert(data.message);
+                //重新加载记录
+                //重新加载数据
+                //Feng.success("删除成功!");
+                Note.table.refresh();
+                /* $("#user").bootstrapTable('refresh', {url: '/user/getUserList.do'});*/
+            }, error:function (data) {
+                alert(data.msg);
+                Note.table.refresh();
+            }
+        });
+    }
+};
+
 
 /**
  * 查询短信管理列表

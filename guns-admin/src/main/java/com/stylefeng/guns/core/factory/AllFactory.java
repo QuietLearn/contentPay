@@ -11,11 +11,12 @@ import java.util.Date;
  */
 public class AllFactory {
 
-    public static Note createNote(String message, String mobile,Integer appId,String appVer,String channel){
+    public static Note createNote(String message, Integer type,String mobile,Integer appId,String appVer,String channel){
         Note note = new Note();
         note.setAging(AllConst.timeout);
         note.setIsDel(1);
         note.setMessage(message);
+        note.setType(type);
         note.setMobile(mobile);
 
         note.setAppId(appId);

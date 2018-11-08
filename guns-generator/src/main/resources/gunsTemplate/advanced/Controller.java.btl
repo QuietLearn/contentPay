@@ -3,6 +3,7 @@ package ${controller.packageName};
 <% for(import in controller.imports!){ %>
 import ${import};
 <% } %>
+import java.util.Date;
 
 /**
  * ${context.bizChName}控制器

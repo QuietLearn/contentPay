@@ -14,12 +14,12 @@ var FeedbackType = {
 FeedbackType.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
+            {title: '自动编号', field: 'id', visible: false, align: 'center', valign: 'middle'},
             {title: '反馈码', field: 'typeCode', visible: true, align: 'center', valign: 'middle'},
             {title: '反馈类型', field: 'typeName', visible: true, align: 'center', valign: 'middle'},
             {title: '', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtCreated', visible: false, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'}
+            {title: '创建时间', field: 'gmtCreated', visible: false, align: 'center', valign: 'middle'},
+            {title: '修改时间', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'}
     ];
 };
 

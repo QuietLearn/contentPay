@@ -131,7 +131,7 @@ public class ActiveController extends BaseController {
     }
 
     /**
-     * 批量激活埋点统计
+     * 批量删除激活统计
      */
     @RequestMapping(value = "/delete_list")
     @ResponseBody

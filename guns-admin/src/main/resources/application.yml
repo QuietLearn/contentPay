@@ -7,6 +7,8 @@ server:
 
 saltpasswd:
   salt1: 532ap.opgg
+batchDelete:
+  open: true
 
 guns:
   swagger-open: true              #是否开启swagger (true/false)

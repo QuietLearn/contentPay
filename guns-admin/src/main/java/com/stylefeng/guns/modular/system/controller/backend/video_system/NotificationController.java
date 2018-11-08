@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.shiro.ShiroUser;
 import com.stylefeng.guns.core.support.BeanKit;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.stylefeng.guns.modular.system.model.Notification;
 import com.stylefeng.guns.modular.system.service.INotificationService;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -113,7 +115,9 @@ public class NotificationController extends BaseController {
     public Object add(Notification notification) {
         notification.setGmtCreated(new Date());
         notification.setGmtModified(new Date());
+
         ShiroUser shiroUser = (ShiroUser) SecurityUtils.getSubject().getPrincipal();
+
         notification.setCreater(shiroUser.getAccount());
         notificationService.insert(notification);
         return SUCCESS_TIP;
@@ -127,6 +131,22 @@ public class NotificationController extends BaseController {
     public Object delete(@RequestParam Integer notificationId) {
         notificationService.deleteById(notificationId);
         return SUCCESS_TIP;
+    }
+
+
+    /**
+     * 批量删除消息推送
+     */
+    @RequestMapping(value = "/delete_list")
+    @ResponseBody
+    public Object deleteNotificationList(@RequestParam String ids) {
+        String[] ss = ids.split(",");
+        List<String>  notificationIdList = Arrays.asList(ss);
+        boolean deleteResult = notificationService.deleteBatchIds(notificationIdList);
+        if (deleteResult){
+            return SUCCESS_TIP;
+        }
+        return Result.createByErrorMessage("批量删除消息推送失败，请稍后再试");
     }
 
     /**

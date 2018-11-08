@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.core.util.ToolUtil;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.stylefeng.guns.modular.system.model.Feedback;
 import com.stylefeng.guns.modular.system.service.IFeedbackService;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -125,6 +127,21 @@ public class FeedbackController extends BaseController {
     public Object delete(@RequestParam Integer feedbackId) {
         feedbackService.deleteById(feedbackId);
         return SUCCESS_TIP;
+    }
+
+    /**
+     * 批量删除反馈
+     */
+    @RequestMapping(value = "/delete_list")
+    @ResponseBody
+    public Object deleteFeedbackList(@RequestParam String ids) {
+        String[] ss = ids.split(",");
+        List<String>  feedbackIdList = Arrays.asList(ss);
+        boolean deleteResult = feedbackService.deleteBatchIds(feedbackIdList);
+        if (deleteResult){
+            return SUCCESS_TIP;
+        }
+        return Result.createByErrorMessage("批量删除反馈失败，请稍后再试");
     }
 
     /**

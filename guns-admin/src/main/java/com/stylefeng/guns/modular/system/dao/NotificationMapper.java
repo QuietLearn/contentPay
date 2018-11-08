@@ -9,9 +9,8 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * </p>
  *
  * @author hyj
- * @since 2018-11-07
+ * @since 2018-11-08
  */
 public interface NotificationMapper extends BaseMapper<Notification> {
-
     Integer selectMaxId();
 }
