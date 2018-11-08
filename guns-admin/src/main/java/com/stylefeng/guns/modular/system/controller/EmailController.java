@@ -43,24 +43,7 @@ public class EmailController extends BaseController {
         return PREFIX + "email.html";
     }
 
-    /**
-     * 跳转到添加邮箱激活
-     */
-    @RequestMapping("/email_add")
-    public String emailAdd() {
-        return PREFIX + "email_add.html";
-    }
 
-    /**
-     * 跳转到修改邮箱激活
-     */
-    @RequestMapping("/email_update/{emailId}")
-    public String emailUpdate(@PathVariable Integer emailId, Model model) {
-        Email email = emailService.selectById(emailId);
-        model.addAttribute("item",email);
-        LogObjectHolder.me().set(email);
-        return PREFIX + "email_edit.html";
-    }
 
     /**
      * 获取邮箱激活列表

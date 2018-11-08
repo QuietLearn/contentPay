@@ -25,12 +25,12 @@ public class NotifyFrontController extends BaseController {
     private INotificationService notificationService;
 
     @RequestMapping(value = "/get_all_notify")
-    public Result<FavoriteVo> getAllNotify(){
-        return notificationService.getAllNotify();
+    public Result<FavoriteVo> getAllNotify(String uuidToken){
+        return notificationService.getAllNotify(uuidToken);
     }
 
     @RequestMapping(value = "/get_push_notify")
-    public Result getPushNotify(){
-        return notificationService.getPushNotify();
+    public Result getPushNotify(String uuidToken){
+        return notificationService.getPushNotify(uuidToken);
     }
 }

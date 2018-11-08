@@ -87,9 +87,9 @@ public class MemberController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String username,Integer appId,String mobile) {
+    public Object list(String username,Integer appId,String mobile,Integer memberTypeCode) {
         //注意改成server
-        if (ToolUtil.isEmpty(username)&&ToolUtil.isEmpty(mobile)&&appId==null){
+        if (ToolUtil.isEmpty(username)&&ToolUtil.isEmpty(mobile)&&ToolUtil.isEmpty(memberTypeCode)&&appId==null){
             Page<Member> page =new PageFactory<Member>().defaultPage();
 
             page = memberService.selectPage(page);
@@ -109,9 +109,13 @@ public class MemberController extends BaseController {
             if (ToolUtil.isNotEmpty(username)){
                 entityWrapper.like("username","%"+username+"%");
             }
+            if (ToolUtil.isNotEmpty(memberTypeCode)&&memberTypeCode!=0){
+                entityWrapper.eq("member_type_id",memberTypeCode);
+            }
             if (ToolUtil.isNotEmpty(mobile)){
                 entityWrapper.like("mobile","%"+mobile+"%");
             }
+
 
             page = memberService.selectPage(page,entityWrapper);
             List<Member> members = page.getRecords();

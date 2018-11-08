@@ -18,11 +18,11 @@ public interface INotificationService extends IService<Notification> {
      * 获取全部通知
      * @return
      */
-    Result getAllNotify();
+    Result getAllNotify(String uuidToken);
 
     /**
      * 获取最新通知推送
      * @return
      */
-    Result getPushNotify();
+    Result getPushNotify(String uuidToken);
 }

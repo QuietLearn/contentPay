@@ -10,6 +10,7 @@ import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.modular.system.model.Member;
 import com.stylefeng.guns.modular.system.warpper.AppInfoWarpper;
+import com.stylefeng.guns.modular.system.warpper.FeedbackBackWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -48,24 +49,7 @@ public class FeedbackController extends BaseController {
         return PREFIX + "feedback.html";
     }
 
-    /**
-     * 跳转到添加用户反馈
-     */
-    @RequestMapping("/feedback_add")
-    public String feedbackAdd() {
-        return PREFIX + "feedback_add.html";
-    }
 
-    /**
-     * 跳转到修改用户反馈
-     */
-    @RequestMapping("/feedback_update/{feedbackId}")
-    public String feedbackUpdate(@PathVariable Integer feedbackId, Model model) {
-        Feedback feedback = feedbackService.selectById(feedbackId);
-        model.addAttribute("item",feedback);
-        LogObjectHolder.me().set(feedback);
-        return PREFIX + "feedback_edit.html";
-    }
 
     /**
      * 获取用户反馈列表
@@ -80,7 +64,7 @@ public class FeedbackController extends BaseController {
             page = feedbackService.selectPage(page);
 
             List<Feedback> FeedbackList = page.getRecords();
-            page.setRecords((List<Feedback>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(FeedbackList))));
+            page.setRecords((List<Feedback>)super.warpObject(new FeedbackBackWarpper(BeanKit.listToMapList(FeedbackList))));
 
             PageInfoBT<Feedback> pageInfoBT =this.packForBT(page);
 
@@ -100,7 +84,7 @@ public class FeedbackController extends BaseController {
 
             page = feedbackService.selectPage(page,entityWrapper);
             List<Feedback> Feedbacks = page.getRecords();
-            page.setRecords((List<Feedback>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(Feedbacks))));
+            page.setRecords((List<Feedback>)super.warpObject(new FeedbackBackWarpper(BeanKit.listToMapList(Feedbacks))));
             PageInfoBT<Feedback> pageInfoBT =this.packForBT(page);
 
             return pageInfoBT;

@@ -16,10 +16,10 @@ Feedback.initColumn = function () {
         {field: 'selectItem', checkbox: true},
             {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
             {title: '反馈信息', field: 'info', visible: true, align: 'center', valign: 'middle'},
-            {title: '用户id', field: 'memberId', visible: false, align: 'center', valign: 'middle'},
-            {title: '用户名', field: 'memberName', visible: true, align: 'center', valign: 'middle'},
-            {title: '反馈类型', field: 'feedbackType', visible: true, align: 'center', valign: 'middle'},
-        {title: '反馈类型', field: 'feedbackType', visible: true, align: 'center',  valign: 'middle'},
+            {title: '用户id', field: 'memberId', visible: true, align: 'center', valign: 'middle'},
+            {title: '用户名', field: 'memberName', visible: false, align: 'center', valign: 'middle'},
+            {title: '反馈类型', field: 'feedbackType', visible: false, align: 'center', valign: 'middle'},
+        {title: '反馈类型', field: 'feedbackTypeName', visible: true, align: 'center',  valign: 'middle'},
 
             {title: '是否删除 ', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
             {title: '反馈时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
@@ -27,9 +27,9 @@ Feedback.initColumn = function () {
 
         {title: '应用id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
         {title: '应用', field: 'appName', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用版本', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
         {title: '应用版本备注', field: 'appVerName', visible: false, align: 'center', valign: 'middle'},
-        {title: '分发渠道', field: 'channel', visible: true, align: 'center', valign: 'middle'},
+        {title: '分发渠道', field: 'channel', visible: false, align: 'center', valign: 'middle'},
         {title: '分发渠道备注', field: 'channelName', visible: false, align: 'center', valign: 'middle'},
     ];
 };
