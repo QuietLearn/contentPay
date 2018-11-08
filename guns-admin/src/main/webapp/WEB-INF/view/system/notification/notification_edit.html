@@ -2,6 +2,8 @@
 <div class="ibox float-e-margins">
     <div class="ibox-content">
         <div class="form-horizontal">
+            <input type="hidden" id="id" value="${item.id}">
+            <input type="hidden" id="sexValue" value="${item.isDel}">
 
             <div class="row">
                 <div class="col-sm-6 b-r">
@@ -10,8 +12,7 @@
                             <!--<#input id="picAddress" name="图片地址" underline="true"/>-->
                             <#input id="activityUrl" name="活动地址" value="${item.activityUrl}" />
                 </div>
-
-                <div class="col-sm-6">
+                <!--<div class="col-sm-6">
                             <#select id="isDel" name="逻辑删除" underline="true">
                                 <option value="0">已删除</option>
                                 <option value="1">未删除</option>
@@ -19,8 +20,37 @@
                             <#input id="gmtCreated" name="创建时间" value="${item.gmtCreated}" underline="true"/>
                             <#input id="gmtModified" name="修改时间" value="${item.gmtModified}" underline="true"/>
                             <#input id="creater" name="创建人" value="${item.creater}" />
+                </div>-->
+                <div class="col-sm-6 b-r">
+                    <#input id="memberId" name="用户id" value="${item.memberId}"/>
+                    <div>
+                        <input type="hidden" id="member" value="">
+                        <!--data-target="#myModal1" -->
+                        <button type="button" class="btn btn-default btn-xs" id="test" underline="true"
+                                data-remote="/member/select" data-toggle="modal" data-backdrop="static">
+                             <i class="glyphicon selected"></i>选择 </button>
+                    </div>
                 </div>
             </div>
+
+            <!--详情按钮的弹出框 -->
+              <div class="modal fade" id="myModal" style="margin-left: auto"> >
+            <div class="modal-dialog" style="width:80%;" >
+                <div class="modal-content">
+                   <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                  <h4 class="modal-title">用户列表</h4>
+                  </div>
+                  <div class="modal-body" id="myModal1">
+                  <h3>body</h3>
+                        </div>
+                  <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        </div>
+                  </div>
+                  </div>
+              </div>
+
 
             <div class="row btn-group-m-t">
                 <div class="col-sm-10">
@@ -33,4 +63,20 @@
     </div>
 </div>
 <script src="${ctxPath}/static/modular/system/notification/notification_info.js"></script>
+<script>
+
+    $('#test').click(function (event) {
+        //如果是a链接，阻止其跳转到url页面
+        event.preventDefault();
+        //获取url的值
+        var url = $('#test').data('remote')||$('#test').attr('href');
+        //将id为deadAdd的页面元素作为模态框激活
+        $('#myModal').modal();
+        //从url加载数据到模态框
+        $('#myModal1').load(url);
+    })
+    $("#myModal1").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
+</script>
 @}

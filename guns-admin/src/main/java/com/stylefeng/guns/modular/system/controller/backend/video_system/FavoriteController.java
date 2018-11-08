@@ -48,24 +48,7 @@ public class FavoriteController extends BaseController {
         return PREFIX + "favorite.html";
     }
 
-    /**
-     * 跳转到添加用户看单
-     */
-    @RequestMapping("/favorite_add")
-    public String favoriteAdd() {
-        return PREFIX + "favorite_add.html";
-    }
 
-    /**
-     * 跳转到修改用户看单
-     */
-    @RequestMapping("/favorite_update/{favoriteId}")
-    public String favoriteUpdate(@PathVariable Integer favoriteId, Model model) {
-        Favorite favorite = favoriteService.selectById(favoriteId);
-        model.addAttribute("item",favorite);
-        LogObjectHolder.me().set(favorite);
-        return PREFIX + "favorite_edit.html";
-    }
 
     /**
      * 获取用户看单列表

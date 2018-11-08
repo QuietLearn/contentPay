@@ -13,23 +13,22 @@
                 </div>
                 <div class="col-sm-6 b-r">
 
-                    <#input id="memberId" name="用户id"  />
+                    <#input id="memberId" name="用户id" />
                     <div>
                         <input type="hidden" id="member" value="">
                         <!--data-target="#myModal1" -->
-                        <button type="button" class="btn btn-default btn-xs" id="test"
+                        <button type="button" class="btn btn-default btn-xs" id="test" underline="true"
                                 data-remote="/member/select" data-toggle="modal" data-backdrop="static">
                              <i class="glyphicon selected"></i>选择 </button>
                     </div>
-
 
                 </div>
             </div>
 
 
             <!--详情按钮的弹出框 -->
-              <div class="modal fade" id="myModal" style="width:1100px"> >
-            <div class="modal-dialog" >
+              <div class="modal fade" id="myModal" style="margin-left: auto"> >
+            <div class="modal-dialog" style="width:80%;" >
             <div class="modal-content">
                <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

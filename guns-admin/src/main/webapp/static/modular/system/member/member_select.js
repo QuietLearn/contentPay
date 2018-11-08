@@ -81,7 +81,7 @@ function checkUserList() {
 Member.search = function () {
     var queryData = {};
     queryData['username'] = $("#username").val();
-    queryData['mobile'] = $("#mobile").val();
+    queryData['memberTypeId'] = $("#memberTypeId").val();
     queryData['appId'] = $("#appId").val();
     Member.table.refresh({query: queryData});
 };

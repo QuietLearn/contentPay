@@ -10,7 +10,11 @@
                                 <#NameCon id="username" name="用户名" />
                             </div>
                             <div class="col-sm-3">
-                                <#NameCon id="mobile" name="手机" />
+                                <#select id="sex" name="性别" underline="true">
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </#select>
+                                <#NameCon id="memberTypeId" name="用户类型" />
                             </div>
                             <div class="col-sm-3">
                                 <#SelectCon id="appId" name="应用" >

@@ -49,6 +49,7 @@ NotificationInfoDlg.collectData = function() {
     .set('title')
     .set('type')
     .set('content')
+    .set('memberId')
     .set('activityUrl')
     .set('picAddress')
     .set('isDel')

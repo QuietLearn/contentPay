@@ -2,10 +2,11 @@
 <div class="ibox float-e-margins">
     <div class="ibox-content">
         <div class="form-horizontal">
+            <input type="hidden" id="id" value="${item.id}">
 
             <div class="row">
                 <div class="col-sm-6 b-r">
-                            <#input id="id" name="自动编号" value="${item.id}" underline="true"/>
+
                             <#input id="email" name="邮箱" value="${item.email}" underline="true"/>
                             <#input id="appId" name="appId" value="${item.appId}" underline="true"/>
                             <#input id="active" name="0 未激活 1 完成激活" value="${item.active}" />
