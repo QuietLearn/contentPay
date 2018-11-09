@@ -191,7 +191,7 @@ Member.search = function () {
     queryData['username'] = $("#username").val();
     queryData['mobile'] = $("#mobile").val();
     queryData['appId'] = $("#appId").val();
-    queryData['memberTypeCode'] = $("#memberTypeCode").val();
+
 
     Member.table.refresh({query: queryData});
 };

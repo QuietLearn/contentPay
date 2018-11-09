@@ -13,9 +13,15 @@
                                 <#SelectCon id="appId" name="应用" >
                                 </#SelectCon>
                             </div>
-                            <div class="col-sm-3">
+                           <!-- <div class="col-sm-3">
                                 <#NameCon id="mobile" name="手机" />
-                            </div>
+                            </div>-->
+                        <div class="col-sm-2">
+                            <#TimeCon id="beginTime" name="从" isTime="false" />
+                        </div>
+                        <div class="col-sm-2">
+                            <#TimeCon id="endTime" name="到" isTime="false" />
+                        </div>
                        <!-- <div class="col-sm-3">
                             <#select id="province" name="省份" underline="true">
                                 <option value="山东">山东</option>
@@ -66,4 +72,12 @@
     </div>
 </div>
 <script src="${ctxPath}/static/modular/system/active/active.js"></script>
+<script>
+    laydate.render({
+        elem: '#beginTime'
+    });
+    laydate.render({
+        elem: '#endTime'
+    });
+</script>
 @}

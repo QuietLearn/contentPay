@@ -2,19 +2,17 @@
 <div class="ibox float-e-margins">
     <div class="ibox-content">
         <div class="form-horizontal">
-
+            <input type="hidden" id="id" value="${item.id}">
             <div class="row">
                 <div class="col-sm-6 b-r">
-                            <#input id="id" name="id" value="${item.id}" underline="true"/>
-                            <#input id="memberTypeCode" name="用户类型" value="${item.memberTypeCode}" underline="true"/>
-                            <#input id="name" name="购买类型名" value="${item.name}" underline="true"/>
+
+                            <#input id="name" name="描述" value="${item.name}" underline="true"/>
                             <#input id="price" name="价格" value="${item.price}" />
                 </div>
 
                 <div class="col-sm-6">
                             <#input id="aging" name="持续时间" value="${item.aging}" underline="true"/>
-                            <#input id="gmtCreated" name="" value="${item.gmtCreated}" underline="true"/>
-                            <#input id="gmtUpdated" name="" value="${item.gmtUpdated}" />
+
                 </div>
             </div>
 

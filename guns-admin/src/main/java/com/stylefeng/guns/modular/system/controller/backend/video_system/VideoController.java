@@ -74,7 +74,7 @@ public class VideoController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(@RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime,String videoName ) {
-        if (ToolUtil.isEmpty(beginTime)&&ToolUtil.isEmpty(beginTime)&&ToolUtil.isEmpty(videoName)){
+        if (ToolUtil.isEmpty(beginTime)&&ToolUtil.isEmpty(endTime)&&ToolUtil.isEmpty(videoName)){
             Page<Video> page =new PageFactory<Video>().defaultPage();
 
             page = videoService.selectPage(page);
@@ -89,7 +89,7 @@ public class VideoController extends BaseController {
             Page<Video> page =new PageFactory<Video>().defaultPage();
             EntityWrapper<Video> entityWrapper = new EntityWrapper<>();
             if (ToolUtil.isNotEmpty(beginTime)&&ToolUtil.isNotEmpty(endTime)){
-                entityWrapper.between("v_publishyear",beginTime,endTime);
+                entityWrapper.between("gmt_created",beginTime,endTime);
             }
             if (ToolUtil.isNotEmpty(videoName)){
                 entityWrapper.like("v_name","%"+videoName+"%");

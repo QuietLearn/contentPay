@@ -13,7 +13,7 @@ var Email = {
  */
 Email.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
+        /*{field: 'selectItem'},*/
             {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: '邮箱', field: 'email', visible: true, align: 'center', valign: 'middle'},
             {title: 'appId', field: 'appId', visible: true, align: 'center', valign: 'middle'},

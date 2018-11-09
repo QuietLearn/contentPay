@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-10-18
+ * @since 2018-11-09
  */
 @TableName("cps_vip_price")
 public class VipPrice extends Model<VipPrice> {
@@ -32,17 +32,17 @@ public class VipPrice extends Model<VipPrice> {
     @TableField("member_type_code")
     private Integer memberTypeCode;
     /**
-     * 购买类型名
+     * 购买天数
      */
     private String name;
     /**
      * 价格
      */
-    private Integer price;
+    private String price;
     /**
      * 持续时间
      */
-    private Integer aging;
+    private String aging;
     @TableField("gmt_created")
     private Date gmtCreated;
     @TableField("gmt_updated")
@@ -73,19 +73,19 @@ public class VipPrice extends Model<VipPrice> {
         this.name = name;
     }
 
-    public Integer getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public Integer getAging() {
+    public String getAging() {
         return aging;
     }
 
-    public void setAging(Integer aging) {
+    public void setAging(String aging) {
         this.aging = aging;
     }
 

@@ -14,15 +14,19 @@ var Order = {
 Order.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '订单id', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: '订单号', field: 'orderNo', visible: true, align: 'center', valign: 'middle'},
+            {title: '支付渠道', field: 'channelId', visible: true, align: 'center', valign: 'middle'},
             {title: '用户id', field: 'memberId', visible: true, align: 'center', valign: 'middle'},
-            {title: '实际付款金额,单位是元,保留两位小数', field: 'payment', visible: true, align: 'center', valign: 'middle'},
-            {title: '支付类型,1-在线支付', field: 'paymentType', visible: true, align: 'center', valign: 'middle'},
-            {title: '订单状态:0-已取消-10-未付款，20-已付款，40-已发货，50-交易成功，60-交易关闭', field: 'status', visible: true, align: 'center', valign: 'middle'},
+            {title: '实际付款金额', field: 'payment', visible: true, align: 'center', valign: 'middle'},
+            {title: '支付类型', field: 'paymentType', visible: true, align: 'center', valign: 'middle'},
+            {title: '订单状态', field: 'status', visible: true, align: 'center', valign: 'middle'},
+            {title: '购买商品类型 ', field: 'buyType', visible: true, align: 'center', valign: 'middle'},
+            {title: 'appId', field: 'appId', visible: true, align: 'center', valign: 'middle'},
+            {title: '机型 ', field: 'payClient', visible: true, align: 'center', valign: 'middle'},
             {title: '支付时间', field: 'paymentTime', visible: true, align: 'center', valign: 'middle'},
-            {title: '创建时间', field: 'createTime', visible: true, align: 'center', valign: 'middle'},
-            {title: '更新时间', field: 'updateTime', visible: true, align: 'center', valign: 'middle'}
+            {title: '创建时间', field: 'createTime', visible: false, align: 'center', valign: 'middle'},
+            {title: '更新时间', field: 'updateTime', visible: false, align: 'center', valign: 'middle'}
     ];
 };
 
@@ -39,6 +43,27 @@ Order.check = function () {
         return true;
     }
 };
+
+/**
+ * 批量删除
+ */
+
+function deleteOrderList() {
+    //获取所有被选中的记录
+    // + this.id
+    var rows = $('#OrderTable').bootstrapTable('getSelections');
+    if (rows.length == 0) {
+        alert("请先选择要删除的记录!");
+        return;
+    }
+    var ids = '';
+    for (var i = 0; i < rows.length; i++) {
+        ids += rows[i]['id'] + ",";
+    }
+    ids = ids.substring(0, ids.length - 1);
+    deleteOrders(ids);
+};
+
 
 /**
  * 点击添加订单管理
@@ -89,11 +114,39 @@ Order.delete = function () {
 };
 
 /**
+ * 删除订单管理List
+ */
+function deleteOrders(ids) {
+    var msg = "您真的确定要删除吗？";
+    if (confirm(msg) == true) {
+        $.ajax({
+            url: Feng.ctxPath +"/order/delete_list",
+            type: "post",
+            data: {
+                ids: ids
+            },
+            success: function (data) {
+                alert(data.message);
+                //重新加载记录
+                //重新加载数据
+                //Feng.success("删除成功!");
+                Order.table.refresh();
+            }, error:function (data) {
+                alert(data.msg);
+                Order.table.refresh();
+            }
+        });
+    }
+};
+
+
+
+/**
  * 查询订单管理列表
  */
 Order.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['orderNo'] = $("#orderNo").val();
     Order.table.refresh({query: queryData});
 };
 

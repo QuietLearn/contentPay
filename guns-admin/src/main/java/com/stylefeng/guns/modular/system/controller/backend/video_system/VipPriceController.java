@@ -1,6 +1,8 @@
 package com.stylefeng.guns.modular.system.controller.backend.video_system;
 
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.modular.system.warpper.MemberTypeWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +15,8 @@ import com.stylefeng.guns.modular.system.model.VipPrice;
 import com.stylefeng.guns.modular.system.service.IVipPriceService;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 会员价格管理控制器
@@ -62,7 +66,9 @@ public class VipPriceController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {
-        return vipPriceService.selectList(null);
+        List<VipPrice> vipPrices = vipPriceService.selectList(null);
+
+        return super.warpObject(new MemberTypeWarpper(BeanKit.listToMapList(vipPrices)));
     }
 
     /**
@@ -73,6 +79,8 @@ public class VipPriceController extends BaseController {
     public Object add(VipPrice vipPrice) {
         vipPrice.setGmtCreated(new Date());
         vipPrice.setGmtUpdated(new Date());
+        vipPrice.setPrice(vipPrice.getPrice()+"¥");
+        vipPrice.setAging(vipPrice.getAging()+"d");
         vipPriceService.insert(vipPrice);
         return SUCCESS_TIP;
     }

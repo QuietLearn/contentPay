@@ -7,13 +7,17 @@
                 <div class="col-sm-6 b-r">
                             <#input id="id" name="订单id" value="${item.id}" underline="true"/>
                             <#input id="orderNo" name="订单号" value="${item.orderNo}" underline="true"/>
+                            <#input id="channelId" name="支付渠道" value="${item.channelId}" underline="true"/>
                             <#input id="memberId" name="用户id" value="${item.memberId}" underline="true"/>
                             <#input id="payment" name="实际付款金额,单位是元,保留两位小数" value="${item.payment}" underline="true"/>
-                            <#input id="paymentType" name="支付类型,1-在线支付" value="${item.paymentType}" />
+                            <#input id="paymentType" name="支付类型,1-在线支付" value="${item.paymentType}" underline="true"/>
+                            <#input id="status" name="订单状态:0-取消支付-10-待支付，20-支付成功,30-支付失败" value="${item.status}" />
                 </div>
 
                 <div class="col-sm-6">
-                            <#input id="status" name="订单状态:0-已取消-10-未付款，20-已付款，40-已发货，50-交易成功，60-交易关闭" value="${item.status}" underline="true"/>
+                            <#input id="buyType" name="购买商品类型  1 会员　２　自定义商品 3积分商品" value="${item.buyType}" underline="true"/>
+                            <#input id="appId" name="" value="${item.appId}" underline="true"/>
+                            <#input id="payClient" name="机型 1 IOS 2 安卓" value="${item.payClient}" underline="true"/>
                             <#input id="paymentTime" name="支付时间" value="${item.paymentTime}" underline="true"/>
                             <#input id="createTime" name="创建时间" value="${item.createTime}" underline="true"/>
                             <#input id="updateTime" name="更新时间" value="${item.updateTime}" />

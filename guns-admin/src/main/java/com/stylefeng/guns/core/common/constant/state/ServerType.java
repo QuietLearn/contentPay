@@ -25,12 +25,14 @@ public enum ServerType {
         return desc;
     }
 
-    public static ServerType codeOf(int code){
+    public static String valueOf(int code){
         for(ServerType serverType:values()){
             if (serverType.getCode()==code){
-                return serverType;
+                return serverType.getDesc();
             }
         }
         throw new RuntimeException("找不到该code对应支付类型枚举");
     }
+
+
 }

@@ -144,6 +144,7 @@ function deleteNotifications(ids) {
 Notification.search = function () {
     var queryData = {};
     queryData['notiType'] = $("#notiType").val();
+    queryData['isOfficial'] = $("#isOfficial").val();
     Notification.table.refresh({query: queryData});
 };
 

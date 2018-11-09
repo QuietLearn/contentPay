@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -22,42 +24,54 @@ public class Feedback extends Model<Feedback> {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
+    @ApiModelProperty(hidden = true,example = "0")
     private Integer id;
     /**
      * 反馈信息
      */
+    @ApiModelProperty(value = "反馈信息 ", required = true)
     private String info;
     /**
      * 用户id
      */
+    @ApiModelProperty(hidden = true,example = "0")
     private Integer memberId;
     /**
      * 用户名
      */
     @TableField("member_name")
+    @ApiModelProperty(hidden = true)
     private String memberName;
+
     @TableField("feedback_type")
+    @ApiModelProperty(value = "反馈类型(code：如1,2,3) ", required = true)
     private String feedbackType;
     /**
      * 是否删除 0 是 1否
      */
     @TableField("is_del")
+    @ApiModelProperty(hidden = true,example = "0")
     private Integer isDel;
     @TableField("gmt_created")
+    @ApiModelProperty(hidden = true)
     private Date gmtCreated;
     @TableField("gmt_modified")
+    @ApiModelProperty(hidden = true)
     private Date gmtModified;
     /**
      * 应用id
      */
+    @ApiModelProperty(value = "app id", required = true,example = "0")
     private Integer appId;
     /**
      * 应用版本
      */
+    @ApiModelProperty(value = "app版本", required = true)
     private String appVer;
     /**
      * 渠道号
      */
+    @ApiModelProperty(value = "分发渠道", required = true)
     private String channel;
 
 

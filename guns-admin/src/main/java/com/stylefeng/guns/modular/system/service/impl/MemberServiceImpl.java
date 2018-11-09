@@ -1,13 +1,9 @@
 package com.stylefeng.guns.modular.system.service.impl;
 
 import com.aliyuncs.exceptions.ClientException;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.google.common.collect.Maps;
-import com.stylefeng.guns.config.datasource.MultiDataSourceConfig;
 import com.stylefeng.guns.config.properties.SaltProperties;
-import com.stylefeng.guns.core.base.tips.ErrorTip;
 import com.stylefeng.guns.core.common.TokenCache;
 import com.stylefeng.guns.core.common.constant.Const;
 import com.stylefeng.guns.core.common.constant.DatasourceEnum;
@@ -15,35 +11,31 @@ import com.stylefeng.guns.core.common.constant.state.AllConst;
 import com.stylefeng.guns.core.common.constant.state.ServerType;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.common.result.ResultCode;
-import com.stylefeng.guns.core.config.properties.MutiDataSourceProperties;
 import com.stylefeng.guns.core.factory.AllFactory;
+import com.stylefeng.guns.core.log.LogManager;
+import com.stylefeng.guns.core.log.factory.MemberLogTaskFactory;
 import com.stylefeng.guns.core.mutidatasource.annotion.DataSource;
 import com.stylefeng.guns.core.support.HttpKit;
 import com.stylefeng.guns.core.util.MD5Util;
-import com.stylefeng.guns.core.util.meassge.IndustrySMS;
 import com.stylefeng.guns.core.util.meassge.SendSMSUtilLZ;
 import com.stylefeng.guns.core.util.registerIp.IpUtil;
 import com.stylefeng.guns.modular.system.dao.*;
 import com.stylefeng.guns.modular.system.model.*;
 import com.stylefeng.guns.modular.system.service.*;
 import com.stylefeng.guns.modular.system.vo.MemberVo;
-import jdk.nashorn.internal.parser.Token;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.MessageFormat;
 import java.util.*;
 
-import static com.stylefeng.guns.core.common.constant.DatasourceEnum.DATA_SOURCE_GUNS;
 
 /**
  * <p>
@@ -115,6 +107,9 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     //前台逻辑方法
     //注册
     public Result register(String mobile,String password,String message,Integer appId,String appVer,String channel) {
+        if (StringUtils.isBlank(mobile)){
+            return Result.createByErrorMessage("手机号不能为空");
+        }
         Member existMember = memberMapper.selectMemberByMobile(mobile,appId);
         if (existMember!=null){
             logger.info("这个手机已经注册过了");
@@ -348,7 +343,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         Result result = sendSMSUtilLZ.main(type);
 
         //如果mobile非空获取短信码存入缓存中
-        if (result.isSuccess()){
+        if (ResultCode.SUCCESS.getCode()==result.getCode()){
             String message = (String)result.getData();
             TokenCache.setKey(TokenCache.TOKEN_PREFIX+mobile,message);
             logger.info("Token mobile message:{}", TokenCache.getKey(TokenCache.TOKEN_PREFIX+mobile));
@@ -504,6 +499,14 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
             PointsConsumeRecord pointsConsumeRecord = AllFactory.assemPointsConsumeRecord(video,null, member, memberLoginLog);
 
             Integer insertCount = pointsConsumeRecordMapper.insert(pointsConsumeRecord);
+
+            video.setViews(video.getViews()+1);
+            video.setvPaidNumber(video.getvPaidNumber()+1);
+            Integer updatedCount = videoMapper.updateById(video);
+            if (updatedCount<0){
+                LogManager.me().executeLog(MemberLogTaskFactory.androidBugLog(2,"视频付费次数与观看次数同步失败"));
+            }
+
             if (updateCount>0&&insertCount>0){
                 return Result.createBySuccessMessage("扣除成功，欢迎观看");
             }

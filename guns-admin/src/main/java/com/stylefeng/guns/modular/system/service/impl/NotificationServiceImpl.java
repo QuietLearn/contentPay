@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -37,30 +38,56 @@ public class NotificationServiceImpl extends ServiceImpl<NotificationMapper, Not
     public Result getAllNotify(String uuidToken){
 
         Member member = memberMapper.selectMemberByUuidToken(uuidToken);
+        if (member==null){
+            return Result.createByErrorMessage("请重新登录");
+        }
         Wrapper<Notification> wrapper = new EntityWrapper<>();
         wrapper.orderBy("id",false);
         List<Notification> notifications = this.selectList(wrapper);
 
         for (Notification notification: notifications) {
-          /*  String memberIdList = notification.getMemberId();
-            String[] memberIdString = StringUtils.split(memberIdList, ",");
-            Arrays.asList(memberIdString);*/
+            String memberIds = notification.getMemberId();
+            if (StringUtils.equals("0",memberIds)||1==notification.getIsOfficial()){
+                continue;
+            }
+           /* String[] memberIdString = StringUtils.split(memberIds, ",");
+            List<String> memberIdList = Arrays.asList(memberIdString);*/
+           //todo 函数式编程
+            List<Integer> ids =Arrays.stream(memberIds.split(",")).map(s->Integer.parseInt(s.trim())).
+                    collect(Collectors.toList());
 
-            /*Wrapper<Notification> wrapper1 = new EntityWrapper<>();
-            wrapper.in("memberId",notification.getMemberId());*/
-
+            if (0==notification.getIsOfficial()){
+                notifications.remove(notification);
+            }
+            if (!ids.contains(member.getId())){
+                notifications.remove(notification);
+            }
         }
-
-
         return Result.createBySuccess(notifications);
     }
 
-
-
     public Result getPushNotify(String uuidToken){
-
+        Member member = memberMapper.selectMemberByUuidToken(uuidToken);
+        if (member==null){
+            return Result.createByErrorMessage("请重新登录");
+        }
         Integer maxId = notificationMapper.selectMaxId();
         Notification notification = this.selectById(maxId);
+        String memberIds = notification.getMemberId();
+        if (StringUtils.equals("0",memberIds)){
+            return Result.createBySuccess(notification);
+        }
+        //todo 函数式编程
+        List<Integer> ids =Arrays.stream(memberIds.split(",")).map(s->Integer.parseInt(s.trim())).
+                collect(Collectors.toList());
+        if (0==notification.getIsOfficial()){
+            return Result.createByErrorMessage("没有新推送");
+        }
+
+        if (!ids.contains(member.getId())){
+           return Result.createByErrorMessage("没有新推送");
+        }
+
         return Result.createBySuccess(notification);
     }
 }

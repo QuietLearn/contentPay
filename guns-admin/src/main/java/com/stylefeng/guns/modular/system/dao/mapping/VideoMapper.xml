@@ -14,13 +14,15 @@
         <result column="v_addtime" property="vAddtime" />
         <result column="v_money" property="vMoney" />
         <result column="v_req_vip" property="vReqVip" />
+        <result column="v_paid_number" property="vPaidNumber" />
+        <result column="views" property="views" />
         <result column="gmt_created" property="gmtCreated" />
         <result column="gmt_modified" property="gmtModified" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, v_id, tid, type_name, v_name, v_pic, v_publishyear, v_addtime, v_money, v_req_vip, gmt_created, gmt_modified
+        id, v_id, tid, type_name, v_name, v_pic, v_publishyear, v_addtime, v_money, v_req_vip, v_paid_number, views, gmt_created, gmt_modified
     </sql>
 
     <delete id="syncDeleteVideoIds" parameterType="map">
@@ -44,12 +46,12 @@
         <include refid="Base_Column_List" />
         from cps_video
         <where>
-        <if test="videoName != null and videoName != ''">
-             v_name like CONCAT('%',#{videoName},'%'))
-        </if>
-        <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
-            and (v_publishyear between CONCAT(#{beginTime}) and CONCAT(#{endTime}))
-        </if>
+            <if test="videoName != null and videoName != ''">
+                v_name like CONCAT('%',#{videoName},'%'))
+            </if>
+            <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
+                and (v_publishyear between CONCAT(#{beginTime}) and CONCAT(#{endTime}))
+            </if>
         </where>
     </select>
 </mapper>

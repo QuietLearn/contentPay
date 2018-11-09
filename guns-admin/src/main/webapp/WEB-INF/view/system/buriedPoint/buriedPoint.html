@@ -13,9 +13,12 @@
                                 <#SelectCon id="appId" name="应用" >
                             </#SelectCon>
                         </div>
-                            <div class="col-sm-2">
-                                <#NameCon id="condition" name="名称" />
-                            </div>
+                        <div class="col-sm-2">
+                            <#TimeCon id="beginTime" name="从" isTime="false" />
+                        </div>
+                        <div class="col-sm-2">
+                            <#TimeCon id="endTime" name="到" isTime="false" />
+                        </div>
 
                             <div class="col-sm-3">
                                 <!--pointId-->
@@ -43,5 +46,12 @@
     </div>
 </div>
 <script src="${ctxPath}/static/modular/system/buriedPoint/buriedPoint.js"></script>
-
+<script>
+    laydate.render({
+        elem: '#beginTime'
+    });
+    laydate.render({
+        elem: '#endTime'
+    });
+</script>
 @}

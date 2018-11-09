@@ -12,6 +12,7 @@ import com.stylefeng.guns.modular.system.service.IMailService;
 import com.stylefeng.guns.modular.system.service.IMemberService;
 import com.stylefeng.guns.modular.system.service.INotificationService;
 import com.stylefeng.guns.modular.system.vo.FavoriteVo;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ import java.util.Date;
 /**
  * Created by hyj on 2018/10/23
  */
-
+@Api(description = "用户邮箱接口")
 @RestController
 @RequestMapping("/front/email")
 public class EmailFrontController extends BaseController {
@@ -42,7 +43,14 @@ public class EmailFrontController extends BaseController {
     @Autowired
     private MemberMapper memberMapper;
 
-    @RequestMapping(value = "get_verify", method = RequestMethod.GET)
+    @ApiOperation(value = "邮箱验证",notes = "邮箱验证")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "email", value = "邮箱", required = true, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "uuidToken", value = "用户唯一识别码",required = true, dataType = "string", paramType = "query")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "服务器错误")})
+    @RequestMapping(value = "get_verify", method = RequestMethod.POST)
     public Object getVerify(String email,String uuidToken) {
 
         Member member = memberMapper.selectMemberByUuidToken(uuidToken);

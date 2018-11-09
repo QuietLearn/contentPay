@@ -4,6 +4,8 @@ import com.stylefeng.guns.modular.system.model.Member;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * <p>
  * 会员表 Mapper 接口
@@ -44,4 +46,6 @@ public interface MemberMapper extends BaseMapper<Member> {
     int checkUsernameByUserId(@Param("username") String username, @Param("userId") Integer userId);
 
     int insertSelective(Member member);
+
+
 }

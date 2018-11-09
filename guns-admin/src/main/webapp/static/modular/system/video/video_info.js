@@ -55,6 +55,8 @@ VideoInfoDlg.collectData = function() {
     .set('vAddtime')
     .set('vMoney')
     .set('vReqVip')
+    .set('vPaidNumber')
+    .set('views')
     .set('gmtCreated')
     .set('gmtModified');
 }

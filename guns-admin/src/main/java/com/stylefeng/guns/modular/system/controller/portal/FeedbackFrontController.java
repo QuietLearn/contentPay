@@ -12,8 +12,10 @@ import com.stylefeng.guns.modular.system.vo.VideoVo;
 import com.stylefeng.guns.modular.system.warpper.FeedbackTypeWarpper;
 import com.stylefeng.guns.modular.system.warpper.FeedbackWarpper;
 import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.List;
  * Created by hyj on 2018/10/23
  */
 
+@Api(description = "用户反馈接口")
 @RestController
 @RequestMapping("/front/feedback")
 public class FeedbackFrontController extends BaseController {
@@ -37,14 +40,25 @@ public class FeedbackFrontController extends BaseController {
         return list;
     }*/
 
-    @RequestMapping(value = "/list")
+    @ApiOperation(value = "（可选）历史反馈列表",notes = "（可选）    历史反馈列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "uuidToken", value = "用户唯一识别码",required = true, dataType = "string", paramType = "query")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "服务器错误")})
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
     public Result listFeedbakcRecord(String uuidToken){
         List<Feedback> data = feedbackService.list(uuidToken).getData();
         return Result.createBySuccess(super.warpObject(new FeedbackWarpper(BeanKit.listToMapList(data))));
     }
 
-
-    @RequestMapping(value = "/add")
+    @ApiOperation(value = "添加问题反馈",notes = "添加问题反馈")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "uuidToken", value = "用户唯一识别码",required = true, dataType = "string", paramType = "query")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "服务器错误")})
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Result addFeedback(String uuidToken, Feedback feedback){
        return feedbackService.addFeedback(uuidToken,feedback);
     }

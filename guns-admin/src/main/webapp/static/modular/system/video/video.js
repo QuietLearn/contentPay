@@ -14,19 +14,22 @@ var Video = {
 Video.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
-            {title: '视频id', field: 'vId', visible: true, align: 'center', valign: 'middle',sortable: true},
-            {title: '视频类型id', field: 'tid', visible: false, align: 'center', valign: 'middle'},
+        {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
+        {title: '视频id', field: 'vId', visible: true, align: 'center', valign: 'middle',sortable: true},
+        {title: '视频类型id', field: 'tid', visible: false, align: 'center', valign: 'middle'},
         {title: '视频类型', field: 'typeName', visible: true, align: 'center', valign: 'middle'},
+        {title: '视频名', field: 'vName', visible: true, align: 'center', valign: 'middle'},
+        {title: '视频图片', field: 'vPic', visible: true, align: 'center', valign: 'middle'},
+        {title: '发行日期', field: 'vPublishyear', visible: true, align: 'center', valign: 'middle',sortable: true},
+        {title: '添加时间(ms)', field: 'vAddtime', visible: false, align: 'center', valign: 'middle'},
+        {title: '添加时间', field: 'vAddtimeFormat', visible: true, align: 'center', valign: 'middle'},
 
-            {title: '视频名', field: 'vName', visible: true, align: 'center', valign: 'middle'},
-            {title: '视频图片', field: 'vPic', visible: true, align: 'center', valign: 'middle'},
-            {title: '发行日期', field: 'vPublishyear', visible: true, align: 'center', valign: 'middle',sortable: true},
-            {title: '添加时间', field: 'vAddtime', visible: true, align: 'center', valign: 'middle'},
-            {title: '消耗金币', field: 'vMoney', visible: true, align: 'center', valign: 'middle'},
-            {title: '是否需要会员 ', field: 'vReqVip', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtCreated', visible: false, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'}
+        {title: '消耗金币', field: 'vMoney', visible: true, align: 'center', valign: 'middle'},
+        {title: '是否需要会员 ', field: 'vReqVip', visible: true, align: 'center', valign: 'middle'},
+            {title: '总付费次数', field: 'vPaidNumber', visible: true, align: 'center', valign: 'middle'},
+            {title: '观看次数', field: 'views', visible: true, align: 'center', valign: 'middle'},
+        {title: '', field: 'gmtCreated', visible: false, align: 'center', valign: 'middle'},
+        {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'}
     ];
 };
 
@@ -43,6 +46,27 @@ Video.check = function () {
         return true;
     }
 };
+
+/**
+ * 批量删除
+ */
+
+function deleteVideoList() {
+    //获取所有被选中的记录
+    // + this.id
+    var rows = $('#VideoTable').bootstrapTable('getSelections');
+    if (rows.length == 0) {
+        alert("请先选择要删除的记录!");
+        return;
+    }
+    var ids = '';
+    for (var i = 0; i < rows.length; i++) {
+        ids += rows[i]['id'] + ",";
+    }
+    ids = ids.substring(0, ids.length - 1);
+    deleteVideos(ids);
+};
+
 
 /**
  * 点击添加视频价格
@@ -92,32 +116,48 @@ Video.delete = function () {
 };
 
 /**
- * 查询表单提交参数对象
- * @returns {{}}
+ * 删除视频价格List
  */
-Video.formParams = function() {
-    var queryData = {};
+function deleteVideos(ids) {
+    var msg = "您真的确定要删除吗？";
+    if (confirm(msg) == true) {
+        $.ajax({
+            url: Feng.ctxPath +"/video/delete_list",
+            type: "post",
+            data: {
+                ids: ids
+            },
+            success: function (data) {
+                alert(data.message);
+                //重新加载记录
+                //重新加载数据
+                //Feng.success("删除成功!");
+                Video.table.refresh();
+            }, error:function (data) {
+                alert(data.msg);
+                Video.table.refresh();
+            }
+        });
+    }
+};
 
-    queryData['videoName'] = $("#videoName").val();
-    queryData['beginTime'] = $("#beginTime").val();
-    queryData['endTime'] = $("#endTime").val();
 
-    return queryData;
-}
 
 /**
  * 查询视频价格列表
  */
 Video.search = function () {
     var queryData = {};
-    //queryData['condition'] = $("#condition").val();
-    Video.table.refresh({query: Video.formParams()});
+    queryData['videoName'] = $("#videoName").val();
+    queryData['beginTime'] = $("#beginTime").val();
+    queryData['endTime'] = $("#endTime").val();
+
+    Video.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = Video.initColumn();
     var table = new BSTable(Video.id, "/video/list", defaultColunms);
     table.setPaginationType("server");
-    table.setQueryParams(Video.formParams());
     Video.table = table.init();
 });

@@ -81,16 +81,12 @@ function checkUserList() {
 Member.search = function () {
     var queryData = {};
     queryData['username'] = $("#username").val();
-    queryData['memberTypeId'] = $("#memberTypeId").val();
+    queryData['memberTypeCode'] = $("#memberTypeCode").val();
     queryData['appId'] = $("#appId").val();
     Member.table.refresh({query: queryData});
 };
 
 
-function selectUserList(){
-    $
-    memberId
-}
 
 $(function () {
     var defaultColunms = Member.initColumn();

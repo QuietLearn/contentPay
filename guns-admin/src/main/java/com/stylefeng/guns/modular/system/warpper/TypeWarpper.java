@@ -5,6 +5,7 @@ import com.stylefeng.guns.core.common.constant.factory.ConstantFactory;
 import com.stylefeng.guns.core.common.constant.state.AllConst;
 import com.stylefeng.guns.core.util.ToolUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,14 @@ public class TypeWarpper extends BaseControllerWarpper {
         }
         if (ToolUtil.isNotEmpty(map.get("type"))){
             map.put("messageTypeName", AllConst.MessageEnum.valueOf((Integer) map.get("type"))); //me工厂方法
+        }
+
+        if (ToolUtil.isNotEmpty(map.get("vAddtime"))){
+            String sTime = map.get("vAddtime")+"000";
+            long lTime = Long.parseLong(sTime);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String formatTime = sdf.format(lTime);
+            map.put("vAddtimeFormat", formatTime); //me工厂方法
         }
 
     }

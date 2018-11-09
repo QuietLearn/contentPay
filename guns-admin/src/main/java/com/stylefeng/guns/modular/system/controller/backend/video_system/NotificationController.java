@@ -75,9 +75,10 @@ public class NotificationController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer notiType,String mobile) {
+    public Object list(Integer isOfficial,String mobile) {
+        //Integer notiType
         //注意改成server
-        if (ToolUtil.isEmpty(mobile)&&notiType==null){
+        if (ToolUtil.isEmpty(mobile)&&isOfficial==null){
             Page<Notification> page =new PageFactory<Notification>().defaultPage();
 
             page = notificationService.selectPage(page);
@@ -91,8 +92,11 @@ public class NotificationController extends BaseController {
         }else {
             Page<Notification> page = new PageFactory<Notification>().defaultPage();
             EntityWrapper<Notification> entityWrapper = new EntityWrapper<>();
-            if (notiType!=null&&notiType!=0){
+           /* if (notiType!=null&&notiType!=0){
                 entityWrapper.eq("type",notiType);
+            }*/
+            if (isOfficial!=null&&isOfficial!=-1){
+                entityWrapper.eq("is_official",isOfficial);
             }
             if (ToolUtil.isNotEmpty(mobile)){
                 entityWrapper.like("mobile","%"+mobile+"%");

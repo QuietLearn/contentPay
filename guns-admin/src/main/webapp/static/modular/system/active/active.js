@@ -14,7 +14,7 @@ var Active = {
 Active.initColumn = function () {
     return [
         {field: 'selectItem', checkbox: true},
-            {title: '', field: 'id', visible: false , align: 'center', valign: 'middle'},
+            {title: '自动埋点', field: 'id', visible: false , align: 'center', valign: 'middle'},
 
         {title: '应用id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
         {title: '应用', field: 'appName', visible: false, align: 'center', valign: 'middle'},
@@ -158,9 +158,11 @@ function deleteActives(ids) {
  */
 Active.search = function () {
     var queryData = {};
-    queryData['province'] = $("#province").val();
+    //queryData['province'] = $("#province").val();
     queryData['appId'] = $("#appId").val();
-    queryData['mobile'] = $("#mobile").val();
+    //queryData['mobile'] = $("#mobile").val();
+    queryData['beginTime'] = $("#beginTime").val();
+    queryData['endTime'] = $("#endTime").val();
     Active.table.refresh({query: queryData});
 };
 

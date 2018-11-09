@@ -14,11 +14,13 @@ var VipPrice = {
 VipPrice.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: 'id', field: 'id', visible: true, align: 'center', valign: 'middle'},
-            {title: '用户类型', field: 'memberTypeCode', visible: true, align: 'center', valign: 'middle'},
-            {title: '购买类型名', field: 'name', visible: true, align: 'center', valign: 'middle'},
-            {title: '价格', field: 'price', visible: true, align: 'center', valign: 'middle'},
-            {title: '持续时间', field: 'aging', visible: true, align: 'center', valign: 'middle'},
+            {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '用户类型', field: 'memberTypeCode', visible: false, align: 'center', valign: 'middle'},
+        {title: '用户类型', field: 'memberTypeName', visible: true, align: 'center', valign: 'middle'},
+
+            {title: '描述', field: 'name', visible: true, align: 'center', valign: 'middle',sortable:true},
+            {title: '价格', field: 'price', visible: true, align: 'center', valign: 'middle',sortable:true},
+            {title: '持续时间', field: 'aging', visible: true, align: 'center', valign: 'middle',sortable:true},
             {title: '', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtUpdated', visible: true, align: 'center', valign: 'middle'}
     ];

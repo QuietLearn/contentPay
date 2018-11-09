@@ -47,10 +47,14 @@ OrderInfoDlg.collectData = function() {
     this
     .set('id')
     .set('orderNo')
+    .set('channelId')
     .set('memberId')
     .set('payment')
     .set('paymentType')
     .set('status')
+    .set('buyType')
+    .set('appId')
+    .set('payClient')
     .set('paymentTime')
     .set('createTime')
     .set('updateTime');

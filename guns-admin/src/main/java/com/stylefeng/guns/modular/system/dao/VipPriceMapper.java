@@ -9,9 +9,8 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * </p>
  *
  * @author hyj
- * @since 2018-10-18
+ * @since 2018-11-09
  */
 public interface VipPriceMapper extends BaseMapper<VipPrice> {
 
-    
 }

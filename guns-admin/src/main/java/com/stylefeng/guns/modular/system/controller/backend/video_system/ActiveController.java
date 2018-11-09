@@ -73,9 +73,9 @@ public class ActiveController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String province,Integer appId,String mobile) {
+    public Object list(@RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime,String province,Integer appId) {
         //注意改成server
-        if (ToolUtil.isEmpty(province)&&ToolUtil.isEmpty(mobile)&&appId==null){
+        if (ToolUtil.isEmpty(province)&&ToolUtil.isEmpty(beginTime)&&ToolUtil.isEmpty(endTime)&&appId==null){
             Page<Active> page =new PageFactory<Active>().defaultPage();
 
             page = activeService.selectPage(page);
@@ -92,8 +92,8 @@ public class ActiveController extends BaseController {
             if (appId!=null&&appId!=0){
                 entityWrapper.eq("appId",appId);
             }
-            if (ToolUtil.isNotEmpty(mobile)){
-                entityWrapper.like("mobile","%"+mobile+"%");
+            if (ToolUtil.isNotEmpty(beginTime)&&ToolUtil.isNotEmpty(endTime)){
+                entityWrapper.between("gmt_created",beginTime,endTime);
             }
             if (ToolUtil.isNotEmpty(province)){
                 entityWrapper.like("address","%"+province+"%");

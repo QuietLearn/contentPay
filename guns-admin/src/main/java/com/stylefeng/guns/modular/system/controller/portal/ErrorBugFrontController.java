@@ -9,12 +9,10 @@ import com.stylefeng.guns.core.util.PropertiesUtil;
 import com.stylefeng.guns.modular.system.model.BuriedPoint;
 import com.stylefeng.guns.modular.system.service.IActiveService;
 import com.stylefeng.guns.modular.system.service.IFileService;
+import io.swagger.annotations.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,16 +25,22 @@ import java.util.Map;
 /**
  * Created by hyj on 2018/10/23
  */
-
+@Api(description = "客户端bug接受接口")
 @RestController
 @RequestMapping("/front/error_bug")
 public class ErrorBugFrontController  extends BaseController{
     @Autowired
     private IFileService iFileService;
 
-    @RequestMapping("/upload")
-    @ResponseBody
-    public Result richtextUpload(HttpSession session, @RequestParam(value = "uploadFile",required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response){
+
+    @ApiOperation(value = "客户端错误bug提交",notes = "客户端错误bug提交")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "file", value = "bug文件", required = true, dataType = "string", paramType = "query")
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = "服务器错误")})
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public Result richtextUpload(@RequestParam(value = "uploadFile",required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response){
         Map<String,String> map = Maps.newHashMap();
 
         //返回上传图片的结果

@@ -75,9 +75,9 @@ public class BuriedPointController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(Integer appId,Integer pointId) {
+    public Object list(@RequestParam(required = false) String beginTime, @RequestParam(required = false) String endTime,Integer appId,Integer pointId) {
         //注意改成server
-        if (appId==null ){
+        if (appId==null&&pointId==null&&ToolUtil.isEmpty(beginTime)&&ToolUtil.isEmpty(endTime) ){
             Page<BuriedPoint> page =new PageFactory<BuriedPoint>().defaultPage();
 
             page = buriedPointService.selectPage(page);
@@ -117,6 +117,9 @@ public class BuriedPointController extends BaseController {
                 }
             }
 
+            if (ToolUtil.isNotEmpty(beginTime)&&ToolUtil.isNotEmpty(endTime)){
+                entityWrapper.between("gmt_created",beginTime,endTime);
+            }
             page = buriedPointService.selectPage(page,entityWrapper);
             List<BuriedPoint> BuriedPoints = page.getRecords();
             page.setRecords((List<BuriedPoint>)super.warpObject(new AppInfoWarpper(BeanKit.listToMapList(BuriedPoints))));

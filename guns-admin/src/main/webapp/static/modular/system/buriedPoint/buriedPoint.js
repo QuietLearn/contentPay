@@ -160,6 +160,8 @@ BuriedPoint.search = function () {
     var queryData = {};
     queryData['pointId'] = $("#pointId").val();
     queryData['appId'] = $("#appId").val();
+    queryData['beginTime'] = $("#beginTime").val();
+    queryData['endTime'] = $("#endTime").val();
     BuriedPoint.table.refresh({query: queryData});
 };
 

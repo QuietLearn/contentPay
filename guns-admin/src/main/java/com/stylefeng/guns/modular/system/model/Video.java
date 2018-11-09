@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-10-25
+ * @since 2018-11-09
  */
 @TableName("cps_video")
 public class Video extends Model<Video> {
@@ -64,6 +64,15 @@ public class Video extends Model<Video> {
      */
     @TableField("v_req_vip")
     private Integer vReqVip;
+    /**
+     * 总付费次数
+     */
+    @TableField("v_paid_number")
+    private Integer vPaidNumber;
+    /**
+     * 观看次数
+     */
+    private Long views;
     @TableField("gmt_created")
     private Date gmtCreated;
     @TableField("gmt_modified")
@@ -150,6 +159,22 @@ public class Video extends Model<Video> {
         this.vReqVip = vReqVip;
     }
 
+    public Integer getvPaidNumber() {
+        return vPaidNumber;
+    }
+
+    public void setvPaidNumber(Integer vPaidNumber) {
+        this.vPaidNumber = vPaidNumber;
+    }
+
+    public Long getViews() {
+        return views;
+    }
+
+    public void setViews(Long views) {
+        this.views = views;
+    }
+
     public Date getGmtCreated() {
         return gmtCreated;
     }
@@ -184,6 +209,8 @@ public class Video extends Model<Video> {
         ", vAddtime=" + vAddtime +
         ", vMoney=" + vMoney +
         ", vReqVip=" + vReqVip +
+        ", vPaidNumber=" + vPaidNumber +
+        ", views=" + views +
         ", gmtCreated=" + gmtCreated +
         ", gmtModified=" + gmtModified +
         "}";

@@ -14,8 +14,8 @@ import java.io.Serializable;
  * 订单表
  * </p>
  *
- * @author hyj
- * @since 2018-10-18
+ * @author stylefeng
+ * @since 2018-11-09
  */
 @TableName("cps_order")
 public class Order extends Model<Order> {
@@ -33,6 +33,10 @@ public class Order extends Model<Order> {
     @TableField("order_no")
     private Long orderNo;
     /**
+     * 支付渠道
+     */
+    private String channelId;
+    /**
      * 用户id
      */
     @TableField("member_id")
@@ -47,9 +51,20 @@ public class Order extends Model<Order> {
     @TableField("payment_type")
     private Integer paymentType;
     /**
-     * 订单状态:0-已取消-10-未付款，20-已付款，40-已发货，50-交易成功，60-交易关闭
+     * 订单状态:0-取消支付-10-待支付，20-支付成功,30-支付失败
      */
     private Integer status;
+    /**
+     * 购买商品类型  1 会员　２　自定义商品 3积分商品
+     */
+    @TableField("buy_type")
+    private Integer buyType;
+    private Integer appId;
+    /**
+     * 机型 1 IOS 2 安卓
+     */
+    @TableField("pay_client")
+    private Integer payClient;
     /**
      * 支付时间
      */
@@ -83,6 +98,14 @@ public class Order extends Model<Order> {
         this.orderNo = orderNo;
     }
 
+    public String getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
+    }
+
     public Integer getMemberId() {
         return memberId;
     }
@@ -113,6 +136,30 @@ public class Order extends Model<Order> {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getBuyType() {
+        return buyType;
+    }
+
+    public void setBuyType(Integer buyType) {
+        this.buyType = buyType;
+    }
+
+    public Integer getAppId() {
+        return appId;
+    }
+
+    public void setAppId(Integer appId) {
+        this.appId = appId;
+    }
+
+    public Integer getPayClient() {
+        return payClient;
+    }
+
+    public void setPayClient(Integer payClient) {
+        this.payClient = payClient;
     }
 
     public Date getPaymentTime() {
@@ -149,10 +196,14 @@ public class Order extends Model<Order> {
         return "Order{" +
         "id=" + id +
         ", orderNo=" + orderNo +
+        ", channelId=" + channelId +
         ", memberId=" + memberId +
         ", payment=" + payment +
         ", paymentType=" + paymentType +
         ", status=" + status +
+        ", buyType=" + buyType +
+        ", appId=" + appId +
+        ", payClient=" + payClient +
         ", paymentTime=" + paymentTime +
         ", createTime=" + createTime +
         ", updateTime=" + updateTime +

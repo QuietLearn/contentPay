@@ -37,10 +37,10 @@ public class Result<T> implements Serializable {
         this.data = data;
     }
 
-    @JSONField(serialize=false)
+   /* @JSONField(serialize=false)
     public boolean isSuccess(){
         return this.code==ResultCode.SUCCESS.getCode();
-    }
+    }*/
 
     public static Result createBySuccess(){
         return new Result(ResultCode.SUCCESS.getCode());

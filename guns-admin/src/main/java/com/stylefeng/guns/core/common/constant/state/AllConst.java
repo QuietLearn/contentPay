@@ -12,10 +12,10 @@ public class AllConst {
     public static final String MESSAGE_ERROR_MSG = "验证码错误，重新输入";
 
     public enum OrderStatusEnum {
-        CANCELED(0, "已取消"),
-        NO_PAY(10, "未支付"),
-        PAID(20, "付款成功"),
-        SHIPPED(30, "付款失败");
+        CANCELED(0, "支付取消"),
+        NO_PAY(10, "待支付"),
+        PAID(20, "支付成功"),
+        SHIPPED(30, "支付失败");
 
         private int code;
         private String status;
