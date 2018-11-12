@@ -62,6 +62,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public String unAuth(AuthenticationException e) {
         log.error("用户未登陆：", e);
+        //该字符串是一个模板的名称
         return "/login.html";
     }
 

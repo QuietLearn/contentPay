@@ -10,7 +10,7 @@ import com.stylefeng.guns.generator.engine.base.GunsTemplateEngine;
  * @author fengshuonan
  * @date 2017-05-09 20:32
  */
-public class SimpleTemplateEngine extends GunsTemplateEngine {
+public class YourTemplateEngine extends GunsTemplateEngine {
 
     @Override
     protected void generatePageEditHtml() {

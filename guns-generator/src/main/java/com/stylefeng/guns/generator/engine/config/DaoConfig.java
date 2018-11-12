@@ -13,7 +13,7 @@ public class DaoConfig {
     private String daoPathTemplate;
     private String xmlPathTemplate;
 
-    private String packageName;
+    private String packageName;//也就是package包名，最上面的
 
     public void init() {
         this.daoPathTemplate = "\\src\\main\\java\\" + contextConfig.getProPackage().replaceAll("\\.", "\\\\") + "\\modular\\" + contextConfig.getModuleName() + "\\dao\\{}Dao.java";

@@ -26,6 +26,7 @@ import java.util.Properties;
 public class DataScopeInterceptor implements Interceptor {
 
     @Override
+    //intercept拦截
     public Object intercept(Invocation invocation) throws Throwable {
         StatementHandler statementHandler = (StatementHandler) PluginUtils.realTarget(invocation.getTarget());
         MetaObject metaStatementHandler = SystemMetaObject.forObject(statementHandler);
@@ -37,13 +38,16 @@ public class DataScopeInterceptor implements Interceptor {
 
         BoundSql boundSql = (BoundSql) metaStatementHandler.getValue("delegate.boundSql");
         String originalSql = boundSql.getSql();
+        //mybatis dao层方法所有的参数
         Object parameterObject = boundSql.getParameterObject();
+        //上面固定写法
+
 
         //查找参数中包含DataScope类型的参数
         DataScope dataScope = findDataScopeObject(parameterObject);
 
         if (dataScope == null) {
-            return invocation.proceed();
+            return invocation.proceed(); //放过 拦截器，跳过不执行拦截器，执行下面的方法
         } else {
             String scopeName = dataScope.getScopeName();
             List<Integer> deptIds = dataScope.getDeptIds();
