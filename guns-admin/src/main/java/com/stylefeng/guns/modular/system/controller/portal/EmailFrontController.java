@@ -27,7 +27,7 @@ import java.util.Date;
 /**
  * Created by hyj on 2018/10/23
  */
-@Api(description = "用户邮箱接口")
+@Api(tags = {"用户邮箱接口"})
 @RestController
 @RequestMapping("/front/email")
 public class EmailFrontController extends BaseController {
@@ -49,13 +49,20 @@ public class EmailFrontController extends BaseController {
             @ApiImplicitParam(name = "uuidToken", value = "用户唯一识别码",required = true, dataType = "string", paramType = "query")
     })
     @ApiResponses(value = {
+            @ApiResponse(code = 0, message = "\"code\": 0,\n" +
+                    "    \"data\": \"\",\n" +
+                    "    \"msg\": \"发送邮件成功\""),
+            @ApiResponse(code = 1, message = "\"code\": 1,\n" +
+                    "    \"data\": \"\",\n" +
+                    "    \"msg\": \"发送邮件失败\""),
             @ApiResponse(code = 500, message = "服务器错误")})
     @RequestMapping(value = "get_verify", method = RequestMethod.POST)
     public Object getVerify(String email,String uuidToken) {
 
         Member member = memberMapper.selectMemberByUuidToken(uuidToken);
-
-        mailService.sendHtmlMail(email,"主题：这是模板邮件",member);
+        boolean isSendMail = mailService.sendHtmlMail(email, "主题：这是模板邮件", member);
+        if (!isSendMail)
+            return Result.createByErrorMessage("发送邮件失败");
         return Result.createBySuccess("发送邮件成功");
     }
 

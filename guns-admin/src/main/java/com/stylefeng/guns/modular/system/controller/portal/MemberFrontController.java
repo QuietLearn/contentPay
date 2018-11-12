@@ -4,6 +4,7 @@ import com.aliyuncs.exceptions.ClientException;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.TokenCache;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.common.result.ReturnEx;
 import com.stylefeng.guns.core.log.LogManager;
 import com.stylefeng.guns.core.log.factory.LogTaskFactory;
 import com.stylefeng.guns.core.log.factory.MemberLogTaskFactory;
@@ -21,7 +22,7 @@ import static com.stylefeng.guns.core.support.HttpKit.getIp;
 /**
  * Created by hyj on 2018/10/15
  */
-@Api(description = "用户接口")
+@Api(tags = {"用户接口"})
 @RestController
 @RequestMapping("/front/member")
 public class MemberFrontController extends BaseController {
@@ -43,8 +44,8 @@ public class MemberFrontController extends BaseController {
             @ApiImplicitParam(name = "channel", value = "渠道号", required = true, dataType = "string", paramType = "query")
     })
     @ApiResponses(value = {
-            /*@ApiResponse(code = 0, message = "成功"),
-            @ApiResponse(code = 1, message = "失败"),*/
+            @ApiResponse(code = 0, message = ReturnEx.memberReturnEx.registerSuccessReturn),
+            @ApiResponse(code = 1, message = ReturnEx.memberReturnEx.registerFailReturn),
             @ApiResponse(code = 500, message = "服务器错误")})
     @RequestMapping(value = "/register",method = RequestMethod.POST)
     public Result<MemberVo> register(String mobile, String password, String message,Integer appId,String appVer,String channel) {
@@ -89,6 +90,8 @@ public class MemberFrontController extends BaseController {
             @ApiImplicitParam(name = "channel", value = "渠道号", required = true, dataType = "string", paramType = "query")
     })
     @ApiResponses(value = {
+            @ApiResponse(code = 0, message = ReturnEx.memberReturnEx.loginSuccessReturn),
+            @ApiResponse(code = 1, message = ReturnEx.memberReturnEx.loginFailReturn),
             @ApiResponse(code = 500, message = "服务器错误")})
     @RequestMapping(value = "/login_use_mobile",method = RequestMethod.POST)
     public Result loginByMobile(String mobile,String password,Integer appId,String appVer,String channel){
@@ -108,6 +111,9 @@ public class MemberFrontController extends BaseController {
             @ApiImplicitParam(name = "vid", value = "视频id", required = true, dataType = "int", paramType = "query")
     })
     @ApiResponses(value = {
+            @ApiResponse(code = 0, message = ReturnEx.memberReturnEx.checkVipSuccessReturn),
+            @ApiResponse(code = 1, message = ReturnEx.memberReturnEx.checkVipFailReturn1),
+            @ApiResponse(code = 2, message = ReturnEx.memberReturnEx.checkVipFailReturn2),
             @ApiResponse(code = 500, message = "服务器错误")})
     @RequestMapping(value = "/checkVip",method = RequestMethod.POST)
     public Result checkVip(@RequestParam(defaultValue = "0") String uuidToken, int vid){
@@ -123,6 +129,8 @@ public class MemberFrontController extends BaseController {
             @ApiImplicitParam(name = "channel", value = "渠道号", required = true, dataType = "string", paramType = "query")
     })
     @ApiResponses(value = {
+            @ApiResponse(code = 0, message = ReturnEx.memberReturnEx.getMessageSuccessReturn),
+            @ApiResponse(code = 1, message = ReturnEx.memberReturnEx.getMessageFailReturn),
             @ApiResponse(code = 500, message = "服务器错误")})
     @RequestMapping(value="/getMessage",method = RequestMethod.GET)
     public Result getMessage(String mobile,String type,Integer appId,String appVer,String channel) throws ClientException, InterruptedException {
@@ -137,6 +145,8 @@ public class MemberFrontController extends BaseController {
             @ApiImplicitParam(name = "appId", value = "应用id", required = true, dataType = "Integer", paramType = "query")
     })
     @ApiResponses(value = {
+            @ApiResponse(code = 0, message = ReturnEx.memberReturnEx.resetPassSuccessReturn),
+            @ApiResponse(code = 1, message = ReturnEx.memberReturnEx.resetPassFailReturn),
             @ApiResponse(code = 500, message = "服务器错误")})
     @RequestMapping(value="/reset_password",method = RequestMethod.POST)
     public Result resetPassword(String mobile,String message,String newPassword,Integer appId){
@@ -148,6 +158,8 @@ public class MemberFrontController extends BaseController {
             @ApiImplicitParam(name = "uuidToken", value = "uuid唯一识别码", required = true, dataType = "string", paramType = "query")
     })
     @ApiResponses(value = {
+            @ApiResponse(code = 0, message = ReturnEx.memberReturnEx.resetPassSuccessReturn),
+            @ApiResponse(code = 1, message = ReturnEx.memberReturnEx.resetPassFailReturn),
             @ApiResponse(code = 500, message = "服务器错误")})
     @RequestMapping(value = "get_uuid_validity",method = RequestMethod.GET)
     public Result getUuidValidity(String uuidToken){
@@ -159,8 +171,9 @@ public class MemberFrontController extends BaseController {
             @ApiImplicitParam(name = "message", value = "短信（在修改用户手机时需要验证短信才能修改）", required = false, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "safeUuid", value = "验证用户解绑手机验证码正确与否", required = false, dataType = "string", paramType = "query")
     })
-
     @ApiResponses(value = {
+            @ApiResponse(code = 0, message = ReturnEx.memberReturnEx.getUuidValiditySuccessReturn),
+            @ApiResponse(code = 1, message = ReturnEx.memberReturnEx.getUuidValidityFailReturn),
             @ApiResponse(code = 500, message = "服务器错误")})
     @RequestMapping(value = "update_user_info",method = RequestMethod.POST)
 
@@ -175,6 +188,8 @@ public class MemberFrontController extends BaseController {
             @ApiImplicitParam(name = "message", value = "短信", required = true, dataType = "string", paramType = "query")
     })
     @ApiResponses(value = {
+            @ApiResponse(code = 0, message = ReturnEx.memberReturnEx.verifyMessageSuccessReturn),
+            @ApiResponse(code = 1, message = ReturnEx.memberReturnEx.verifyMessageFailReturn),
             @ApiResponse(code = 500, message = "服务器错误")})
     @RequestMapping(value = "verify_message",method = RequestMethod.POST)
     Result verifyMessageResult(String uuidToken,String mobile,String message){
@@ -187,6 +202,9 @@ public class MemberFrontController extends BaseController {
             @ApiImplicitParam(name = "uuidToken", value = "用户唯一识别码", required = true, dataType = "string", paramType = "query")
     })
     @ApiResponses(value = {
+            @ApiResponse(code = 0, message = ReturnEx.memberReturnEx.deductedGoinSuccessReturn1),
+            @ApiResponse(code = 1, message = ReturnEx.memberReturnEx.deductedGoinSuccessReturn2),
+            @ApiResponse(code = 2, message = ReturnEx.memberReturnEx.deductedGoinFailReturn),
             @ApiResponse(code = 500, message = "服务器错误")})
     @RequestMapping(value = "deducted_goin",method = RequestMethod.POST)
     Result deductedGoin(int vid,String uuidToken){

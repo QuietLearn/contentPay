@@ -45,7 +45,7 @@ public class MailServiceImpl implements IMailService {
         }
     }
 
-    public void sendHtmlMail(String to, String subject, Member member) {
+    public boolean sendHtmlMail(String to, String subject, Member member) {
         MimeMessage message = mailSender.createMimeMessage();
         try {
             //true表示需要创建一个multipart message
@@ -61,8 +61,10 @@ public class MailServiceImpl implements IMailService {
             helper.setText(emailContent, true);
             mailSender.send(message);
             logger.info("html邮件发送成功");
+            return true;
         } catch (MessagingException e) {
             logger.error("发送html邮件时发生异常！", e);
+            return false;
         }
     }
 }

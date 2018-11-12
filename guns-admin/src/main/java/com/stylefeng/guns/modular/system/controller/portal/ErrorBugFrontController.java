@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * Created by hyj on 2018/10/23
  */
-@Api(description = "客户端bug接受接口")
+@Api(tags = {"客户端bug接受接口"})
 @RestController
 @RequestMapping("/front/error_bug")
 public class ErrorBugFrontController  extends BaseController{
@@ -38,6 +38,10 @@ public class ErrorBugFrontController  extends BaseController{
             @ApiImplicitParam(name = "file", value = "bug文件", required = true, dataType = "string", paramType = "query")
     })
     @ApiResponses(value = {
+            @ApiResponse(code = 0, message = " \"code\": 0,\n" +
+                    "    \"msg\": \"上传成功\""),
+            @ApiResponse(code = 1, message = "  \"code\": 1,\n" +
+                    "    \"msg\": \"上传失败\""),
             @ApiResponse(code = 500, message = "服务器错误")})
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public Result richtextUpload(@RequestParam(value = "uploadFile",required = false) MultipartFile file, HttpServletRequest request, HttpServletResponse response){

@@ -47,7 +47,7 @@ public class CodeController extends BaseController {
     /**
      * 生成代码
      */
-    @ApiOperation("生成代码")
+    //@ApiOperation("生成代码")
     //ApiImplicitParams()
     @RequestMapping(value = "/generate", method = RequestMethod.POST)
     @ResponseBody

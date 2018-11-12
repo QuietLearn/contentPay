@@ -2,6 +2,7 @@ package com.stylefeng.guns.modular.system.controller.portal;
 
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.common.result.ReturnEx;
 import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.modular.system.service.IFavoriteService;
 import com.stylefeng.guns.modular.system.vo.FavoriteVo;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * Created by hyj on 2018/10/23
  */
-@Api(description = "收藏夹接口")
+@Api(tags = {"收藏夹接口"})
 @RestController
 @RequestMapping("/front/favorite")
 public class FavoriteFrontController extends BaseController {
@@ -32,6 +33,8 @@ public class FavoriteFrontController extends BaseController {
             @ApiImplicitParam(name = "uuidToken", value = "用户唯一识别码",required = true, dataType = "string", paramType = "query")
     })
     @ApiResponses(value = {
+            @ApiResponse(code = 200, message = ReturnEx.favoriteReturnEx.successRetrun),
+            @ApiResponse(code = 200-1, message = ReturnEx.favoriteReturnEx.failReturn),
             @ApiResponse(code = 500, message = "服务器错误")})
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     public Result<FavoriteVo> list(String uuidToken){
@@ -54,6 +57,8 @@ public class FavoriteFrontController extends BaseController {
             @ApiImplicitParam(name = "uuidToken", value = "用户唯一识别码",required = true, dataType = "string", paramType = "query")
     })
     @ApiResponses(value = {
+            @ApiResponse(code = 0, message = ReturnEx.favoriteReturnEx.successRetrun),
+            @ApiResponse(code = 1, message = ReturnEx.favoriteReturnEx.failReturn),
             @ApiResponse(code = 500, message = "服务器错误")})
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Result addVideoToFav(VIdList vid, String uuidToken){

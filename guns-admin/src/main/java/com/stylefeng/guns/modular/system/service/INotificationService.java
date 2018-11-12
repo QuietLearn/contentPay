@@ -24,5 +24,5 @@ public interface INotificationService extends IService<Notification> {
      * 获取最新通知推送
      * @return
      */
-    Result getPushNotify(String uuidToken);
+    Result<Notification> getPushNotify(String uuidToken);
 }

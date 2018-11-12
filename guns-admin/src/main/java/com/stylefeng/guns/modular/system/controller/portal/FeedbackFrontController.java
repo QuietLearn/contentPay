@@ -2,6 +2,7 @@ package com.stylefeng.guns.modular.system.controller.portal;
 
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.common.result.ReturnEx;
 import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.modular.system.model.Feedback;
 import com.stylefeng.guns.modular.system.service.IFavoriteService;
@@ -23,8 +24,7 @@ import java.util.List;
 /**
  * Created by hyj on 2018/10/23
  */
-
-@Api(description = "用户反馈接口")
+@Api(tags = {"用户问题反馈"})
 @RestController
 @RequestMapping("/front/feedback")
 public class FeedbackFrontController extends BaseController {
@@ -45,6 +45,8 @@ public class FeedbackFrontController extends BaseController {
             @ApiImplicitParam(name = "uuidToken", value = "用户唯一识别码",required = true, dataType = "string", paramType = "query")
     })
     @ApiResponses(value = {
+            @ApiResponse(code = 0, message = ReturnEx.feedbackReturnEx.listSuccessReturn),
+            @ApiResponse(code = 1, message = ReturnEx.feedbackReturnEx.failReturn),
             @ApiResponse(code = 500, message = "服务器错误")})
     @RequestMapping(value = "/list", method = RequestMethod.POST)
     public Result listFeedbakcRecord(String uuidToken){
@@ -57,6 +59,8 @@ public class FeedbackFrontController extends BaseController {
             @ApiImplicitParam(name = "uuidToken", value = "用户唯一识别码",required = true, dataType = "string", paramType = "query")
     })
     @ApiResponses(value = {
+            @ApiResponse(code = 0, message = ReturnEx.feedbackReturnEx.addSuccessReturn),
+            @ApiResponse(code = 1, message = ReturnEx.feedbackReturnEx.failReturn),
             @ApiResponse(code = 500, message = "服务器错误")})
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Result addFeedback(String uuidToken, Feedback feedback){

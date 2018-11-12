@@ -8,5 +8,5 @@ import com.stylefeng.guns.modular.system.model.Member;
 public interface IMailService {
     void sendSimpleMail(String to, String subject, String content);
 
-    void sendHtmlMail(String to, String subject, Member member);
+    boolean sendHtmlMail(String to, String subject, Member member);
 }

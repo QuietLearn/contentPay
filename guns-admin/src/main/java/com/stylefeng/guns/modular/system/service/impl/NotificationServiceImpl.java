@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,9 +46,14 @@ public class NotificationServiceImpl extends ServiceImpl<NotificationMapper, Not
         wrapper.orderBy("id",false);
         List<Notification> notifications = this.selectList(wrapper);
 
-        for (Notification notification: notifications) {
+        for(Iterator<Notification> iterator = notifications.iterator();iterator.hasNext();) {
+            Notification notification = iterator.next();
             String memberIds = notification.getMemberId();
-            if (StringUtils.equals("0",memberIds)||1==notification.getIsOfficial()){
+            if (StringUtils.isBlank(memberIds)){
+                iterator.remove();
+                continue;
+            }
+            if (StringUtils.equals("0",memberIds)&&1==notification.getIsOfficial()){
                 continue;
             }
            /* String[] memberIdString = StringUtils.split(memberIds, ",");
@@ -57,16 +63,17 @@ public class NotificationServiceImpl extends ServiceImpl<NotificationMapper, Not
                     collect(Collectors.toList());
 
             if (0==notification.getIsOfficial()){
-                notifications.remove(notification);
+                iterator.remove();
             }
             if (!ids.contains(member.getId())){
-                notifications.remove(notification);
+                iterator.remove();
             }
         }
         return Result.createBySuccess(notifications);
     }
 
-    public Result getPushNotify(String uuidToken){
+    //让前端保存上一次推送的消息，不知道行不行
+    public Result<Notification> getPushNotify(String uuidToken){
         Member member = memberMapper.selectMemberByUuidToken(uuidToken);
         if (member==null){
             return Result.createByErrorMessage("请重新登录");
