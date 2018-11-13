@@ -95,6 +95,10 @@
         </dependency>
 
         <dependency>
+            <groupId>org.redis</groupId>
+            <artifactId>scala-redis_2.10.0</artifactId>
+        </dependency>
+        <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
         </dependency>

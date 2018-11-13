@@ -15,6 +15,15 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class PageFactory<T> {
 
+    /**
+     * 创建BootStrap默认的分页对象
+     * 创建通用配置的方法
+     * 因为bootstrap每次默认 传的参数一样，所以把分页的方法封装到工厂类中
+     * 所以因为 每个分页list方法都会接受到同样的4个参数，所以把它封装起来
+     * 不然每个业务的方法都要在参数上加上这4个
+     * 如果有其他业务需要相同的参数，也可以封装到工厂类中
+     * @return
+     */
     public Page<T> defaultPage() {
         HttpServletRequest request = HttpKit.getRequest();
         int limit = Integer.valueOf(request.getParameter("limit"));     //每页多少条数据

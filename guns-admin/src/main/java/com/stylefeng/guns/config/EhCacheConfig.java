@@ -20,6 +20,7 @@ public class EhCacheConfig {
 
     /**
      * EhCache的配置
+     * 是spring的实现类，spring缓存主要的核心类
      */
     @Bean
     public EhCacheCacheManager cacheManager(CacheManager cacheManager) {
@@ -35,4 +36,14 @@ public class EhCacheConfig {
         ehCacheManagerFactoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
         return ehCacheManagerFactoryBean;
     }
+
+    /**
+     * EhCache的配置
+     * 是spring缓存的主类，spring框架提供的
+     */
+    /*@Bean
+    public Redisca redisCacheManager(CacheManager cacheManager) {
+        return new EhCacheCacheManager(cacheManager);
+    }*/
+
 }

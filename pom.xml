@@ -34,6 +34,7 @@
         <velocity.version>1.7</velocity.version>
         <kaptcha.version>2.3.2</kaptcha.version>
         <ehcache.version>3.3.1</ehcache.version>
+        <redis.version>0.0.17</redis.version>
         <zxing.version>3.2.1</zxing.version>
         <druid.version>1.1.10</druid.version>
         <beetl.version>2.8.5</beetl.version>
@@ -121,6 +122,11 @@
                 <groupId>org.ehcache</groupId>
                 <artifactId>ehcache</artifactId>
                 <version>${ehcache.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redis</groupId>
+                <artifactId>scala-redis_2.10.0</artifactId>
+                <version>${redis.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.zxing</groupId>
@@ -265,9 +271,9 @@
             <properties>
                 <spring.active>local</spring.active>
             </properties>
-            <activation>
+           <!-- <activation>
                 <activeByDefault>true</activeByDefault>
-            </activation>
+            </activation>-->
         </profile>
         <profile>
             <id>dev</id>
@@ -286,6 +292,9 @@
             <properties>
                 <spring.active>produce</spring.active>
             </properties>
+             <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
     </profiles>
 

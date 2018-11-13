@@ -3,7 +3,9 @@
          xsi:noNamespaceSchemaLocation="ehcache.xsd"
          updateCheck="false" monitoring="autodetect"
          dynamicConfig="true" >
-         
+
+    <!--在内存不足的情况下，在相应的目录下创建相应的硬盘缓存文件来弥补内存的不足-->
+    <!--可以通过文件的形式存放缓存的存放位置-->
     <diskStore path="java.io.tmpdir/ehcache"/>
 
     <defaultCache
@@ -17,6 +19,7 @@
     />
 
     <!-- 全局变量：永不过期-->
+    <!--name是缓存名称-->
     <cache name="CONSTANT"
     	   maxElementsInMemory="50000"
            eternal="true"
@@ -45,7 +48,7 @@
 		4、如果没设置timeToLiveSeconds，则该对象的超时时间=min(创建时间，最近访问时间)+timeToIdleSeconds，假设为B；
 		5、如果两者都设置了，则取出A、B最少的值，即min(A,B)，表示只要有一个超时成立即算超时。
 		
-		overflowToDisk="true"    		//内存不足时，是否启用磁盘缓存  	
+		overflowToDisk="true"    		//内存不足时，是否启用磁盘缓存，也就是文件缓存
 		diskSpoolBufferSizeMB	//设置DiskStore（磁盘缓存）的缓存区大小。默认是30MB。每个Cache都应该有自己的一个缓冲区
 		maxElementsOnDisk		//硬盘最大缓存个数
 		diskPersistent			//是否缓存虚拟机重启期数据The default value is false	
