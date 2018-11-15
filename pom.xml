@@ -271,9 +271,9 @@
             <properties>
                 <spring.active>local</spring.active>
             </properties>
-           <!-- <activation>
+            <activation>
                 <activeByDefault>true</activeByDefault>
-            </activation>-->
+            </activation>
         </profile>
         <profile>
             <id>dev</id>
@@ -292,9 +292,9 @@
             <properties>
                 <spring.active>produce</spring.active>
             </properties>
-             <activation>
+             <!--<activation>
                 <activeByDefault>true</activeByDefault>
-            </activation>
+            </activation>-->
         </profile>
     </profiles>
 

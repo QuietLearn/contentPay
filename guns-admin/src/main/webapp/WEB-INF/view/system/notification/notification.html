@@ -17,11 +17,16 @@
                                     <option value="1001">热门活动</option>
                                     <option value="1002">app异常bug反馈消息</option>
                                 </#select>-->
-                                <#select id="isOfficial" name="版本">
+                              <!--  <#select id="isOfficial" name="版本">
                                     <option value="-1">全部</option>
                                     <option value="0">草稿</option>
                                     <option value="1">正式</option>
-                                </#select>
+                                </#select>-->
+                            <#SelectCon id="isOfficial" name="版本">
+                                <option value="-1">全部</option>
+                                <option value="0">草稿</option>
+                                <option value="1">正式</option>
+                            </#SelectCon>
                             </div>
                             <div class="col-sm-3">
                                 <#button name="搜索" icon="fa-search" clickFun="Notification.search()"/>

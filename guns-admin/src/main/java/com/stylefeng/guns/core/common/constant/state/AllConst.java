@@ -220,7 +220,46 @@ public class AllConst {
     }
 
 
+    public enum EmailActiveStatus {
+        //(1000 系统消息 1001 热门活动 1002 app异常bug消息)
 
+
+        NONACTIVATED(0,"未激活"),
+        ACTIVE(1,"完成激活");
+
+
+
+        private Integer code;
+        private String message;
+
+
+        EmailActiveStatus(Integer code, String message) {
+            this.code = code;
+            this.message = message;
+        }
+
+        public static String valueOf(Integer value) {
+            if (value == null) {
+                return null;
+            } else {
+                for (EmailActiveStatus emailActiveStatus : EmailActiveStatus.values()) {
+
+                    if (value.equals(emailActiveStatus.getCode())) {
+                        return emailActiveStatus.getMessage();
+                    }
+                }
+                return null;
+            }
+        }
+
+        public Integer getCode() {
+            return code;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+    }
 
 
 

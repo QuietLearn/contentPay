@@ -12,8 +12,12 @@
                             <#input id="activityUrl" name="活动地址"/>
                 </div>
                 <div class="col-sm-6 b-r">
-
+                    <#select id="isOfficial" name="版本" underline="true">
+                        <option value="0">草稿</option>
+                        <option value="1">正式</option>
+                    </#select>
                     <#input id="memberId" name="用户id" />
+
                     <div>
                         <input type="hidden" id="member" value="">
                         <!--data-target="#myModal1" -->

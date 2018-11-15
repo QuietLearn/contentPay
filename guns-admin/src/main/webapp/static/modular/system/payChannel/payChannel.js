@@ -15,8 +15,10 @@ PayChannel.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
             {title: 'id', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '应用id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
+            {title: '商户号', field: 'partnerId', visible: true, align: 'center', valign: 'middle'},
             {title: '用户名', field: 'name', visible: true, align: 'center', valign: 'middle'},
-            {title: '删除', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
+            {title: '删除', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
             {title: '支付码', field: 'payCode', visible: true, align: 'center', valign: 'middle'},
             {title: '支付渠道类型', field: 'payType', visible: true, align: 'center', valign: 'middle'},
             {title: '排序', field: 'sort', visible: true, align: 'center', valign: 'middle'},

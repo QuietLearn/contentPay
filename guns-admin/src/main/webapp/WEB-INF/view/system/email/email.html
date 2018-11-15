@@ -10,12 +10,40 @@
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-3">
-                                <#NameCon id="condition" name="名称" />
+                                <#NameCon id="appId" name="应用id" />
                             </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="memberId" name="用户id" />
+
+                                    <input type="hidden" id="member" value="">
+                                    <!--data-target="#myModal1" -->
+                                    <button type="button" class="btn btn-default btn-xs" id="test" underline="true"
+                                            data-remote="/member/select" data-toggle="modal" data-backdrop="static">
+                                         <i class="glyphicon selected"></i>选择 </button>
+                            </div>
+
                             <div class="col-sm-3">
                                 <#button name="搜索" icon="fa-search" clickFun="Email.search()"/>
                             </div>
                         </div>
+
+                        <!--详情按钮的弹出框 -->
+                          <div class="modal fade" id="myModal" style="margin-left: auto"> >
+                                    <div class="modal-dialog" style="width:80%;" >
+                                        <div class="modal-content">
+                                           <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                          <h4 class="modal-title">用户列表</h4>
+                                          </div>
+                                          <div class="modal-body" id="myModal1">
+                                            <h3>body</h3>
+                                                 </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                 </div>
+                                     </div>
+                                  </div>
+                          </div>
                        <!-- <div class="hidden-xs" id="EmailTableToolbar" role="group">
                              @if(shiro.hasPermission("/member/delete_list")){
                                 <#button name="删除" icon="fa-remove" clickFun="deleteEmailList()" space="true"/>
@@ -29,4 +57,19 @@
     </div>
 </div>
 <script src="${ctxPath}/static/modular/system/email/email.js"></script>
+<script>
+    $('#test').click(function (event) {
+        //如果是a链接，阻止其跳转到url页面
+        event.preventDefault();
+        //获取url的值
+        var url = $('#test').data('remote')||$('#test').attr('href');
+        //将id为deadAdd的页面元素作为模态框激活
+        $('#myModal').modal();
+        //从url加载数据到模态框
+        $('#myModal1').load(url);
+        })
+        $("#myModal1").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
+</script>
 @}

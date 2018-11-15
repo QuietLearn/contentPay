@@ -3,14 +3,18 @@
     <div class="ibox-content">
         <div class="form-horizontal">
             <input type="hidden" id="id" value="${item.id}">
-            <input type="hidden" id="sexValue" value="${item.isDel}">
+            <input type="hidden" id="isDel" value="${item.isDel}">
 
+            <input type="hidden" id="isOfficialValue" value="${item.isOfficial}">
             <div class="row">
                 <div class="col-sm-6 b-r">
                             <#input id="title" name="标题" value="${item.title}" underline="true"/>
                             <#input id="content" name="内容" value="${item.content}" underline="true"/>
                             <!--<#input id="picAddress" name="图片地址" underline="true"/>-->
-                            <#input id="activityUrl" name="活动地址" value="${item.activityUrl}" />
+                            <#select id="isOfficial" name="版本" underline="true">
+                                <option value="0">草稿</option>
+                                <option value="1">正式</option>
+                            </#select>
                 </div>
                 <!--<div class="col-sm-6">
                             <#select id="isDel" name="逻辑删除" underline="true">
@@ -22,6 +26,7 @@
                             <#input id="creater" name="创建人" value="${item.creater}" />
                 </div>-->
                 <div class="col-sm-6 b-r">
+                    <#input id="activityUrl" name="活动地址" value="${item.activityUrl}" />
                     <#input id="memberId" name="用户id" value="${item.memberId}"/>
                     <div>
                         <input type="hidden" id="member" value="">

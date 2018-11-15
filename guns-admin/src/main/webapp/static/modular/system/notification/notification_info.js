@@ -48,8 +48,9 @@ NotificationInfoDlg.collectData = function() {
     .set('id')
     .set('title')
     .set('type')
-    .set('content')
     .set('memberId')
+    .set('content')
+    .set('isOfficial')
     .set('activityUrl')
     .set('picAddress')
     .set('isDel')
@@ -99,5 +100,5 @@ NotificationInfoDlg.editSubmit = function() {
 }
 
 $(function() {
-
+    $("#isOfficial").val($("#isOfficialValue").val());
 });

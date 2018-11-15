@@ -17,7 +17,9 @@ Email.initColumn = function () {
             {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: '邮箱', field: 'email', visible: true, align: 'center', valign: 'middle'},
             {title: 'appId', field: 'appId', visible: true, align: 'center', valign: 'middle'},
-            {title: '激活状态', field: 'active', visible: true, align: 'center', valign: 'middle'},
+            {title: '激活状态码', field: 'active', visible: false, align: 'center', valign: 'middle'},
+            {title: '激活状态', field: 'activeStatusDesc', visible: true, align: 'center', valign: 'middle'},
+
             {title: '用户id', field: 'memberId', visible: true, align: 'center', valign: 'middle'},
             {title: '创建时间', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
             {title: '修改时间', field: 'gmtModified', visible: true, align: 'center', valign: 'middle'}
@@ -140,13 +142,36 @@ function deleteEmails(ids) {
  */
 Email.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['memberId'] = $("#memberId").val();
+    queryData['appId'] = $("#appId").val();
     Email.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = Email.initColumn();
     var table = new BSTable(Email.id, "/email/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     Email.table = table.init();
+});
+
+
+$(function () {
+    $.ajax({
+        url: "/app/list",    //后台webservice里的方法名称
+        contentType: "application/json; charset=utf-8",
+        type: "get",
+        async : true ,
+        dataType: "json",
+        success: function (data) {
+            var optionstring = "";
+            for (var j = 0; j < data.length;j++) {
+                optionstring += "<option value=\"" + data[j].appId + "\" >" +data[j].appId + "</option>";
+                $("#appId").html("<option value='0'>全部</option> "+optionstring);
+            }
+        },
+        error: function (msg) {
+            alert("出错了！");
+        }
+    });
+
 });

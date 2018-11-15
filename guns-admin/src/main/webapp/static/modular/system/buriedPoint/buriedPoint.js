@@ -16,12 +16,12 @@ BuriedPoint.initColumn = function () {
         {field: 'selectItem', checkbox: true},
             {title: '', field: 'id', visible: false, align: 'center', valign: 'middle'},
 
-        {title: '应用', field: 'appName', visible: true, align: 'center', valign: 'middle'},
-        {title: '应用id', field: 'appId', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用版本ver', field: 'appVer', visible: false, align: 'center', valign: 'middle'},
-        {title: '应用版本', field: 'appVerName', visible: true, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channel', visible: false, align: 'center', valign: 'middle'},
-        {title: '渠道号', field: 'channelName', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用', field: 'appName', visible: false, align: 'center', valign: 'middle'},
+        {title: '应用id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用版本ver', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
+        {title: '应用版本', field: 'appVerName', visible: false, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channelId', visible: true, align: 'center', valign: 'middle'},
+        {title: '渠道号', field: 'channelName', visible: false, align: 'center', valign: 'middle'},
 
             {title: '运营商', field: 'operator', visible: true, align: 'center', valign: 'middle'},
             {title: '省份地区', field: 'address', visible: true, align: 'center', valign: 'middle'},
@@ -238,7 +238,7 @@ $(function () {
         success: function (data) {
             var optionstring = "";
             for (var j = 0; j < data.length;j++) {
-                optionstring += "<option value=\"" + data[j].appId + "\" >" +data[j].appName + "</option>";
+                optionstring += "<option value=\"" + data[j].appId + "\" >" +data[j].appId + "</option>";
                 $("#appId").html("<option value='0'>全部</option> "+optionstring);
             }
         },

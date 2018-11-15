@@ -180,7 +180,7 @@ $(function () {
         success: function (data) {
             var optionstring = "";
             for (var j = 0; j < data.length;j++) {
-                optionstring += "<option value=\"" + data[j].appId + "\" >" +data[j].appName + "</option>";
+                optionstring += "<option value=\"" + data[j].appId + "\" >" +data[j].appId + "</option>";
                 $("#appId").html("<option value='0'>全部</option> "+optionstring);
             }
         },

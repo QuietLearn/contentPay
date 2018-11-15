@@ -1,8 +1,18 @@
 package com.stylefeng.guns.modular.system.controller;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.page.PageInfoBT;
+import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.modular.system.model.Note;
 import com.stylefeng.guns.modular.system.service.IMailService;
+import com.stylefeng.guns.modular.system.warpper.EmailWarpper;
+import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,8 +60,38 @@ public class EmailController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        return emailService.selectList(null);
+    public Object list(Integer appId,String memberId) {
+        //注意改成server
+        if (ToolUtil.isEmpty(memberId)&&appId==null){
+            Page<Email> page =new PageFactory<Email>().defaultPage();
+
+            page = emailService.selectPage(page);
+
+            List<Email> EmailList = page.getRecords();
+            page.setRecords((List<Email>)super.warpObject(new EmailWarpper(BeanKit.listToMapList(EmailList))));
+
+            PageInfoBT<Email> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }else {
+            Page<Email> page = new PageFactory<Email>().defaultPage();
+            EntityWrapper<Email> entityWrapper = new EntityWrapper<>();
+            if (appId!=null&&appId!=0){
+                entityWrapper.eq("appId",appId);
+            }
+            if (ToolUtil.isNotEmpty(memberId)){
+                String[] memberIdArray = StringUtils.split(memberId, ",");
+                entityWrapper.in("memberId",memberIdArray);
+
+            }
+
+            page = emailService.selectPage(page,entityWrapper);
+            List<Email> Emails = page.getRecords();
+            page.setRecords((List<Email>)super.warpObject(new EmailWarpper(BeanKit.listToMapList(Emails))));
+            PageInfoBT<Email> pageInfoBT =this.packForBT(page);
+
+            return pageInfoBT;
+        }
     }
 
     /**
