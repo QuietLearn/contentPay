@@ -35,6 +35,8 @@
     <select id="selectListByContentId" parameterType="long" resultMap="BaseResultMap">
         select <include refid="Base_Column_List"/>
         from repo_video_repository
+        left outer join repo_video_app_source
+        on
         where
     </select>
 </mapper>
