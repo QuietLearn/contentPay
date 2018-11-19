@@ -1,0 +1,38 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>模特应用内容管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="condition" name="名称" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="ModelAppSource.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="ModelAppSourceTableToolbar" role="group">
+                            @if(shiro.hasPermission("/modelAppSource/add")){
+                                <#button name="添加" icon="fa-plus" clickFun="ModelAppSource.openAddModelAppSource()"/>
+                            @}
+                            @if(shiro.hasPermission("/modelAppSource/update")){
+                                <#button name="修改" icon="fa-edit" clickFun="ModelAppSource.openModelAppSourceDetail()" space="true"/>
+                            @}
+                             @if(shiro.hasPermission("/modelAppSource/delete_list")){
+                                <#button name="删除" icon="fa-remove" clickFun="deleteModelAppSourceList()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="ModelAppSourceTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/repository/modelAppSource/modelAppSource.js"></script>
+@}

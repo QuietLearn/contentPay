@@ -23,7 +23,7 @@
                             @if(shiro.hasPermission("/${context.bizEnName}/update")){
                                 <#button name="修改" icon="fa-edit" clickFun="${context.bizEnBigName}.open${context.bizEnBigName}Detail()" space="true"/>
                             @}
-                             @if(shiro.hasPermission("/member/delete_list")){
+                             @if(shiro.hasPermission("/${context.bizEnName}/delete_list")){
                                 <#button name="删除" icon="fa-remove" clickFun="delete${context.bizEnBigName}List()" space="true"/>
                             @}
                         </div>

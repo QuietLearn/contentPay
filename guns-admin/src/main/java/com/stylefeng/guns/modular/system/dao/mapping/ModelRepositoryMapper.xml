@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.ModelRepositoryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.ModelRepository">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="user_name" property="userName" />
+        <result column="password" property="password" />
+        <result column="pwdMD5" property="pwdMD5" />
+        <result column="role" property="role" />
+        <result column="pic_address" property="picAddress" />
+        <result column="description" property="description" />
+        <result column="signature" property="signature" />
+        <result column="notes" property="notes" />
+        <result column="sort" property="sort" />
+        <result column="is_del" property="isDel" />
+        <result column="nick_name" property="nickName" />
+        <result column="height" property="height" />
+        <result column="measurements" property="measurements" />
+        <result column="countriesid" property="countriesid" />
+        <result column="age" property="age" />
+        <result column="characteristics" property="characteristics" />
+        <result column="birth" property="birth" />
+        <result column="focus_count" property="focusCount" />
+        <result column="is_chat" property="isChat" />
+        <result column="mobile" property="mobile" />
+        <result column="gmt_created" property="gmtCreated" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, user_name, password, pwdMD5, role, pic_address, description, signature, notes, sort, is_del, nick_name, height, measurements, countriesid, age, characteristics, birth, focus_count, is_chat, mobile, gmt_created, gmt_modified
+    </sql>
+
+</mapper>

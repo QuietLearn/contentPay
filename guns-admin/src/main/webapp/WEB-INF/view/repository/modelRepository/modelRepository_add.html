@@ -1,0 +1,49 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="" underline="true"/>
+                            <#input id="name" name="模特姓名" underline="true"/>
+                            <#input id="userName" name="登录" underline="true"/>
+                            <#input id="password" name="密码" underline="true"/>
+                            <#input id="pwdMD5" name="" underline="true"/>
+                            <#input id="role" name="角色" underline="true"/>
+                            <#input id="picAddress" name="头像" underline="true"/>
+                            <#input id="description" name="" underline="true"/>
+                            <#input id="signature" name="个性签名" underline="true"/>
+                            <#input id="notes" name="备注" underline="true"/>
+                            <#input id="sort" name="" underline="true"/>
+                            <#input id="isDel" name=""/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="nickName" name="昵称" underline="true"/>
+                            <#input id="height" name="身高" underline="true"/>
+                            <#input id="measurements" name="三围" underline="true"/>
+                            <#input id="countriesid" name="地区" underline="true"/>
+                            <#input id="age" name="年龄" underline="true"/>
+                            <#input id="characteristics" name="特征" underline="true"/>
+                            <#input id="birth" name="出生年月" underline="true"/>
+                            <#input id="focusCount" name="关注数量" underline="true"/>
+                            <#input id="isChat" name="是否开启私聊  1  开启 2 不开启" underline="true"/>
+                            <#input id="mobile" name="手机号码" underline="true"/>
+                            <#input id="gmtCreated" name="" underline="true"/>
+                            <#input id="gmtModified" name="" underline="true"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ModelRepositoryInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ModelRepositoryInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/repository/modelRepository/modelRepository_info.js"></script>
+@}

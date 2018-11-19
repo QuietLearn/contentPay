@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.PicturesCategoryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.PicturesCategory">
+        <id column="id" property="id" />
+        <result column="category_id" property="categoryId" />
+        <result column="labelIds" property="labelIds" />
+        <result column="name" property="name" />
+        <result column="pictures_num" property="picturesNum" />
+        <result column="views" property="views" />
+        <result column="modelId" property="modelId" />
+        <result column="thumbUp_count" property="thumbupCount" />
+        <result column="share_count" property="shareCount" />
+        <result column="collection_count" property="collectionCount" />
+        <result column="pic_address" property="picAddress" />
+        <result column="scale_picAddress" property="scalePicaddress" />
+        <result column="is_del" property="isDel" />
+        <result column="cover" property="cover" />
+        <result column="gmt_created" property="gmtCreated" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, category_id, labelIds, name, pictures_num, views, modelId, thumbUp_count, share_count, collection_count, pic_address, scale_picAddress, is_del, cover, gmt_created, gmt_modified
+    </sql>
+
+</mapper>

@@ -27,6 +27,9 @@ public class ControllerConfig {
         imports.add("org.springframework.web.bind.annotation.PathVariable");
         imports.add("org.springframework.beans.factory.annotation.Autowired");
         imports.add("java.util.Date");
+        imports.add("java.util.Arrays");
+        imports.add("com.stylefeng.guns.core.common.result.Result");
+        imports.add("java.util.List");
         imports.add(contextConfig.getProPackage() + ".core.log.LogObjectHolder");
         imports.add("org.springframework.web.bind.annotation.RequestParam");
         imports.add(contextConfig.getModelPackageName() + "." + contextConfig.getEntityName());

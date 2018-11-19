@@ -87,10 +87,17 @@ public class SqlConfig {
         menus.add(update);
 
         //删除
-        Menu delete = createSubMenu(menu);
+        /*Menu delete = createSubMenu(menu);
         delete.setCode(contextConfig.getBizEnName() + "_delete");
         delete.setName(contextConfig.getBizChName() + "删除");
         delete.setUrl("/" + contextConfig.getBizEnName() + "/delete");
+        menus.add(delete);*/
+
+        //删除
+        Menu delete = createSubMenu(menu);
+        delete.setCode(contextConfig.getBizEnName() + "_batchDelete");
+        delete.setName(contextConfig.getBizChName() + "删除");
+        delete.setUrl("/" + contextConfig.getBizEnName() + "/delete_list");
         menus.add(delete);
 
         //详情

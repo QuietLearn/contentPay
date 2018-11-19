@@ -1,0 +1,49 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="" value="${item.id}" underline="true"/>
+                            <#input id="name" name="模特姓名" value="${item.name}" underline="true"/>
+                            <#input id="userName" name="登录" value="${item.userName}" underline="true"/>
+                            <#input id="password" name="密码" value="${item.password}" underline="true"/>
+                            <#input id="pwdMD5" name="" value="${item.pwdMD5}" underline="true"/>
+                            <#input id="role" name="角色" value="${item.role}" underline="true"/>
+                            <#input id="picAddress" name="头像" value="${item.picAddress}" underline="true"/>
+                            <#input id="description" name="" value="${item.description}" underline="true"/>
+                            <#input id="signature" name="个性签名" value="${item.signature}" underline="true"/>
+                            <#input id="notes" name="备注" value="${item.notes}" underline="true"/>
+                            <#input id="sort" name="" value="${item.sort}" underline="true"/>
+                            <#input id="isDel" name="" value="${item.isDel}" />
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="nickName" name="昵称" value="${item.nickName}" underline="true"/>
+                            <#input id="height" name="身高" value="${item.height}" underline="true"/>
+                            <#input id="measurements" name="三围" value="${item.measurements}" underline="true"/>
+                            <#input id="countriesid" name="地区" value="${item.countriesid}" underline="true"/>
+                            <#input id="age" name="年龄" value="${item.age}" underline="true"/>
+                            <#input id="characteristics" name="特征" value="${item.characteristics}" underline="true"/>
+                            <#input id="birth" name="出生年月" value="${item.birth}" underline="true"/>
+                            <#input id="focusCount" name="关注数量" value="${item.focusCount}" underline="true"/>
+                            <#input id="isChat" name="是否开启私聊  1  开启 2 不开启" value="${item.isChat}" underline="true"/>
+                            <#input id="mobile" name="手机号码" value="${item.mobile}" underline="true"/>
+                            <#input id="gmtCreated" name="" value="${item.gmtCreated}" underline="true"/>
+                            <#input id="gmtModified" name="" value="${item.gmtModified}" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ModelRepositoryInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ModelRepositoryInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/repository/modelRepository/modelRepository_info.js"></script>
+@}

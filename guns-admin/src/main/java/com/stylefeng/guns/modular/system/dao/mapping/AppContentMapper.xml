@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.stylefeng.guns.modular.system.dao.AppContentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.stylefeng.guns.modular.system.model.AppContent">
+        <result column="id" property="id" />
+        <result column="app_id" property="appId" />
+        <result column="app_ver" property="appVer" />
+        <result column="channel_id" property="channelId" />
+        <result column="name" property="name" />
+        <result column="gmt_created" property="gmtCreated" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, app_id, app_ver, channel_id, name, gmt_created, gmt_modified
+    </sql>
+
+    <select id="searchAppContent" parameterType="map" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/>
+        from repo_app_content
+        where app_id = #{appId}
+        and app_ver = #{appVer}
+        and channel_id = #{channelId}
+    </select>
+</mapper>
