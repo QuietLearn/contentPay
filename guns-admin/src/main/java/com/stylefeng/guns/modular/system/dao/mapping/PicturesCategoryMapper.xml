@@ -27,4 +27,11 @@
         id, category_id, labelIds, name, pictures_num, views, modelId, thumbUp_count, share_count, collection_count, pic_address, scale_picAddress, is_del, cover, gmt_created, gmt_modified
     </sql>
 
+    <select id="selectListByContentId" parameterType="long" resultMap="BaseResultMap">
+        select p.id, p.category_id, p.labelIds, p.name, p.pictures_num, p.views, p.modelId, p.thumbUp_count, p.share_count, p.collection_count, p.pic_address, p.scale_picAddress, p.is_del, p.cover, p.gmt_created, p.gmt_modified
+        from repo_pictures_category p
+        left outer join repo_photos_app_source s
+        on p.id = s.pictures_category_id
+        where s.app_content_id = #{contentId}
+    </select>
 </mapper>

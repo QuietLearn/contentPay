@@ -10,9 +10,9 @@ import org.apache.ibatis.annotations.Param;
  * </p>
  *
  * @author hyj
- * @since 2018-11-19
+ * @since 2018-11-20
  */
 public interface AppContentMapper extends BaseMapper<AppContent> {
 
-    AppContent searchAppContent(@Param("appId") String appId, @Param("appVer") String appVer, @Param("channelId") String channelId);
+    AppContent searchAppContent(@Param("appId") String appId,@Param("appVer")String appVer, @Param("channelId") String channelId);
 }

@@ -1,7 +1,15 @@
 package com.stylefeng.guns.modular.repository.controller.backend;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.page.PageInfoBT;
+import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.modular.system.model.PhotosAppSource;
+import com.stylefeng.guns.modular.system.warpper.MemberWarpper;
+import com.stylefeng.guns.modular.system.warpper.repo.VideoAppSourceWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,8 +73,34 @@ public class VideoAppSourceController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        return videoAppSourceService.selectList(null);
+    public Object list(Integer appContentId) {
+        //注意改成server
+
+        if (appContentId == null) {
+            Page<VideoAppSource> page = new PageFactory<VideoAppSource>().defaultPage();
+
+            page = videoAppSourceService.selectPage(page);
+
+            List<VideoAppSource> VideoAppSourceList = page.getRecords();
+            page.setRecords((List<VideoAppSource>) super.warpObject(new VideoAppSourceWarpper(BeanKit.listToMapList(VideoAppSourceList))));
+
+            PageInfoBT<VideoAppSource> pageInfoBT = this.packForBT(page);
+
+            return pageInfoBT;
+        } else {
+            Page<VideoAppSource> page = new PageFactory<VideoAppSource>().defaultPage();
+            EntityWrapper<VideoAppSource> entityWrapper = new EntityWrapper<>();
+            if (appContentId != null && appContentId != 0) {
+                entityWrapper.eq("app_content_id", appContentId);
+            }
+
+            page = videoAppSourceService.selectPage(page, entityWrapper);
+            List<VideoAppSource> VideoAppSources = page.getRecords();
+            page.setRecords((List<VideoAppSource>) super.warpObject(new VideoAppSourceWarpper(BeanKit.listToMapList(VideoAppSources))));
+            PageInfoBT<VideoAppSource> pageInfoBT = this.packForBT(page);
+
+            return pageInfoBT;
+        }
     }
 
     /**

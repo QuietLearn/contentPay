@@ -3,6 +3,9 @@ package com.stylefeng.guns.core.common.constant.factory;
 import com.stylefeng.guns.core.common.constant.cache.Cache;
 import com.stylefeng.guns.core.common.constant.cache.CacheKey;
 import com.stylefeng.guns.modular.system.model.Dict;
+import com.stylefeng.guns.modular.system.model.ModelRepository;
+import com.stylefeng.guns.modular.system.model.PicturesCategory;
+import com.stylefeng.guns.modular.system.model.VideoRepository;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
@@ -179,4 +182,10 @@ public interface IConstantFactory {
      * @return
      */
     String getNotifyOfficialRemark(Integer isOfficial);
+
+    VideoRepository getVideoRepositoryById(Long videoId);
+
+    ModelRepository getModelRepositoryById(Long modelId);
+
+    PicturesCategory getPicturesCategoryById(Long picturesId);
 }

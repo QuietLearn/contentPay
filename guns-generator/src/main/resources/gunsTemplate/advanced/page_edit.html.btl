@@ -2,12 +2,13 @@
 <div class="ibox float-e-margins">
     <div class="ibox-content">
         <div class="form-horizontal">
+            <#input type="hidden"  id="${table.fields[0].propertyName}" name="${table.fields[0].comment}" value="\${item.${table.fields[0].propertyName}}" underline="true"/>
 
             <div class="row">
                 <div class="col-sm-6 b-r">
-                    <% var leftSize = tool.toInt((table.fields.~size + 1) / 2); %>
+                    <% var leftSize = tool.toInt((table.fields.~size - 1) / 2); %>
                     <% var rightSize = tool.toInt(table.fields.~size - leftSize); %>
-                    <% for(var i=0;i<leftSize;i++){ %>
+                    <% for(var i=1;i<leftSize;i++){ %>
                         <% if(i != (leftSize-1) ){ %>
                             <#input id="${table.fields[i].propertyName}" name="${table.fields[i].comment}" value="\${item.${table.fields[i].propertyName}}" underline="true"/>
                         <% }else{ %>
@@ -17,8 +18,8 @@
                 </div>
 
                 <div class="col-sm-6">
-                    <% for(var i=leftSize;i<table.fields.~size;i++){ %>
-                        <% if(i != (table.fields.~size-1) ){ %>
+                    <% for(var i=leftSize;i<table.fields.~size-2;i++){ %>
+                        <% if(i != (table.fields.~size-3) ){ %>
                             <#input id="${table.fields[i].propertyName}" name="${table.fields[i].comment}" value="\${item.${table.fields[i].propertyName}}" underline="true"/>
                         <% }else{ %>
                             <#input id="${table.fields[i].propertyName}" name="${table.fields[i].comment}" value="\${item.${table.fields[i].propertyName}}" />

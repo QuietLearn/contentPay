@@ -13,7 +13,7 @@ var ${context.bizEnBigName} = {
  */
 ${context.bizEnBigName}.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
+        {field: 'selectItem', checkbox: true},
         <% for(item in table.fields!){ %>
         <% if(itemLP.last != true){ %>
             {title: '${item.comment}', field: '${item.propertyName}', visible: true, align: 'center', valign: 'middle'},

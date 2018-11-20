@@ -18,4 +18,5 @@
         id, app_content_id, pictures_category_id, authority, isdel, gmt_created, gmt_modified
     </sql>
 
+
 </mapper>

@@ -14,13 +14,35 @@ var ModelAppSource = {
 ModelAppSource.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: '应用内容id', field: 'appContentId', visible: true, align: 'center', valign: 'middle'},
             {title: '模特id', field: 'modelId', visible: true, align: 'center', valign: 'middle'},
             {title: '权限', field: 'authority', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtModified', visible: true, align: 'center', valign: 'middle'}
+            {title: '逻辑删除', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
+            {title: '', field: 'gmtCreated', visible: false, align: 'center', valign: 'middle'},
+            {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'},
+
+        {title: '模特姓名', field: 'name', visible: true, align: 'center', valign: 'middle'},
+        {title: '用户名', field: 'userName', visible: true, align: 'center', valign: 'middle'},
+        {title: '密码', field: 'password', visible: false, align: 'center', valign: 'middle'},
+        {title: '', field: 'pwdMD5', visible: false, align: 'center', valign: 'middle'},
+        {title: '角色', field: 'role', visible: true, align: 'center', valign: 'middle'},
+        {title: '头像', field: 'picAddress', visible: true, align: 'center', valign: 'middle'},
+        {title: '', field: 'description', visible: false, align: 'center', valign: 'middle'},
+        {title: '个性签名', field: 'signature', visible: true, align: 'center', valign: 'middle'},
+        {title: '备注', field: 'notes', visible: true, align: 'center', valign: 'middle'},
+        {title: '', field: 'sort', visible: false, align: 'center', valign: 'middle'},
+        {title: '', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
+        {title: '昵称', field: 'nickName', visible: true, align: 'center', valign: 'middle'},
+        {title: '身高', field: 'height', visible: true, align: 'center', valign: 'middle'},
+        {title: '三围', field: 'measurements', visible: true, align: 'center', valign: 'middle'},
+        {title: '地区', field: 'countriesid', visible: true, align: 'center', valign: 'middle'},
+        {title: '年龄', field: 'age', visible: true, align: 'center', valign: 'middle'},
+        {title: '特征', field: 'characteristics', visible: true, align: 'center', valign: 'middle'},
+        {title: '出生年月', field: 'birth', visible: true, align: 'center', valign: 'middle'},
+        {title: '关注数量', field: 'focusCount', visible: true, align: 'center', valign: 'middle'},
+        {title: '是否开启私聊', field: 'isChat', visible: true, align: 'center', valign: 'middle'},
+        {title: '手机号码', field: 'mobile', visible: true, align: 'center', valign: 'middle'}
     ];
 };
 
@@ -147,6 +169,6 @@ ModelAppSource.search = function () {
 $(function () {
     var defaultColunms = ModelAppSource.initColumn();
     var table = new BSTable(ModelAppSource.id, "/modelAppSource/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     ModelAppSource.table = table.init();
 });

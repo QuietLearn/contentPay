@@ -1,7 +1,15 @@
 package com.stylefeng.guns.modular.repository.controller.backend;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.page.PageInfoBT;
+import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.modular.system.warpper.MemberWarpper;
+import com.stylefeng.guns.modular.system.warpper.repo.PhotosAppSourceWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,10 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 import java.util.Date;
+
 import com.stylefeng.guns.core.log.LogObjectHolder;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.stylefeng.guns.modular.system.model.PhotosAppSource;
 import com.stylefeng.guns.modular.repository.service.IPhotosAppSourceService;
+
 import java.util.Date;
 import java.util.List;
 
@@ -55,7 +65,7 @@ public class PhotosAppSourceController extends BaseController {
     @RequestMapping("/photosAppSource_update/{photosAppSourceId}")
     public String photosAppSourceUpdate(@PathVariable Integer photosAppSourceId, Model model) {
         PhotosAppSource photosAppSource = photosAppSourceService.selectById(photosAppSourceId);
-        model.addAttribute("item",photosAppSource);
+        model.addAttribute("item", photosAppSource);
         LogObjectHolder.me().set(photosAppSource);
         return PREFIX + "photosAppSource_edit.html";
     }
@@ -65,8 +75,34 @@ public class PhotosAppSourceController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        return photosAppSourceService.selectList(null);
+    public Object list(Integer appContentId) {
+        //注意改成server
+
+        if (appContentId == null) {
+            Page<PhotosAppSource> page = new PageFactory<PhotosAppSource>().defaultPage();
+
+            page = photosAppSourceService.selectPage(page);
+
+            List<PhotosAppSource> PhotosAppSourceList = page.getRecords();
+            page.setRecords((List<PhotosAppSource>) super.warpObject(new PhotosAppSourceWarpper(BeanKit.listToMapList(PhotosAppSourceList))));
+
+            PageInfoBT<PhotosAppSource> pageInfoBT = this.packForBT(page);
+
+            return pageInfoBT;
+        } else {
+            Page<PhotosAppSource> page = new PageFactory<PhotosAppSource>().defaultPage();
+            EntityWrapper<PhotosAppSource> entityWrapper = new EntityWrapper<>();
+            if (appContentId != null && appContentId != 0) {
+                entityWrapper.eq("app_content_id", appContentId);
+            }
+
+            page = photosAppSourceService.selectPage(page, entityWrapper);
+            List<PhotosAppSource> PhotosAppSources = page.getRecords();
+            page.setRecords((List<PhotosAppSource>) super.warpObject(new PhotosAppSourceWarpper(BeanKit.listToMapList(PhotosAppSources))));
+            PageInfoBT<PhotosAppSource> pageInfoBT = this.packForBT(page);
+
+            return pageInfoBT;
+        }
     }
 
     /**
@@ -100,11 +136,12 @@ public class PhotosAppSourceController extends BaseController {
         String[] ss = ids.split(",");
         List<String> photosAppSourceIdList = Arrays.asList(ss);
         boolean deleteResult = photosAppSourceService.deleteBatchIds(photosAppSourceIdList);
-        if (deleteResult){
+        if (deleteResult) {
             return SUCCESS_TIP;
         }
         return Result.createByErrorMessage("图集应用内容批量删除失败，请稍后再试");
     }
+
     /**
      * 修改图集应用内容
      */

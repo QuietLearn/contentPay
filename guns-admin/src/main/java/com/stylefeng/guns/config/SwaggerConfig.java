@@ -26,7 +26,7 @@ public class SwaggerConfig{
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .host("http://www.relaxstudy.top/")
+                //.host("http://www.relaxstudy.top/")
                 .apiInfo(apiInfo())
                 .select()
                  .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))                         //这里采用包含注解的方式来确定要显示的接口

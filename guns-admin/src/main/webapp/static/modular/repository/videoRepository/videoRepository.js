@@ -14,9 +14,9 @@ var VideoRepository = {
 VideoRepository.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: '所属视频分类', field: 'categoryId', visible: true, align: 'center', valign: 'middle'},
-            {title: '原封面图片地址id', field: 'pictureId', visible: true, align: 'center', valign: 'middle'},
+            {title: '原封面图片地址id', field: 'pictureId', visible: false, align: 'center', valign: 'middle'},
             {title: '封面图片', field: 'coverImage', visible: true, align: 'center', valign: 'middle'},
             {title: '视频标签', field: 'labelIds', visible: true, align: 'center', valign: 'middle'},
             {title: '标题', field: 'title', visible: true, align: 'center', valign: 'middle'},
@@ -24,17 +24,17 @@ VideoRepository.initColumn = function () {
             {title: '播放次数', field: 'playsNumber', visible: true, align: 'center', valign: 'middle'},
             {title: '视频地址Id', field: 'videoAddressid', visible: true, align: 'center', valign: 'middle'},
             {title: '国家id', field: 'countryId', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'times', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
-            {title: '排序字段', field: 'sort', visible: true, align: 'center', valign: 'middle'},
-            {title: '1:2图片', field: 'onePastTwo', visible: true, align: 'center', valign: 'middle'},
-            {title: '4:5图片', field: 'fivePastFour', visible: true, align: 'center', valign: 'middle'},
-            {title: 'x：x图片', field: 'xPastx', visible: true, align: 'center', valign: 'middle'},
+            {title: '', field: 'times', visible: false, align: 'center', valign: 'middle'},
+            {title: '', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
+            {title: '排序字段', field: 'sort', visible: false, align: 'center', valign: 'middle'},
+            {title: '1:2图片', field: 'onePastTwo', visible: false, align: 'center', valign: 'middle'},
+            {title: '4:5图片', field: 'fivePastFour', visible: false, align: 'center', valign: 'middle'},
+            {title: 'x：x图片', field: 'xPastx', visible: false, align: 'center', valign: 'middle'},
             {title: '浏览次数', field: 'browse', visible: true, align: 'center', valign: 'middle'},
             {title: '所属模特', field: 'modelId', visible: true, align: 'center', valign: 'middle'},
             {title: '收藏次数', field: 'collectionCount', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtModified', visible: true, align: 'center', valign: 'middle'}
+            {title: '', field: 'gmtCreated', visible: false, align: 'center', valign: 'middle'},
+            {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'}
     ];
 };
 

@@ -3,6 +3,8 @@ package com.stylefeng.guns.modular.system.dao;
 import com.stylefeng.guns.modular.system.model.PicturesCategory;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * <p>
  * 图集资源库表 Mapper 接口
@@ -13,4 +15,5 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface PicturesCategoryMapper extends BaseMapper<PicturesCategory> {
 
+    List selectListByContentId(Long id);
 }

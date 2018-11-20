@@ -1,6 +1,8 @@
 package com.stylefeng.guns.modular.system.model;
 
+import com.baomidou.mybatisplus.enums.IdType;
 import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -12,13 +14,14 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-11-19
+ * @since 2018-11-20
  */
 @TableName("repo_app_content")
 public class AppContent extends Model<AppContent> {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     /**
      * app id
@@ -103,7 +106,7 @@ public class AppContent extends Model<AppContent> {
 
     @Override
     protected Serializable pkVal() {
-        return null;
+        return this.id;
     }
 
     @Override

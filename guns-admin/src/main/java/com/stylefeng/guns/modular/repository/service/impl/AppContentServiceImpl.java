@@ -1,6 +1,5 @@
 package com.stylefeng.guns.modular.repository.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.google.common.collect.Lists;
 import com.stylefeng.guns.core.common.result.Result;
@@ -8,9 +7,6 @@ import com.stylefeng.guns.modular.system.dao.*;
 import com.stylefeng.guns.modular.system.model.AppContent;
 import com.stylefeng.guns.modular.repository.service.IAppContentService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.stylefeng.guns.modular.system.model.ModelAppSource;
-import com.stylefeng.guns.modular.system.model.PhotosAppSource;
-import com.stylefeng.guns.modular.system.model.VideoAppSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,13 +26,10 @@ public class AppContentServiceImpl extends ServiceImpl<AppContentMapper, AppCont
     private AppContentMapper appContentMapper;
 
     @Autowired
-    private ModelAppSourceMapper modelAppSourceMapper;
+    private ModelRepositoryMapper modelRepositoryMapper;
 
     @Autowired
-    private VideoAppSourceMapper videoAppSourceMapper;
-
-    @Autowired
-    private PhotosAppSourceMapper photosAppSourceMapper;
+    private PicturesCategoryMapper picturesCategoryMapper;
 
     @Autowired
     private VideoRepositoryMapper videoRepositoryMapper;
@@ -55,17 +48,11 @@ public class AppContentServiceImpl extends ServiceImpl<AppContentMapper, AppCont
                 list = videoRepositoryMapper.selectListByContentId(appContent.getId());
                 break;
         case "photos":
-                wrapper = new EntityWrapper<PhotosAppSource>();
-                wrapper.eq("app_content_id",appContent.getId());
-                list = photosAppSourceMapper.selectList(wrapper);
+                list = picturesCategoryMapper.selectListByContentId(appContent.getId());
                 break;
-
         case "model":
-                wrapper = new EntityWrapper<ModelAppSource>();
-                wrapper.eq("app_content_id",appContent.getId());
-                list = modelAppSourceMapper.selectList(wrapper);
+                list = modelRepositoryMapper.selectListByContentId(appContent.getId());
                 break;
-
         }
 
         return Result.createBySuccess(list);

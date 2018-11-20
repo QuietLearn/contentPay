@@ -24,7 +24,6 @@ public class MemberWarpper extends BaseControllerWarpper {
         //typeName
         //me工厂方法
        /*
-
        map.put("appName", ConstantFactory.me().getAppName(Integer.valueOf((String) map.get("appId"))));
         map.put("appVerName", ConstantFactory.me().getAppVerName( (String)map.get("appVer")));
         map.put("channelName", ConstantFactory.me().getChannelName((String) map.get("channel")));

@@ -1,7 +1,14 @@
 package com.stylefeng.guns.modular.repository.controller.backend;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.page.PageInfoBT;
+import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.modular.system.warpper.MemberWarpper;
+import com.stylefeng.guns.modular.system.warpper.repo.ModelAppSourceWarpper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,8 +72,34 @@ public class ModelAppSourceController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        return modelAppSourceService.selectList(null);
+    public Object list(Integer appContentId) {
+        //注意改成server
+
+        if (appContentId == null) {
+            Page<ModelAppSource> page = new PageFactory<ModelAppSource>().defaultPage();
+
+            page = modelAppSourceService.selectPage(page);
+
+            List<ModelAppSource> ModelAppSourceList = page.getRecords();
+            page.setRecords((List<ModelAppSource>) super.warpObject(new ModelAppSourceWarpper(BeanKit.listToMapList(ModelAppSourceList))));
+
+            PageInfoBT<ModelAppSource> pageInfoBT = this.packForBT(page);
+
+            return pageInfoBT;
+        } else {
+            Page<ModelAppSource> page = new PageFactory<ModelAppSource>().defaultPage();
+            EntityWrapper<ModelAppSource> entityWrapper = new EntityWrapper<>();
+            if (appContentId != null && appContentId != 0) {
+                entityWrapper.eq("app_content_id", appContentId);
+            }
+
+            page = modelAppSourceService.selectPage(page, entityWrapper);
+            List<ModelAppSource> ModelAppSources = page.getRecords();
+            page.setRecords((List<ModelAppSource>) super.warpObject(new ModelAppSourceWarpper(BeanKit.listToMapList(ModelAppSources))));
+            PageInfoBT<ModelAppSource> pageInfoBT = this.packForBT(page);
+
+            return pageInfoBT;
+        }
     }
 
     /**

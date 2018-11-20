@@ -2,19 +2,17 @@
 <div class="ibox float-e-margins">
     <div class="ibox-content">
         <div class="form-horizontal">
+            <#input type="hidden"  id="id" name="" value="${item.id}" underline="true"/>
 
             <div class="row">
                 <div class="col-sm-6 b-r">
-                            <#input id="id" name="" value="${item.id}" underline="true"/>
                             <#input id="appContentId" name="应用内容id" value="${item.appContentId}" underline="true"/>
-                            <#input id="picturesCategoryId" name="图集资源库id" value="${item.picturesCategoryId}" underline="true"/>
-                            <#input id="authority" name="权限" value="${item.authority}" />
+                            <#input id="picturesCategoryId" name="图集资源库id" value="${item.picturesCategoryId}" />
                 </div>
 
                 <div class="col-sm-6">
-                            <#input id="isdel" name="" value="${item.isdel}" underline="true"/>
-                            <#input id="gmtCreated" name="" value="${item.gmtCreated}" underline="true"/>
-                            <#input id="gmtModified" name="" value="${item.gmtModified}" />
+                            <#input id="authority" name="权限" value="${item.authority}" underline="true"/>
+                            <#input id="isdel" name="" value="${item.isdel}" />
                 </div>
             </div>
 

@@ -18,4 +18,5 @@
         id, app_content_id, model_id, authority, is_del, gmt_created, gmt_modified
     </sql>
 
+
 </mapper>

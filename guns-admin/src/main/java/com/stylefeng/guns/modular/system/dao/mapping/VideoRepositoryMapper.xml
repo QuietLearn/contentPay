@@ -33,10 +33,10 @@
     </sql>
 
     <select id="selectListByContentId" parameterType="long" resultMap="BaseResultMap">
-        select <include refid="Base_Column_List"/>
-        from repo_video_repository
-        left outer join repo_video_app_source
-        on
-        where
+        select r.id, r.category_id, r.picture_id, r.cover_image, r.labelIds, r.title, r.introduction, r.plays_number, r.video_addressId, r.country_id, r.times, r.is_del, r.sort, r.onePastTwo, r.fivePastFour, r.xPastx, r.browse, r.modelId, r.collection_count, r.gmt_created, r.gmt_modified
+        from repo_video_repository r
+        left outer join repo_video_app_source s
+        on r.id = s.video_id
+        where s.app_content_id = #{contentId}
     </select>
 </mapper>

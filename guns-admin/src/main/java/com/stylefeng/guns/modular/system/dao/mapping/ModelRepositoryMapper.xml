@@ -35,4 +35,11 @@
         id, name, user_name, password, pwdMD5, role, pic_address, description, signature, notes, sort, is_del, nick_name, height, measurements, countriesid, age, characteristics, birth, focus_count, is_chat, mobile, gmt_created, gmt_modified
     </sql>
 
+    <select id="selectListByContentId" parameterType="long" resultMap="BaseResultMap">
+        select m.id, m.name, m.user_name, m.password, m.pwdMD5, m.role, m.pic_address, m.description, m.signature, m.notes, m.sort, m.is_del, m.nick_name, m.height, m.measurements, m.countriesid, m.age, m.characteristics, m.birth, m.focus_count, m.is_chat, m.mobile, m.gmt_created, m.gmt_modified
+        from  repo_model_repository m
+        left outer join  repo_model_app_source s
+        on m.id = s.model_id
+        where s.app_content_id = #{contentId}
+    </select>
 </mapper>

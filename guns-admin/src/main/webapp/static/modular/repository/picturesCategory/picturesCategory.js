@@ -14,7 +14,7 @@ var PicturesCategory = {
 PicturesCategory.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: '图片分类集id(图集分类)', field: 'categoryId', visible: true, align: 'center', valign: 'middle'},
             {title: '图集标签', field: 'labelIds', visible: true, align: 'center', valign: 'middle'},
             {title: '图集名称', field: 'name', visible: true, align: 'center', valign: 'middle'},
@@ -26,10 +26,10 @@ PicturesCategory.initColumn = function () {
             {title: '收藏次数', field: 'collectionCount', visible: true, align: 'center', valign: 'middle'},
             {title: '图片地址', field: 'picAddress', visible: true, align: 'center', valign: 'middle'},
             {title: '缩略图地址', field: 'scalePicaddress', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
+            {title: '', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
             {title: '封面图片地址', field: 'cover', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtModified', visible: true, align: 'center', valign: 'middle'}
+            {title: '', field: 'gmtCreated', visible: false, align: 'center', valign: 'middle'},
+            {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'}
     ];
 };
 

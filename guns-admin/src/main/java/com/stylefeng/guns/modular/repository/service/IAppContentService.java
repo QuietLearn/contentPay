@@ -10,9 +10,8 @@ import com.baomidou.mybatisplus.service.IService;
  * </p>
  *
  * @author hyj
- * @since 2018-11-19
+ * @since 2018-11-20
  */
 public interface IAppContentService extends IService<AppContent> {
-
-    Result searchAppContent(String appId, String appVer, String channelId,String type);
+    Result searchAppContent(String appId, String appVer, String channelId, String type);
 }

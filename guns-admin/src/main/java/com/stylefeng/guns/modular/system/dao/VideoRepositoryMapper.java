@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface VideoRepositoryMapper extends BaseMapper<VideoRepository> {
 
-    List<VideoRepository> selectListByContentId(Long id);
+    List<VideoRepository> selectListByContentId(Long contentId);
 }

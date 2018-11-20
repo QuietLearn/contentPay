@@ -14,13 +14,25 @@ var PhotosAppSource = {
 PhotosAppSource.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: '应用内容id', field: 'appContentId', visible: true, align: 'center', valign: 'middle'},
             {title: '图集资源库id', field: 'picturesCategoryId', visible: true, align: 'center', valign: 'middle'},
             {title: '权限', field: 'authority', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'isdel', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
-            {title: '', field: 'gmtModified', visible: true, align: 'center', valign: 'middle'}
+            {title: '逻辑删除', field: 'isdel', visible: false, align: 'center', valign: 'middle'},
+
+        {title: '图片分类集id(图集分类)', field: 'categoryId', visible: true, align: 'center', valign: 'middle'},
+        {title: '图集标签', field: 'labelIds', visible: true, align: 'center', valign: 'middle'},
+        {title: '图集名称', field: 'name', visible: true, align: 'center', valign: 'middle'},
+        {title: '图片数量', field: 'picturesNum', visible: true, align: 'center', valign: 'middle'},
+        {title: '浏览次数', field: 'views', visible: true, align: 'center', valign: 'middle'},
+        {title: '所属模特', field: 'modelId', visible: true, align: 'center', valign: 'middle'},
+        {title: '点赞次数', field: 'thumbupCount', visible: true, align: 'center', valign: 'middle'},
+        {title: '分享次数', field: 'shareCount', visible: true, align: 'center', valign: 'middle'},
+        {title: '收藏次数', field: 'collectionCount', visible: true, align: 'center', valign: 'middle'},
+        {title: '图片地址', field: 'picAddress', visible: true, align: 'center', valign: 'middle'},
+        {title: '缩略图地址', field: 'scalePicaddress', visible: true, align: 'center', valign: 'middle'},
+        {title: '封面图片地址', field: 'cover', visible: true, align: 'center', valign: 'middle'},
+
     ];
 };
 
@@ -147,6 +159,6 @@ PhotosAppSource.search = function () {
 $(function () {
     var defaultColunms = PhotosAppSource.initColumn();
     var table = new BSTable(PhotosAppSource.id, "/photosAppSource/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     PhotosAppSource.table = table.init();
 });

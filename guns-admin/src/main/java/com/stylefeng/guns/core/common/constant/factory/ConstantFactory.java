@@ -52,6 +52,10 @@ public class ConstantFactory implements IConstantFactory {
 
     private IVideoService videoService = SpringContextHolder.getBean(IVideoService.class);
 
+    private VideoRepositoryMapper videoRepositoryMapper = SpringContextHolder.getBean(VideoRepositoryMapper.class);
+    private ModelRepositoryMapper modelRepositoryMapper = SpringContextHolder.getBean(ModelRepositoryMapper.class);
+    private PicturesCategoryMapper picturesCategoryMapper = SpringContextHolder.getBean(PicturesCategoryMapper.class);
+
     public static IConstantFactory me() {
         return SpringContextHolder.getBean("constantFactory");
     }
@@ -423,5 +427,17 @@ public class ConstantFactory implements IConstantFactory {
         wrapper.eq("v_id",videoId);
         String videoName = (String) videoService.selectObj(wrapper);
         return videoName;
+    }
+
+    public VideoRepository getVideoRepositoryById(Long videoId){
+        return videoRepositoryMapper.selectById(videoId);
+    }
+
+    public ModelRepository getModelRepositoryById(Long modelId){
+        return modelRepositoryMapper.selectById(modelId);
+    }
+
+    public PicturesCategory getPicturesCategoryById(Long picturesId){
+        return picturesCategoryMapper.selectById(picturesId);
     }
 }

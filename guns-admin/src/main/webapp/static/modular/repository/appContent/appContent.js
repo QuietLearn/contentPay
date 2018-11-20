@@ -13,8 +13,8 @@ var AppContent = {
  */
 AppContent.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
-            {title: '', field: 'id', visible: true, align: 'center', valign: 'middle'},
+        {field: 'selectItem', checkbox: true},
+            {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: 'app id', field: 'appId', visible: true, align: 'center', valign: 'middle'},
             {title: '版本号', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
             {title: '发行渠道', field: 'channelId', visible: true, align: 'center', valign: 'middle'},

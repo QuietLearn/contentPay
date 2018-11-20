@@ -22,7 +22,7 @@ public class VideoRepository extends Model<VideoRepository> {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
     /**
      * 所属视频分类
      */
@@ -105,11 +105,11 @@ public class VideoRepository extends Model<VideoRepository> {
     private Date gmtModified;
 
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
