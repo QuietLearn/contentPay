@@ -19,10 +19,94 @@ AppContent.initColumn = function () {
             {title: '版本号', field: 'appVer', visible: true, align: 'center', valign: 'middle'},
             {title: '发行渠道', field: 'channelId', visible: true, align: 'center', valign: 'middle'},
             {title: '应用名', field: 'name', visible: true, align: 'center', valign: 'middle'},
+
+        {title: '内容', visible: true, align: 'center', valign: 'middle',formatter:hrefFormatter },
+
             {title: '', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtModified', visible: true, align: 'center', valign: 'middle'}
     ];
 };
+
+/**
+ * 下拉菜单
+ * @returns {string}
+ */
+function operateFormatter() {
+    return [
+        '<div class="btn-group">\n' +
+        '    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">原始\n' +
+        '        <span class="caret"></span>\n' +
+        '    </button>\n' +
+        '    <ul class="dropdown-menu" style="z-index:9999999;height:100px;overflow:scroll" role="menu">\n' +
+        '        <li>\n' +
+        '            <a href="#">功能</a>\n' +
+        '        </li>\n' +
+        '        <li>\n' +
+        '            <a href="#">另一个功能</a>\n' +
+        '        </li>\n' +
+        '        <li>\n' +
+        '            <a href="#">其他</a>\n' +
+        '        </li>\n' +
+        '        <li class="divider"></li>\n' +
+        '        <li>\n' +
+        '            <a href="#">分离的链接</a>\n' +
+        '        </li>\n' +
+        '    </ul>\n' +
+        '</div>',]
+        .join('');
+};
+/**
+ * 下拉选择框
+ * @param value
+ * @param row
+ * @param index
+ * @returns {string}
+ * selected='selected'
+ */
+function operateFormatter1(value, row, index) {
+    return [
+        '<select class=\'selectpicker show-tick form-control\'>' +
+        '<option value=\'Item 1\' ><a href=\'#\' >图集内容</a></option>' +
+        '<option value=\'Item 2\' ><a href=\'#\' >视频内容</a></option>' +
+        '<option value=\'Item 2\' ><a href=\'\\modelAppSource\' >模特内容</a></option>' +
+        '</select>',]
+        .join('');
+};
+
+function hrefFormatter(value, row, index) {
+
+    return [
+        "<div id=\"tabs\">" +
+        "<a onclick=\"viewPhotos('"+row.id+"')\">图集内容</a> &nbsp;" +
+        "<a onclick=\"viewVideo('"+row.id+"')\">视频内容</a> <br /> " +
+        "<a onclick=\"viewModel('"+row.id+"')\">模特内容</a>" +
+        "</div>",]
+        .join('');
+};
+
+
+function viewPhotos(rowId){
+    this.href = "/photosAppSource?appContentId="+rowId;
+    window.open(this.href,"_self");
+};
+
+function viewVideo(rowId){
+    this.href = "/videoAppSource?appContentId="+rowId;
+    window.open(this.href,"_self");
+};
+
+function viewModel(rowId){
+    this.href = "/modelAppSource?appContentId="+rowId;
+    window.open(this.href,"_self");
+};
+
+$(function () {
+    $('#tabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+});
+
 
 /**
  * 检查是否选中
@@ -150,3 +234,4 @@ $(function () {
     table.setPaginationType("client");
     AppContent.table = table.init();
 });
+

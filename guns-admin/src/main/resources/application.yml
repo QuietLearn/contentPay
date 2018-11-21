@@ -25,6 +25,7 @@ spring:
     static-path-pattern: /static/**
     view:
       prefix: /WEB-INF/view
+    
   devtools:
     restart:
       enabled: false

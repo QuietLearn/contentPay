@@ -7,13 +7,11 @@ import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
-import com.stylefeng.guns.modular.system.model.PhotosAppSource;
-import com.stylefeng.guns.modular.system.warpper.MemberWarpper;
 import com.stylefeng.guns.modular.system.warpper.repo.VideoAppSourceWarpper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -45,7 +43,10 @@ public class VideoAppSourceController extends BaseController {
      * 跳转到视频应用内容首页
      */
     @RequestMapping("")
-    public String index() {
+    public String index(Integer appContentId, Model model) {
+        if (appContentId!=null){
+            model.addAttribute("apdSearch",appContentId);
+        }
         return PREFIX + "videoAppSource.html";
     }
 

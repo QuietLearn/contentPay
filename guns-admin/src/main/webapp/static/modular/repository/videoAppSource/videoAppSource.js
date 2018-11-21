@@ -158,7 +158,8 @@ function deleteVideoAppSources(ids) {
  */
 VideoAppSource.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['appContentId'] = $("#appContentId").val();
+    queryData['appContentId1'] = $("#appContentId1").val();
     VideoAppSource.table.refresh({query: queryData});
 };
 

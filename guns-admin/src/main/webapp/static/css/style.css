@@ -122,7 +122,7 @@ body.body-small .navbar-top-links li:last-child {
     position: absolute;
     text-shadow: none;
     top: 100%;
-    z-index: 1000;
+    z-index: 1000000;
     border-radius: 0;
     box-shadow: 0 0 3px rgba(86, 96, 117, 0.3);
 }
