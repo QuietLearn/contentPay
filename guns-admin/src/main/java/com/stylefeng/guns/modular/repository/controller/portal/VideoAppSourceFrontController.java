@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = {"资源库","查找对应应用内容接口"})
 @RestController
-@RequestMapping("/front/appContent")
-public class AppContentFrontController extends BaseController {
+@RequestMapping("/front/videoAppSource")
+public class VideoAppSourceFrontController extends BaseController {
 
     @Autowired
     private IAppContentService appContentService;
@@ -38,11 +38,6 @@ public class AppContentFrontController extends BaseController {
        return appContentService.searchAppContent(appId,appVer,channelId,type);
     }
 
-
-    /*@RequestMapping(value = "/checkPermission",method = RequestMethod.POST)
-    public Result checkPermission(String type,String uuidToken){
-        return appContentService.checkPermission(type);
-    }*/
 
     /*@RequestMapping(value="/error")
     public Result Get(){

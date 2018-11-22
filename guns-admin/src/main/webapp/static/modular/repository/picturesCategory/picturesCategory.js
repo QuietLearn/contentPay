@@ -13,7 +13,7 @@ var PicturesCategory = {
  */
 PicturesCategory.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
+        {field: 'selectItem', checkbox: true},
             {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: '图片分类集id(图集分类)', field: 'categoryId', visible: true, align: 'center', valign: 'middle'},
             {title: '图集标签', field: 'labelIds', visible: true, align: 'center', valign: 'middle'},
@@ -149,13 +149,14 @@ function deletePicturesCategorys(ids) {
  */
 PicturesCategory.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+
+    queryData['isDelObject'] = $("#isDelObject").val();
     PicturesCategory.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = PicturesCategory.initColumn();
     var table = new BSTable(PicturesCategory.id, "/picturesCategory/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     PicturesCategory.table = table.init();
 });

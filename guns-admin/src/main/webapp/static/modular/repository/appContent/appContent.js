@@ -1,3 +1,5 @@
+
+
 /**
  * 应用内容版本管理初始化
  */
@@ -77,9 +79,9 @@ function hrefFormatter(value, row, index) {
 
     return [
         "<div id=\"tabs\">" +
-        "<a onclick=\"viewPhotos('"+row.id+"')\">图集内容</a> &nbsp;" +
-        "<a onclick=\"viewVideo('"+row.id+"')\">视频内容</a> <br /> " +
-        "<a onclick=\"viewModel('"+row.id+"')\">模特内容</a>" +
+        "<a name='tabMenuItem' class='J_menuItem' data-index='16' onclick=\"viewPhotos('"+row.id+"')\">图集内容</a> &nbsp;" +
+        "<a name='tabMenuItem' class='J_menuItem' data-index='17' onclick=\"viewVideo('"+row.id+"')\">视频内容</a> <br /> " +
+        "<a name='tabMenuItem' class='J_menuItem' data-index='18' onclick=\"viewModel('"+row.id+"')\">模特内容</a>" +
         "</div>",]
         .join('');
 };
@@ -95,17 +97,19 @@ function viewVideo(rowId){
     window.open(this.href,"_self");
 };
 
+
+
 function viewModel(rowId){
     this.href = "/modelAppSource?appContentId="+rowId;
     window.open(this.href,"_self");
 };
 
-$(function () {
-    $('#tabs a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
-    })
-});
+
+$('#tabs a').click = function goVideoTab(e) {
+    e.preventDefault();
+    $(this).tab('show');
+};
+
 
 
 /**

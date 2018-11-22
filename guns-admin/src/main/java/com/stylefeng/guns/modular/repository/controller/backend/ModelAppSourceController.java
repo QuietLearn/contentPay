@@ -44,7 +44,12 @@ public class ModelAppSourceController extends BaseController {
      * 跳转到模特应用内容首页
      */
     @RequestMapping("")
-    public String index() {
+    public String index(Integer appContentId, Model model) {
+        if (appContentId!=null){
+            model.addAttribute("apdSearch",appContentId);
+        }else{
+            model.addAttribute("apdSearch",null);
+        }
         return PREFIX + "modelAppSource.html";
     }
 

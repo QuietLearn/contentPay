@@ -1,7 +1,14 @@
 package com.stylefeng.guns.modular.repository.controller.backend;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.google.common.collect.Lists;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.page.PageInfoBT;
+import com.stylefeng.guns.core.support.BeanKit;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,10 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 import java.util.Date;
+
 import com.stylefeng.guns.core.log.LogObjectHolder;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.stylefeng.guns.modular.system.model.PicturesCategory;
 import com.stylefeng.guns.modular.repository.service.IPicturesCategoryService;
+
 import java.util.Date;
 import java.util.List;
 
@@ -37,7 +46,12 @@ public class PicturesCategoryController extends BaseController {
      * 跳转到图集资源库首页
      */
     @RequestMapping("")
-    public String index() {
+    public String index(Integer isDel, Model model) {
+        if (isDel != null) {
+            model.addAttribute("isDel", isDel);
+        } else {
+            model.addAttribute("isDel", null);
+        }
         return PREFIX + "picturesCategory.html";
     }
 
@@ -55,7 +69,7 @@ public class PicturesCategoryController extends BaseController {
     @RequestMapping("/picturesCategory_update/{picturesCategoryId}")
     public String picturesCategoryUpdate(@PathVariable Integer picturesCategoryId, Model model) {
         PicturesCategory picturesCategory = picturesCategoryService.selectById(picturesCategoryId);
-        model.addAttribute("item",picturesCategory);
+        model.addAttribute("item", picturesCategory);
         LogObjectHolder.me().set(picturesCategory);
         return PREFIX + "picturesCategory_edit.html";
     }
@@ -65,9 +79,21 @@ public class PicturesCategoryController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        return picturesCategoryService.selectList(null);
+    public Object list(Integer isDelObject) {
+        //注意改成server
+        Page<PicturesCategory> page = new PageFactory<PicturesCategory>().defaultPage();
+        EntityWrapper<PicturesCategory> entityWrapper = new EntityWrapper<>();
+        if (isDelObject == null) {
+            isDelObject = 1;
+        }
+        entityWrapper.eq("is_del", isDelObject);
+        page = picturesCategoryService.selectPage(page, entityWrapper);
+        PageInfoBT<PicturesCategory> pageInfoBT = this.packForBT(page);
+
+        return pageInfoBT;
     }
+
+
 
     /**
      * 新增图集资源库
@@ -99,12 +125,23 @@ public class PicturesCategoryController extends BaseController {
     public Object deletePicturesCategoryList(@RequestParam String ids) {
         String[] ss = ids.split(",");
         List<String> picturesCategoryIdList = Arrays.asList(ss);
-        boolean deleteResult = picturesCategoryService.deleteBatchIds(picturesCategoryIdList);
-        if (deleteResult){
+        List<PicturesCategory> picturesCategoryList = Lists.newArrayList();
+        for (String id : picturesCategoryIdList) {
+            PicturesCategory picturesCategory = picturesCategoryService.selectById(id);
+            picturesCategory.setIsDel(0);
+            picturesCategoryList.add(picturesCategory);
+        }
+
+        /*Wrapper<PicturesCategory> wrapper = new EntityWrapper<>();
+        wrapper.*/
+        boolean updateResult = picturesCategoryService.updateBatchById(picturesCategoryList, 100);
+        //boolean deleteResult = picturesCategoryService.deleteBatchIds(picturesCategoryIdList);
+        if (updateResult) {
             return SUCCESS_TIP;
         }
         return Result.createByErrorMessage("图集资源库批量删除失败，请稍后再试");
     }
+
     /**
      * 修改图集资源库
      */

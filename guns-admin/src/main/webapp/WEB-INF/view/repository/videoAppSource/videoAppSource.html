@@ -17,7 +17,7 @@
                                                 type="button">应用内容id
                                         </button>
                                     </div>
-                                    <input type="text" class="form-control" id="appContentId" />
+                                    <input type="text" class="form-control" id="appContentId" value="${apdSearch}" />
 
                                 </div>
 
@@ -47,12 +47,14 @@
 <script src="${ctxPath}/static/modular/repository/videoAppSource/videoAppSource.js"></script>
 <script>
     $(function () {
-        // VideoAppSource.search();
+
         //${parameter.userId}
-        var apdSearchVal = "${parameter['apdSearch']}";
+        //var apdSearchVal = "${parameter['apdSearch']}";
+       /* var apdSearchVal = '${apdSearch}';
         if(apdSearchVal!=null){
             $("#appContentId").val(apdSearchVal);
-        }
+        }*/
+        VideoAppSource.search();
     });
 </script>
 @}

@@ -46,6 +46,8 @@ public class VideoAppSourceController extends BaseController {
     public String index(Integer appContentId, Model model) {
         if (appContentId!=null){
             model.addAttribute("apdSearch",appContentId);
+        }else{
+            model.addAttribute("apdSearch",null);
         }
         return PREFIX + "videoAppSource.html";
     }
