@@ -108,6 +108,19 @@ public class PicturesCategoryController extends BaseController {
     }
 
     /**
+     * 还原图集资源库垃圾站
+     */
+    @RequestMapping(value = "/restore")
+    @ResponseBody
+    public Object restore(@RequestParam String ids) {
+        String[] ss = ids.split(",");
+        List<String> picturesCategoryIdList = Arrays.asList(ss);
+        boolean deleteResult = picturesCategoryService.deleteBatchIds(picturesCategoryIdList);
+        return SUCCESS_TIP;
+    }
+
+
+    /**
      * 删除图集资源库
      */
     @RequestMapping(value = "/delete")

@@ -24,8 +24,8 @@
                             @if(shiro.hasPermission("/picturesCategory/update")){
                                 <#button name="修改" icon="fa-edit" clickFun="PicturesCategory.openPicturesCategoryDetail()" space="true"/>
                             @}
-                             @if(shiro.hasPermission("/picturesCategory/delete_list")){
-                                <#button name="删除" icon="fa-remove" clickFun="deletePicturesCategoryList()" space="true"/>
+                            @if(shiro.hasPermission("/picturesCategory/restore")){
+                                <#button name="还原" icon="fa-restore" clickFun="restore()" space="true"/>
                             @}
                         </div>
                         <#table id="PicturesCategoryTable"/>
