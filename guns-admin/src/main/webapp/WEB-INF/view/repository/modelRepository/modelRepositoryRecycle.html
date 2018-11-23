@@ -11,6 +11,7 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <#NameCon id="condition" name="名称" />
+                                <!--${isDel!}   0-->
                                 <input type="hidden" id="isDelObject"  value="${isDel}">
                             </div>
                             <div class="col-sm-3">
@@ -18,27 +19,24 @@
                             </div>
                         </div>
                         <div class="hidden-xs" id="ModelRepositoryTableToolbar" role="group">
-                            @if(shiro.hasPermission("/modelRepository/add")){
-                                <#button name="添加" icon="fa-plus" clickFun="ModelRepository.openAddModelRepository()"/>
+                            @if(shiro.hasPermission("/videoRepository/delete_list")){
+                                <#button name="还原" icon="fa-reply" clickFun="deleteModelRepositoryList(false)" space="true"/>
                             @}
-                            @if(shiro.hasPermission("/modelRepository/update")){
-                                <#button name="修改" icon="fa-edit" clickFun="ModelRepository.openModelRepositoryDetail()" space="true"/>
-                            @}
-                             @if(shiro.hasPermission("/modelRepository/delete_list")){
-                                <#button name="删除" icon="fa-remove" clickFun="deleteModelRepositoryList(true)" space="true"/>
+                             @if(shiro.hasPermission("/modelRepository/really_delete")){
+                                <#button name="删除" icon="fa-remove" clickFun="reallyDelete()" space="true"/>
                             @}
                         </div>
                         <#table id="ModelRepositoryTable"/>
                     </div>
                 </div>
-            </div>
+            </div>video
         </div>
     </div>
 </div>
 <script src="${ctxPath}/static/modular/repository/modelRepository/modelRepository.js"></script>
 <script>
     $(function () {
-        PicturesCategory.search();
+        ModelRepository.search();
     });
 </script>
 @}

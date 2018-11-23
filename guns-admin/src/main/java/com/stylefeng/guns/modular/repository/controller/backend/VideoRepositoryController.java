@@ -1,7 +1,14 @@
 package com.stylefeng.guns.modular.repository.controller.backend;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.google.common.collect.Lists;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.page.PageInfoBT;
+import com.stylefeng.guns.modular.system.model.ModelRepository;
+import com.stylefeng.guns.modular.system.model.PicturesCategory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,8 +44,26 @@ public class VideoRepositoryController extends BaseController {
      * 跳转到视频资源库首页
      */
     @RequestMapping("")
-    public String index() {
+    public String index(Integer isDel, Model model) {
+        if (isDel != null) {
+            model.addAttribute("isDel", isDel);
+        } else {
+            model.addAttribute("isDel", null);
+        }
         return PREFIX + "videoRepository.html";
+    }
+
+    /**
+     * 跳转到图集回收站
+     */
+    @RequestMapping("/recycle")
+    public String recycle(Integer isDel, Model model) {
+        if (isDel != null) {
+            model.addAttribute("isDel", isDel);
+        } else {
+            model.addAttribute("isDel", null);
+        }
+        return PREFIX + "videoRepositoryRecycle.html";
     }
 
     /**
@@ -65,8 +90,17 @@ public class VideoRepositoryController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        return videoRepositoryService.selectList(null);
+    public Object list(Integer isDelObject) {
+        //注意改成server
+        Page<VideoRepository> page = new PageFactory<VideoRepository>().defaultPage();
+        EntityWrapper<VideoRepository> entityWrapper = new EntityWrapper<>();
+        if (isDelObject == null) {
+            isDelObject = 1;
+        }
+        entityWrapper.eq("is_del", isDelObject);
+        page = videoRepositoryService.selectPage(page, entityWrapper);
+        PageInfoBT<VideoRepository> pageInfoBT = this.packForBT(page);
+        return pageInfoBT;
     }
 
     /**
@@ -92,15 +126,59 @@ public class VideoRepositoryController extends BaseController {
     }
 
     /**
+     * 真删除
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value = "/really_delete")
+    @ResponseBody
+    public Object ReallyDelete(@RequestParam String ids) {
+        String[] ss = ids.split(",");
+        List<String> VideoRepositoryIdList = Arrays.asList(ss);
+        boolean deleteResult = videoRepositoryService.deleteBatchIds(VideoRepositoryIdList);
+
+        if (deleteResult) {
+            return SUCCESS_TIP;
+        }
+        return Result.createByErrorMessage("视频回收站真删除失败，请稍后再试");
+    }
+
+    /**
      * 批量删除视频资源库
      */
     @RequestMapping(value = "/delete_list")
     @ResponseBody
     public Object deleteVideoRepositoryList(@RequestParam String ids) {
+
+
+        boolean isAllDel = false;
+        boolean isAllNotDel = false;
+
         String[] ss = ids.split(",");
         List<String> videoRepositoryIdList = Arrays.asList(ss);
-        boolean deleteResult = videoRepositoryService.deleteBatchIds(videoRepositoryIdList);
-        if (deleteResult){
+        List<VideoRepository> videoRepositoryList = Lists.newArrayList();
+        for (String id : videoRepositoryIdList) {
+            VideoRepository videoRepository = videoRepositoryService.selectById(id);
+            Integer isDel = videoRepository.getIsDel();
+            if (isDel==1){
+                isAllNotDel = true;
+                videoRepository.setIsDel(0);
+            } else {
+                isAllDel = true;
+                videoRepository.setIsDel(1);
+            }
+
+            if (isAllNotDel==isAllDel){
+                return Result.createByErrorMessage("视频状态更新失败，删除状态值不同");
+            }
+
+            videoRepositoryList.add(videoRepository);
+        }
+
+
+        boolean updateResult = videoRepositoryService.updateBatchById(videoRepositoryList, 100);
+
+        if (updateResult) {
             return SUCCESS_TIP;
         }
         return Result.createByErrorMessage("视频资源库批量删除失败，请稍后再试");

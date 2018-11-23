@@ -66,7 +66,6 @@ public class BuriedPointController extends BaseController {
     public String buriedPointUpdate(@PathVariable Integer buriedPointId, Model model) {
         BuriedPoint buriedPoint = buriedPointService.selectById(buriedPointId);
         model.addAttribute("item",buriedPoint);
-        LogObjectHolder.me().set(buriedPoint);
         return PREFIX + "buriedPoint_edit.html";
     }
 

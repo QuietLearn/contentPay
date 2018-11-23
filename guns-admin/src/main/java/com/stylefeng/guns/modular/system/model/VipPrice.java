@@ -14,7 +14,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author hyj
- * @since 2018-11-09
+ * @since 2018-11-23
  */
 @TableName("cps_vip_price")
 public class VipPrice extends Model<VipPrice> {
@@ -43,6 +43,10 @@ public class VipPrice extends Model<VipPrice> {
      * 持续时间
      */
     private String aging;
+    /**
+     * 拥有权限
+     */
+    private Integer authority;
     @TableField("gmt_created")
     private Date gmtCreated;
     @TableField("gmt_updated")
@@ -89,6 +93,14 @@ public class VipPrice extends Model<VipPrice> {
         this.aging = aging;
     }
 
+    public Integer getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(Integer authority) {
+        this.authority = authority;
+    }
+
     public Date getGmtCreated() {
         return gmtCreated;
     }
@@ -118,6 +130,7 @@ public class VipPrice extends Model<VipPrice> {
         ", name=" + name +
         ", price=" + price +
         ", aging=" + aging +
+        ", authority=" + authority +
         ", gmtCreated=" + gmtCreated +
         ", gmtUpdated=" + gmtUpdated +
         "}";

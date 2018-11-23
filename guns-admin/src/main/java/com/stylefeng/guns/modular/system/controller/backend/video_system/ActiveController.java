@@ -64,7 +64,6 @@ public class ActiveController extends BaseController {
     public String activeUpdate(@PathVariable Integer activeId, Model model) {
         Active active = activeService.selectById(activeId);
         model.addAttribute("item",active);
-        LogObjectHolder.me().set(active);
         return PREFIX + "active_edit.html";
     }
 

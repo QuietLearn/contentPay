@@ -18,14 +18,11 @@
                             </div>
                         </div>
                         <div class="hidden-xs" id="PicturesCategoryTableToolbar" role="group">
-                            @if(shiro.hasPermission("/picturesCategory/add")){
-                                <#button name="添加" icon="fa-plus" clickFun="PicturesCategory.openAddPicturesCategory()"/>
+                            @if(shiro.hasPermission("/picturesCategory/delete_list")){
+                                <#button name="还原" icon="fa-reply" clickFun="deletePicturesCategoryList(false)" space="true"/>
                             @}
-                            @if(shiro.hasPermission("/picturesCategory/update")){
-                                <#button name="修改" icon="fa-edit" clickFun="PicturesCategory.openPicturesCategoryDetail()" space="true"/>
-                            @}
-                            @if(shiro.hasPermission("/picturesCategory/restore")){
-                                <#button name="还原" icon="fa-restore" clickFun="restore()" space="true"/>
+                            @if(shiro.hasPermission("/picturesCategory/really_delete")){
+                              <#button name="删除" icon="fa-remove" clickFun="reallyDelete()" space="true"/>
                             @}
                         </div>
                         <#table id="PicturesCategoryTable"/>

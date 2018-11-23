@@ -23,20 +23,11 @@
                                 <#button name="搜索" icon="fa-search" clickFun="PlayHistory.search()"/>
                             </div>
                         </div>
-                        <!--<div class="hidden-xs" id="PlayHistoryTableToolbar" role="group">
-                            @if(shiro.hasPermission("/playHistory/add")){
-                                <#button name="添加" icon="fa-plus" clickFun="PlayHistory.openAddPlayHistory()"/>
-                            @}
+                        <div class="hidden-xs" id="PlayHistoryTableToolbar" role="group">
                             @if(shiro.hasPermission("/playHistory/update")){
-                                <#button name="修改" icon="fa-edit" clickFun="PlayHistory.openPlayHistoryDetail()" space="true"/>
+                                <#button name="详情" icon="fa-edit" clickFun="PlayHistory.openPlayHistoryDetail()" space="true"/>
                             @}
-                            @if(shiro.hasPermission("/playHistory/delete")){
-                                <#button name="删除" icon="fa-remove" clickFun="PlayHistory.delete()" space="true"/>
-                            @}
-                            @if(shiro.hasPermission("/playHistory/delete_list")){
-                            <#button name="批量删除" icon="fa-remove" clickFun="deletePlayhistoryList()" space="true"/>
-                            @}
-                        </div>-->
+                        </div>
                         <#table id="PlayHistoryTable"/>
                     </div>
                 </div>

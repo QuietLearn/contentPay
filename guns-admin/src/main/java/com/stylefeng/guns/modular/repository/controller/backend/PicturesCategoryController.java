@@ -56,6 +56,19 @@ public class PicturesCategoryController extends BaseController {
     }
 
     /**
+     * 跳转到图集回收站
+     */
+    @RequestMapping("/recycle")
+    public String recycle(Integer isDel, Model model) {
+        if (isDel != null) {
+            model.addAttribute("isDel", isDel);
+        } else {
+            model.addAttribute("isDel", null);
+        }
+        return PREFIX + "picturesCategoryRecycle.html";
+    }
+
+    /**
      * 跳转到添加图集资源库
      */
     @RequestMapping("/picturesCategory_add")
@@ -107,17 +120,7 @@ public class PicturesCategoryController extends BaseController {
         return SUCCESS_TIP;
     }
 
-    /**
-     * 还原图集资源库垃圾站
-     */
-    @RequestMapping(value = "/restore")
-    @ResponseBody
-    public Object restore(@RequestParam String ids) {
-        String[] ss = ids.split(",");
-        List<String> picturesCategoryIdList = Arrays.asList(ss);
-        boolean deleteResult = picturesCategoryService.deleteBatchIds(picturesCategoryIdList);
-        return SUCCESS_TIP;
-    }
+
 
 
     /**
@@ -131,24 +134,57 @@ public class PicturesCategoryController extends BaseController {
     }
 
     /**
-     * 批量删除图集资源库
+     * 真删除
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value = "/really_delete")
+    @ResponseBody
+    public Object ReallyDelete(@RequestParam String ids) {
+        String[] ss = ids.split(",");
+        List<String> picturesCategoryIdList = Arrays.asList(ss);
+        boolean deleteResult = picturesCategoryService.deleteBatchIds(picturesCategoryIdList);
+
+
+        if (deleteResult) {
+            return SUCCESS_TIP;
+        }
+        return Result.createByErrorMessage("图集回收站真删除失败，请稍后再试");
+    }
+
+    /**
+     * 改变删除状态
      */
     @RequestMapping(value = "/delete_list")
     @ResponseBody
-    public Object deletePicturesCategoryList(@RequestParam String ids) {
+    public Object changePicturesCategoryListDeleteState(@RequestParam String ids) {
+        boolean isAllDel = false;
+        boolean isAllNotDel = false;
+
         String[] ss = ids.split(",");
         List<String> picturesCategoryIdList = Arrays.asList(ss);
         List<PicturesCategory> picturesCategoryList = Lists.newArrayList();
         for (String id : picturesCategoryIdList) {
             PicturesCategory picturesCategory = picturesCategoryService.selectById(id);
-            picturesCategory.setIsDel(0);
+            Integer isDel = picturesCategory.getIsDel();
+            if (isDel==1){
+                isAllNotDel = true;
+                picturesCategory.setIsDel(0);
+            } else {
+                isAllDel = true;
+                picturesCategory.setIsDel(1);
+            }
+
+            if (isAllNotDel==isAllDel){
+                return Result.createByErrorMessage("图集状态更新失败，删除状态值不同");
+            }
+
             picturesCategoryList.add(picturesCategory);
         }
 
-        /*Wrapper<PicturesCategory> wrapper = new EntityWrapper<>();
-        wrapper.*/
+
         boolean updateResult = picturesCategoryService.updateBatchById(picturesCategoryList, 100);
-        //boolean deleteResult = picturesCategoryService.deleteBatchIds(picturesCategoryIdList);
+
         if (updateResult) {
             return SUCCESS_TIP;
         }

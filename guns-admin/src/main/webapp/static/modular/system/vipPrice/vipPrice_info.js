@@ -50,6 +50,7 @@ VipPriceInfoDlg.collectData = function() {
     .set('name')
     .set('price')
     .set('aging')
+    .set('authority')
     .set('gmtCreated')
     .set('gmtUpdated');
 }

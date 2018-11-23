@@ -6,42 +6,37 @@
             <div class="row">
                 <div class="col-sm-6 b-r">
 
-                            <#input id="appId" name="app id" value="${item.appId}" underline="true"/>
-                            <#input id="appVer" name="app 版本号" value="${item.appVer}" underline="true"/>
-                            <#input id="channelId" name=" 渠道号" value="${item.channelId}" underline="true"/>
-                            <#input id="operator" name="运营商" value="${item.operator}" underline="true"/>
-                            <#input id="address" name="省份 地区" value="${item.address}" underline="true"/>
-                            <#input id="imsi" name="移动设备识别码" value="${item.imsi}" underline="true"/>
-                            <#input id="imei" name="移动设备身份码" value="${item.imei}" underline="true"/>
-                            <#input id="smsc" name="短信中心号码" value="${item.smsc}" underline="true"/>
-                            <#input id="isDel" name="是否删除 0 未删除 1 删除" value="${item.isDel}" underline="true"/>
-                            <#input id="activeType" name="0  开启   1  激活  2  手动开启" value="${item.activeType}" underline="true"/>
-                            <#input id="phoneType" name="手机型号" value="${item.phoneType}" underline="true"/>
-                            <#input id="phoneBrand" name="手机品牌" value="${item.phoneBrand}" />
+                            <#input id="appId" name="app id" value="${item.appId}" underline="true"  readonly="readonly"/>
+                            <#input id="appVer" name="app 版本号" value="${item.appVer}" underline="true" readonly="readonly"/>
+                            <#input id="channelId" name=" 渠道号" value="${item.channelId}" underline="true" readonly="readonly"/>
+                            <#input id="operator" name="运营商" value="${item.operator}" underline="true" readonly="readonly"/>
+                            <#input id="address" name="省份 地区" value="${item.address}" underline="true" readonly="readonly"/>
+                            <#input id="imsi" name="移动设备识别码" value="${item.imsi}" underline="true" readonly="readonly"/>
+                            <#input id="imei" name="移动设备身份码" value="${item.imei}" underline="true" readonly="readonly"/>
+                            <#input id="smsc" name="短信中心号码" value="${item.smsc}" underline="true" readonly="readonly"/>
+                            <#input id="isDel" name="是否删除 0 未删除 1 删除" value="${item.isDel}" underline="true" readonly="readonly"/>
+                            <#input id="activeType" name="0  开启   1  激活  2  手动开启" value="${item.activeType}" underline="true" readonly="readonly"/>
+                            <#input id="phoneType" name="手机型号" value="${item.phoneType}" underline="true" readonly="readonly"/>
+                            <#input id="phoneBrand" name="手机品牌" value="${item.phoneBrand}" readonly="readonly"/>
                 </div>
 
                 <div class="col-sm-6">
-                            <#input id="phoneSystem" name="手机系统" value="${item.phoneSystem}" underline="true"/>
-                            <#input id="dpi" name="分辨率" value="${item.dpi}" underline="true"/>
-                            <#input id="uuid" name="" value="${item.uuid}" underline="true"/>
-                            <#input id="mobile" name="手机号" value="${item.mobile}" underline="true"/>
-                            <#input id="iccid" name="手机识别码" value="${item.iccid}" underline="true"/>
-                            <#input id="pointType" name="埋点类型 1 安卓 2ios" value="${item.pointType}" underline="true"/>
-                            <#input id="wifiType" name="网络类型" value="${item.wifiType}" underline="true"/>
-                            <#input id="idfa" name="广告标识" value="${item.idfa}" underline="true"/>
-                            <#input id="openUdid" name="" value="${item.openUdid}" underline="true"/>
-                            <#input id="isToutiao" name="1 代表来自头条" value="${item.isToutiao}" underline="true"/>
-                            <#input id="gmtCreated" name="创建时间" value="${item.gmtCreated}" underline="true"/>
-                            <#input id="gmtModified" name="" value="${item.gmtModified}" />
+                            <#input id="phoneSystem" name="手机系统" value="${item.phoneSystem}" underline="true" readonly="readonly"/>
+                            <#input id="dpi" name="分辨率" value="${item.dpi}" underline="true" readonly="readonly"/>
+                            <#input id="uuid" name="uuid" value="${item.uuid}" underline="true" readonly="readonly"/>
+                            <#input id="mobile" name="手机号" value="${item.mobile}" underline="true" readonly="readonly"/>
+                            <#input id="iccid" name="手机识别码" value="${item.iccid}" underline="true" readonly="readonly"/>
+                            <#input id="pointType" name="埋点类型 1 安卓 2ios" value="${item.pointType}" underline="true" readonly="readonly"/>
+                            <#input id="wifiType" name="网络类型" value="${item.wifiType}" underline="true" readonly="readonly"/>
+                            <#input id="idfa" name="广告标识" value="${item.idfa}" underline="true" readonly="readonly"/>
+                            <#input id="openUdid" name="openUdid" value="${item.openUdid}" underline="true" readonly="readonly"/>
+                            <#input id="isToutiao" name="1 代表来自头条" value="${item.isToutiao}" underline="true" readonly="readonly"/>
+                            <#input id="gmtCreated" name="创建时间" value="${item.gmtCreated}" underline="true" readonly="readonly"/>
+                            <#input id="gmtModified" name="修改时间" value="${item.gmtModified}" readonly="readonly"/>
                 </div>
             </div>
 
-            <div class="row btn-group-m-t">
-                <div class="col-sm-10">
-                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ActiveInfoDlg.editSubmit()"/>
-                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ActiveInfoDlg.close()"/>
-                </div>
-            </div>
+
         </div>
 
     </div>

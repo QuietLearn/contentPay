@@ -51,7 +51,7 @@ PicturesCategory.check = function () {
  * 批量删除
  */
 
-function deletePicturesCategoryList() {
+function deletePicturesCategoryList(recycle) {
     //获取所有被选中的记录
     // + this.id
     var rows = $('#PicturesCategoryTable').bootstrapTable('getSelections');
@@ -64,9 +64,24 @@ function deletePicturesCategoryList() {
         ids += rows[i]['id'] + ",";
     }
     ids = ids.substring(0, ids.length - 1);
-    deletePicturesCategorys(ids);
+    deletePicturesCategorys(ids,recycle);
 };
 
+function reallyDelete() {
+    //获取所有被选中的记录
+    // + this.id
+    var rows = $('#PicturesCategoryTable').bootstrapTable('getSelections');
+    if (rows.length == 0) {
+        alert("请先选择要删除的记录!");
+        return;
+    }
+    var ids = '';
+    for (var i = 0; i < rows.length; i++) {
+        ids += rows[i]['id'] + ",";
+    }
+    ids = ids.substring(0, ids.length - 1);
+    reallyDeletePicturesCategorys(ids);
+};
 
 /**
  * 点击添加图集资源库
@@ -119,8 +134,14 @@ PicturesCategory.delete = function () {
 /**
  * 删除图集资源库List
  */
-function deletePicturesCategorys(ids) {
-    var msg = "您真的确定要删除吗？";
+function deletePicturesCategorys(ids,recycle) {
+    var msg ;
+    if (recycle){
+        msg = "您确定要放入回收站吗？";
+    } else {
+        msg =  "您确定要还原吗？";
+    }
+
     if (confirm(msg) == true) {
         $.ajax({
             url: Feng.ctxPath +"/picturesCategory/delete_list",
@@ -142,7 +163,28 @@ function deletePicturesCategorys(ids) {
     }
 };
 
-
+function reallyDeletePicturesCategorys(ids){
+    var msg = "您真的确定要删除吗？";
+    if (confirm(msg) == true) {
+        $.ajax({
+            url: Feng.ctxPath +"/picturesCategory/really_delete",
+            type: "post",
+            data: {
+                ids: ids
+            },
+            success: function (data) {
+                alert(data.message);
+                //重新加载记录
+                //重新加载数据
+                //Feng.success("删除成功!");
+                PicturesCategory.table.refresh();
+            }, error:function (data) {
+                alert(data.msg);
+                PicturesCategory.table.refresh();
+            }
+        });
+    }
+};
 
 /**
  * 查询图集资源库列表

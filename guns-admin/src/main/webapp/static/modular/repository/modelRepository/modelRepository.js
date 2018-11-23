@@ -13,7 +13,7 @@ var ModelRepository = {
  */
 ModelRepository.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
+        {field: 'selectItem', checkbox: true},
             {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: '模特姓名', field: 'name', visible: true, align: 'center', valign: 'middle'},
             {title: '用户名', field: 'userName', visible: true, align: 'center', valign: 'middle'},
@@ -59,7 +59,7 @@ ModelRepository.check = function () {
  * 批量删除
  */
 
-function deleteModelRepositoryList() {
+function deleteModelRepositoryList(recycle) {
     //获取所有被选中的记录
     // + this.id
     var rows = $('#ModelRepositoryTable').bootstrapTable('getSelections');
@@ -72,9 +72,24 @@ function deleteModelRepositoryList() {
         ids += rows[i]['id'] + ",";
     }
     ids = ids.substring(0, ids.length - 1);
-    deleteModelRepositorys(ids);
+    deleteModelRepositorys(ids,recycle);
 };
 
+function reallyDelete() {
+    //获取所有被选中的记录
+    // + this.id
+    var rows = $('#ModelRepositoryTable').bootstrapTable('getSelections');
+    if (rows.length == 0) {
+        alert("请先选择要删除的记录!");
+        return;
+    }
+    var ids = '';
+    for (var i = 0; i < rows.length; i++) {
+        ids += rows[i]['id'] + ",";
+    }
+    ids = ids.substring(0, ids.length - 1);
+    reallyDeletePicturesCategorys(ids);
+};
 
 /**
  * 点击添加模特资源库
@@ -127,8 +142,13 @@ ModelRepository.delete = function () {
 /**
  * 删除模特资源库List
  */
-function deleteModelRepositorys(ids) {
-    var msg = "您真的确定要删除吗？";
+function deleteModelRepositorys(ids,recycle) {
+    var msg ;
+    if (recycle){
+        msg = "您确定要放入回收站吗？";
+    } else {
+        msg =  "您确定要还原吗？";
+    }
     if (confirm(msg) == true) {
         $.ajax({
             url: Feng.ctxPath +"/modelRepository/delete_list",
@@ -150,7 +170,25 @@ function deleteModelRepositorys(ids) {
     }
 };
 
-
+function reallyDeletePicturesCategorys(ids){
+    var msg = "您真的确定要删除吗？";
+    if (confirm(msg) == true) {
+        $.ajax({
+            url: Feng.ctxPath +"/modelRepository/really_delete",
+            type: "post",
+            data: {
+                ids: ids
+            },
+            success: function (data) {
+                alert(data.message);
+                ModelRepository.table.refresh();
+            }, error:function (data) {
+                alert(data.msg);
+                ModelRepository.table.refresh();
+            }
+        });
+    }
+};
 
 /**
  * 查询模特资源库列表
@@ -158,12 +196,13 @@ function deleteModelRepositorys(ids) {
 ModelRepository.search = function () {
     var queryData = {};
     queryData['condition'] = $("#condition").val();
+    queryData['isDelObject'] = $("#isDelObject").val();
     ModelRepository.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = ModelRepository.initColumn();
     var table = new BSTable(ModelRepository.id, "/modelRepository/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     ModelRepository.table = table.init();
 });

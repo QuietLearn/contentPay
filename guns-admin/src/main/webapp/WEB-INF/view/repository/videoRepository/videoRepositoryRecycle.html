@@ -19,14 +19,11 @@
                             </div>
                         </div>
                         <div class="hidden-xs" id="VideoRepositoryTableToolbar" role="group">
-                            @if(shiro.hasPermission("/videoRepository/add")){
-                                <#button name="添加" icon="fa-plus" clickFun="VideoRepository.openAddVideoRepository()"/>
+                            @if(shiro.hasPermission("/videoRepository/delete_list")){
+                                <#button name="还原" icon="fa-reply" clickFun="deleteVideoRepositoryList(false)" space="true"/>
                             @}
-                            @if(shiro.hasPermission("/videoRepository/update")){
-                                <#button name="修改" icon="fa-edit" clickFun="VideoRepository.openVideoRepositoryDetail()" space="true"/>
-                            @}
-                             @if(shiro.hasPermission("/videoRepository/delete_list")){
-                                <#button name="删除" icon="fa-remove" clickFun="deleteVideoRepositoryList(true)" space="true"/>
+                             @if(shiro.hasPermission("/videoRepository/really_delete")){
+                                <#button name="删除" icon="fa-remove" clickFun="reallyDelete()" space="true"/>
                             @}
                         </div>
                         <#table id="VideoRepositoryTable"/>
@@ -39,7 +36,7 @@
 <script src="${ctxPath}/static/modular/repository/videoRepository/videoRepository.js"></script>
 <script>
     $(function () {
-        PicturesCategory.search();
+        VideoRepository.search();
     });
 </script>
 @}

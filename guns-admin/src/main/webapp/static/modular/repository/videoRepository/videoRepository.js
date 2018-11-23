@@ -13,7 +13,7 @@ var VideoRepository = {
  */
 VideoRepository.initColumn = function () {
     return [
-        {field: 'selectItem', radio: true},
+        {field: 'selectItem', checkbox: true},
             {title: '自动编号', field: 'id', visible: true, align: 'center', valign: 'middle'},
             {title: '所属视频分类', field: 'categoryId', visible: true, align: 'center', valign: 'middle'},
             {title: '原封面图片地址id', field: 'pictureId', visible: false, align: 'center', valign: 'middle'},
@@ -56,7 +56,7 @@ VideoRepository.check = function () {
  * 批量删除
  */
 
-function deleteVideoRepositoryList() {
+function deleteVideoRepositoryList(recycle) {
     //获取所有被选中的记录
     // + this.id
     var rows = $('#VideoRepositoryTable').bootstrapTable('getSelections');
@@ -69,9 +69,24 @@ function deleteVideoRepositoryList() {
         ids += rows[i]['id'] + ",";
     }
     ids = ids.substring(0, ids.length - 1);
-    deleteVideoRepositorys(ids);
+    deleteVideoRepositorys(ids,recycle);
 };
 
+function reallyDelete() {
+    //获取所有被选中的记录
+    // + this.id
+    var rows = $('#PicturesCategoryTable').bootstrapTable('getSelections');
+    if (rows.length == 0) {
+        alert("请先选择要删除的记录!");
+        return;
+    }
+    var ids = '';
+    for (var i = 0; i < rows.length; i++) {
+        ids += rows[i]['id'] + ",";
+    }
+    ids = ids.substring(0, ids.length - 1);
+    reallyDeletePicturesCategorys(ids);
+};
 
 /**
  * 点击添加视频资源库
@@ -124,8 +139,14 @@ VideoRepository.delete = function () {
 /**
  * 删除视频资源库List
  */
-function deleteVideoRepositorys(ids) {
-    var msg = "您真的确定要删除吗？";
+function deleteVideoRepositorys(ids,recycle) {
+    var msg ;
+    if (recycle){
+        msg = "您确定要放入回收站吗？";
+    } else {
+        msg =  "您确定要还原吗？";
+    }
+
     if (confirm(msg) == true) {
         $.ajax({
             url: Feng.ctxPath +"/videoRepository/delete_list",
@@ -147,7 +168,28 @@ function deleteVideoRepositorys(ids) {
     }
 };
 
-
+function reallyDeletePicturesCategorys(ids){
+    var msg = "您真的确定要删除吗？";
+    if (confirm(msg) == true) {
+        $.ajax({
+            url: Feng.ctxPath +"/videoRepository/really_delete",
+            type: "post",
+            data: {
+                ids: ids
+            },
+            success: function (data) {
+                alert(data.message);
+                //重新加载记录
+                //重新加载数据
+                //Feng.success("删除成功!");
+                VideoRepository.table.refresh();
+            }, error:function (data) {
+                alert(data.msg);
+                VideoRepository.table.refresh();
+            }
+        });
+    }
+};
 
 /**
  * 查询视频资源库列表
@@ -155,12 +197,13 @@ function deleteVideoRepositorys(ids) {
 VideoRepository.search = function () {
     var queryData = {};
     queryData['condition'] = $("#condition").val();
+    queryData['isDelObject'] = $("#isDelObject").val();
     VideoRepository.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = VideoRepository.initColumn();
     var table = new BSTable(VideoRepository.id, "/videoRepository/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     VideoRepository.table = table.init();
 });

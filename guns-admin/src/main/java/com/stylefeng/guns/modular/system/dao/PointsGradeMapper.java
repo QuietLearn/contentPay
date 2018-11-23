@@ -1,6 +1,6 @@
 package com.stylefeng.guns.modular.system.dao;
 
-import com.stylefeng.guns.modular.system.model.VipPrice;
+import com.stylefeng.guns.modular.system.model.PointsGrade;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @author hyj
  * @since 2018-11-23
  */
-public interface VipPriceMapper extends BaseMapper<VipPrice> {
+public interface PointsGradeMapper extends BaseMapper<PointsGrade> {
 
 }

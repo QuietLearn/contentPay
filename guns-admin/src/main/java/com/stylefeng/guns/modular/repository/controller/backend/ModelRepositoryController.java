@@ -1,7 +1,13 @@
 package com.stylefeng.guns.modular.repository.controller.backend;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.google.common.collect.Lists;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.result.Result;
+import com.stylefeng.guns.core.page.PageInfoBT;
+import com.stylefeng.guns.modular.system.model.PicturesCategory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,8 +43,26 @@ public class ModelRepositoryController extends BaseController {
      * 跳转到模特资源库首页
      */
     @RequestMapping("")
-    public String index() {
+    public String index(Integer isDel, Model model) {
+        if (isDel != null) {
+            model.addAttribute("isDel", isDel);
+        } else {
+            model.addAttribute("isDel", null);
+        }
         return PREFIX + "modelRepository.html";
+    }
+
+    /**
+     * 跳转到图集回收站
+     */
+    @RequestMapping("/recycle")
+    public String recycle(Integer isDel, Model model) {
+        if (isDel != null) {
+            model.addAttribute("isDel", isDel);
+        } else {
+            model.addAttribute("isDel", null);
+        }
+        return PREFIX + "modelRepositoryRecycle.html";
     }
 
     /**
@@ -65,8 +89,18 @@ public class ModelRepositoryController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        return modelRepositoryService.selectList(null);
+    public Object list(Integer isDelObject) {
+        //注意改成server
+        Page<ModelRepository> page = new PageFactory<ModelRepository>().defaultPage();
+        EntityWrapper<ModelRepository> entityWrapper = new EntityWrapper<>();
+        if (isDelObject == null) {
+            isDelObject = 1;
+        }
+        entityWrapper.eq("is_del", isDelObject);
+        page = modelRepositoryService.selectPage(page, entityWrapper);
+        PageInfoBT<ModelRepository> pageInfoBT = this.packForBT(page);
+
+        return pageInfoBT;
     }
 
     /**
@@ -92,19 +126,61 @@ public class ModelRepositoryController extends BaseController {
     }
 
     /**
-     * 批量删除模特资源库
+     * 真删除
+     * @param ids
+     * @return
+     */
+    @RequestMapping(value = "/really_delete")
+    @ResponseBody
+    public Object ReallyDelete(@RequestParam String ids) {
+        String[] ss = ids.split(",");
+        List<String> ModelRepositoryIdList = Arrays.asList(ss);
+        boolean deleteResult = modelRepositoryService.deleteBatchIds(ModelRepositoryIdList);
+        if (deleteResult) {
+            return SUCCESS_TIP;
+        }
+        return Result.createByErrorMessage("模特回收站真删除失败，请稍后再试");
+    }
+
+    /**
+     * 改变删除状态
      */
     @RequestMapping(value = "/delete_list")
     @ResponseBody
-    public Object deleteModelRepositoryList(@RequestParam String ids) {
+    public Object changeModelRepositoryListDeleteState(@RequestParam String ids) {
+        boolean isAllDel = false;
+        boolean isAllNotDel = false;
+
         String[] ss = ids.split(",");
         List<String> modelRepositoryIdList = Arrays.asList(ss);
-        boolean deleteResult = modelRepositoryService.deleteBatchIds(modelRepositoryIdList);
-        if (deleteResult){
+        List<ModelRepository> modelRepositoryList = Lists.newArrayList();
+        for (String id : modelRepositoryIdList) {
+            ModelRepository modelRepository = modelRepositoryService.selectById(id);
+            Integer isDel = modelRepository.getIsDel();
+            if (isDel==1){
+                isAllNotDel = true;
+                modelRepository.setIsDel(0);
+            } else {
+                isAllDel = true;
+                modelRepository.setIsDel(1);
+            }
+
+            if (isAllNotDel==isAllDel){
+                return Result.createByErrorMessage("模特状态更新失败，删除状态值不同");
+            }
+
+            modelRepositoryList.add(modelRepository);
+        }
+
+
+        boolean updateResult = modelRepositoryService.updateBatchById(modelRepositoryList, 100);
+
+        if (updateResult) {
             return SUCCESS_TIP;
         }
         return Result.createByErrorMessage("模特资源库批量删除失败，请稍后再试");
     }
+
     /**
      * 修改模特资源库
      */

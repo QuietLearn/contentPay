@@ -21,6 +21,7 @@ VipPrice.initColumn = function () {
             {title: '描述', field: 'name', visible: true, align: 'center', valign: 'middle',sortable:true},
             {title: '价格', field: 'price', visible: true, align: 'center', valign: 'middle',sortable:true},
             {title: '持续时间', field: 'aging', visible: true, align: 'center', valign: 'middle',sortable:true},
+        {title: '权限', field: 'authority', visible: true, align: 'center', valign: 'middle',sortable:true},
             {title: '', field: 'gmtCreated', visible: true, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtUpdated', visible: true, align: 'center', valign: 'middle'}
     ];

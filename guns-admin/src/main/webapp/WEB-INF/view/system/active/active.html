@@ -63,7 +63,11 @@
                                 <#button name="搜索" icon="fa-search" clickFun="Active.search()"/>
                             </div>
                         </div>
-
+                        <div class="hidden-xs" id="ActiveTableToolbar" role="group">
+                            @if(shiro.hasPermission("/active/update")){
+                            <#button name="详情" icon="fa-edit" clickFun="Active.openActiveDetail()" space="true"/>
+                            @}
+                        </div>
                         <#table id="ActiveTable"/>
                     </div>
                 </div>

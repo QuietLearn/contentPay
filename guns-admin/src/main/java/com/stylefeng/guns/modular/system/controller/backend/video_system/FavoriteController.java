@@ -8,6 +8,7 @@ import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.modular.system.model.PlayHistory;
 import com.stylefeng.guns.modular.system.warpper.AppInfoWarpper;
 import com.stylefeng.guns.modular.system.warpper.TypeWarpper;
 import org.springframework.stereotype.Controller;
@@ -48,7 +49,16 @@ public class FavoriteController extends BaseController {
         return PREFIX + "favorite.html";
     }
 
-
+    /**
+     * 跳转到修改用户播放历史
+     */
+    @RequestMapping("/favorite_update/{favoriteId}")
+    public String favoriteUpdate(@PathVariable Integer favoriteId, Model model) {
+        Favorite favorite = favoriteService.selectById(favoriteId);
+        model.addAttribute("item",favorite);
+        //LogObjectHolder.me().set(favorite);
+        return PREFIX + "favorite_edit.html";
+    }
 
     /**
      * 获取用户看单列表
@@ -137,12 +147,16 @@ public class FavoriteController extends BaseController {
         return SUCCESS_TIP;
     }
 
+
     /**
      * 用户看单详情
      */
     @RequestMapping(value = "/detail/{favoriteId}")
     @ResponseBody
-    public Object detail(@PathVariable("favoriteId") Integer favoriteId) {
-        return favoriteService.selectById(favoriteId);
+    public String detail(@PathVariable("favoriteId") Integer favoriteId, Model model) {
+        Favorite favorite = favoriteService.selectById(favoriteId);
+        model.addAttribute("item",favorite);
+        //LogObjectHolder.me().set(favorite);
+        return PREFIX + "favorite_edit.html";
     }
 }

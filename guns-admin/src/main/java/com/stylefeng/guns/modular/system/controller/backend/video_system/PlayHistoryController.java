@@ -63,7 +63,7 @@ public class PlayHistoryController extends BaseController {
     public String playHistoryUpdate(@PathVariable Integer playHistoryId, Model model) {
         PlayHistory playHistory = playHistoryService.selectById(playHistoryId);
         model.addAttribute("item",playHistory);
-        LogObjectHolder.me().set(playHistory);
+        //LogObjectHolder.me().set(playHistory);
         return PREFIX + "playHistory_edit.html";
     }
 

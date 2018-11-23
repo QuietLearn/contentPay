@@ -36,7 +36,11 @@
                                 <#button name="搜索" icon="fa-search" clickFun="BuriedPoint.search()"/>
                             </div>
                         </div>
-
+                        <div class="hidden-xs" id="BuriedPointTableToolbar" role="group">
+                            @if(shiro.hasPermission("/buriedPoint/update")){
+                            <#button name="详情" icon="fa-edit" clickFun="BuriedPoint.openBuriedPointDetail()" space="true"/>
+                            @}
+                        </div>
 
                         <#table id="BuriedPointTable"/>
                     </div>
