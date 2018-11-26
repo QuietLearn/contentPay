@@ -8,6 +8,7 @@ import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
 import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.modular.system.model.VideoAppSource;
 import com.stylefeng.guns.modular.system.warpper.MemberWarpper;
 import com.stylefeng.guns.modular.system.warpper.repo.PhotosAppSourceWarpper;
 import org.springframework.stereotype.Controller;
@@ -86,8 +87,10 @@ public class PhotosAppSourceController extends BaseController {
 
         if (appContentId == null) {
             Page<PhotosAppSource> page = new PageFactory<PhotosAppSource>().defaultPage();
+            EntityWrapper<PhotosAppSource> entityWrapper = new EntityWrapper<>();
+            entityWrapper.eq("is_del",1);
 
-            page = photosAppSourceService.selectPage(page);
+            page = photosAppSourceService.selectPage(page,entityWrapper);
 
             List<PhotosAppSource> PhotosAppSourceList = page.getRecords();
             page.setRecords((List<PhotosAppSource>) super.warpObject(new PhotosAppSourceWarpper(BeanKit.listToMapList(PhotosAppSourceList))));
@@ -98,6 +101,7 @@ public class PhotosAppSourceController extends BaseController {
         } else {
             Page<PhotosAppSource> page = new PageFactory<PhotosAppSource>().defaultPage();
             EntityWrapper<PhotosAppSource> entityWrapper = new EntityWrapper<>();
+            entityWrapper.eq("is_del",1);
             if (appContentId != null && appContentId != 0) {
                 entityWrapper.eq("app_content_id", appContentId);
             }

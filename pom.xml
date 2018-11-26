@@ -4,6 +4,12 @@
     <groupId>com.stylefeng</groupId>
     <artifactId>guns-parent</artifactId>
     <version>1.0.0</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
+    </dependencies>
 
     <name>guns-parent</name>
     <packaging>pom</packaging>

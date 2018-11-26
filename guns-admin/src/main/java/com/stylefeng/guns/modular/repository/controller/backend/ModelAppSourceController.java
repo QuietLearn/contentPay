@@ -7,6 +7,7 @@ import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.modular.system.model.VideoAppSource;
 import com.stylefeng.guns.modular.system.warpper.MemberWarpper;
 import com.stylefeng.guns.modular.system.warpper.repo.ModelAppSourceWarpper;
 import org.springframework.stereotype.Controller;
@@ -82,8 +83,9 @@ public class ModelAppSourceController extends BaseController {
 
         if (appContentId == null) {
             Page<ModelAppSource> page = new PageFactory<ModelAppSource>().defaultPage();
-
-            page = modelAppSourceService.selectPage(page);
+            EntityWrapper<ModelAppSource> entityWrapper = new EntityWrapper<>();
+            entityWrapper.eq("is_del",1);
+            page = modelAppSourceService.selectPage(page,entityWrapper);
 
             List<ModelAppSource> ModelAppSourceList = page.getRecords();
             page.setRecords((List<ModelAppSource>) super.warpObject(new ModelAppSourceWarpper(BeanKit.listToMapList(ModelAppSourceList))));
@@ -94,6 +96,7 @@ public class ModelAppSourceController extends BaseController {
         } else {
             Page<ModelAppSource> page = new PageFactory<ModelAppSource>().defaultPage();
             EntityWrapper<ModelAppSource> entityWrapper = new EntityWrapper<>();
+            entityWrapper.eq("is_del",1);
             if (appContentId != null && appContentId != 0) {
                 entityWrapper.eq("app_content_id", appContentId);
             }

@@ -1,14 +1,17 @@
 package com.stylefeng.guns.modular.repository.controller.backend;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.google.common.collect.Lists;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.page.PageInfoBT;
+import com.stylefeng.guns.modular.repository.service.IVideoAppSourceService;
 import com.stylefeng.guns.modular.system.model.ModelRepository;
 import com.stylefeng.guns.modular.system.model.PicturesCategory;
+import com.stylefeng.guns.modular.system.model.VideoAppSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,6 +42,9 @@ public class VideoRepositoryController extends BaseController {
 
     @Autowired
     private IVideoRepositoryService videoRepositoryService;
+
+    @Autowired
+    private IVideoAppSourceService videoAppSourceService;
 
     /**
      * 跳转到视频资源库首页
@@ -163,6 +169,9 @@ public class VideoRepositoryController extends BaseController {
             if (isDel==1){
                 isAllNotDel = true;
                 videoRepository.setIsDel(0);
+                Wrapper<VideoAppSource> wrapper = new EntityWrapper<>();
+                wrapper.eq("video_id",id);
+                videoAppSourceService.delete(wrapper);
             } else {
                 isAllDel = true;
                 videoRepository.setIsDel(1);

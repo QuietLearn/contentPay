@@ -9,6 +9,10 @@ import com.stylefeng.guns.core.common.constant.state.ManagerStatus;
 import com.stylefeng.guns.core.common.constant.state.MemberStatus;
 import com.stylefeng.guns.core.common.constant.state.MenuStatus;
 import com.stylefeng.guns.modular.appver.service.IAppVerService;
+import com.stylefeng.guns.modular.repository.service.IModelRepositoryService;
+import com.stylefeng.guns.modular.repository.service.IPicturesCategoryService;
+import com.stylefeng.guns.modular.repository.service.IVideoRepositoryService;
+import com.stylefeng.guns.modular.repository.service.IVideoSourceService;
 import com.stylefeng.guns.modular.system.dao.*;
 import com.stylefeng.guns.modular.system.model.*;
 import com.stylefeng.guns.core.log.LogObjectHolder;
@@ -52,9 +56,11 @@ public class ConstantFactory implements IConstantFactory {
 
     private IVideoService videoService = SpringContextHolder.getBean(IVideoService.class);
 
-    private VideoRepositoryMapper videoRepositoryMapper = SpringContextHolder.getBean(VideoRepositoryMapper.class);
-    private ModelRepositoryMapper modelRepositoryMapper = SpringContextHolder.getBean(ModelRepositoryMapper.class);
-    private PicturesCategoryMapper picturesCategoryMapper = SpringContextHolder.getBean(PicturesCategoryMapper.class);
+    private IVideoRepositoryService videoRepositoryService = SpringContextHolder.getBean(IVideoRepositoryService.class);
+    private IModelRepositoryService modelRepositoryService = SpringContextHolder.getBean(IModelRepositoryService.class);
+    private IPicturesCategoryService picturesCategoryService = SpringContextHolder.getBean(IPicturesCategoryService.class);
+
+    private IVideoSourceService videoSourceService = SpringContextHolder.getBean(IVideoSourceService.class);
 
     public static IConstantFactory me() {
         return SpringContextHolder.getBean("constantFactory");
@@ -430,14 +436,28 @@ public class ConstantFactory implements IConstantFactory {
     }
 
     public VideoRepository getVideoRepositoryById(Long videoId){
-        return videoRepositoryMapper.selectById(videoId);
+        Wrapper<VideoRepository> wrapper = new EntityWrapper<>();
+        wrapper.eq("id",videoId);
+        wrapper.eq("is_del",1);
+        return videoRepositoryService.selectOne(wrapper);
     }
 
     public ModelRepository getModelRepositoryById(Long modelId){
-        return modelRepositoryMapper.selectById(modelId);
+        Wrapper<ModelRepository> wrapper = new EntityWrapper<>();
+        wrapper.eq("id",modelId);
+        wrapper.eq("is_del",1);
+        return modelRepositoryService.selectOne(wrapper);
     }
 
     public PicturesCategory getPicturesCategoryById(Long picturesId){
-        return picturesCategoryMapper.selectById(picturesId);
+        Wrapper<PicturesCategory> wrapper = new EntityWrapper<>();
+        wrapper.eq("id",picturesId);
+        wrapper.eq("is_del",1);
+        return picturesCategoryService.selectOne(wrapper);
+    }
+
+    public String getVideoSourceNameById(Integer videoSourceId){
+        VideoSource videoSource = videoSourceService.selectById(videoSourceId);
+        return videoSource.getName();
     }
 }

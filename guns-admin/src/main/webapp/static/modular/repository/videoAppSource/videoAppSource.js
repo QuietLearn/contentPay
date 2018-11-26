@@ -18,7 +18,7 @@ VideoAppSource.initColumn = function () {
             {title: '应用内容id', field: 'appContentId', visible: true, align: 'center', valign: 'middle'},
             {title: '视频id', field: 'videoId', visible: true, align: 'center', valign: 'middle'},
             {title: '权限', field: 'authority', visible: true, align: 'center', valign: 'middle'},
-            {title: '逻辑删除', field: 'isDel', visible: true, align: 'center', valign: 'middle'},
+            {title: '逻辑删除', field: 'isDel', visible: false, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtCreated', visible: false, align: 'center', valign: 'middle'},
             {title: '', field: 'gmtModified', visible: false, align: 'center', valign: 'middle'},
 

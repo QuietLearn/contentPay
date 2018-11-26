@@ -9,6 +9,9 @@ import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.page.PageInfoBT;
 import com.stylefeng.guns.core.support.BeanKit;
+import com.stylefeng.guns.modular.repository.service.IPhotosAppSourceService;
+import com.stylefeng.guns.modular.system.model.ModelAppSource;
+import com.stylefeng.guns.modular.system.model.PhotosAppSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,6 +44,9 @@ public class PicturesCategoryController extends BaseController {
 
     @Autowired
     private IPicturesCategoryService picturesCategoryService;
+
+    @Autowired
+    private IPhotosAppSourceService photosAppSourceService;
 
     /**
      * 跳转到图集资源库首页
@@ -170,6 +176,10 @@ public class PicturesCategoryController extends BaseController {
             if (isDel==1){
                 isAllNotDel = true;
                 picturesCategory.setIsDel(0);
+
+                Wrapper<PhotosAppSource> wrapper = new EntityWrapper<>();
+                wrapper.eq("model_id",id);
+                photosAppSourceService.delete(wrapper);
             } else {
                 isAllDel = true;
                 picturesCategory.setIsDel(1);

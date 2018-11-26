@@ -1,13 +1,17 @@
 package com.stylefeng.guns.modular.repository.controller.backend;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.google.common.collect.Lists;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.result.Result;
 import com.stylefeng.guns.core.page.PageInfoBT;
+import com.stylefeng.guns.modular.repository.service.IModelAppSourceService;
+import com.stylefeng.guns.modular.system.model.ModelAppSource;
 import com.stylefeng.guns.modular.system.model.PicturesCategory;
+import com.stylefeng.guns.modular.system.model.VideoAppSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,6 +42,9 @@ public class ModelRepositoryController extends BaseController {
 
     @Autowired
     private IModelRepositoryService modelRepositoryService;
+
+    @Autowired
+    private IModelAppSourceService modelAppSourceService;
 
     /**
      * 跳转到模特资源库首页
@@ -160,6 +167,9 @@ public class ModelRepositoryController extends BaseController {
             if (isDel==1){
                 isAllNotDel = true;
                 modelRepository.setIsDel(0);
+                Wrapper<ModelAppSource> wrapper = new EntityWrapper<>();
+                wrapper.eq("model_id",id);
+                modelAppSourceService.delete(wrapper);
             } else {
                 isAllDel = true;
                 modelRepository.setIsDel(1);

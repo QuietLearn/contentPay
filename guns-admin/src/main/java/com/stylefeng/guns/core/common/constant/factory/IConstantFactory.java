@@ -188,4 +188,6 @@ public interface IConstantFactory {
     ModelRepository getModelRepositoryById(Long modelId);
 
     PicturesCategory getPicturesCategoryById(Long picturesId);
+
+    String getVideoSourceNameById(Integer videoSourceId);
 }

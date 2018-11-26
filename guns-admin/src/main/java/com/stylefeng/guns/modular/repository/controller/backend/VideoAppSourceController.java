@@ -81,8 +81,10 @@ public class VideoAppSourceController extends BaseController {
 
         if (appContentId == null) {
             Page<VideoAppSource> page = new PageFactory<VideoAppSource>().defaultPage();
+            EntityWrapper<VideoAppSource> entityWrapper = new EntityWrapper<>();
+            entityWrapper.eq("is_del",1);
 
-            page = videoAppSourceService.selectPage(page);
+            page = videoAppSourceService.selectPage(page,entityWrapper);
 
             List<VideoAppSource> VideoAppSourceList = page.getRecords();
             page.setRecords((List<VideoAppSource>) super.warpObject(new VideoAppSourceWarpper(BeanKit.listToMapList(VideoAppSourceList))));
@@ -93,6 +95,7 @@ public class VideoAppSourceController extends BaseController {
         } else {
             Page<VideoAppSource> page = new PageFactory<VideoAppSource>().defaultPage();
             EntityWrapper<VideoAppSource> entityWrapper = new EntityWrapper<>();
+            entityWrapper.eq("is_del",1);
             if (appContentId != null && appContentId != 0) {
                 entityWrapper.eq("app_content_id", appContentId);
             }

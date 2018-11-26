@@ -34,6 +34,7 @@ public class ChannelController extends BaseController {
      */
     @RequestMapping("")
     public String index() {
+
         return PREFIX + "channel.html";
     }
 
