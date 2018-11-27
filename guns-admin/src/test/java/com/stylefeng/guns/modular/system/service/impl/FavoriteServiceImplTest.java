@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,5 +63,15 @@ public class FavoriteServiceImplTest {
 
         List subtract = ListUtils.subtract(list1, list2);
         System.out.println(subtract);
+    }
+
+    @Test
+    public void fun3(){
+        File file = new File("G:\\英雄时刻\\784510436\\hero.avi");
+        System.out.println(file.toString());
+        System.out.println(file.getName());
+        System.out.println(file.getPath());
+        System.out.println(file.getAbsolutePath());
+
     }
 }

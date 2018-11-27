@@ -38,11 +38,11 @@ public class FtpUtil {
      * @return
      * @throws IOException
      */
-    public static boolean uploadFile(List<File> fileList) throws IOException {
+    public static boolean uploadFile(List<File> fileList,String dirPath) throws IOException {
         FtpUtil ftpUtil = new FtpUtil(ftpIp,21,ftpUser,ftpPass);
         logger.info("开始连接ftp服务器,准备上传图片");
 
-        boolean result = ftpUtil.uploadFile("log/", fileList);
+        boolean result = ftpUtil.uploadFile(dirPath, fileList);
         logger.info("结束上传，图片上传结果为{}",result);
         return result;
     }

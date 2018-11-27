@@ -11,6 +11,13 @@ public class AllConst {
 
     public static final String MESSAGE_ERROR_MSG = "验证码错误，重新输入";
 
+
+    public interface TranscodeVideo{
+        public static final String TRANSCODE_TYPE = ".mp4";
+        public static final String COVER_TYPE = ".jpg";
+    }
+
+
     public enum OrderStatusEnum {
         CANCELED(0, "支付取消"),
         NO_PAY(10, "待支付"),

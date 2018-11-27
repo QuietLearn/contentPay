@@ -2,14 +2,21 @@ package com.stylefeng.guns.modular.system.service.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.stylefeng.guns.core.common.constant.state.AllConst;
+import com.stylefeng.guns.core.util.PropertiesUtil;
+import com.stylefeng.guns.core.util.converter.VideoConverter;
 import com.stylefeng.guns.core.util.file.FtpUtil;
 import com.stylefeng.guns.modular.system.service.IFileService;
+import com.stylefeng.guns.modular.userResouceLib.model.UslVideoRepository;
+import com.stylefeng.guns.modular.userResouceLib.service.IUslVideoRepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -17,6 +24,9 @@ import java.util.UUID;
 public class FileServiceImpl implements IFileService {
 
     private Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
+
+    @Autowired
+    private IUslVideoRepositoryService iUslVideoRepositoryService;
 
     public Map uploadPhoto(MultipartFile file, String path){
         String originalFilename = file.getOriginalFilename();
@@ -51,7 +61,7 @@ public class FileServiceImpl implements IFileService {
             map.put("bugLogString",bugLogString);
             // list为以后多文件上传扩展使用
             // 当时是因为没有在linux的 /ftpfile文件创建img并赋予ftpuser权限导致不能写入的原因
-            if (!FtpUtil.uploadFile(Lists.newArrayList(targetFile))){
+            if (!FtpUtil.uploadFile(Lists.newArrayList(targetFile),"log/")){
                 return null; //如果没有将文件写入ftp服务器，返回的文件名为""代表失败，因为返回string，不知道如何表示错误
             }
 
@@ -66,6 +76,71 @@ public class FileServiceImpl implements IFileService {
         return map;
     }
 
+
+    public String uploadVideo(MultipartFile file, String path){
+        String originalFilename = file.getOriginalFilename();
+
+        logger.info("（开始）上传文件，文件放置路径{}，旧文件名{}，新文件名{}",path,originalFilename,originalFilename);
+
+        File fileDir = new File(path);
+        if (!fileDir.exists()){
+            //毕竟tomcat的用户对里面工程可能没有创建文件夹的权限
+            fileDir.setWritable(true);
+            fileDir.mkdirs();
+        }
+
+        File targetFile = new File(path , originalFilename);
+
+        try {
+            //文件已经上传成功了
+            file.transferTo(targetFile);
+            if (!VideoConverter.convert(targetFile)){
+                logger.error("转码失败");
+            }
+            String targetFileName = targetFile.getName().substring(0, targetFile.getName().lastIndexOf("."));
+            File transcodingVideo = new File(VideoConverter.FLV_PATH + targetFileName + AllConst.TranscodeVideo.TRANSCODE_TYPE);
+
+
+            File video_cover = new File(VideoConverter.FLV_PATH + targetFileName + AllConst.TranscodeVideo.COVER_TYPE);
+
+            // list为以后多文件上传扩展使用
+            // 当时是因为没有在linux的 /ftpfile文件创建img并赋予ftpuser权限导致不能写入的原因
+            if (!FtpUtil.uploadFile(Lists.newArrayList(transcodingVideo),"video/")){
+                return null; //如果没有将文件写入ftp服务器，返回的文件名为""代表失败，因为返回string，不知道如何表示错误
+            }
+
+            if (!FtpUtil.uploadFile(Lists.newArrayList(video_cover),"img/")){
+                return null; //如果没有将文件写入ftp服务器，返回的文件名为""代表失败，因为返回string，不知道如何表示错误
+            }
+
+            /**
+             * 插入上传视频信息到数据库
+             */
+            UslVideoRepository uslVideoRepository = assemUslVideo(targetFileName);
+            boolean insert = iUslVideoRepositoryService.insert(uslVideoRepository);
+            if (!insert){
+                logger.error("插入失败");
+            }
+
+        } catch (IOException e) {
+            logger.error("文件上传到目标目录异常",e);
+            return null;
+        } finally {
+            targetFile.delete();
+        }
+        return targetFile.getName();
+    }
+
+    public UslVideoRepository assemUslVideo(String fileName){
+        UslVideoRepository uslVideoRepository = new UslVideoRepository();
+        uslVideoRepository.setGmtCreated(new Date());
+        uslVideoRepository.setGmtModified(new Date());
+        uslVideoRepository.setVideoAddress(fileName + AllConst.TranscodeVideo.TRANSCODE_TYPE);
+        uslVideoRepository.setTitle(fileName.substring(0,fileName.indexOf(".")));
+
+        uslVideoRepository.setCoverImage(fileName + AllConst.TranscodeVideo.COVER_TYPE);
+        return uslVideoRepository;
+    }
 
     private String getBugLogString(File file) {
         FileInputStream fis = null;

@@ -1,0 +1,41 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="categoryId" name="所属视频分类" underline="true"/>
+                            <#input id="pictureId" name="原封面图片地址id
+" underline="true"/>
+                            <#input id="coverImage" name="封面图片" underline="true"/>
+                            <#input id="labelIds" name="视频标签" underline="true"/>
+                            <#input id="title" name="标题" underline="true"/>
+                            <#input id="introduction" name="描述" underline="true"/>
+                            <#input id="playsNumber" name="播放次数"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="videoAddress" name="视频地址" underline="true"/>
+                            <#input id="countryId" name="国家id" underline="true"/>
+                            <#input id="times" name="" underline="true"/>
+                            <#input id="isDel" name="" underline="true"/>
+                            <#input id="sort" name="排序字段" underline="true"/>
+                            <#input id="browse" name="浏览次数" underline="true"/>
+                            <#input id="userId" name="所属用戶" underline="true"/>
+                            <#input id="collectionCount" name="收藏次数"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="UslVideoRepositoryInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="UslVideoRepositoryInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/userResouceLib/uslVideoRepository/uslVideoRepository_info.js"></script>
+@}
