@@ -80,7 +80,14 @@ public class FileServiceImpl implements IFileService {
     public String uploadVideo(MultipartFile file, String path){
         String originalFilename = file.getOriginalFilename();
 
-        logger.info("（开始）上传文件，文件放置路径{}，旧文件名{}，新文件名{}",path,originalFilename,originalFilename);
+
+        String prefix = originalFilename.substring(0,originalFilename.lastIndexOf("."));
+        //avi mp4 flv 文件结尾
+        String suffix  = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+
+        String uploadFilename = UUID.randomUUID().toString()+"."+suffix;
+
+        logger.info("（开始）上传文件，文件放置路径{}，旧文件名{}，新文件名{}",path,originalFilename,uploadFilename);
 
         File fileDir = new File(path);
         if (!fileDir.exists()){
@@ -89,8 +96,9 @@ public class FileServiceImpl implements IFileService {
             fileDir.mkdirs();
         }
 
-        File targetFile = new File(path , originalFilename);
-
+        File targetFile = new File(path , uploadFilename);
+        File transcodingVideo = null;
+        File video_cover = null;
         try {
             //文件已经上传成功了
             file.transferTo(targetFile);
@@ -98,10 +106,10 @@ public class FileServiceImpl implements IFileService {
                 logger.error("转码失败");
             }
             String targetFileName = targetFile.getName().substring(0, targetFile.getName().lastIndexOf("."));
-            File transcodingVideo = new File(VideoConverter.FLV_PATH + targetFileName + AllConst.TranscodeVideo.TRANSCODE_TYPE);
+            transcodingVideo = new File(VideoConverter.FLV_PATH + targetFileName + AllConst.TranscodeVideo.TRANSCODE_TYPE);
 
 
-            File video_cover = new File(VideoConverter.FLV_PATH + targetFileName + AllConst.TranscodeVideo.COVER_TYPE);
+            video_cover = new File(VideoConverter.FLV_PATH + targetFileName + AllConst.TranscodeVideo.COVER_TYPE);
 
             // list为以后多文件上传扩展使用
             // 当时是因为没有在linux的 /ftpfile文件创建img并赋予ftpuser权限导致不能写入的原因
@@ -116,7 +124,7 @@ public class FileServiceImpl implements IFileService {
             /**
              * 插入上传视频信息到数据库
              */
-            UslVideoRepository uslVideoRepository = assemUslVideo(targetFileName);
+            UslVideoRepository uslVideoRepository = assemUslVideo(targetFileName,prefix);
             boolean insert = iUslVideoRepositoryService.insert(uslVideoRepository);
             if (!insert){
                 logger.error("插入失败");
@@ -127,18 +135,20 @@ public class FileServiceImpl implements IFileService {
             return null;
         } finally {
             targetFile.delete();
+            //transcodingVideo.delete();
+            video_cover.delete();
         }
         return targetFile.getName();
     }
 
-    public UslVideoRepository assemUslVideo(String fileName){
+    public UslVideoRepository assemUslVideo(String urlFile,String title){
         UslVideoRepository uslVideoRepository = new UslVideoRepository();
         uslVideoRepository.setGmtCreated(new Date());
         uslVideoRepository.setGmtModified(new Date());
-        uslVideoRepository.setVideoAddress(fileName + AllConst.TranscodeVideo.TRANSCODE_TYPE);
-        uslVideoRepository.setTitle(fileName.substring(0,fileName.indexOf(".")));
+        uslVideoRepository.setVideoAddress(urlFile + AllConst.TranscodeVideo.TRANSCODE_TYPE);
+        uslVideoRepository.setTitle(title);
 
-        uslVideoRepository.setCoverImage(fileName + AllConst.TranscodeVideo.COVER_TYPE);
+        uslVideoRepository.setCoverImage(urlFile + AllConst.TranscodeVideo.COVER_TYPE);
         return uslVideoRepository;
     }
 

@@ -40,8 +40,13 @@ public class FtpUtil {
      */
     public static boolean uploadFile(List<File> fileList,String dirPath) throws IOException {
         FtpUtil ftpUtil = new FtpUtil(ftpIp,21,ftpUser,ftpPass);
-        logger.info("开始连接ftp服务器,准备上传图片");
-
+        if (dirPath.contains("video")){
+            logger.info("开始连接ftp服务器,准备上传视频");
+        } else if(dirPath.contains("img")){
+            logger.info("开始连接ftp服务器,准备上传图片");
+        } else if(dirPath.contains("log")){
+            logger.info("开始连接ftp服务器,准备上传日志");
+        }
         boolean result = ftpUtil.uploadFile(dirPath, fileList);
         logger.info("结束上传，图片上传结果为{}",result);
         return result;

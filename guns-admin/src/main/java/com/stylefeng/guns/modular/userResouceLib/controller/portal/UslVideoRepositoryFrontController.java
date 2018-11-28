@@ -27,7 +27,7 @@ import java.util.List;
  * @author fengshuonan
  * @Date 2018-11-27 15:20:46
  */
-@Controller
+@RestController
 @RequestMapping("/front/uslVideoRepository")
 public class UslVideoRepositoryFrontController extends BaseController {
 

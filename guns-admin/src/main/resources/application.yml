@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8080
   # address: 0.0.0.0
   #ssl:
   #  key-store: classpath:tv2.onlinetech.com.cn.jks

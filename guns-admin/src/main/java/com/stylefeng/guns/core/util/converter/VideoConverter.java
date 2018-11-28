@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.stylefeng.guns.core.common.constant.state.AllConst;
@@ -60,13 +61,13 @@ public class VideoConverter {
             if (logger.isDebugEnabled()) {
                 logger.debug("Start to convert to flv file");
             }
-            status = processFLV(PATH);// 直接将文件转为flv文件
+            status = processMP4(PATH);// 直接将文件转为flv文件
         } else if (type == 1) {
             String avifilepath = processAVI(type);
             if (avifilepath == null) {
                 return false;// avi文件没有得到
             }
-            status = processFLV(avifilepath);// 将avi转为flv
+            status = processMP4(avifilepath);// 将avi转为flv
         } else if (type == 9) {
             if (logger.isDebugEnabled()) {
                 logger.debug("this file is no need to convert.");
@@ -140,7 +141,8 @@ public class VideoConverter {
         try {
             ProcessBuilder builder = new ProcessBuilder();
             builder.command(commend);
-            builder.start();
+            Process process = builder.start();
+            doWaitFor(process);
             return FLV_PATH + FILE_NAME.substring(0, FILE_NAME.lastIndexOf(".")) + ".avi";
         } catch (Exception e) {
             e.printStackTrace();
@@ -149,16 +151,29 @@ public class VideoConverter {
     }
 
     // ffmpeg能解析的格式：（asx，asf，mpg，wmv，3gp，mp4，mov，avi，flv等）
-    private static boolean processFLV(String oldfilepath) {
+    private static boolean processMP4(String oldfilepath) {
 
         if (!checkfile(PATH)) {
             return false;
         }
+        // 文件命名
+        Calendar c = Calendar.getInstance();
+        String savename = String.valueOf(c.getTimeInMillis())+ Math.round(Math.random() * 100000);
+
         // 创建一个List集合来保存转换视频文件为flv格式的命令
         List<String> commend = new ArrayList<String>();
         commend.add(FLV_PATH + "ffmpeg");// 添加转换工具路径
         commend.add("-i"); // 添加参数＂-i＂，该参数指定要转换的文件
         commend.add(oldfilepath); // 添加要转换格式的视频文件的路径
+        commend.add("-acodec");
+        commend.add("copy");
+        commend.add("-vcodec");
+        commend.add("libx264");
+        commend.add("-preset");
+        commend.add("superfast");
+        commend.add("-y"); // 添加参数＂-y＂，该参数指定将覆盖已存在的文件
+        /*
+        flv转码
         commend.add("-qscale");     //指定转换的质量
         commend.add("8");
         commend.add("-ab");        //设置音频码率
@@ -168,8 +183,8 @@ public class VideoConverter {
         commend.add("-ar");        //设置声音的采样频率
         commend.add("22050");
         commend.add("-r");        //设置帧频
-        commend.add("24");
-        commend.add("-y"); // 添加参数＂-y＂，该参数指定将覆盖已存在的文件
+        commend.add("24");*/
+
         /*commend.add("-s");
         commend.add("600x500");*/
         commend.add(FLV_PATH + FILE_NAME.substring(0, FILE_NAME.lastIndexOf(".")) + AllConst.TranscodeVideo.TRANSCODE_TYPE);
@@ -212,6 +227,7 @@ public class VideoConverter {
         int exitValue = -1; // returned to caller when p is finished
         InputStream in = null;
         InputStream err = null;
+        StringBuffer videoPrint = new StringBuffer();
         try {
             in = p.getInputStream();
             err = p.getErrorStream();
@@ -219,22 +235,29 @@ public class VideoConverter {
 
             while (!finished) {
                 try {
-                    Thread.sleep(200);
                     while (in.available() > 0) {
                         // Print the output of our system call
                         Character c = new Character((char) in.read());
-                        if (logger.isDebugEnabled()) {
+                        videoPrint.append(c);
+
+
+                        /*if (logger.isDebugEnabled()) {
                             logger.debug("", c);
-                        }
+                        }*/
                     }
                     while (err.available() > 0) {
                         // Print the output of our system call
                         Character c = new Character((char) err.read());
-                        if (logger.isDebugEnabled()) {
+                        videoPrint.append(c);
+                        /*if (logger.isDebugEnabled()) {
                             logger.debug("", c);
-                        }
+                        }*/
                     }
 
+                    if (logger.isDebugEnabled()) {
+                        logger.debug( videoPrint.toString());
+                    }
+                    videoPrint.setLength(0);
                     // Ask the process for its exitValue. If the process
                     // is not finished, an IllegalThreadStateException
                     // is thrown. If it is finished, we fall through and
@@ -265,13 +288,14 @@ public class VideoConverter {
                     in.close();
                 }
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                logger.error(e.getMessage());
             }
             if (err != null) {
                 try {
                     err.close();
                 } catch (IOException e) {
-                    System.out.println(e.getMessage());
+                    logger.error(e.getMessage());
+
                 }
             }
         }
