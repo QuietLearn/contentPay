@@ -1206,7 +1206,7 @@
      */
     define('lib/file',[
         'base',
-        'lib/blob'
+        'WEB-INF/lib/blob'
     ], function( Base, Blob ) {
 
         var uid = 1,
@@ -1242,7 +1242,7 @@
     define('lib/filepicker',[
         'base',
         'runtime/client',
-        'lib/file'
+        'WEB-INF/lib/file'
     ], function( Base, RuntimeClent, File ) {
 
         var $ = Base.$;
@@ -1613,7 +1613,7 @@
     define('widgets/filepicker',[
         'base',
         'uploader',
-        'lib/filepicker',
+        'WEB-INF/lib/filepicker',
         'widgets/widget'
     ], function( Base, Uploader, FilePicker ) {
         var $ = Base.$;
@@ -1754,7 +1754,7 @@
     define('lib/image',[
         'base',
         'runtime/client',
-        'lib/blob'
+        'WEB-INF/lib/blob'
     ], function( Base, RuntimeClient, Blob ) {
         var $ = Base.$;
 
@@ -1852,7 +1852,7 @@
     define('widgets/image',[
         'base',
         'uploader',
-        'lib/image',
+        'WEB-INF/lib/image',
         'widgets/widget'
     ], function( Base, Uploader, Image ) {
 
@@ -2592,7 +2592,7 @@
         'uploader',
         'queue',
         'file',
-        'lib/file',
+        'WEB-INF/lib/file',
         'runtime/client',
         'widgets/widget'
     ], function( Base, Uploader, Queue, WUFile, File, RuntimeClient ) {
@@ -3084,7 +3084,7 @@
         'base',
         'uploader',
         'file',
-        'lib/transport',
+        'WEB-INF/lib/transport',
         'widgets/widget'
     ], function( Base, Uploader, WUFile, Transport ) {
 
@@ -4430,7 +4430,7 @@
      */
     define('runtime/flash/blob',[
         'runtime/flash/runtime',
-        'lib/blob'
+        'WEB-INF/lib/blob'
     ], function( FlashRuntime, Blob ) {
 
         return FlashRuntime.register( 'Blob', {

@@ -1,0 +1,61 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins" >
+            <div class="ibox-title">
+                <h5>埋点统计管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row" >
+                            <div class="col-sm-2">
+                                <#SelectCon id="appId" name="应用" >
+                            </#SelectCon>
+                        </div>
+                        <div class="col-sm-2">
+                            <#TimeCon id="beginTime" name="从" isTime="false" />
+                        </div>
+                        <div class="col-sm-2">
+                            <#TimeCon id="endTime" name="到" isTime="false" />
+                        </div>
+
+                            <div class="col-sm-3">
+                                <!--pointId-->
+                                <#input id="citySel" name="埋点行为" underline="true" readonly="readonly" hidden="pointId"
+                                clickFun="BuriedPoint.showDeptSelectTree(); return false;"
+                                style="background-color: #ffffff !important;"/>
+                            </div>
+                            <!-- 这是部门选择的下拉框 -->
+                            <div id="menuContent" class="menuContent"
+                                 style="display: none; position: absolute; z-index: 200;">
+                                <ul id="treeDemo" class="ztree tree-box" style="width: 180px !important;"></ul>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="BuriedPoint.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="BuriedPointTableToolbar" role="group">
+                            @if(shiro.hasPermission("/buriedPoint/update")){
+                            <#button name="详情" icon="fa-edit" clickFun="BuriedPoint.openBuriedPointDetail()" space="true"/>
+                            @}
+                        </div>
+
+                        <#table id="BuriedPointTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/buriedPoint/buriedPoint.js"></script>
+<script>
+    laydate.render({
+        elem: '#beginTime'
+    });
+    laydate.render({
+        elem: '#endTime'
+    });
+</script>
+@}

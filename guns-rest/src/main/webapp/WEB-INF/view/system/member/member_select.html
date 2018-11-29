@@ -1,0 +1,40 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="username" name="用户名" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#select id="memberTypeCode" name="用户类型" underline="true">\
+                                    <option value="0">全部</option>
+                                    <option value="1000">普通会员</option>
+                                    <option value="1001">vip会员</option>
+                                </#select>
+                            </div>
+                            <div class="col-sm-3">
+                                <#SelectCon id="appId" name="应用" >
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="Member.search()"/>
+                            </div>
+                        </div>
+
+                        <div class="hidden-xs" id="MemberTableToolbar" role="group">
+                            <#button name="选择" icon="fa-check" clickFun="checkUserList()" space="true"/>
+
+                        </div>
+                        <#table id="MemberTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/member/member_select.js"></script>
+@}

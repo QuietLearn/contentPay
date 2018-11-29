@@ -1,0 +1,43 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+            <input type="hidden" id="id" value="${item.id}">
+            <div class="row">
+                <div class="col-sm-6 b-r">
+
+                            <#input id="appId" name="app  id" value="${item.appId}" underline="true" readonly="readonly"/>
+                            <#input id="appVer" name="app 版本号" value="${item.appVer}" underline="true" readonly="readonly"/>
+                            <#input id="channelId" name=" 渠道号" value="${item.channelId}" underline="true" readonly="readonly"/>
+                            <#input id="operator" name="运营商 1移动 2联通 3 电信" value="${item.operator}" underline="true" readonly="readonly"/>
+                            <#input id="address" name="省份 地区" value="${item.address}" underline="true" readonly="readonly"/>
+                            <#input id="imsi" name="移动设备识别码" value="${item.imsi}" underline="true" readonly="readonly"/>
+                            <#input id="imei" name="移动设备身份码" value="${item.imei}" underline="true" readonly="readonly"/>
+                            <#input id="pointId" name="埋点类型码" value="${item.pointId}" underline="true" readonly="readonly"/>
+                            <#input id="pointMessage" name="埋点信息" value="${item.pointMessage}" underline="true" readonly="readonly"/>
+                            <#input id="payType" name="支付类型 1 ZZF  2 DM 3 LFT" value="${item.payType}" underline="true" readonly="readonly"/>
+                            <#input id="uuid" name="用户唯一识别号码" value="${item.uuid}"  readonly="readonly"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="isDel" name="是否删除 0 未删除 1 删除" value="${item.isDel}" underline="true" readonly="readonly"/>
+                            <#input id="wifiType" name="网络类型" value="${item.wifiType}" underline="true" readonly="readonly"/>
+                            <#input id="mobile" name="手机号码" value="${item.mobile}" underline="true" readonly="readonly"/>
+                            <#input id="iccid" name="手机识别码" value="${item.iccid}" underline="true" readonly="readonly"/>
+                            <#input id="phoneType" name="手机型号" value="${item.phoneType}" underline="true" readonly="readonly"/>
+                            <#input id="errorMessage" name="错误信息" value="${item.errorMessage}" underline="true" readonly="readonly"/>
+                            <#input id="pointType" name="//埋点类型  1 安卓 2 ios" value="${item.pointType}" underline="true" readonly="readonly"/>
+                            <#input id="idfa" name="广告标识" value="${item.idfa}" underline="true" readonly="readonly"/>
+                            <#input id="openUdid" name="openUdid" value="${item.openUdid}" underline="true" readonly="readonly"/>
+                            <#input id="gmtCreated" name="创建时间" value="${item.gmtCreated}" underline="true" readonly="readonly"/>
+                            <#input id="gmtModified" name="修改时间" value="${item.gmtModified}"  readonly="readonly"/>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/buriedPoint/buriedPoint_info.js"></script>
+@}

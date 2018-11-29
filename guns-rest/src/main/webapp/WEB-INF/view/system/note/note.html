@@ -1,0 +1,37 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>短信管理管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#SelectCon id="appId" name="应用" >
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="mobile" name="手机" />
+                            </div>
+
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="Note.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="NoteTableToolbar" role="group">
+                            @if(shiro.hasPermission("/note/delete_list")){
+                                <#button name="删除" icon="fa-remove" clickFun="deleteNoteList()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="NoteTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/note/note.js"></script>
+@}

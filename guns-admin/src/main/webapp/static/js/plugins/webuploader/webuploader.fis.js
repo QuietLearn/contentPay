@@ -1419,7 +1419,7 @@ return (function( root, factory ) {
     define('widgets/filednd',[
         'base',
         'uploader',
-        'lib/dnd',
+        'WEB-INF/lib/dnd',
         'widgets/widget'
     ], function( Base, Uploader, Dnd ) {
         var $ = Base.$;
@@ -1526,7 +1526,7 @@ return (function( root, factory ) {
     define('widgets/filepaste',[
         'base',
         'uploader',
-        'lib/filepaste',
+        'WEB-INF/lib/filepaste',
         'widgets/widget'
     ], function( Base, Uploader, FilePaste ) {
         var $ = Base.$;
@@ -1622,7 +1622,7 @@ return (function( root, factory ) {
      */
     define('lib/file',[
         'base',
-        'lib/blob'
+        'WEB-INF/lib/blob'
     ], function( Base, Blob ) {
 
         var uid = 1,
@@ -1658,7 +1658,7 @@ return (function( root, factory ) {
     define('lib/filepicker',[
         'base',
         'runtime/client',
-        'lib/file'
+        'WEB-INF/lib/file'
     ], function( Base, RuntimeClent, File ) {
 
         var $ = Base.$;
@@ -1790,7 +1790,7 @@ return (function( root, factory ) {
     define('widgets/filepicker',[
         'base',
         'uploader',
-        'lib/filepicker',
+        'WEB-INF/lib/filepicker',
         'widgets/widget'
     ], function( Base, Uploader, FilePicker ) {
         var $ = Base.$;
@@ -1931,7 +1931,7 @@ return (function( root, factory ) {
     define('lib/image',[
         'base',
         'runtime/client',
-        'lib/blob'
+        'WEB-INF/lib/blob'
     ], function( Base, RuntimeClient, Blob ) {
         var $ = Base.$;
 
@@ -2029,7 +2029,7 @@ return (function( root, factory ) {
     define('widgets/image',[
         'base',
         'uploader',
-        'lib/image',
+        'WEB-INF/lib/image',
         'widgets/widget'
     ], function( Base, Uploader, Image ) {
 
@@ -2769,7 +2769,7 @@ return (function( root, factory ) {
         'uploader',
         'queue',
         'file',
-        'lib/file',
+        'WEB-INF/lib/file',
         'runtime/client',
         'widgets/widget'
     ], function( Base, Uploader, Queue, WUFile, File, RuntimeClient ) {
@@ -3261,7 +3261,7 @@ return (function( root, factory ) {
         'base',
         'uploader',
         'file',
-        'lib/transport',
+        'WEB-INF/lib/transport',
         'widgets/widget'
     ], function( Base, Uploader, WUFile, Transport ) {
 
@@ -4374,8 +4374,8 @@ return (function( root, factory ) {
     define('widgets/md5',[
         'base',
         'uploader',
-        'lib/md5',
-        'lib/blob',
+        'WEB-INF/lib/md5',
+        'WEB-INF/lib/blob',
         'widgets/widget'
     ], function( Base, Uploader, Md5, Blob ) {
 
@@ -4544,7 +4544,7 @@ return (function( root, factory ) {
      */
     define('runtime/html5/blob',[
         'runtime/html5/runtime',
-        'lib/blob'
+        'WEB-INF/lib/blob'
     ], function( Html5Runtime, Blob ) {
 
         return Html5Runtime.register( 'Blob', {
@@ -4564,7 +4564,7 @@ return (function( root, factory ) {
     define('runtime/html5/dnd',[
         'base',
         'runtime/html5/runtime',
-        'lib/file'
+        'WEB-INF/lib/file'
     ], function( Base, Html5Runtime, File ) {
 
         var $ = Base.$,
@@ -4773,7 +4773,7 @@ return (function( root, factory ) {
     define('runtime/html5/filepaste',[
         'base',
         'runtime/html5/runtime',
-        'lib/file'
+        'WEB-INF/lib/file'
     ], function( Base, Html5Runtime, File ) {
 
         return Html5Runtime.register( 'FilePaste', {
@@ -7912,7 +7912,7 @@ return (function( root, factory ) {
      */
     define('runtime/flash/blob',[
         'runtime/flash/runtime',
-        'lib/blob'
+        'WEB-INF/lib/blob'
     ], function( FlashRuntime, Blob ) {
 
         return FlashRuntime.register( 'Blob', {

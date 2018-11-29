@@ -2,6 +2,7 @@ package com.stylefeng.guns.modular.userResouceLib.controller;
 
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.modular.userResouceLib.model.UslVideoRepository;
+import com.stylefeng.guns.modular.userResouceLib.service.IUslVideoRepositoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,8 +16,6 @@ import java.util.List;
 import com.stylefeng.guns.core.log.LogObjectHolder;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.stylefeng.guns.modular.userResouceLib.service.IUslVideoRepositoryService;
-import java.util.Date;
 
 /**
  * 发布视频控制器

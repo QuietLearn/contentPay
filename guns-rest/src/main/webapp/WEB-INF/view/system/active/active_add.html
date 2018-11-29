@@ -1,0 +1,50 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="" underline="true"/>
+                            <#input id="appId" name="app id" underline="true"/>
+                            <#input id="appVer" name="app 版本号" underline="true"/>
+                            <#input id="channelId" name=" 渠道号" underline="true"/>
+                            <#input id="operator" name="运营商" underline="true"/>
+                            <#input id="address" name="省份 地区" underline="true"/>
+                            <#input id="imsi" name="移动设备识别码" underline="true"/>
+                            <#input id="imei" name="移动设备身份码" underline="true"/>
+                            <#input id="smsc" name="短信中心号码" underline="true"/>
+                            <#input id="isDel" name="是否删除 0 未删除 1 删除" underline="true"/>
+                            <#input id="activeType" name="0  开启   1  激活  2  手动开启" underline="true"/>
+                            <#input id="phoneType" name="手机型号" underline="true"/>
+                            <#input id="phoneBrand" name="手机品牌"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="phoneSystem" name="手机系统" underline="true"/>
+                            <#input id="dpi" name="分辨率" underline="true"/>
+                            <#input id="uuid" name="" underline="true"/>
+                            <#input id="mobile" name="手机号" underline="true"/>
+                            <#input id="iccid" name="手机识别码" underline="true"/>
+                            <#input id="pointType" name="埋点类型 1 安卓 2ios" underline="true"/>
+                            <#input id="wifiType" name="网络类型" underline="true"/>
+                            <#input id="idfa" name="广告标识" underline="true"/>
+                            <#input id="openUdid" name="" underline="true"/>
+                            <#input id="isToutiao" name="1 代表来自头条" underline="true"/>
+                            <#input id="gmtCreated" name="创建时间" underline="true"/>
+                            <#input id="gmtModified" name="" underline="true"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ActiveInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ActiveInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/active/active_info.js"></script>
+@}

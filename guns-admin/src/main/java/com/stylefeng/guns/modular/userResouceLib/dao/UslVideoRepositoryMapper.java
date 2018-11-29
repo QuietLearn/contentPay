@@ -1,7 +1,7 @@
 package com.stylefeng.guns.modular.userResouceLib.dao;
 
-import com.stylefeng.guns.modular.userResouceLib.model.UslVideoRepository;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.stylefeng.guns.modular.userResouceLib.model.UslVideoRepository;
 
 /**
  * <p>

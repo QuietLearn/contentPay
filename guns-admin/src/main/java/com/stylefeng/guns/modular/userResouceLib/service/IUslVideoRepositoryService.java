@@ -1,9 +1,7 @@
 package com.stylefeng.guns.modular.userResouceLib.service;
 
-import com.stylefeng.guns.modular.userResouceLib.model.UslVideoRepository;
 import com.baomidou.mybatisplus.service.IService;
-
-import java.util.List;
+import com.stylefeng.guns.modular.userResouceLib.model.UslVideoRepository;
 
 /**
  * <p>

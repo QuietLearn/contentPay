@@ -1,0 +1,38 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="订单id" underline="true"/>
+                            <#input id="orderNo" name="订单号" underline="true"/>
+                            <#input id="channelId" name="支付渠道" underline="true"/>
+                            <#input id="memberId" name="用户id" underline="true"/>
+                            <#input id="payment" name="实际付款金额,单位是元,保留两位小数" underline="true"/>
+                            <#input id="paymentType" name="支付类型,1-在线支付" underline="true"/>
+                            <#input id="status" name="订单状态:0-取消支付-10-待支付，20-支付成功,30-支付失败"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="buyType" name="购买商品类型  1 会员　２　自定义商品 3积分商品" underline="true"/>
+                            <#input id="appId" name="" underline="true"/>
+                            <#input id="payClient" name="机型 1 IOS 2 安卓" underline="true"/>
+                            <#input id="paymentTime" name="支付时间" underline="true"/>
+                            <#input id="createTime" name="创建时间" underline="true"/>
+                            <#input id="updateTime" name="更新时间" underline="true"/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="OrderInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="OrderInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/order/order_info.js"></script>
+@}

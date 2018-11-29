@@ -1,0 +1,54 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>会员管理管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="username" name="用户名" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="mobile" name="手机" />
+                            </div>
+                            <div class="col-sm-3">
+                                <!--<#input id="appSel" name="应用" underline="true" readonly="readonly" hidden="appId"
+                                clickFun="MemberInfoDlg.showAppSelectTree(); return false;"
+                                style="background-color: #ffffff !important;"/>-->
+                                <#SelectCon id="appId" name="应用" >
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="Member.search()"/>
+                            </div>
+                        </div>
+                        <!-- 这是部门选择的下拉框 -->
+                        <!--<div id="appContent" class="menuContent"
+                             style="display: none; position: absolute; z-index: 200;">
+                            <ul id="appTreeDemo" class="ztree tree-box" style="width: 249px !important;"></ul>
+                        </div>-->
+
+                        <div class="hidden-xs" id="MemberTableToolbar" role="group">
+                            @if(shiro.hasPermission("/member/add")){
+                                    <#button name="添加" icon="fa-plus" clickFun="Member.openAddMember()"/>
+                            @}
+                            @if(shiro.hasPermission("/member/update")){
+                                <#button name="修改" icon="fa-edit" clickFun="Member.openMemberDetail()" space="true"/>
+                            @}
+                            @if(shiro.hasPermission("/member/delete_list")){
+                            <#button name="批量删除" icon="fa-remove" clickFun="deleteUserList()" space="true"/>
+                            @}
+                        </div>
+                        <#table id="MemberTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/member/member.js"></script>
+@}

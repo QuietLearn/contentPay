@@ -1,0 +1,39 @@
+@layout("/common/_container.html"){
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>用户收藏夹管理管理</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="row row-lg">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <#NameCon id="videoName" name="视频名" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="username" name="用户名" />
+                            </div>
+                            <div class="col-sm-3">
+                                <#SelectCon id="appId" name="应用" >
+                                 </#SelectCon>
+                           </div>
+                            <div class="col-sm-3">
+                                <#button name="搜索" icon="fa-search" clickFun="Favorite.search()"/>
+                            </div>
+                        </div>
+                        <div class="hidden-xs" id="FavoriteTableToolbar" role="group">
+                            @if(shiro.hasPermission("/favorite/detail")){
+                                <#button name="详情" icon="fa-edit" clickFun="Favorite.openFavoriteDetail()" space="true" />
+                            @}
+                        </div>
+                        <#table id="FavoriteTable"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/favorite/favorite.js"></script>
+@}

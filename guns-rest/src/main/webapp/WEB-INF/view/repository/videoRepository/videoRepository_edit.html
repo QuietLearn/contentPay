@@ -1,0 +1,48 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="" value="${item.id}" underline="true"/>
+                            <#input id="categoryId" name="所属视频分类" value="${item.categoryId}" underline="true"/>
+                            <#input id="pictureId" name="原封面图片地址id
+" value="${item.pictureId}" underline="true"/>
+                            <#input id="coverImage" name="封面图片" value="${item.coverImage}" underline="true"/>
+                            <#input id="labelIds" name="视频标签" value="${item.labelIds}" underline="true"/>
+                            <#input id="title" name="标题" value="${item.title}" underline="true"/>
+                            <#input id="introduction" name="描述" value="${item.introduction}" underline="true"/>
+                            <#input id="playsNumber" name="播放次数" value="${item.playsNumber}" underline="true"/>
+                            <#input id="videoAddressid" name="视频地址Id" value="${item.videoAddressid}" underline="true"/>
+                            <#input id="countryId" name="国家id" value="${item.countryId}" underline="true"/>
+                            <#input id="times" name="" value="${item.times}" />
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="isDel" name="" value="${item.isDel}" underline="true"/>
+                            <#input id="sort" name="排序字段" value="${item.sort}" underline="true"/>
+                            <#input id="onePastTwo" name="1:2图片
+" value="${item.onePastTwo}" underline="true"/>
+                            <#input id="fivePastFour" name="4:5图片" value="${item.fivePastFour}" underline="true"/>
+                            <#input id="xPastx" name="x：x图片" value="${item.xPastx}" underline="true"/>
+                            <#input id="browse" name="浏览次数" value="${item.browse}" underline="true"/>
+                            <#input id="modelId" name="所属模特" value="${item.modelId}" underline="true"/>
+                            <#input id="collectionCount" name="收藏次数" value="${item.collectionCount}" underline="true"/>
+                            <#input id="gmtCreated" name="" value="${item.gmtCreated}" underline="true"/>
+                            <#input id="gmtModified" name="" value="${item.gmtModified}" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="VideoRepositoryInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="VideoRepositoryInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/repository/videoRepository/videoRepository_info.js"></script>
+@}

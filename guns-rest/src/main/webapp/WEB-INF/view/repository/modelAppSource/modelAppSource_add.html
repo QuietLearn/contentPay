@@ -1,0 +1,29 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="appContentId" name="应用内容id" underline="true"/>
+                            <#input id="modelId" name="模特id"/>
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="authority" name="权限" underline="true"/>
+                            <#input id="isDel" name=""/>
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ModelAppSourceInfoDlg.addSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ModelAppSourceInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/repository/modelAppSource/modelAppSource_info.js"></script>
+@}

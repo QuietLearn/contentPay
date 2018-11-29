@@ -13,7 +13,7 @@
     <name>guns-admin</name>
     <description>guns 的spring boot版本</description>
 
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <dependencies>
 
@@ -21,6 +21,7 @@
             <groupId>com.stylefeng</groupId>
             <artifactId>guns-core</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.stylefeng</groupId>
             <artifactId>guns-generator</artifactId>
@@ -149,8 +150,6 @@
             <version>1.5.21</version>
         </dependency>
 
-
-
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
@@ -190,6 +189,8 @@
             <groupId>commons-net</groupId>
             <artifactId>commons-net</artifactId>
         </dependency>
+        <!--aspose文档转换-->
+
     </dependencies>
 
     <build>
@@ -201,6 +202,7 @@
                     <fork>true</fork><!-- 如果没有该项配置，肯呢个devtools不会起作用，即应用不会restart -->
                 </configuration>
             </plugin>
+
         </plugins>
         <resources>
             <resource>

@@ -8,5 +8,4 @@ import java.util.Map;
 public interface IFileService {
     Map uploadPhoto(MultipartFile file, String path);
 
-    String uploadVideo(MultipartFile file, String path);
 }

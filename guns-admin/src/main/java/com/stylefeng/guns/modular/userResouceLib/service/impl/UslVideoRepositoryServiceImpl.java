@@ -1,9 +1,9 @@
 package com.stylefeng.guns.modular.userResouceLib.service.impl;
 
-import com.stylefeng.guns.modular.userResouceLib.model.UslVideoRepository;
-import com.stylefeng.guns.modular.userResouceLib.dao.UslVideoRepositoryMapper;
-import com.stylefeng.guns.modular.userResouceLib.service.IUslVideoRepositoryService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.stylefeng.guns.modular.userResouceLib.dao.UslVideoRepositoryMapper;
+import com.stylefeng.guns.modular.userResouceLib.model.UslVideoRepository;
+import com.stylefeng.guns.modular.userResouceLib.service.IUslVideoRepositoryService;
 import org.springframework.stereotype.Service;
 
 
