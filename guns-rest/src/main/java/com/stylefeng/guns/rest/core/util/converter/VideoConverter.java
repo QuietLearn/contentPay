@@ -154,7 +154,7 @@ public class VideoConverter {
         }
         // 文件命名
         Calendar c = Calendar.getInstance();
-        String savename = String.valueOf(c.getTimeInMillis())+ Math.round(Math.random() * 100000);
+        String savename = String.valueOf(c.getTimeInMillis()) + Math.round(Math.random() * 100000);
 
         // 创建一个List集合来保存转换视频文件为flv格式的命令
         List<String> commend = new ArrayList<String>();
@@ -214,7 +214,7 @@ public class VideoConverter {
         }
     }
 
-    public static boolean deleteFile(String path){
+    public static boolean deleteFile(String path) {
         File file = new File(path);
         return file.delete();
     }
@@ -251,7 +251,7 @@ public class VideoConverter {
                     }
 
                     if (logger.isDebugEnabled()) {
-                        logger.debug( videoPrint.toString());
+                        logger.debug(videoPrint.toString());
                     }
                     videoPrint.setLength(0);
                     // Ask the process for its exitValue. If the process
@@ -260,8 +260,8 @@ public class VideoConverter {
                     // the variable finished is set to true.
                     exitValue = p.exitValue();
                     finished = true;
-                }catch (MalformedURLException e){
-                    logger.error("MalformedURLException已捕获",e);
+                } catch (MalformedURLException e) {
+                    logger.error("MalformedURLException已捕获", e);
                 } catch (IllegalThreadStateException e) {
                     Thread.currentThread();
                     // Process is not finished yet;
@@ -278,7 +278,7 @@ public class VideoConverter {
             if (logger.isErrorEnabled()) {
                 logger.error(e.getMessage());
             }
-        }finally {
+        } finally {
             try {
                 if (in != null) {
                     in.close();

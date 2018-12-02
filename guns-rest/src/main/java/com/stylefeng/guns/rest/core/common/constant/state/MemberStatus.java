@@ -8,7 +8,7 @@ package com.stylefeng.guns.rest.core.common.constant.state;
  */
 public enum MemberStatus {
 
-    LOCK(0,"锁定"),
+    LOCK(0, "锁定"),
     OK(1, "启用");
 
     int code;

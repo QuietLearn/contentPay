@@ -25,7 +25,7 @@ public class FtpUtil {
     private String password;
     private FTPClient ftpClient;
 
-    public FtpUtil(String ip, int port , String username, String password){
+    public FtpUtil(String ip, int port, String username, String password) {
         this.ip = ip;
         this.port = port;
         this.username = username;
@@ -34,28 +34,29 @@ public class FtpUtil {
 
     /**
      * 对外暴露此方法，用来上传到tomcat的文件转到ftp服务器
+     *
      * @param fileList
      * @return
      * @throws IOException
      */
-    public static boolean uploadFile(List<File> fileList,String dirPath) throws IOException {
-        FtpUtil ftpUtil = new FtpUtil(ftpIp,21,ftpUser,ftpPass);
-        if (dirPath.contains("video")){
+    public static boolean uploadFile(List<File> fileList, String dirPath) throws IOException {
+        FtpUtil ftpUtil = new FtpUtil(ftpIp, 21, ftpUser, ftpPass);
+        if (dirPath.contains("video")) {
             logger.info("开始连接ftp服务器,准备上传视频");
-        } else if(dirPath.contains("img")){
+        } else if (dirPath.contains("img")) {
             logger.info("开始连接ftp服务器,准备上传图片");
-        } else if(dirPath.contains("log")){
+        } else if (dirPath.contains("log")) {
             logger.info("开始连接ftp服务器,准备上传日志");
         }
         boolean result = ftpUtil.uploadFile(dirPath, fileList);
-        logger.info("结束上传，图片上传结果为{}",result);
+        logger.info("结束上传，图片上传结果为{}", result);
         return result;
     }
 
-    private boolean uploadFile(String remotePath,List<File> fileList) throws IOException {
+    private boolean uploadFile(String remotePath, List<File> fileList) throws IOException {
         boolean uploaded = true;
-        FileInputStream fis =null;
-        if (connectFtpServer(this.ip,this.username,this.password)){
+        FileInputStream fis = null;
+        if (connectFtpServer(this.ip, this.username, this.password)) {
             try {
                 ftpClient.changeWorkingDirectory(remotePath);
                 ftpClient.setBufferSize(1024);
@@ -64,14 +65,14 @@ public class FtpUtil {
                 ftpClient.enterLocalPassiveMode(); //之前linux ftp服务器上配置的是被动模式，对外开放了被动的服务端口范围,打开本地被动模式
                 for (File fileItem : fileList) {
                     fis = new FileInputStream(fileItem);
-                    uploaded =  ftpClient.storeFile(fileItem.getName(),fis);
+                    uploaded = ftpClient.storeFile(fileItem.getName(), fis);
 //                    ftpClient.storeFile(remotePath,fis);
-                    if (!uploaded){  // 当时是因为没有在linux的 /ftpfile文件创建img并赋予ftpuser权限导致不能写入的原因
+                    if (!uploaded) {  // 当时是因为没有在linux的 /ftpfile文件创建img并赋予ftpuser权限导致不能写入的原因
                         return uploaded;
                     }
                 }
             } catch (IOException e) {
-                logger.error("上传文件到文件服务器 出现异常",e);
+                logger.error("上传文件到文件服务器 出现异常", e);
                 uploaded = false;
             } finally {
                 fis.close();
@@ -81,14 +82,14 @@ public class FtpUtil {
         return uploaded;
     }
 
-    private boolean connectFtpServer(String ip,String username,String password){
+    private boolean connectFtpServer(String ip, String username, String password) {
         boolean isSuccess = false;
         this.ftpClient = new FTPClient();
         try {
             ftpClient.connect(ip); //因为FTP类的构造方法已经设置了21端口了
             isSuccess = ftpClient.login(username, password);
         } catch (IOException e) {
-            logger.error("ftpClient连接ftp服务器异常",e);
+            logger.error("ftpClient连接ftp服务器异常", e);
         }
         return isSuccess;
     }

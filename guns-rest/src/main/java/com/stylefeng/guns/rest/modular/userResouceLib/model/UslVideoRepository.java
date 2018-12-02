@@ -1,16 +1,19 @@
 package com.stylefeng.guns.rest.modular.userResouceLib.model;
 
 import com.baomidou.mybatisplus.enums.IdType;
+
 import java.util.Date;
+
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableName;
+
 import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author hyj
@@ -30,7 +33,6 @@ public class UslVideoRepository extends Model<UslVideoRepository> {
     private Integer categoryId;
     /**
      * 原封面图片地址id
-
      */
     @TableField("picture_id")
     private Integer pictureId;
@@ -245,24 +247,24 @@ public class UslVideoRepository extends Model<UslVideoRepository> {
     @Override
     public String toString() {
         return "UslVideoRepository{" +
-        "id=" + id +
-        ", categoryId=" + categoryId +
-        ", pictureId=" + pictureId +
-        ", coverImage=" + coverImage +
-        ", labelIds=" + labelIds +
-        ", title=" + title +
-        ", introduction=" + introduction +
-        ", playsNumber=" + playsNumber +
-        ", videoAddress=" + videoAddress +
-        ", countryId=" + countryId +
-        ", times=" + times +
-        ", isDel=" + isDel +
-        ", sort=" + sort +
-        ", browse=" + browse +
-        ", userId=" + userId +
-        ", collectionCount=" + collectionCount +
-        ", gmtCreated=" + gmtCreated +
-        ", gmtModified=" + gmtModified +
-        "}";
+                "id=" + id +
+                ", categoryId=" + categoryId +
+                ", pictureId=" + pictureId +
+                ", coverImage=" + coverImage +
+                ", labelIds=" + labelIds +
+                ", title=" + title +
+                ", introduction=" + introduction +
+                ", playsNumber=" + playsNumber +
+                ", videoAddress=" + videoAddress +
+                ", countryId=" + countryId +
+                ", times=" + times +
+                ", isDel=" + isDel +
+                ", sort=" + sort +
+                ", browse=" + browse +
+                ", userId=" + userId +
+                ", collectionCount=" + collectionCount +
+                ", gmtCreated=" + gmtCreated +
+                ", gmtModified=" + gmtModified +
+                "}";
     }
 }

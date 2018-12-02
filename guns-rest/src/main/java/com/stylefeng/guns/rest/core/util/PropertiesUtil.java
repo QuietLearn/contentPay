@@ -21,9 +21,9 @@ public class PropertiesUtil {
         String fileName = "guns.properties";
         props = new Properties();
         try {
-            props.load(new InputStreamReader(PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName),"UTF-8"));
+            props.load(new InputStreamReader(PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName), "UTF-8"));
         } catch (IOException e) {
-            logger.error("配置文件读取异常",e);
+            logger.error("配置文件读取异常", e);
         }
     }
 
@@ -45,21 +45,21 @@ public class PropertiesUtil {
     }
 */
 
-    public static String getProperty(String key){
-        if (StringUtils.isEmpty(key.trim())|| StringUtils.isBlank(key.trim())){
+    public static String getProperty(String key) {
+        if (StringUtils.isEmpty(key.trim()) || StringUtils.isBlank(key.trim())) {
             return null;
         }
         String value = props.getProperty(key);
-        if (StringUtils.isEmpty(value.trim())|| StringUtils.isBlank(value.trim())){
+        if (StringUtils.isEmpty(value.trim()) || StringUtils.isBlank(value.trim())) {
             return null;
         }
         return value.trim();
     }
 
-    public static String getProperty(String key,String defaultValue){
+    public static String getProperty(String key, String defaultValue) {
 
         String value = props.getProperty(key.trim());
-        if(StringUtils.isBlank(value)){
+        if (StringUtils.isBlank(value)) {
             value = defaultValue;
         }
         return value.trim();

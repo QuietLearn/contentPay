@@ -12,7 +12,7 @@ public class AllConst {
     public static final String MESSAGE_ERROR_MSG = "验证码错误，重新输入";
 
 
-    public interface TranscodeVideo{
+    public interface TranscodeVideo {
         public static final String TRANSCODE_TYPE = ".mp4";
         public static final String COVER_TYPE = ".jpg";
     }
@@ -78,10 +78,10 @@ public class AllConst {
 
     public enum MessageEnum {
         //(1000 系统消息 1001 热门活动 1002 app异常bug消息)
-        REGISTER(1000,"注册"),
-        RETRIEVE_PASSWORD(1001,"找回密码"),
-        UNTIED_PHONE(1002,"解绑手机"),
-        SWAP_PHONE(1003,"换绑手机");
+        REGISTER(1000, "注册"),
+        RETRIEVE_PASSWORD(1001, "找回密码"),
+        UNTIED_PHONE(1002, "解绑手机"),
+        SWAP_PHONE(1003, "换绑手机");
 
         private Integer code;
         private String message;
@@ -115,7 +115,6 @@ public class AllConst {
             return message;
         }
     }
-
 
 
     public enum NotifyTypeEnum {
@@ -231,9 +230,8 @@ public class AllConst {
         //(1000 系统消息 1001 热门活动 1002 app异常bug消息)
 
 
-        NONACTIVATED(0,"未激活"),
-        ACTIVE(1,"完成激活");
-
+        NONACTIVATED(0, "未激活"),
+        ACTIVE(1, "完成激活");
 
 
         private Integer code;
@@ -267,8 +265,6 @@ public class AllConst {
             return message;
         }
     }
-
-
 
 
 }

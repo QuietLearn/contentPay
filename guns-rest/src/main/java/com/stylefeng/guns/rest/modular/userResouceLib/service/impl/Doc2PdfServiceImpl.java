@@ -18,6 +18,11 @@ import java.io.OutputStream;
 */
 /**
  * Created by hyj on 2018/11/29
+ * <p>
+ * Inserts a watermark into a document.
+ *
+ * @param doc           The input document.
+ * @param watermarkText Text of the watermark.
  *//*
 
 @Service
@@ -55,11 +60,11 @@ public class Doc2PdfServiceImpl implements IFile2PdfService {
 
     */
 /**
-     * Inserts a watermark into a document.
-     *
-     * @param doc           The input document.
-     * @param watermarkText Text of the watermark.
-     *//*
+ * Inserts a watermark into a document.
+ *
+ * @param doc           The input document.
+ * @param watermarkText Text of the watermark.
+ *//*
 
     private void insertWatermarkText(Document doc, String watermarkText) throws Exception {
         // Create a watermark shape. This will be a WordArt shape.

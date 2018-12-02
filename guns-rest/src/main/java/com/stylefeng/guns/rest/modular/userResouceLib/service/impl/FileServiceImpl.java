@@ -27,46 +27,46 @@ public class FileServiceImpl implements IFileService {
     @Autowired
     private IUslVideoRepositoryService iUslVideoRepositoryService;
 
-    public Map uploadPhoto(MultipartFile file, String path){
+    public Map uploadPhoto(MultipartFile file, String path) {
         String originalFilename = file.getOriginalFilename();
         //jpg  jpeg png 文件结尾
-        String suffix  = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+        String suffix = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 
-        String uploadFilename = UUID.randomUUID().toString()+"."+suffix;
+        String uploadFilename = UUID.randomUUID().toString() + "." + suffix;
 
         Map map = Maps.newHashMap();
         String bugLogString = "";
 //        String path = request.getContextPath()+"/upload/"+((User)(request.getSession().getAttribute(Const.CURRENT_USER))).getId()+"/";
 
-        logger.info("（开始）上传文件，文件放置路径{}，旧文件名{}，新文件名{}",path,originalFilename,uploadFilename);
+        logger.info("（开始）上传文件，文件放置路径{}，旧文件名{}，新文件名{}", path, originalFilename, uploadFilename);
 
         File fileDir = new File(path);
-        if (!fileDir.exists()){
+        if (!fileDir.exists()) {
             //毕竟tomcat的用户对里面工程可能没有创建文件夹的权限
             fileDir.setWritable(true);
             fileDir.mkdirs();
         }
 
-        File targetFile = new File(path , uploadFilename);
+        File targetFile = new File(path, uploadFilename);
 
         try {
             file.transferTo(targetFile);
             /*List<File> fileList =  Lists.newArrayList();
             fileList.add(targetFile);*/
             //文件已经上传成功了
-            map.put("targetFile",targetFile);
+            map.put("targetFile", targetFile);
 
-            map.put("bugLogString",bugLogString);
+            map.put("bugLogString", bugLogString);
             // list为以后多文件上传扩展使用
             // 当时是因为没有在linux的 /ftpfile文件创建img并赋予ftpuser权限导致不能写入的原因
-            if (!FtpUtil.uploadFile(Lists.newArrayList(targetFile),"log/")){
+            if (!FtpUtil.uploadFile(Lists.newArrayList(targetFile), "log/")) {
                 return null; //如果没有将文件写入ftp服务器，返回的文件名为""代表失败，因为返回string，不知道如何表示错误
             }
 
             //已经上传到ftp服务器上
 
         } catch (IOException e) {
-            logger.error("文件上传到目标目录异常",e);
+            logger.error("文件上传到目标目录异常", e);
             return null;
         } finally {
             targetFile.delete();
@@ -75,32 +75,32 @@ public class FileServiceImpl implements IFileService {
     }
 
 
-    public String uploadVideo(MultipartFile file, String path){
+    public String uploadVideo(MultipartFile file, String path) {
         String originalFilename = file.getOriginalFilename();
 
 
-        String prefix = originalFilename.substring(0,originalFilename.lastIndexOf("."));
+        String prefix = originalFilename.substring(0, originalFilename.lastIndexOf("."));
         //avi mp4 flv 文件结尾
-        String suffix  = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
+        String suffix = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
 
-        String uploadFilename = UUID.randomUUID().toString()+"."+suffix;
+        String uploadFilename = UUID.randomUUID().toString() + "." + suffix;
 
-        logger.info("（开始）上传文件，文件放置路径{}，旧文件名{}，新文件名{}",path,originalFilename,uploadFilename);
+        logger.info("（开始）上传文件，文件放置路径{}，旧文件名{}，新文件名{}", path, originalFilename, uploadFilename);
 
         File fileDir = new File(path);
-        if (!fileDir.exists()){
+        if (!fileDir.exists()) {
             //毕竟tomcat的用户对里面工程可能没有创建文件夹的权限
             fileDir.setWritable(true);
             fileDir.mkdirs();
         }
 
-        File targetFile = new File(path , uploadFilename);
+        File targetFile = new File(path, uploadFilename);
         File transcodingVideo = null;
         File video_cover = null;
         try {
             //文件已经上传成功了
             file.transferTo(targetFile);
-            if (!VideoConverter.convert(targetFile)){
+            if (!VideoConverter.convert(targetFile)) {
                 logger.error("转码失败");
             }
             String targetFileName = targetFile.getName().substring(0, targetFile.getName().lastIndexOf("."));
@@ -111,25 +111,25 @@ public class FileServiceImpl implements IFileService {
 
             // list为以后多文件上传扩展使用
             // 当时是因为没有在linux的 /ftpfile文件创建img并赋予ftpuser权限导致不能写入的原因
-            if (!FtpUtil.uploadFile(Lists.newArrayList(transcodingVideo),"video/")){
+            if (!FtpUtil.uploadFile(Lists.newArrayList(transcodingVideo), "video/")) {
                 return null; //如果没有将文件写入ftp服务器，返回的文件名为""代表失败，因为返回string，不知道如何表示错误
             }
 
-            if (!FtpUtil.uploadFile(Lists.newArrayList(video_cover),"img/")){
+            if (!FtpUtil.uploadFile(Lists.newArrayList(video_cover), "img/")) {
                 return null; //如果没有将文件写入ftp服务器，返回的文件名为""代表失败，因为返回string，不知道如何表示错误
             }
 
             /**
              * 插入上传视频信息到数据库
              */
-            UslVideoRepository uslVideoRepository = assemUslVideo(targetFileName,prefix);
+            UslVideoRepository uslVideoRepository = assemUslVideo(targetFileName, prefix);
             boolean insert = iUslVideoRepositoryService.insert(uslVideoRepository);
-            if (!insert){
+            if (!insert) {
                 logger.error("插入失败");
             }
 
         } catch (IOException e) {
-            logger.error("文件上传到目标目录异常",e);
+            logger.error("文件上传到目标目录异常", e);
             return null;
         } finally {
             targetFile.delete();
@@ -139,7 +139,7 @@ public class FileServiceImpl implements IFileService {
         return targetFile.getName();
     }
 
-    public UslVideoRepository assemUslVideo(String urlFile, String title){
+    public UslVideoRepository assemUslVideo(String urlFile, String title) {
         UslVideoRepository uslVideoRepository = new UslVideoRepository();
         uslVideoRepository.setGmtCreated(new Date());
         uslVideoRepository.setGmtModified(new Date());
