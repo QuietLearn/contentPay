@@ -219,7 +219,7 @@
                     <encoding>UTF-8</encoding>
                     <compilerArguments>
                         <!--${project.basedir}-->
-                        <extdirs>${project.basedir}/src/main/webapp/WEB-INF/lib</extdirs>
+                        <extdirs>${project.basedir}/src/main/webapp/lib</extdirs>
                     </compilerArguments>
                 </configuration>
             </plugin>

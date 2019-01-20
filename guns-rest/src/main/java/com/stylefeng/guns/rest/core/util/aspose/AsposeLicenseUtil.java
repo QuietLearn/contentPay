@@ -63,7 +63,7 @@ public class AsposeLicenseUtil {
         if (licenseInput != null) {
             try {
                 com.aspose.cells.License aposeLic = new com.aspose.cells.License();
-                aposeLic.setLicense(lcenseInput);
+                aposeLic.setLicense(licenseInput);
                 return true;
             } catch (Exception e) {
                 logger.error("set cells license error!", e);
