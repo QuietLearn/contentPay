@@ -4,10 +4,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.stylefeng.guns.core.util.file.FtpUtil;
 import com.stylefeng.guns.modular.system.service.IFileService;
-import com.stylefeng.guns.modular.userResouceLib.service.IUslVideoRepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,9 +17,6 @@ import java.util.UUID;
 public class FileServiceImpl implements IFileService {
 
     private Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
-
-    @Autowired
-    private IUslVideoRepositoryService iUslVideoRepositoryService;
 
     public Map uploadPhoto(MultipartFile file, String path){
         String originalFilename = file.getOriginalFilename();
