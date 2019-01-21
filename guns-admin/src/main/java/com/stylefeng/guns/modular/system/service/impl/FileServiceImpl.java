@@ -2,11 +2,8 @@ package com.stylefeng.guns.modular.system.service.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.stylefeng.guns.core.common.constant.state.AllConst;
-import com.stylefeng.guns.core.util.converter.VideoConverter;
 import com.stylefeng.guns.core.util.file.FtpUtil;
 import com.stylefeng.guns.modular.system.service.IFileService;
-import com.stylefeng.guns.modular.userResouceLib.model.UslVideoRepository;
 import com.stylefeng.guns.modular.userResouceLib.service.IUslVideoRepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 

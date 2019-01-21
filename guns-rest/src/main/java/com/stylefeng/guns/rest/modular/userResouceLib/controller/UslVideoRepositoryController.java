@@ -1,8 +1,9 @@
-package com.stylefeng.guns.modular.userResouceLib.controller;
+package com.stylefeng.guns.rest.modular.userResouceLib.controller;
 
 import com.stylefeng.guns.core.base.controller.BaseController;
-import com.stylefeng.guns.modular.userResouceLib.model.UslVideoRepository;
-import com.stylefeng.guns.modular.userResouceLib.service.IUslVideoRepositoryService;
+import com.stylefeng.guns.rest.core.common.result.Result;
+import com.stylefeng.guns.rest.modular.userResouceLib.model.UslVideoRepository;
+import com.stylefeng.guns.rest.modular.userResouceLib.service.IUslVideoRepositoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,9 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Date;
 import java.util.Arrays;
-import com.stylefeng.guns.core.common.result.Result;
 import java.util.List;
-import com.stylefeng.guns.core.log.LogObjectHolder;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -55,7 +54,8 @@ public class UslVideoRepositoryController extends BaseController {
     public String uslVideoRepositoryUpdate(@PathVariable Integer uslVideoRepositoryId, Model model) {
         UslVideoRepository uslVideoRepository = uslVideoRepositoryService.selectById(uslVideoRepositoryId);
         model.addAttribute("item",uslVideoRepository);
-        LogObjectHolder.me().set(uslVideoRepository);
+        //日志
+        //LogObjectHolder.me().set(uslVideoRepository);
         return PREFIX + "uslVideoRepository_edit.html";
     }
 
